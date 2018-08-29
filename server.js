@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 // use to connect with mongoDB
 const mongoose = require('mongoose');
@@ -26,9 +27,11 @@ mongoose
     .then(() => console.log('MongoDB Connected')) //if success do this
     .catch(err => console.log(err)); //if fail do this
 
-// home route
-// req-request , res-response
-app.get('/', (req, res) => res.send('Hello world'));
+// Passport middleware
+app.use(passport.initialize());
+
+// bring passport library to config/passport.js
+require('./config/passport')(passport);
 
 // Use Routes
 // this will append to home route 'localHost:5000/api/users/{what ever users.js dictate}
