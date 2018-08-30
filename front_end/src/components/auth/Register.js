@@ -31,10 +31,10 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    axios
-      .post("/api/users/register", newUser) //in package.json we have "proxy": "http://localhost:5000"
-      .then(res => console.log(res.data)) // res.data to get data from response
-      .catch(err => this.setState({ errors: err.response.data })); // set err message from backend to state
+    // axios
+    //   .post("/api/users/register", newUser) //in package.json we have "proxy": "http://localhost:5000"
+    //   .then(res => console.log(res.data)) // res.data to get data from response
+    //   .catch(err => this.setState({ errors: err.response.data })); // set err message from backend to state
   }
 
   render() {
