@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 class Register extends Component {
-  render () {
+  render() {
     return (
       <div>
         <h1>Register</h1>
       </div>
-    )
+    );
   }
 }
 
-export default Register
+export default Register;

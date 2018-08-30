@@ -1,49 +1,49 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const passport = require('passport')
+const express = require("express");
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
 // use to connect with mongoDB
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 // api routes
-const users = require('./routes/api/users')
-const profile = require('./routes/api/profile')
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
 
 // get some functionalities from express library like get() function
-const app = express()
+const app = express();
 
 // Body parser middleware
 app.use(
   bodyParser.urlencoded({
     extended: false
   })
-)
-app.use(bodyParser.json())
+);
+app.use(bodyParser.json());
 
 // DB config
-const db = require('./config/keys').mongoURI
+const db = require("./config/keys").mongoURI;
 
 // connect to MongoDB
 mongoose
   .connect(db)
-  .then(() => console.log('MongoDB Connected')) // if success do this
-  .catch(err => console.log(err)) // if fail do this
+  .then(() => console.log("MongoDB Connected")) // if success do this
+  .catch(err => console.log(err)); // if fail do this
 
 // Passport middleware
-app.use(passport.initialize())
+app.use(passport.initialize());
 
 // bring passport library to config/passport.js
-require('./config/passport')(passport)
+require("./config/passport")(passport);
 
 // Use Routes
 // this will append to home route 'localHost:5000/api/users/{what ever users.js dictate}
-app.use('/api/users', users)
+app.use("/api/users", users);
 // this will append to home route 'localHost:5000/api/profile/{what ever profile.js dictate}
-app.use('/api/profile', profile)
+app.use("/api/profile", profile);
 
 // using port deployed to Heroku || use local port 5000
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 
 // listen to port when server is running
-app.listen(port, () => console.log(`Server running on port ${port}`))
+app.listen(port, () => console.log(`Server running on port ${port}`));
 // NOTE: At this point , go to terminal and do $ npm run server
