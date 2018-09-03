@@ -24,7 +24,7 @@ When stories are picked up (assigned to a dev), they have to be manually moved t
 #In Progress
 As soon as the dev has code ready, a remote branch can be created and a new pull request created.
 The newly created pull request has to be added to 'Needs review', by clicking "Add cards".
-The issue can be closed as it is now replaced by the pull request.
+Please leave the issue open and in 'In Progress' until entire story is done.
 Please make sure the name of pull request and issue match.
 
 #Needs review
@@ -40,13 +40,14 @@ If verified successfully, please move story to 'Done'.
 
 #Done
 Finished stories will be reviewed by Tech lead or PM and can be deleted from board.
+Issue should still be 'In Progress' and can also be closed.
 ```
 
 #### Pull request Rules
 ```
 When raising a pull request,
 - make sure you have written unit tests for your code.
-- please use same naming as the corresponing issue.
+- please use following naming convention: "SJSU-1234, what I did" (same naming as issue)
 - please update Story Board.
 - please discribe the changes you made
 - please make sure to tag the minimum amount of required reviewers.
