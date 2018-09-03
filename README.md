@@ -57,3 +57,12 @@ When raising a pull request,
 *during verification, a dev will manually test the features you worked on
 
 ```
+
+#### Naming Rules
+```
+Branches:
+Use same naming convention as the corresponding issue, f.e. "SJSU-1097"
+
+Pull Requests/Commit:
+Use issue/story number + short description of work, f.e. "SJSU-1097, Updated Login screen"
+```
