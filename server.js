@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const logger = require("winston").createLogger({
+const winston = require("winston")
+const logger = winston.createLogger({
 	level: "error",
 	format: winston.format.json(),
 	transports: [
