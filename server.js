@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-
+const logger = require("winston")
 // use to connect with mongoDB
 const mongoose = require("mongoose");
 
@@ -26,8 +26,8 @@ const db = require("./config/keys").mongoURI;
 // connect to MongoDB
 mongoose
   .connect(db)
-  .then(() => console.log("MongoDB Connected")) // if success do this
-  .catch(err => console.log(err)); // if fail do this
+  .then(() => logger.info("MongoDB Connected")) // if success do this
+  .catch(err => logger.error(`MongoDB error: ${err}`)); // if fail do this
 
 // Passport middleware
 app.use(passport.initialize());
@@ -45,5 +45,5 @@ app.use("/api/profile", profile);
 const port = process.env.PORT || 5000;
 
 // listen to port when server is running
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => logger.info(`Server running on port ${port}`));
 // NOTE: At this point , go to terminal and do $ npm run server
