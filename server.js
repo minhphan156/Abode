@@ -1,7 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const logger = require("winston")
+const logger = require("winston").createLogger({
+	level: "error",
+	format: winston.format.json(),
+	transports: [
+		new winston.transports.File({filename: "error.log", level: "error"})
+	]
+})
 // use to connect with mongoDB
 const mongoose = require("mongoose");
 
