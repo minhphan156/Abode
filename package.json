@@ -10,7 +10,7 @@
     "client": "npm start --prefix front_end",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Minh Phan",
+  "author": "Sandro, Kento, Yu, Sterling, Dale, Vinny, Justin, Minh",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",

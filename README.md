@@ -1,1 +1,5 @@
-reply to this message or 7 years of bad luck
+// install dependencies
+$npm client-install
+
+// To run the project
+$npm run dev
