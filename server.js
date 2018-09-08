@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const path = require("path");
 
 // use to connect with mongoDB
 const mongoose = require("mongoose");
@@ -40,6 +41,15 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 // this will append to home route 'localHost:5000/api/profile/{what ever profile.js dictate}
 app.use("/api/profile", profile);
+
+// Server static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("front_end/build"));
+  app.get("*", (req, res) => {
+    res.sendfile(path.resolve(__dirname, "front_end", "build", "index.html"));
+  });
+}
 
 // using port deployed to Heroku || use local port 5000
 const port = process.env.PORT || 5000;
