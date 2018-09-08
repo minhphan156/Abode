@@ -17,7 +17,8 @@ class Landing extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 text-center">
-                <h1 className="display-3 mb-4">Mini Safeway</h1>
+                <h1 className="display-3 mb-4">Spartanstop</h1>
+                <p>One stop for your combat's need</p>
                 <hr />
               </div>
             </div>
