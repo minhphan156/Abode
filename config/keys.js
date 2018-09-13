@@ -1,6 +1,7 @@
 // export module file to be available to other components
 // mongoURI to connect with mongo database
-module.exports = {
-    mongoURI: 'mongodb://minhphan:minhphan1@ds231242.mlab.com:31242/minisafeway',
-    secretOrKey: 'secret'
-};
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./keys_prod"); // load keys_prod.js if it is in production environment
+} else {
+  module.exports = require("./keys_dev"); // load keys_dev.js if it is in dev environment
+}

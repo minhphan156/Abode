@@ -8,9 +8,10 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix front_end",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix front_end && npm run build --prefix front_end"
   },
-  "author": "Minh Phan",
+  "author": "Sandro, Kento, Yu, Sterling, Dale, Vinny, Justin, Minh",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",

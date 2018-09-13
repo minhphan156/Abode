@@ -9,17 +9,17 @@
 - SW Testing: Yu Ning Hee
 - Documentation: Justin Magadia
 
-
 ### Project Management
 
 #### Story-Board Rules
 
 [Story Board](https://github.com/Abcbadq/sjsu_shop/projects/1)
+
 ```
 #To Do
 The 'To Do' list is populated with issues (aka stories) that are not yet assigned to any developer.
 Those stories are generally created by the PM. If need be, developer can create stories but need to inform PM.
-When stories are picked up (assigned to a dev), they have to be manually moved to 'In Progress'. 
+When stories are picked up (assigned to a dev), they have to be manually moved to 'In Progress'.
 
 #In Progress
 As soon as the dev has code ready, a remote branch can be created and a new pull request created.
@@ -44,6 +44,7 @@ Issue should still be 'In Progress' and can also be closed.
 ```
 
 #### Pull request Rules
+
 ```
 When raising a pull request,
 - make sure you have written unit tests for your code.
@@ -55,10 +56,10 @@ When raising a pull request,
 - please add a comment section for verification with instructions on how to verify*
 
 *during verification, a dev will manually test the features you worked on
-
 ```
 
 #### Naming Rules
+
 ```
 Branches:
 Use same naming convention as the corresponding issue, f.e. "SJSU-1097"
@@ -66,3 +67,19 @@ Use same naming convention as the corresponding issue, f.e. "SJSU-1097"
 Pull Requests/Commit:
 Use issue/story number + short description of work, f.e. "SJSU-1097, Updated Login screen"
 ```
+
+## Install dependencies
+
+$npm client-install
+install Redux Devtool
+
+## To run the project
+
+$npm run dev
+
+## How to use Heroku:
+
+$ heroku login
+$ git add .
+$ git commit -am 'type-any-message-here'
+$ git push heroku master

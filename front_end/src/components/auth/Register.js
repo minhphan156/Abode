@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom"; // to route to other pages (1)
 import classnames from "classnames";
+import { connect } from "react-redux"; // use this to connect react component to redux
+import { registerUser } from "../../actions/authActions";
 
 class Register extends Component {
   constructor() {
@@ -17,6 +20,20 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount = () => {
+    // during logged in , if we change url to register it will redirect to homepage
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  };
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.errors) {
+      // this.state.errors = this.props.errors
+      this.setState({ errors: nextProps.errors });
+    }
+  };
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -31,14 +48,12 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    // axios
-    //   .post("/api/users/register", newUser) //in package.json we have "proxy": "http://localhost:5000"
-    //   .then(res => console.log(res.data)) // res.data to get data from response
-    //   .catch(err => this.setState({ errors: err.response.data })); // set err message from backend to state
+    this.props.registerUser(newUser, this.props.history); // second para to route to other page (3)
   }
-
+  //NOTE: component dispatch -> action give new data to -> reducer update new state and pass as props to -> component
   render() {
     const { errors } = this.state;
+    // this achieved by mapStateToProps()
 
     return (
       <div className="register">
@@ -117,4 +132,21 @@ class Register extends Component {
   }
 }
 
-export default Register;
+// map props to PropTypes for type checking
+Register.PropTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  // 'state.auth' is from reducers/index.js
+  // we then can do: this.props.auth
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Register)); // withRouter to route to other page (2)
