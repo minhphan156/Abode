@@ -68,13 +68,17 @@ Pull Requests/Commit:
 Use issue/story number + short description of work, f.e. "SJSU-1097, Updated Login screen"
 ```
 
-// install dependencies
-$npm client-install
+## Install dependencies
 
-// To run the project
+$npm client-install
+install Redux Devtool
+
+## To run the project
+
 $npm run dev
 
-// how to use Heroku:
+## How to use Heroku:
+
 $ heroku login
 $ git add .
 $ git commit -am 'type-any-message-here'
