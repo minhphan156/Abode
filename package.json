@@ -1,7 +1,7 @@
 {
-  "name": "minisafeway",
+  "name": "spartanstop",
   "version": "1.0.0",
-  "description": "mini web version of safeway",
+  "description": "grocery store for SJSU students",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix front_end",
