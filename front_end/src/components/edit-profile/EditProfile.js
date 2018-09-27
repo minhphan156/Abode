@@ -117,7 +117,7 @@ class CreateProfile extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Edit Profile</h1>
-              <p className="lead text-center">Let's update your information</p>
+              <p className="lead text-center">Let us update your information</p>
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
                 <h4 className="d-block pb-3" />
