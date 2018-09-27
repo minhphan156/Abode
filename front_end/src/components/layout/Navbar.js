@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileActions";
+
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
 
@@ -15,17 +18,23 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          {/* <img
+            className="rounded-circle"
+            src="https://openclipart.org/download/247319/abstract-user-flat-3.svg"
+            alt={"user image"}
+            style={{ width: "15px", marginRight: "5px" }}
+          /> */}
+          <Link className="nav-link" to="/dashboard">
+            {user.name}
+          </Link>
+        </li>
+
+        <li className="nav-item">
           <a
             href="#"
             onClick={this.onLogoutClick.bind(this)}
             className="nav-link"
           >
-            <img
-              className="rounded-circle"
-              src="https://openclipart.org/download/247319/abstract-user-flat-3.svg"
-              alt={"user image"}
-              style={{ width: "25px", marginRight: "5px" }}
-            />
             Logout
           </a>
         </li>
@@ -53,6 +62,9 @@ class Navbar extends Component {
           <Link className="navbar-brand" to="/">
             Home
           </Link>
+          <Link to="/cart" className="btn btn-light">
+            <i className="fas fa-shopping-cart text-info mr-1" />
+          </Link>
           {isAuthenticated ? authLinks : guestLinks}
         </div>
       </nav>
@@ -71,5 +83,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);
