@@ -36,3 +36,7 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.category-Tile {
+  height: 200px;
+}
