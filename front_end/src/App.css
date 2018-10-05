@@ -37,8 +37,27 @@ img {
   color: #bbb !important;
 }
 
-.category-Tile {
-  height: 200px;
-  line-height: 200px;
+.category-tile {
+  padding: 50px 0px 0px 0px;
+  height: 250px;
   text-align: center;
+}
+
+.category-img {
+  display: block;
+  margin: auto;
+  height: 75%;
+  width: 75%;
+  max-width: 125px;
+  max-height: 125px;
+}
+
+.category-text {
+  font-family: Lobster, Serif;
+  font-size: 20px;
+  color: black;
+}
+
+.lobster-font {
+  font-family: Lobster, Serif;
 }

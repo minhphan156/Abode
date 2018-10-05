@@ -18,11 +18,6 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link className="nav-link" to="/browse">
-            Browse <i class="fas fa-search" />
-          </Link>
-        </li>
-        <li className="nav-item">
           {/* <img
             className="rounded-circle"
             src="https://openclipart.org/download/247319/abstract-user-flat-3.svg"
@@ -49,11 +44,6 @@ class Navbar extends Component {
     const guestLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link className="nav-link" to="/browse">
-            Browse <i class="fas fa-search" />
-          </Link>
-        </li>
-        <li className="nav-item">
           <Link className="nav-link" to="/register">
             Sign Up
           </Link>
@@ -71,6 +61,9 @@ class Navbar extends Component {
         <div className="container">
           <Link className="navbar-brand" to="/">
             Home
+          </Link>
+          <Link className="navbar-brand" to="/categories">
+            Categories
           </Link>
           <Link to="/cart" className="btn btn-light">
             <i className="fas fa-shopping-cart text-info mr-1" />
