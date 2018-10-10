@@ -58,9 +58,10 @@ img {
   font-size: 20px;
   color: white;
   padding: auto;
-  background-color: #00609d;
+  background-color: #343A40;
 }
 
 .lobster-font {
   font-family: Lobster, Serif;
+  color: #343A40;
 }
