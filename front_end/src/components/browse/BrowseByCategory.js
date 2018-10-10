@@ -10,55 +10,55 @@ class BrowseByCategory extends Component {
           <hr className="shadow-sm" />
         </div>
         <div className="row justify-content-md-center">
-          <div className="m-3 col-sm-2 border category-tile shadow">
+          <div className="col-sm-2 border category-tile shadow">
             <Link to="/categories">
               <img src="category-imgs/Snacks_c.png" className="category-img" />
               <br />
-              <p class="category-text">Snacks</p>
+              <div class="category-text">Snacks</div>
             </Link>
           </div>
-          <div className="m-3 col-sm-2 border category-tile shadow">
+          <div className="col-sm-2 border category-tile shadow">
             <Link to="/categories">
               <img src="category-imgs/Drinks_c.png" className="category-img" />
               <br />
-              <p class="category-text">Drinks</p>
+              <div class="category-text">Drinks</div>
             </Link>
           </div>
-          <div className="m-3 col-sm-2 border category-tile shadow">
+          <div className="col-sm-2 border category-tile shadow">
             <Link to="/categories">
               <img src="category-imgs/Produce_c.png" className="category-img" />
               <br />
-              <p class="category-text">Produce</p>
+              <div class="category-text">Produce</div>
             </Link>
           </div>
         </div>
         <div className="row justify-content-md-center">
-          <div className="m-3 col-sm-2 border category-tile shadow">
+          <div className="col-sm-2 border category-tile shadow">
             <Link to="/categories">
               <img src="category-imgs/Bakery_c.png" className="category-img" />
               <br />
-              <p class="category-text">Bakery</p>
+              <div class="category-text">Bakery</div>
             </Link>
           </div>
-          <div className="m-3 col-sm-2 border category-tile shadow">
+          <div className="col-sm-2 border category-tile shadow">
             <Link to="/categories">
               <img src="category-imgs/Dairy_c.png" className="category-img" />
               <br />
-              <p class="category-text">Dairy</p>
+              <div class="category-text">Dairy</div>
             </Link>
           </div>
-          <div className="m-3 col-sm-2 border category-tile shadow">
+          <div className="col-sm-2 border category-tile shadow">
             <Link to="/categories">
               <img src="category-imgs/Meats_c.png" className="category-img" />
               <br />
-              <p class="category-text">Meats</p>
+              <div class="category-text">Meats</div>
             </Link>
           </div>
-          <div className="m-3 col-sm-2 border category-tile shadow">
+          <div className="col-sm-2 border category-tile shadow">
             <Link to="/categories">
               <img src="category-imgs/Alcohol_c.png" className="category-img" />
               <br />
-              <p class="category-text">Alcohol</p>
+              <div class="category-text">Alcohol</div>
             </Link>
           </div>
         </div>

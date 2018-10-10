@@ -39,6 +39,7 @@ img {
 
 .category-tile {
   padding: 50px 0px 0px 0px;
+  margin: 15px;
   height: 250px;
   text-align: center;
 }
@@ -55,7 +56,9 @@ img {
 .category-text {
   font-family: Lobster, Serif;
   font-size: 20px;
-  color: black;
+  color: white;
+  padding: auto;
+  background-color: #00609d;
 }
 
 .lobster-font {
