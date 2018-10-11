@@ -62,6 +62,9 @@ class Navbar extends Component {
           <Link className="navbar-brand" to="/">
             Home
           </Link>
+          <Link className="navbar-brand" to="/categories">
+            Categories
+          </Link>
           <Link to="/cart" className="btn btn-light">
             <i className="fas fa-shopping-cart text-info mr-1" />
           </Link>

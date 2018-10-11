@@ -36,3 +36,32 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.category-tile {
+  padding: 50px 0px 0px 0px;
+  margin: 15px;
+  height: 250px;
+  text-align: center;
+}
+
+.category-img {
+  display: block;
+  margin: auto;
+  height: 75%;
+  width: 75%;
+  max-width: 125px;
+  max-height: 125px;
+}
+
+.category-text {
+  font-family: Lobster, Serif;
+  font-size: 20px;
+  color: white;
+  padding: auto;
+  background-color: #343A40;
+}
+
+.lobster-font {
+  font-family: Lobster, Serif;
+  color: #343A40;
+}
