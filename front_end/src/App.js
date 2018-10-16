@@ -19,6 +19,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import BrowseByCategory from "./components/browse/BrowseByCategory";
+import ShoppingCart from "./components/cart/ShoppingCart";
 
 import "./App.css";
 
@@ -54,6 +55,7 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <div className="container">
               <Route exact path="/categories" component={BrowseByCategory} />
+              <Route exact path="/cart" component={ShoppingCart} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Switch>

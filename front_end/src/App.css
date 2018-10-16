@@ -58,10 +58,15 @@ img {
   font-size: 20px;
   color: white;
   padding: auto;
-  background-color: #343A40;
+  background-color: #343a40;
 }
 
 .lobster-font {
   font-family: Lobster, Serif;
-  color: #343A40;
+  color: #343a40;
+}
+
+/*Shopping Cart*/
+.product-in-cart {
+  text-align: center;
 }
