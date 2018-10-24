@@ -32,7 +32,7 @@ export default class ProductCard extends Component {
     return (
       <div className="product-card border m-0 p-0">
         <img
-          src="test-img.jpg" // IMG src of product
+          src="PRODUCT-IMG.jpg" // IMG src of product
           className="product-card-img img-fluid m-0"
           alt="Responsive image"
         />

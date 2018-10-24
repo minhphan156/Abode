@@ -1,71 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+/*
+  The main component of the 'Browse by Category' page.
+  NOTE: This page is NOT connected to the backend as the backend is still yet to be implemented.
+        To connect to the back end (Once it's been implemented), 
+        wrap <Links> around the contents of <div className="col-md-3"> elements.
+*/
 class BrowseByCategory extends Component {
   render() {
-    /*
-    return (
-      <div>
-        <div className="text-center">
-          <h1 className="lobster-font">Browse By Category</h1>
-          <hr className="shadow-sm" />
-        </div>
-        <div className="row justify-content-md-center">
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Snacks_c.png" className="category-img" alt="Snacks.img"/>
-              <br />
-              <div class="category-text">Snacks</div>
-            </Link>
-          </div>
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Drinks_c.png" className="category-img" alt="Drinks.img"/>
-              <br />
-              <div class="category-text">Drinks</div>
-            </Link>
-          </div>
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Produce_c.png" className="category-img" alt="Produce.img"/>
-              <br />
-              <div class="category-text">Produce</div>
-            </Link>
-          </div>
-        </div>
-        <div className="row justify-content-md-center">
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Bakery_c.png" className="category-img" alt="Bakery.img"/>
-              <br />
-              <div class="category-text">Bakery</div>
-            </Link>
-          </div>
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Dairy_c.png" className="category-img" alt="Dairy.img"/>
-              <br />
-              <div class="category-text">Dairy</div>
-            </Link>
-          </div>
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Meats_c.png" className="category-img" alt="Meats.img"/>
-              <br />
-              <div class="category-text">Meats</div>
-            </Link>
-          </div>
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Alcohol_c.png" className="category-img" alt="Alcohol.img"/>
-              <br />
-              <div class="category-text">Alcohol</div>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-    */
     return (
       <div>
         <h1 className="category-title text-center font-weight-bold">
