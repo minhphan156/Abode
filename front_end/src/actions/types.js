@@ -7,3 +7,8 @@ export const PROFILE_LOADING = "PROFILE_LOADING";
 export const PROFILE_NOT_FOUND = "PROFILE_NOT_FOUND";
 export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE"; // clear profile after logging out
 export const GET_PROFILES = "GET_PROFILES";
+
+// PRODUCT TYPES
+export const GET_PRODUCT = "GET_PRODUCT";
+export const PRODUCT_LOADING = "PRODUCT_LOADING";
+export const CLEAR_CURRENT_PRODUCT = "CLEAR_CURRENT_PRODUCT";
