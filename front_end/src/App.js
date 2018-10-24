@@ -20,6 +20,7 @@ import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import ProductDetail from "./components/product/ProductDetail";
 import BrowseByCategory from "./components/browse/BrowseByCategory";
+import NotFound from "./components/layout/NotFound";
 
 
 import "./App.css";
@@ -59,6 +60,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/product/:productname" component={ProductDetail} />
+              <Route exact path="/not-found/:attempt" component={NotFound} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
