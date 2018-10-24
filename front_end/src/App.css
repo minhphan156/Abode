@@ -37,31 +37,60 @@ img {
   color: #bbb !important;
 }
 
-.category-tile {
-  padding: 50px 0px 0px 0px;
-  margin: 15px;
-  height: 250px;
-  text-align: center;
+/* 'Browse By Category' page CSS */
+.category-card-img {
+  width: 100%;
+  height: 35vh;
+  background-color: white;
 }
 
-.category-img {
-  display: block;
-  margin: auto;
-  height: 75%;
-  width: 75%;
-  max-width: 125px;
-  max-height: 125px;
+.category-card-nameBox {
+  width: 100%;
+  height: auto;
+  background-color: rgb(90, 235, 90);
 }
 
-.category-text {
-  font-family: Lobster, Serif;
-  font-size: 20px;
+.category-card-name {
   color: white;
-  padding: auto;
-  background-color: #343A40;
+  font-family: Roboto;
+  font-size: 30px;
 }
 
-.lobster-font {
-  font-family: Lobster, Serif;
-  color: #343A40;
+.category-card-botBox {
+  width: 100%;
+  height: 25px;
+  background-color: white;
+}
+
+.category-title {
+  font-family: Roboto;
+}
+
+/* Product Card component CSS */
+.product-card-img {
+  width: 100%;
+  height: 30vh; /* Important for keeping all products cards the same height */
+}
+
+.product-card-name {
+  display: block;
+  width: 100%;
+  background-color: #f6f4f5;
+  font-family: Roboto;
+  font-size: 15px;
+}
+
+.product-card-btn {
+  width: 25%;
+  height: auto;
+  background-color: rgb(90, 235, 90); /* Color of the button */
+  color: white;
+}
+
+.product-card-price {
+  width: 75%;
+  background-color: #f6f4f5;
+  font-family: Roboto;
+  font-size: 15px;
+  font-style: italic;
 }
