@@ -11,7 +11,6 @@ class ProductDetail extends Component {
       this.props.getProductByName(this.props.match.params.productname);
       console.log(this.props.match.params.productname);
     }
-    console.log(this.props.product);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +53,7 @@ class ProductDetail extends Component {
             </div>
 
             <div className="product-price">
-              <span>${product.price / 100}</span>
+              <span>${(product.price / 100).toFixed(2)}</span>
               <a href="#" className="cart-btn">
                 Add to Cart
               </a>
