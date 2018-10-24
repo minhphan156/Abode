@@ -12,7 +12,7 @@ class BrowseByCategory extends Component {
     return (
       <div>
         <h1 className="category-title text-center font-weight-bold">
-          Browse by Category
+          Categories
         </h1>
         <hr className="shadow" />
         <div className="row justify-content-center">
