@@ -64,13 +64,14 @@ class ProductDetail extends Component {
           <div className = "row">
             <div className = "list-group">
               {product.otherproducts.map(relatedProduct => 
-                <a href={`/product/${relatedProduct.name}`} class="list-group-item">
+                <Link to={`/product/${relatedProduct.name}`} class="list-group-item">
                   <img  style={{ height: 50, width:50 }} src={relatedProduct.image}/>
-                    {`${relatedProduct.name} - $${relatedProduct.price/100}`}</a>
+                    {`${relatedProduct.name} - $${relatedProduct.price/100}`}
+                </Link>
               )}
             </div>
           </div>
-          
+
             </div>
           </div>
         </main>

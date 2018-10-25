@@ -71,7 +71,7 @@ router.get("/:productname", (req, res) => {
       .nin('_id',product._id)
       .limit(3)
       .then(related => {
-        product.relatedarray = related;
+        product.otherproducts = related;
         res.json(product);
       });
     })
