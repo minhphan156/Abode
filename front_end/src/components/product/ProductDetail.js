@@ -15,7 +15,7 @@ class ProductDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.product.product === null && this.props.product.loading) {
-      this.props.history.push("/not-found");
+      this.props.history.push(`/not-found/${this.props.match.params.productname}`);
     }
   }
 
