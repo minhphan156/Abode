@@ -35,6 +35,9 @@ const productSchema = new Schema({
   related: {
     type: Number,
     required: true
+  },
+  otherproducts:{
+    type: Array
   }
 });
 

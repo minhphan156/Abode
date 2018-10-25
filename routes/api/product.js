@@ -18,7 +18,13 @@ router.get("/:productname", (req, res) => {
         errors.noproduct = "There is no product for this name";
         return res.status(404).json(errors);
       }
-      res.json(product);
+      Product.find({category: product.category})
+      
+      .limit(3)
+      .then(related => {
+        product.relatedarray = related;
+        res.json(product);
+      });
     })
     .catch(err => res.status(404).json(err));
 });
