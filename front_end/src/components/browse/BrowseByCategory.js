@@ -1,7 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { submitCategory } from "../../actions/categoryActions";
+import { connect } from "react-redux";
 
 class BrowseByCategory extends Component {
+  constructor() {
+    super();
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(e) {
+    //NOTE: we assume user will search for name
+    // 1-submit query as object with to submitQuery at queryActions.js
+    const newCategory = {
+      category: e
+    };
+    this.props.submitCategory(newCategory);
+  }
+
   render() {
     return (
       <div>
@@ -11,54 +27,83 @@ class BrowseByCategory extends Component {
         </div>
         <div className="row justify-content-md-center">
           <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Snacks_c.png" className="category-img" alt="Snacks.img"/>
+            <Link to="/Snack" onClick={() => this.onClick("snack")}>
+              <img
+                src="category-imgs/Snacks_c.png"
+                className="category-img"
+                alt="Snacks.img"
+              />
               <br />
-              <div class="category-text">Snacks</div>
+              <button className="category-text" type="button">
+                Snack
+              </button>
             </Link>
           </div>
           <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Drinks_c.png" className="category-img" alt="Drinks.img"/>
+            <Link to="/Drink" onClick={() => this.onClick("drink")}>
+              <img
+                src="category-imgs/Drinks_c.png"
+                className="category-img"
+                alt="Drinks.img"
+              />
               <br />
-              <div class="category-text">Drinks</div>
+              <button className="category-text" type="button">
+                Drink
+              </button>
             </Link>
           </div>
           <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Produce_c.png" className="category-img" alt="Produce.img"/>
+            <Link to="/Alcohol" onClick={() => this.onClick("alcohol")}>
+              <img
+                src="category-imgs/Alcohol_c.png"
+                className="category-img"
+                alt="Produce.img"
+              />
               <br />
-              <div class="category-text">Produce</div>
+              <button className="category-text" type="button">
+                Alcohol
+              </button>
             </Link>
           </div>
         </div>
         <div className="row justify-content-md-center">
           <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Bakery_c.png" className="category-img" alt="Bakery.img"/>
+            <Link to="/Bakery" onClick={() => this.onClick("bakery")}>
+              <img
+                src="category-imgs/Bakery_c.png"
+                className="category-img"
+                alt="Bakery.img"
+              />
               <br />
-              <div class="category-text">Bakery</div>
+              <button className="category-text" type="button">
+                Bakery
+              </button>
             </Link>
           </div>
           <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Dairy_c.png" className="category-img" alt="Dairy.img"/>
+            <Link to="/Dairy" onClick={() => this.onClick("dairy")}>
+              <img
+                src="category-imgs/Dairy_c.png"
+                className="category-img"
+                alt="Dairy.img"
+              />
               <br />
-              <div class="category-text">Dairy</div>
+              <button className="category-text" type="button">
+                Diary
+              </button>
             </Link>
           </div>
           <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Meats_c.png" className="category-img" alt="Meats.img"/>
+            <Link to="/Meat" onClick={() => this.onClick("meat")}>
+              <img
+                src="category-imgs/Meats_c.png"
+                className="category-img"
+                alt="Meats.img"
+              />
               <br />
-              <div class="category-text">Meats</div>
-            </Link>
-          </div>
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/categories">
-              <img src="category-imgs/Alcohol_c.png" className="category-img" alt="Alcohol.img"/>
-              <br />
-              <div class="category-text">Alcohol</div>
+              <button className="category-text" type="button">
+                Meat
+              </button>
             </Link>
           </div>
         </div>
@@ -67,4 +112,11 @@ class BrowseByCategory extends Component {
   }
 }
 
-export default BrowseByCategory;
+const mapStateToProps = state => ({});
+// this.props.query = { productQuery : data}
+// if this.props.query is empty we will not show the Search page
+
+export default connect(
+  mapStateToProps,
+  { submitCategory }
+)(BrowseByCategory);

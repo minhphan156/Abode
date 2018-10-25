@@ -15,13 +15,14 @@ import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Search from "./components/layout/Search";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
-import ProductDetail from "./components/product/ProductDetail";
 import BrowseByCategory from "./components/browse/BrowseByCategory";
+import categoryPage from "./components/browse/categoryPage";
+import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
-
 
 import "./App.css";
 
@@ -55,11 +56,24 @@ class App extends Component {
           <div className="App">
             <NavBar />
             <Route exact path="/" component={Landing} />
+            <Route exact path="/Search" component={Search} />
+
+            <Route exact path="/Snack" component={categoryPage} />
+            <Route exact path="/Drink" component={categoryPage} />
+            <Route exact path="/Alcohol" component={categoryPage} />
+            <Route exact path="/Dairy" component={categoryPage} />
+            <Route exact path="/Meat" component={categoryPage} />
+            <Route exact path="/Bakery" component={categoryPage} />
+
             <div className="container">
               <Route exact path="/categories" component={BrowseByCategory} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/product/:productname" component={ProductDetail} />
+              <Route
+                exact
+                path="/product/:productname"
+                component={ProductDetail}
+              />
               <Route exact path="/not-found/:attempt" component={NotFound} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />

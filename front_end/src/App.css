@@ -2,6 +2,10 @@ img {
   width: 100%;
 }
 
+img.shop-logo {
+  width: 10%;
+}
+
 .landing {
   position: relative;
   background-size: cover;
@@ -9,6 +13,9 @@ img {
   height: 100vh;
   margin-top: -24px;
   margin-bottom: -50px;
+  /* The image used */
+  background-image: url("https://media.giphy.com/media/1gdqAIlRGdZOyx21sb/giphy.gif");
+  background-repeat: no-repeat;
 }
 
 .landing-inner {
@@ -45,19 +52,19 @@ img {
   display: flex;
   font-family: "Roboto", sans-serif;
 }
- /* Columns */
- /* Left Column */
+/* Columns */
+/* Left Column */
 .left-column img {
   padding-right: 25%;
   padding-left: 25%;
-  
+
   left: 0;
   top: 0;
   opacity: 1;
   transition: all 0.3s ease;
 }
- /* Right Column */
- /* Product Description */
+/* Right Column */
+/* Product Description */
 .product-description {
   border-bottom: 1px solid #e1e8ee;
   margin-bottom: 20px;
@@ -81,18 +88,18 @@ img {
   color: #86939e;
   line-height: 24px;
 }
- /* Product Price */
+/* Product Price */
 .product-price {
   display: flex;
   align-items: center;
 }
- .product-price span {
+.product-price span {
   font-size: 26px;
   font-weight: 300;
   color: #43474d;
   margin-right: 20px;
 }
- .cart-btn {
+.cart-btn {
   display: inline-block;
   background-color: #7dc855;
   border-radius: 6px;
@@ -105,29 +112,29 @@ img {
 .cart-btn:hover {
   background-color: #64af3d;
 }
- /* Responsive */
+/* Responsive */
 @media (max-width: 940px) {
   .container {
     flex-direction: column;
     margin-top: 60px;
   }
-   .left-column,
+  .left-column,
   .right-column {
     width: 100%;
   }
-   .left-column img {
+  .left-column img {
     width: 300px;
     right: 0;
     top: -65px;
     left: initial;
   }
 }
- @media (max-width: 535px) {
+@media (max-width: 535px) {
   .left-column img {
     width: 220px;
     top: -85px;
   }
-} 
+}
 
 .category-tile {
   padding: 50px 0px 0px 0px;
@@ -150,10 +157,10 @@ img {
   font-size: 20px;
   color: white;
   padding: auto;
-  background-color: #343A40;
+  background-color: #343a40;
 }
 
 .lobster-font {
   font-family: Lobster, Serif;
-  color: #343A40;
+  color: #343a40;
 }
