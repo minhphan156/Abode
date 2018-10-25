@@ -100,8 +100,3 @@ export default connect(
   mapStateToProps,
   { loginUser }
 )(Login);
-
-/**
- * HOW LOGIN WORK:
- *
- */

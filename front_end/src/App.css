@@ -2,6 +2,10 @@ img {
   width: 100%;
 }
 
+img.shop-logo {
+  width: 10%;
+}
+
 .landing {
   position: relative;
   background-size: cover;
@@ -9,6 +13,9 @@ img {
   height: 100vh;
   margin-top: -24px;
   margin-bottom: -50px;
+  /* The gif used */
+  background-image: url("https://media.giphy.com/media/1gdqAIlRGdZOyx21sb/giphy.gif");
+  background-repeat: no-repeat;
 }
 
 .landing-inner {
@@ -120,19 +127,6 @@ img {
   font-weight: 300;
   color: #43474d;
   margin-right: 20px;
-}
-.cart-btn {
-  display: inline-block;
-  background-color: #7dc855;
-  border-radius: 6px;
-  font-size: 16px;
-  color: #ffffff;
-  text-decoration: none;
-  padding: 12px 30px;
-  transition: all 0.5s;
-}
-.cart-btn:hover {
-  background-color: #64af3d;
 }
 /* Responsive */
 @media (max-width: 940px) {

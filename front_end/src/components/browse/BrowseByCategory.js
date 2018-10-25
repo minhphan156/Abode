@@ -1,13 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { submitCategory } from "../../actions/categoryActions";
+import { connect } from "react-redux";
 
-/*
-  The main component of the 'Browse by Category' page.
-  NOTE: This page is NOT connected to the backend as the backend is still yet to be implemented.
-        To connect to the back end (Once it's been implemented), 
-        wrap <Links> around the contents of <div className="col-md-3"> elements.
-*/
 class BrowseByCategory extends Component {
+  constructor() {
+    super();
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(e) {
+    //NOTE: we assume user will search for name
+    // submit query as object with to submitQuery at queryActions.js
+    const newCategory = {
+      category: e
+    };
+    this.props.submitCategory(newCategory);
+  }
+
   render() {
     return (
       <div>
@@ -17,7 +27,7 @@ class BrowseByCategory extends Component {
         <hr className="shadow" />
         <div className="row justify-content-center">
           <div className="col-md-3 pb-5">
-            <Link to="/categories">
+            <Link to="/Snack" onClick={() => this.onClick("snack")}>
               <div className="border shadow m-0 p-0">
                 <img
                   src="category-imgs/snacks.png"
@@ -34,7 +44,7 @@ class BrowseByCategory extends Component {
             </Link>
           </div>
           <div className="col-md-3 pb-5">
-            <Link to="/categories">
+            <Link to="/Drink" onClick={() => this.onClick("drink")}>
               <div className="border shadow m-0 p-0">
                 <img
                   src="category-imgs/drinks.png"
@@ -51,7 +61,7 @@ class BrowseByCategory extends Component {
             </Link>
           </div>
           <div className="col-md-3 pb-5">
-            <Link to="/categories">
+            <Link to="/Fruit" onClick={() => this.onClick("fruit")}>
               <div className="border shadow m-0 p-0">
                 <img
                   src="category-imgs/produce.jpg"
@@ -60,7 +70,7 @@ class BrowseByCategory extends Component {
                 />
                 <div className="category-card-nameBox text-center m-0 p-0">
                   <span className="category-card-name align-middle m-0">
-                    Produce
+                    Fruit
                   </span>
                 </div>
                 <div className="category-card-botBox" />
@@ -70,7 +80,24 @@ class BrowseByCategory extends Component {
         </div>
         <div className="row justify-content-center">
           <div className="col-md-3 pb-5">
-            <Link to="/categories">
+            <Link to="/Bakery" onClick={() => this.onClick("bakery")}>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/bakery.jpg"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Bakery
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
+            </Link>
+          </div>
+          <div className="col-md-3 pb-5">
+            <Link to="/Dairy" onClick={() => this.onClick("dairy")}>
               <div className="border shadow m-0 p-0">
                 <img
                   src="category-imgs/dairy.jpg"
@@ -87,7 +114,7 @@ class BrowseByCategory extends Component {
             </Link>
           </div>
           <div className="col-md-3 pb-5">
-            <Link to="/categories">
+            <Link to="/Meat" onClick={() => this.onClick("meat")}>
               <div className="border shadow m-0 p-0">
                 <img
                   src="category-imgs/meats.jpg"
@@ -104,7 +131,7 @@ class BrowseByCategory extends Component {
             </Link>
           </div>
           <div className="col-md-3 pb-5">
-            <Link to="/categories">
+            <Link to="/Alcohol" onClick={() => this.onClick("alcohol")}>
               <div className="border shadow m-0 p-0">
                 <img
                   src="category-imgs/alcohol.jpg"
@@ -126,4 +153,9 @@ class BrowseByCategory extends Component {
   }
 }
 
-export default BrowseByCategory;
+const mapStateToProps = state => ({});
+
+export default connect(
+  mapStateToProps,
+  { submitCategory }
+)(BrowseByCategory);
