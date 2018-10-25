@@ -39,7 +39,7 @@ export default class ProductCard extends Component {
         </Link>
         <div className="d-flex text-center">
           <span className="product-card-price align-middle border-top m-0 p-2">
-            ${this.props.productPrice / 100}
+            ${(this.props.productPrice / 100).toFixed(2)}
           </span>
           <button
             type="button"
