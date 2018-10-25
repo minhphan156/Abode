@@ -10,8 +10,6 @@ class BrowseByCategory extends Component {
   }
 
   onClick(e) {
-    // NOTE: we assume user will search for name
-    // submit query as object with to submitQuery at queryActions.js
     const newCategory = {
       category: e
     };

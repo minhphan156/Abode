@@ -29,7 +29,7 @@ export default class ProductCard extends Component {
       <div key={this.props.productKey} className="product-card border m-0 p-0">
         <Link to={`/product/${this.props.productName}`}>
           <img
-            src={this.props.productImage} // IMG src of product
+            src={this.props.productImage}
             className="product-card-img img-fluid m-0"
             alt="Responsive image"
           />
