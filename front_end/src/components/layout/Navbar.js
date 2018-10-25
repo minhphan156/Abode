@@ -23,7 +23,7 @@ class Navbar extends Component {
 
   onSearchClick() {
     //NOTE: we assume user will search for name
-    // 1-submit query as object with to submitQuery at queryActions.js
+    // submit query as object with to submitQuery at queryActions.js
 
     const newQuery = {
       name: this.state.query
