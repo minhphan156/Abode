@@ -60,6 +60,18 @@ class ProductDetail extends Component {
             </div>
           </div>
               </div>
+          
+          <div className = "row">
+            <div className = "list-group">
+              {product.otherproducts.map(relatedProduct => 
+                <Link to={`/product/${relatedProduct.name}`} class="list-group-item">
+                  <img  style={{ height: 50, width:50 }} src={relatedProduct.image}/>
+                    {`${relatedProduct.name} - $${(relatedProduct.price/100).toFixed(2)}`}
+                </Link>
+              )}
+            </div>
+          </div>
+
             </div>
           </div>
         </main>
