@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom"; // to route to other pages (1)
+import { withRouter } from "react-router-dom"; // to route to other pages
 import { connect } from "react-redux"; // use this to connect react component to redux
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
@@ -48,7 +48,7 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    this.props.registerUser(newUser, this.props.history); // second para to route to other page (3)
+    this.props.registerUser(newUser, this.props.history); // second para to route to other page
   }
   //NOTE: component dispatch -> action give new data to -> reducer update new state and pass as props to -> component
   render() {
@@ -124,4 +124,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { registerUser }
-)(withRouter(Register)); // withRouter to route to other page (2)
+)(withRouter(Register)); // withRouter to route to other page

@@ -20,7 +20,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import BrowseByCategory from "./components/browse/BrowseByCategory";
-import CategoryPage from "./components/browse/CategoryPage";
+import CategoryShowProducts from "./components/browse/CategoryShowProducts";
 import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
 
@@ -58,12 +58,12 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/Search" component={Search} />
 
-            <Route exact path="/Snack" component={CategoryPage} />
-            <Route exact path="/Drink" component={CategoryPage} />
-            <Route exact path="/Alcohol" component={CategoryPage} />
-            <Route exact path="/Dairy" component={CategoryPage} />
-            <Route exact path="/Meat" component={CategoryPage} />
-            <Route exact path="/Bakery" component={CategoryPage} />
+            <Route exact path="/Snack" component={CategoryShowProducts} />
+            <Route exact path="/Drink" component={CategoryShowProducts} />
+            <Route exact path="/Alcohol" component={CategoryShowProducts} />
+            <Route exact path="/Dairy" component={CategoryShowProducts} />
+            <Route exact path="/Meat" component={CategoryShowProducts} />
+            <Route exact path="/Bakery" component={CategoryShowProducts} />
 
             <div className="container">
               <Route exact path="/categories" component={BrowseByCategory} />

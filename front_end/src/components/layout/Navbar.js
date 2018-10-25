@@ -44,9 +44,6 @@ class Navbar extends Component {
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">
-        <Link to="/cart" className="btn btn-light">
-          <i className="fas fa-shopping-cart text-info mr-1" />
-        </Link>
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">
             {user.name}
@@ -58,12 +55,6 @@ class Navbar extends Component {
             onClick={this.onLogoutClick.bind(this)}
             className="nav-link"
           >
-            <img
-              className="rounded-circle"
-              src="https://openclipart.org/download/247319/abstract-user-flat-3.svg"
-              alt={"user"}
-              style={{ width: "25px", marginRight: "5px" }}
-            />
             Logout
           </a>
         </li>
@@ -72,9 +63,6 @@ class Navbar extends Component {
 
     const guestLinks = (
       <ul className="navbar-nav ml-auto">
-        <Link to="/cart" className="btn btn-light">
-          <i className="fas fa-shopping-cart text-info mr-1" />
-        </Link>
         <li className="nav-item">
           <Link className="nav-link" to="/register">
             Sign Up
@@ -122,6 +110,9 @@ class Navbar extends Component {
                 </div>
               </div>
             </form>
+            <Link to="/cart" className="btn btn-light">
+              <i className="fas fa-shopping-cart text-info mr-1" />
+            </Link>
             {isAuthenticated ? authLinks : guestLinks}
           </div>
         </nav>
@@ -139,7 +130,6 @@ const mapStateToProps = state => ({
   auth: state.auth,
   query: state.query
 });
-// this.props.query = { productQuery : data}
 // if this.props.query is empty we will not show the Search page
 
 export default connect(
