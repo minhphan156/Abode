@@ -99,19 +99,7 @@ img.shop-logo {
   color: #43474d;
   margin-right: 20px;
 }
-.cart-btn {
-  display: inline-block;
-  background-color: #7dc855;
-  border-radius: 6px;
-  font-size: 16px;
-  color: #ffffff;
-  text-decoration: none;
-  padding: 12px 30px;
-  transition: all 0.5s;
-}
-.cart-btn:hover {
-  background-color: #64af3d;
-}
+
 /* Responsive */
 @media (max-width: 940px) {
   .container {
