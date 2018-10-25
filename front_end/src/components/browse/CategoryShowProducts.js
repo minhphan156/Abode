@@ -9,7 +9,7 @@ class CategoryShowProducts extends Component {
     if (category != null) {
       const itemsList = category.map(item => {
         return (
-          <div className="col-md-2" key={item._id}>
+          <div className="col-md-3 pb-3" key={item._id}>
             <ProductCard
               productKey={item._id}
               productImage={item.image}

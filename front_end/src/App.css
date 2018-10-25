@@ -44,6 +44,35 @@ img.shop-logo {
   color: #bbb !important;
 }
 
+/* 'Browse By Category' page CSS */
+.category-card-img {
+  width: 100%;
+  height: 35vh;
+  background-color: white;
+}
+
+.category-card-nameBox {
+  width: 100%;
+  height: auto;
+  background-color: rgb(90, 235, 90);
+}
+
+.category-card-name {
+  color: white;
+  font-family: Roboto;
+  font-size: 30px;
+}
+
+.category-card-botBox {
+  width: 100%;
+  height: 25px;
+  background-color: white;
+}
+
+.category-title {
+  font-family: Roboto;
+}
+
 /* Basic Styling */
 .product-container {
   max-width: 1200px;
@@ -99,7 +128,6 @@ img.shop-logo {
   color: #43474d;
   margin-right: 20px;
 }
-
 /* Responsive */
 @media (max-width: 940px) {
   .container {
@@ -124,30 +152,34 @@ img.shop-logo {
   }
 }
 
-.category-tile {
-  padding: 50px 0px 0px 0px;
-  margin: 15px;
-  height: 250px;
-  text-align: center;
+/* Product Card component CSS */
+.product-card-img {
+  width: 100%;
+  height: 30vh;
 }
 
-.category-img {
+.product-card-name {
   display: block;
-  margin: auto;
-  height: 75%;
-  width: 75%;
-  max-width: 125px;
-  max-height: 125px;
+  width: 100%;
+  background-color: #f6f4f5;
+  font-family: Roboto;
+  font-size: 15px;
 }
 
-.category-text {
-  font-family: Lobster, Serif;
-  font-size: 20px;
+.product-card-btn {
+  width: 25%;
+  height: auto;
+  background-color: rgb(90, 235, 90);
   color: white;
-  padding: auto;
-  background-color: #343a40;
 }
 
+.product-card-price {
+  width: 75%;
+  background-color: #f6f4f5;
+  font-family: Roboto;
+  font-size: 15px;
+  font-style: italic;
+}
 .lobster-font {
   font-family: Lobster, Serif;
   color: #343a40;

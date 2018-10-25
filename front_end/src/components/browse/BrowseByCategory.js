@@ -10,8 +10,6 @@ class BrowseByCategory extends Component {
   }
 
   onClick(e) {
-    //NOTE: we assume user will search for name
-    // submit query as object with to submitQuery at queryActions.js
     const newCategory = {
       category: e
     };
@@ -21,89 +19,130 @@ class BrowseByCategory extends Component {
   render() {
     return (
       <div>
-        <div className="text-center">
-          <h1 className="lobster-font">Browse By Category</h1>
-          <hr className="shadow-sm" />
-        </div>
-        <div className="row justify-content-md-center">
-          <div className="col-sm-2 border category-tile shadow">
+        <h1 className="category-title text-center font-weight-bold">
+          Categories
+        </h1>
+        <hr className="shadow" />
+        <div className="row justify-content-center">
+          <div className="col-md-3 pb-5">
             <Link to="/Snack" onClick={() => this.onClick("snack")}>
-              <img
-                src="category-imgs/Snacks_c.png"
-                className="category-img"
-                alt="Snacks.img"
-              />
-              <br />
-              <button className="category-text" type="button">
-                Snack
-              </button>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/snacks.png"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Snacks
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
             </Link>
           </div>
-          <div className="col-sm-2 border category-tile shadow">
+          <div className="col-md-3 pb-5">
             <Link to="/Drink" onClick={() => this.onClick("drink")}>
-              <img
-                src="category-imgs/Drinks_c.png"
-                className="category-img"
-                alt="Drinks.img"
-              />
-              <br />
-              <button className="category-text" type="button">
-                Drink
-              </button>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/drinks.png"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Drinks
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
             </Link>
           </div>
-          <div className="col-sm-2 border category-tile shadow">
-            <Link to="/Alcohol" onClick={() => this.onClick("alcohol")}>
-              <img
-                src="category-imgs/Alcohol_c.png"
-                className="category-img"
-                alt="Produce.img"
-              />
-              <br />
-              <button className="category-text" type="button">
-                Alcohol
-              </button>
+          <div className="col-md-3 pb-5">
+            <Link to="/Fruit" onClick={() => this.onClick("fruit")}>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/produce.jpg"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Fruit
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
             </Link>
           </div>
         </div>
-        <div className="row justify-content-md-center">
-          <div className="col-sm-2 border category-tile shadow">
+        <div className="row justify-content-center">
+          <div className="col-md-3 pb-5">
             <Link to="/Bakery" onClick={() => this.onClick("bakery")}>
-              <img
-                src="category-imgs/Bakery_c.png"
-                className="category-img"
-                alt="Bakery.img"
-              />
-              <br />
-              <button className="category-text" type="button">
-                Bakery
-              </button>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/bakery.jpg"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Bakery
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
             </Link>
           </div>
-          <div className="col-sm-2 border category-tile shadow">
+          <div className="col-md-3 pb-5">
             <Link to="/Dairy" onClick={() => this.onClick("dairy")}>
-              <img
-                src="category-imgs/Dairy_c.png"
-                className="category-img"
-                alt="Dairy.img"
-              />
-              <br />
-              <button className="category-text" type="button">
-                Diary
-              </button>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/dairy.jpg"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Dairy
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
             </Link>
           </div>
-          <div className="col-sm-2 border category-tile shadow">
+          <div className="col-md-3 pb-5">
             <Link to="/Meat" onClick={() => this.onClick("meat")}>
-              <img
-                src="category-imgs/Meats_c.png"
-                className="category-img"
-                alt="Meats.img"
-              />
-              <br />
-              <button className="category-text" type="button">
-                Meat
-              </button>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/meats.jpg"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Meats
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
+            </Link>
+          </div>
+          <div className="col-md-3 pb-5">
+            <Link to="/Alcohol" onClick={() => this.onClick("alcohol")}>
+              <div className="border shadow m-0 p-0">
+                <img
+                  src="category-imgs/alcohol.jpg"
+                  alt="Test Image"
+                  className="category-card-img img-fluid m-0 p-0"
+                />
+                <div className="category-card-nameBox text-center m-0 p-0">
+                  <span className="category-card-name align-middle m-0">
+                    Alcohol
+                  </span>
+                </div>
+                <div className="category-card-botBox" />
+              </div>
             </Link>
           </div>
         </div>

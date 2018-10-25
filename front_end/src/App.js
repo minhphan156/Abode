@@ -60,6 +60,7 @@ class App extends Component {
 
             <Route exact path="/Snack" component={CategoryShowProducts} />
             <Route exact path="/Drink" component={CategoryShowProducts} />
+            <Route exact path="/Fruit" component={CategoryShowProducts} />
             <Route exact path="/Alcohol" component={CategoryShowProducts} />
             <Route exact path="/Dairy" component={CategoryShowProducts} />
             <Route exact path="/Meat" component={CategoryShowProducts} />
