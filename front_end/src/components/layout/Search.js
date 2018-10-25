@@ -34,7 +34,6 @@ class Search extends Component {
 const mapStateToProps = state => ({
   query: state.query
 });
-// this.props.query = { productQuery : data}
 // if this.props.query is empty we will not show the Search page
 
 export default connect(

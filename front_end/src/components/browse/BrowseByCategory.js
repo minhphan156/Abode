@@ -113,8 +113,6 @@ class BrowseByCategory extends Component {
 }
 
 const mapStateToProps = state => ({});
-// this.props.query = { productQuery : data}
-// if this.props.query is empty we will not show the Search page
 
 export default connect(
   mapStateToProps,

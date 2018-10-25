@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProductCard from "../product-tiles/ProductCard";
 
-class categoryPage extends Component {
+class CategoryPage extends Component {
   render() {
     const category = this.props.category.productCategory;
 
@@ -34,10 +34,9 @@ class categoryPage extends Component {
 const mapStateToProps = state => ({
   category: state.category
 });
-// this.props.category = { productcategory : data}
-// if this.props.category is empty we will not show the categoryPage page
+// if this.props.category is empty we will not show the CategoryPage page
 
 export default connect(
   mapStateToProps,
   {}
-)(categoryPage);
+)(CategoryPage);

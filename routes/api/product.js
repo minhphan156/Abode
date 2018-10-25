@@ -8,13 +8,13 @@ const Product = require("../../models/Product");
 // @route GET api/product/search
 // @desc Register user
 // @access Public
-// router.get("/search/:description", (req, res) => {
+// receive req to query from submitQuery at /actions/queryActions.js
+//NOTE:
+// search/?string <-we use-> req.query
+// search/:string <-we use-> req.params
 router.get("/search/", (req, res) => {
-  // 3-receive req to query from submitQuery at /actions/queryActions.js
-  //NOTE:
-  // search/?string <-we use-> req.query
-  // search/:string <-we use-> req.params
-  const regex = new RegExp(req.query.name, "i"); // find part of string which include lower and upper case
+  // find part of string which include lower and upper case
+  const regex = new RegExp(req.query.name, "i");
 
   // find return [ ]
   Product.find({ name: regex })
@@ -35,11 +35,12 @@ router.get("/search/", (req, res) => {
 // @desc Register user
 // @access Public
 router.get("/category/", (req, res) => {
-  // 3-receive req to query from submitcategory at /actions/categoryActions.js
+  // receive req to query from submitcategory at /actions/categoryActions.js
   //NOTE:
   // category/?string <-we use-> req.query
   // category/:string <-we use-> req.params
   const newQuery = new RegExp(req.query.category, "i"); // find part of string which include lower and upper case
+
   // find return [ ]
   Product.find({ category: newQuery })
     .then(product => {

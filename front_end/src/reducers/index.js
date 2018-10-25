@@ -6,9 +6,6 @@ import profileReducer from "./profileReducer";
 import categoryReducer from "./categoryReducer";
 import productReducer from "./productReducer";
 
-// authReducer = { new initialState }
-// query = { productQuery : data}
-
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
