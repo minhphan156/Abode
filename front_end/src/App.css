@@ -47,7 +47,8 @@ img.shop-logo {
 /* 'Browse By Category' page CSS */
 .category-card-img {
   width: 100%;
-  height: 35vh;
+  height: 25vh;
+  object-fit: contain;
   background-color: white;
 }
 
@@ -155,7 +156,8 @@ img.shop-logo {
 /* Product Card component CSS */
 .product-card-img {
   width: 100%;
-  height: 30vh;
+  height: 25vh;
+  object-fit: contain;
 }
 
 .product-card-name {
