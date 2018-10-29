@@ -5,7 +5,6 @@ class ShoppingCart extends Component {
   render() {
     return (
       //empty cart, redirect to home page
-      //add items to cart, redirect to browse by category page
       //checkout, redirect to checkout page
       <div>
         <div className="text-center">
@@ -30,10 +29,6 @@ class ShoppingCart extends Component {
           <Link to="/" className="btn btn-light">
             <i className="fas fa-cart-arrow-down text-info mr-1" />
             Empty Cart
-          </Link>
-          <Link to="/categories" className="btn btn-light">
-            <i className="fas fa-cart-plus text-info mr-1" />
-            Continue Shopping and Add To Cart
           </Link>
           <Link to="/checkout" className="btn btn-light">
             <i className="fas fa-credit-card text-info mr-1" />
