@@ -15,11 +15,18 @@ import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Search from "./components/layout/Search";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import BrowseByCategory from "./components/browse/BrowseByCategory";
+<<<<<<< HEAD
 import ShoppingCart from "./components/cart/ShoppingCart";
+=======
+import CategoryShowProducts from "./components/browse/CategoryShowProducts";
+import ProductDetail from "./components/product/ProductDetail";
+import NotFound from "./components/layout/NotFound";
+>>>>>>> 60ebcbb54903f4f733d953418a02b00e95cc36ad
 
 import "./App.css";
 
@@ -53,11 +60,27 @@ class App extends Component {
           <div className="App">
             <NavBar />
             <Route exact path="/" component={Landing} />
+            <Route exact path="/Search" component={Search} />
+
+            <Route exact path="/Snack" component={CategoryShowProducts} />
+            <Route exact path="/Drink" component={CategoryShowProducts} />
+            <Route exact path="/Fruit" component={CategoryShowProducts} />
+            <Route exact path="/Alcohol" component={CategoryShowProducts} />
+            <Route exact path="/Dairy" component={CategoryShowProducts} />
+            <Route exact path="/Meat" component={CategoryShowProducts} />
+            <Route exact path="/Bakery" component={CategoryShowProducts} />
+
             <div className="container">
               <Route exact path="/categories" component={BrowseByCategory} />
               <Route exact path="/cart" component={ShoppingCart} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route
+                exact
+                path="/product/:productname"
+                component={ProductDetail}
+              />
+              <Route exact path="/not-found/:attempt" component={NotFound} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
