@@ -20,13 +20,10 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import BrowseByCategory from "./components/browse/BrowseByCategory";
-<<<<<<< HEAD
 import ShoppingCart from "./components/cart/ShoppingCart";
-=======
 import CategoryShowProducts from "./components/browse/CategoryShowProducts";
 import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
->>>>>>> 60ebcbb54903f4f733d953418a02b00e95cc36ad
 
 import "./App.css";
 

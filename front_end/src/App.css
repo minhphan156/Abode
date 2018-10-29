@@ -173,11 +173,8 @@ img.shop-logo {
   height: auto;
   background-color: rgb(90, 235, 90);
   color: white;
-<<<<<<< HEAD
   padding: auto;
   background-color: #343a40;
-=======
->>>>>>> 60ebcbb54903f4f733d953418a02b00e95cc36ad
 }
 
 .product-card-price {
@@ -190,12 +187,9 @@ img.shop-logo {
 .lobster-font {
   font-family: Lobster, Serif;
   color: #343a40;
-<<<<<<< HEAD
 }
 
 /*Shopping Cart*/
 .product-in-cart {
   text-align: center;
-=======
->>>>>>> 60ebcbb54903f4f733d953418a02b00e95cc36ad
 }
