@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { addItem } from "../../actions/cartActions";
+import { connect } from "react-redux";
 
 /*
 Product Card component that shows a product's image, name, and price as well as an 'add to cart' button.
@@ -23,7 +25,18 @@ EXAMPLE:
     
 Please remove HOW TO USE, and EXAMPLE when finalizing app.
 */
-export default class ProductCard extends Component {
+class ProductCard extends Component {
+  constructor() {
+    super();
+    this.state = {
+      productDescription: ""
+    };
+
+    this.onCartClick = this.onCartClick.bind(this);
+  }
+
+  onCartClick() {}
+
   render() {
     return (
       <div key={this.props.productKey} className="product-card border m-0 p-0">
@@ -52,3 +65,12 @@ export default class ProductCard extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  cart: state.cart
+});
+
+export default connect(
+  mapStateToProps,
+  { addItem }
+)(ProductCard);
