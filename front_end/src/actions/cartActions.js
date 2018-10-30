@@ -18,4 +18,4 @@ export const addItem = productDescription => dispatch => {
 };
 
 // Remove Item from Cart
-export const removeItem = () => dispatch => {};
+// export const removeItem = () => dispatch => {};

@@ -29,13 +29,20 @@ class ProductCard extends Component {
   constructor() {
     super();
     this.state = {
-      productDescription: ""
+      name: ""
     };
-
     this.onCartClick = this.onCartClick.bind(this);
   }
 
-  onCartClick() {}
+  onCartClick(e) {
+    const product = {
+      name: e
+    };
+    this.setState({ name: e });
+
+    this.props.addItem(product);
+    console.log(product);
+  }
 
   render() {
     return (
@@ -55,6 +62,7 @@ class ProductCard extends Component {
             ${(this.props.productPrice / 100).toFixed(2)}
           </span>
           <button
+            onClick={() => this.onCartClick(this.props.productName)}
             type="button"
             className="product-card-btn btn rounded-0 m-0 p-2"
           >
@@ -66,9 +74,7 @@ class ProductCard extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  cart: state.cart
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,

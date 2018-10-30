@@ -1,7 +1,7 @@
 import { ADD_ITEM, REMOVE_ITEM } from "../actions/types";
 
 const initialState = {
-  shoppingCart: [] //initial shopping cart is empty
+  shoppingCart: null //initial shopping cart is empty
 };
 
 export default function(state = initialState, action) {
@@ -9,8 +9,7 @@ export default function(state = initialState, action) {
     case ADD_ITEM:
       return {
         ...state,
-        //add item to shopping cart
-        shoppingCart: [...state.shoppingCart, action.payload]
+        shoppingCart: action.payload
       };
     case REMOVE_ITEM:
       return {

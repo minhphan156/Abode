@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 class ShoppingCart extends Component {
   render() {
     const cart = this.props.cart.shoppingCart;
-
-    if (cart.length) {
+    console.log("====ShoppingCart==" + JSON.stringify(cart));
+    if (cart != null) {
       const itemsList = cart.map(item => {
+        console.log(item);
         return (
           <div className="col-sm-2 product-in-cart" key={item._id}>
             <img src={item.image} />
