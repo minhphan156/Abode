@@ -43,7 +43,7 @@ class Navbar extends Component {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav">
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">
             {user.name}
@@ -62,7 +62,7 @@ class Navbar extends Component {
     );
 
     const guestLinks = (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav">
         <li className="nav-item">
           <Link className="nav-link" to="/register">
             Sign Up
@@ -87,7 +87,7 @@ class Navbar extends Component {
               Categories
             </Link>
             <form onSubmit={this.onSearchClick}>
-              <div className="input-group">
+              <div className="input-group mr-auto">
                 <input
                   style={{ height: 36 }}
                   type="input"
@@ -110,9 +110,11 @@ class Navbar extends Component {
                 </div>
               </div>
             </form>
-            <Link to="/cart" className="btn btn-light">
-              <i className="fas fa-shopping-cart text-info mr-1" />
-            </Link>
+            <ul class="navbar-nav ml-auto">
+              <Link to="/cart" className="btn btn-light">
+                <i className="fas fa-shopping-cart text-info " />
+              </Link>
+            </ul>
             {isAuthenticated ? authLinks : guestLinks}
           </div>
         </nav>
