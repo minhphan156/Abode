@@ -5,16 +5,17 @@ import { Link } from "react-router-dom";
 class ShoppingCart extends Component {
   render() {
     const cart = this.props.cart.shoppingCart;
-    console.log("====ShoppingCart==" + JSON.stringify(cart));
-    if (cart != null) {
+
+    if (cart.length) {
+      console.log("====ShoppingCart==" + JSON.stringify(cart));
       const itemsList = cart.map(item => {
-        console.log(item);
         return (
           <div className="col-sm-2 product-in-cart" key={item._id}>
             <img src={item.image} />
             <br />
             <div> {item._id} </div>
             <div> {item.name} </div>
+            <div>Count: {item.c}</div>
             <div> {item.price} </div>
             <Link to="/cart" className="btn btn-light">
               <i className="fas fa-minus text-info mr-1" />
