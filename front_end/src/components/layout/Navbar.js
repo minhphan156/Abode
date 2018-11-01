@@ -6,11 +6,16 @@ import { logoutUser } from "../../actions/authActions";
 import { submitQuery } from "../../actions/queryActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
 
+import ShoppingCartModal from "../cart/ShoppingCartModal";
+
+import { Button } from "react-bootstrap";
+
 class Navbar extends Component {
   constructor() {
     super();
     this.state = {
-      query: ""
+      query: "",
+      modalShow: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -40,6 +45,8 @@ class Navbar extends Component {
   }
 
   render() {
+    let modalClose = () => this.setState({ modalShow: false });
+
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
@@ -111,9 +118,18 @@ class Navbar extends Component {
               </div>
             </form>
             <ul class="navbar-nav ml-auto">
-              <Link to="/cart" className="btn btn-light">
+              {/* <Link to="/cart" className="btn btn-light">
                 <i className="fas fa-shopping-cart text-info " />
-              </Link>
+              </Link> */}
+
+              <button onClick={() => this.setState({ modalShow: true })}>
+                Launch vertically centered modal
+              </button>
+
+              <ShoppingCartModal
+                show={this.state.modalShow}
+                onHide={modalClose}
+              />
             </ul>
             {isAuthenticated ? authLinks : guestLinks}
           </div>
