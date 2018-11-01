@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM } from "../actions/types";
+import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT } from "../actions/types";
 
 const initialState = {
   shoppingCart: [] //initial shopping cart is empty
@@ -43,6 +43,17 @@ export default function(state = initialState, action) {
         ...state,
         shoppingCart: state.shoppingCart
       };
+
+    case INCREMENT_ITEM_COUNT:
+      for (let i = 0; i < state.shoppingCart.length; i++) {
+        if (action.payload == state.shoppingCart[i]._id) {
+          state.shoppingCart[i].count++;
+          return {
+            ...state,
+            shoppingCart: state.shoppingCart
+          };
+        }
+      }
 
     default:
       return state;
