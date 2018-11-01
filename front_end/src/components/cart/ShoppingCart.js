@@ -32,43 +32,39 @@ class ShoppingCart extends Component {
     if (cart.length) {
       var total = 0;
       const itemsList = cart.map(item => {
-        if (item != undefined) {
-          total += item.count * item.price;
-          return (
-            <div className="col-sm-2 product-in-cart" key={item._id}>
-              <img src={item.image} />
-              <br />
-              <div> {item._id} </div>
-              <div> {item.name} </div>
-              <div>
-                <button
-                  className="btn btn-light"
-                  onClick={() =>
-                    this.onDecrementCountClick(item._id, false, false)
-                  }
-                >
-                  <i className="fas fa-minus text-info mr-1" />
-                </button>
-                {item.count}
-                <button
-                  className="btn btn-light"
-                  onClick={() => this.onIncrementCountClick(item.name)}
-                >
-                  <i className="fa fa-plus text-info mr-1" />
-                </button>
-              </div>
-              <div>{item.count * item.price}</div>
+        total += item.count * item.price;
+        return (
+          <div className="col-sm-2 product-in-cart" key={item._id}>
+            <img src={item.image} />
+            <br />
+            <div> {item._id} </div>
+            <div> {item.name} </div>
+            <div>
               <button
                 className="btn btn-light"
                 onClick={() =>
-                  this.onDecrementCountClick(item._id, true, false)
+                  this.onDecrementCountClick(item._id, false, false)
                 }
               >
-                <i className="fa fa-window-close text-info mr-1" />
+                <i className="fas fa-minus text-info mr-1" />
+              </button>
+              {item.count}
+              <button
+                className="btn btn-light"
+                onClick={() => this.onIncrementCountClick(item.name)}
+              >
+                <i className="fa fa-plus text-info mr-1" />
               </button>
             </div>
-          );
-        }
+            <div>{item.count * item.price}</div>
+            <button
+              className="btn btn-light"
+              onClick={() => this.onDecrementCountClick(item._id, true, false)}
+            >
+              <i className="fa fa-window-close text-info mr-1" />
+            </button>
+          </div>
+        );
       });
 
       return (
@@ -87,11 +83,7 @@ class ShoppingCart extends Component {
             <button
               className="btn btn-light"
               onClick={() =>
-                this.onDecrementCountClick(
-                  "Placeholder: All Items",
-                  false,
-                  true
-                )
+                this.onDecrementCountClick("placeholder", false, true)
               }
             >
               <i className="fas fa-cart-arrow-down text-info mr-1" />

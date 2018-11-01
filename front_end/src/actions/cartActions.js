@@ -1,7 +1,7 @@
 import { ADD_ITEM, REMOVE_ITEM } from "./types";
 import axios from "axios";
 
-//do get request at routes/product.js with productDescription object
+//do get request at routes/product.js with productName object
 //productName = {name: stringOfProductName}
 
 // Add Item to Cart

@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT } from "../actions/types";
+import { ADD_ITEM, REMOVE_ITEM } from "../actions/types";
 
 const initialState = {
   shoppingCart: [] //initial shopping cart is empty
