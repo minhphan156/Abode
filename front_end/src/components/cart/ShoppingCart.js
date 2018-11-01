@@ -34,7 +34,6 @@ class ShoppingCart extends Component {
           <div className="col-sm-2 product-in-cart" key={item._id}>
             <img src={item.image} />
             <br />
-            <div> {item._id} </div>
             <div> {item.name} </div>
             <div>
               <button
@@ -51,7 +50,7 @@ class ShoppingCart extends Component {
                 <i className="fa fa-plus text-info mr-1" />
               </button>
             </div>
-            <div>{item.count * item.price}</div>
+            <div>${((item.count * item.price) / 100).toFixed(2)}</div>
             <button
               className="btn btn-light"
               onClick={() => this.onDecrementCountClick(item._id, true)}
@@ -72,7 +71,7 @@ class ShoppingCart extends Component {
           </div>
           <div className="container">
             <div className="row">{itemsList}</div>
-            <div className="row">Total: {total}</div>
+            <div className="row">Total: ${(total / 100).toFixed(2)}</div>
           </div>
           <div className="btn-group mb-4" role="group">
             <button
