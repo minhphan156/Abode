@@ -17,9 +17,12 @@ class ShoppingCart extends Component {
     this.props.addItem(product);
   }
 
-  onDecrementCountClick(e) {
-    const productId = e;
-    this.props.removeItem(productId);
+  onDecrementCountClick(e, removeAll) {
+    const product = {
+      productId: e,
+      removeAllItems: removeAll
+    };
+    this.props.removeItem(product);
   }
 
   render() {
@@ -38,7 +41,7 @@ class ShoppingCart extends Component {
               <div>
                 <button
                   className="btn btn-light"
-                  onClick={() => this.onDecrementCountClick(item._id)}
+                  onClick={() => this.onDecrementCountClick(item._id, false)}
                 >
                   <i className="fas fa-minus text-info mr-1" />
                 </button>
@@ -50,10 +53,13 @@ class ShoppingCart extends Component {
                   <i className="fa fa-plus text-info mr-1" />
                 </button>
               </div>
-              <div> {item.price} </div>
-              <Link to="/cart" className="btn btn-light">
+              <div>{item.count * item.price}</div>
+              <button
+                className="btn btn-light"
+                onClick={() => this.onDecrementCountClick(item._id, true)}
+              >
                 <i className="fa fa-window-close text-info mr-1" />
-              </Link>
+              </button>
             </div>
           );
       });
