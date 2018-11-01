@@ -2,8 +2,7 @@ import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT } from "../actions/types";
 
 const initialState = {
   shoppingCart: [], //initial shopping cart is empty
-  productIds: [],
-  isDeleted: []
+  productIds: []
 };
 
 export default function(state = initialState, action) {
@@ -22,7 +21,7 @@ export default function(state = initialState, action) {
       console.log("AAAaAAAa" + JSON.stringify(state.productsIds));
       for (var i = 0; i < state.productIds.length; i++) {
         console.log([state.productIds[i]]);
-        if (id == state.productIds[i] && !state.isDeleted[i]) {
+        if (state.shoppingCart[i] != undefined && id == state.productIds[i]) {
           isSimilarProductInCart = true;
           break;
         }
@@ -33,8 +32,7 @@ export default function(state = initialState, action) {
         for (var i = 0; i < state.shoppingCart.length; i++) {
           if (
             state.shoppingCart[i] != undefined &&
-            state.shoppingCart[i]._id == id &&
-            !state.isDeleted[i]
+            state.shoppingCart[i]._id == id
           ) {
             state.shoppingCart[i].count++;
             break;
@@ -51,8 +49,7 @@ export default function(state = initialState, action) {
         return {
           ...state,
           shoppingCart: [...state.shoppingCart, productToAdd],
-          productIds: [...state.productIds, id],
-          isDeleted: [...state.isDeleted, false]
+          productIds: [...state.productIds, id]
         };
       }
 
@@ -63,7 +60,6 @@ export default function(state = initialState, action) {
           if (state.shoppingCart[i].count == 0) {
             delete state.shoppingCart[i];
             state.productIds[i] = "Removed Product ID";
-            state.isDeleted[i] = true;
           }
         }
       }
