@@ -8,46 +8,23 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_ITEM:
-      //clean the data:
-      //action.payload contains a product of this format [{Product}]
-      //get only the Product JSON object to add it to the shoppingCart array
-      var productToAdd = action.payload[0];
-
-      var id = productToAdd._id;
-      var isSimilarProductInCart = false;
-      for (var i = 0; i < state.productIds.length; i++) {
-        console.log([state.productIds[i]]);
-        if (state.shoppingCart[i] != undefined && id == state.productIds[i]) {
-          isSimilarProductInCart = true;
-          break;
-        }
-      }
-      if (!isSimilarProductInCart) {
-        productToAdd["count"] = "1";
-      } else {
-        for (var i = 0; i < state.shoppingCart.length; i++) {
-          if (
-            state.shoppingCart[i] != undefined &&
-            state.shoppingCart[i]._id == id
-          ) {
+      for (var i = 0; i < state.shoppingCart.length; i++) {
+        if (state.shoppingCart[i] != undefined)
+          if (action.payload[0]._id == state.shoppingCart[i]._id) {
             state.shoppingCart[i].count++;
-            break;
+            return {
+              ...state,
+              shoppingCart: state.shoppingCart
+            };
           }
-        }
       }
 
-      if (isSimilarProductInCart) {
-        return {
-          ...state,
-          shoppingCart: state.shoppingCart
-        };
-      } else {
-        return {
-          ...state,
-          shoppingCart: [...state.shoppingCart, productToAdd],
-          productIds: [...state.productIds, id]
-        };
-      }
+      action.payload[0]["count"] = "1";
+      return {
+        ...state,
+        shoppingCart: [...state.shoppingCart, action.payload[0]],
+        productIds: [...state.productIds, action.payload[0]._id]
+      };
 
     case REMOVE_ITEM:
       if (action.payload.emptyCart) {
