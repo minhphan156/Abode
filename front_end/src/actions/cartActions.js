@@ -18,9 +18,9 @@ export const addItem = productName => dispatch => {
 };
 
 // Remove Item from Cart
-export const removeItem = productId => dispatch => {
+export const removeItem = product => dispatch => {
   dispatch({
     type: REMOVE_ITEM,
-    payload: productId
+    payload: product
   });
 };

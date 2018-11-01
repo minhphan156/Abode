@@ -1,5 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM } from "../actions/types";
-import { isUndefined } from "util";
+import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT } from "../actions/types";
 
 const initialState = {
   shoppingCart: [], //initial shopping cart is empty
@@ -32,7 +31,11 @@ export default function(state = initialState, action) {
         productToAdd[count] = "1";
       } else {
         for (var i = 0; i < state.shoppingCart.length; i++) {
-          if (state.shoppingCart[i]._id == id && !state.isDeleted[i]) {
+          if (
+            state.shoppingCart[i] != undefined &&
+            state.shoppingCart[i]._id == id &&
+            !state.isDeleted[i]
+          ) {
             state.shoppingCart[i].count++;
             break;
           }
@@ -54,7 +57,6 @@ export default function(state = initialState, action) {
       }
 
     case REMOVE_ITEM:
-      console.log("WWWWWWWWWWWWE" + action.payload);
       for (var i = 0; i < state.productIds.length; i++) {
         if (action.payload == state.productIds[i]) {
           state.shoppingCart[i].count--;
@@ -71,6 +73,7 @@ export default function(state = initialState, action) {
         ...state,
         shoppingCart: state.shoppingCart
       };
+
     default:
       return state;
   }
