@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
       };
 
     case REMOVE_ITEM:
-      if (action.payload.emptyCart) {
+      if (action.payload.productId == "All Product Ids") {
         state.shoppingCart = [];
       } else {
         for (var i = 0; i < state.shoppingCart.length; i++) {
