@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM } from "./types";
+import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT } from "./types";
 import axios from "axios";
 
 //do get request at routes/product.js with productName object
@@ -21,6 +21,14 @@ export const addItem = productName => dispatch => {
 export const removeItem = product => dispatch => {
   dispatch({
     type: REMOVE_ITEM,
+    payload: product
+  });
+};
+
+//Increment Item Count of Existing Product in Cart
+export const incrementItemCount = product => dispatch => {
+  dispatch({
+    type: INCREMENT_ITEM_COUNT,
     payload: product
   });
 };
