@@ -28,33 +28,34 @@ class ShoppingCart extends Component {
     if (cart.length) {
       console.log("====ShoppingCart==" + JSON.stringify(cart));
       const itemsList = cart.map(item => {
-        return (
-          <div className="col-sm-2 product-in-cart" key={item._id}>
-            <img src={item.image} />
-            <br />
-            <div> {item._id} </div>
-            <div> {item.name} </div>
-            <div>
-              <button
-                className="btn btn-light"
-                onClick={() => this.onDecrementCountClick(item._id)}
-              >
-                <i className="fas fa-minus text-info mr-1" />
-              </button>
-              {item.count}
-              <button
-                className="btn btn-light"
-                onClick={() => this.onIncrementCountClick(item.name)}
-              >
-                <i className="fa fa-plus text-info mr-1" />
-              </button>
+        if (item != undefined)
+          return (
+            <div className="col-sm-2 product-in-cart" key={item._id}>
+              <img src={item.image} />
+              <br />
+              <div> {item._id} </div>
+              <div> {item.name} </div>
+              <div>
+                <button
+                  className="btn btn-light"
+                  onClick={() => this.onDecrementCountClick(item._id)}
+                >
+                  <i className="fas fa-minus text-info mr-1" />
+                </button>
+                {item.count}
+                <button
+                  className="btn btn-light"
+                  onClick={() => this.onIncrementCountClick(item.name)}
+                >
+                  <i className="fa fa-plus text-info mr-1" />
+                </button>
+              </div>
+              <div> {item.price} </div>
+              <Link to="/cart" className="btn btn-light">
+                <i className="fa fa-window-close text-info mr-1" />
+              </Link>
             </div>
-            <div> {item.price} </div>
-            <Link to="/cart" className="btn btn-light">
-              <i className="fa fa-window-close text-info mr-1" />
-            </Link>
-          </div>
-        );
+          );
       });
 
       return (
