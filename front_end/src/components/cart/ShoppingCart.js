@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { addItem, removeItem } from "../../actions/cartActions";
+import { removeItem, incrementItemCount } from "../../actions/cartActions";
 
 class ShoppingCart extends Component {
   constructor() {
@@ -11,10 +11,8 @@ class ShoppingCart extends Component {
   }
 
   onIncrementCountClick(e) {
-    const product = {
-      name: e
-    };
-    this.props.addItem(product);
+    const productId = e;
+    this.props.incrementItemCount(productId);
   }
 
   onDecrementCountClick(e, isRemoveAllItems) {
@@ -48,7 +46,7 @@ class ShoppingCart extends Component {
               {item.count}
               <button
                 className="btn btn-light"
-                onClick={() => this.onIncrementCountClick(item.name)}
+                onClick={() => this.onIncrementCountClick(item._id)}
               >
                 <i className="fa fa-plus text-info mr-1" />
               </button>
@@ -114,5 +112,5 @@ const mapStateToProps = state => ({
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  { addItem, removeItem }
+  { removeItem, incrementItemCount }
 )(ShoppingCart);
