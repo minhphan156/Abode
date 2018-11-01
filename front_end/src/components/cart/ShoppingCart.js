@@ -1,8 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { addItem, removeItem } from "../../actions/cartActions";
 
 class ShoppingCart extends Component {
+  constructor() {
+    super();
+    this.onIncrementCountClick = this.onIncrementCountClick.bind(this);
+    this.onDecrementCountClick = this.onDecrementCountClick.bind(this);
+  }
+
+  onIncrementCountClick(e) {
+    const product = {
+      name: e
+    };
+    this.props.addItem(product);
+  }
+
+  onDecrementCountClick(e) {
+    const productId = e;
+    this.props.removeItem(productId);
+  }
+
   render() {
     const cart = this.props.cart.shoppingCart;
 
@@ -15,10 +34,24 @@ class ShoppingCart extends Component {
             <br />
             <div> {item._id} </div>
             <div> {item.name} </div>
-            <div>Count: {item.c}</div>
+            <div>
+              <button
+                className="btn btn-light"
+                onClick={() => this.onDecrementCountClick(item._id)}
+              >
+                <i className="fas fa-minus text-info mr-1" />
+              </button>
+              {item.count}
+              <button
+                className="btn btn-light"
+                onClick={() => this.onIncrementCountClick(item.name)}
+              >
+                <i className="fa fa-plus text-info mr-1" />
+              </button>
+            </div>
             <div> {item.price} </div>
             <Link to="/cart" className="btn btn-light">
-              <i className="fas fa-minus text-info mr-1" />
+              <i className="fa fa-window-close text-info mr-1" />
             </Link>
           </div>
         );
@@ -68,5 +101,5 @@ const mapStateToProps = state => ({
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  {}
+  { addItem, removeItem }
 )(ShoppingCart);

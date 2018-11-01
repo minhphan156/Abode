@@ -14,7 +14,7 @@ export default function(state = initialState, action) {
       //action.payload contains a product of this format [{Product}]
       //get only the Product JSON object to add it to the shoppingCart array
       var productToAdd = action.payload[0];
-      var count = "c";
+      var count = "count";
       var id = productToAdd._id;
       console.log(id);
       var isSimilarProductInCart = false;
@@ -31,12 +31,11 @@ export default function(state = initialState, action) {
       } else {
         for (var i = 0; i < state.shoppingCart.length; i++) {
           if (state.shoppingCart[i]._id == id) {
-            state.shoppingCart[i].c++;
+            state.shoppingCart[i].count++;
             break;
           }
         }
       }
-      console.log(productToAdd[count]);
 
       if (isSimilarProductInCart) {
         return {
@@ -52,9 +51,15 @@ export default function(state = initialState, action) {
       }
 
     case REMOVE_ITEM:
+      console.log("WWWWWWWWWWWWE" + action.payload);
+      for (var i = 0; i < state.productIds.length; i++) {
+        if (action.payload == state.productIds[i]) {
+          state.shoppingCart[i].count--;
+        }
+      }
       return {
-        ...state
-        //delete item from shopping cart
+        ...state,
+        shoppingCart: state.shoppingCart
       };
     default:
       return state;

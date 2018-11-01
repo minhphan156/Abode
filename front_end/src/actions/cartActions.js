@@ -2,12 +2,12 @@ import { ADD_ITEM, REMOVE_ITEM } from "./types";
 import axios from "axios";
 
 //do get request at routes/product.js with productDescription object
-//productDescription = {description: someString}
+//productName = {name: stringOfProductName}
 
 // Add Item to Cart
-export const addItem = productDescription => dispatch => {
+export const addItem = productName => dispatch => {
   axios
-    .get("/api/product/search", { params: productDescription })
+    .get("/api/product/search", { params: productName })
     .then(res => {
       dispatch({
         type: ADD_ITEM,
@@ -18,4 +18,9 @@ export const addItem = productDescription => dispatch => {
 };
 
 // Remove Item from Cart
-// export const removeItem = () => dispatch => {};
+export const removeItem = productId => dispatch => {
+  dispatch({
+    type: REMOVE_ITEM,
+    payload: productId
+  });
+};

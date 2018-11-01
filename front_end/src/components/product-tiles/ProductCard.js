@@ -28,9 +28,6 @@ Please remove HOW TO USE, and EXAMPLE when finalizing app.
 class ProductCard extends Component {
   constructor() {
     super();
-    this.state = {
-      name: ""
-    };
     this.onCartClick = this.onCartClick.bind(this);
   }
 
@@ -38,10 +35,7 @@ class ProductCard extends Component {
     const product = {
       name: e
     };
-    this.setState({ name: e });
-
     this.props.addItem(product);
-    console.log(product);
   }
 
   render() {
