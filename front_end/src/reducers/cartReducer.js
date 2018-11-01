@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
       //action.payload contains a product of this format [{Product}]
       //get only the Product JSON object to add it to the shoppingCart array
       var productToAdd = action.payload[0];
-      var count = "count";
+
       var id = productToAdd._id;
       var isSimilarProductInCart = false;
       for (var i = 0; i < state.productIds.length; i++) {
@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
         }
       }
       if (!isSimilarProductInCart) {
-        productToAdd[count] = "1";
+        productToAdd["count"] = "1";
       } else {
         for (var i = 0; i < state.shoppingCart.length; i++) {
           if (
@@ -50,15 +50,20 @@ export default function(state = initialState, action) {
       }
 
     case REMOVE_ITEM:
-      for (var i = 0; i < state.productIds.length; i++) {
-        if (action.payload.productId == state.productIds[i]) {
-          state.shoppingCart[i].count--;
-          if (
-            state.shoppingCart[i].count == 0 ||
-            action.payload.removeAllItems
-          ) {
-            delete state.shoppingCart[i];
-            state.productIds[i] = "Removed Product ID";
+      if (action.payload.emptyCart) {
+        state.shoppingCart = [];
+        state.productIds = [];
+      } else {
+        for (var i = 0; i < state.productIds.length; i++) {
+          if (action.payload.productId == state.productIds[i]) {
+            state.shoppingCart[i].count--;
+            if (
+              state.shoppingCart[i].count == 0 ||
+              action.payload.removeAllItems
+            ) {
+              delete state.shoppingCart[i];
+              state.productIds[i] = "Removed Product ID";
+            }
           }
         }
       }
