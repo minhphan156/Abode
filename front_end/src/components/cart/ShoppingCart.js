@@ -46,9 +46,7 @@ class ShoppingCart extends Component {
                   </span>
                 </div>
                 <div className="product-bar-quantity text-center border-right m-0 p-0">
-                  <span className="font-weight-bold m-0 p-0">
-                    Qty:
-                  </span>
+                  <span className="font-weight-bold m-0 p-0">Qty:</span>
                   <br />
                   <button
                     className="product-bar-quantity-btn btn font-weight-bold mr-2 p-0"
@@ -87,39 +85,6 @@ class ShoppingCart extends Component {
         );
       });
 
-      // const itemsList = cart.map(item => {
-      //   total += item.count * item.price;
-      //   return (
-      //     <div className="col-sm-2 product-in-cart" key={item._id}>
-      //       <img src={item.image} />
-      //       <br />
-      //       <div> {item.name} </div>
-      //       <div>
-      //         <button
-      //           className="btn btn-light"
-      //           onClick={() => this.onDecrementCountClick(item._id, false)}
-      //         >
-      //           <i className="fas fa-minus text-info mr-1" />
-      //         </button>
-      //         {item.count}
-      //         <button
-      //           className="btn btn-light"
-      //           onClick={() => this.onIncrementCountClick(item._id)}
-      //         >
-      //           <i className="fa fa-plus text-info mr-1" />
-      //         </button>
-      //       </div>
-      //       <div>${((item.count * item.price) / 100).toFixed(2)}</div>
-      //       <button
-      //         className="btn btn-light"
-      //         onClick={() => this.onDecrementCountClick(item._id, true)}
-      //       >
-      //         <i className="fa fa-window-close text-info mr-1" />
-      //       </button>
-      //     </div>
-      //   );
-      // });
-
       return (
         <div>
           {itemsList}
@@ -147,38 +112,6 @@ class ShoppingCart extends Component {
           </div>
         </div>
       );
-
-      /*
-      return (
-        //empty cart, redirect to home page
-        //checkout, redirect to checkout page
-        <div>
-          <div className="text-center">
-            <h1>Shopping Cart</h1>
-            <hr className="shadow-sm" />
-          </div>
-          <div className="container">
-            <div className="row">{itemsList}</div>
-            <div className="row">Total: ${(total / 100).toFixed(2)}</div>
-          </div>
-          <div className="btn-group mb-4" role="group">
-            <button
-              className="btn btn-light"
-              onClick={() =>
-                this.onDecrementCountClick("All Product Ids", false)
-              }
-            >
-              <i className="fas fa-cart-arrow-down text-info mr-1" />
-              Empty Cart
-            </button>
-            <Link to="/checkout" className="btn btn-light">
-              <i className="fas fa-credit-card text-info mr-1" />
-              Checkout
-            </Link>
-          </div>
-        </div>
-      );
-      */
     }
 
     return (

@@ -5,10 +5,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { submitQuery } from "../../actions/queryActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
-
 import ShoppingCartModal from "../cart/ShoppingCartModal";
-
-import { Button } from "react-bootstrap";
 
 class Navbar extends Component {
   constructor() {
@@ -118,11 +115,10 @@ class Navbar extends Component {
               </div>
             </form>
             <ul class="navbar-nav ml-auto">
-              {/* <Link to="/cart" className="btn btn-light">
-                <i className="fas fa-shopping-cart text-info " />
-              </Link> */}
-
-              <button className="btn btn-info" onClick={() => this.setState({ modalShow: true })}>
+              <button
+                className="btn btn-info"
+                onClick={() => this.setState({ modalShow: true })}
+              >
                 <i className="fas fa-shopping-cart" />
               </button>
 
