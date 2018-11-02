@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
+import { connect } from "react-redux";
+import ShoppingCart from "./ShoppingCart";
 
 export default class ShoppingCartModal extends Component {
   render() {
@@ -17,11 +19,7 @@ export default class ShoppingCartModal extends Component {
         </Modal.Header>
         <Modal.Body>
           <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </p>
+          <ShoppingCart />
         </Modal.Body>
         <Modal.Footer>
           <button onClick={this.props.onHide}>Close</button>
@@ -30,3 +28,13 @@ export default class ShoppingCartModal extends Component {
     );
   }
 }
+
+// const mapStateToProps = state => ({
+//     cart: state.cart
+//   });
+//   // if this.props.query is empty we will not show the Search page
+
+//   export default connect(
+//     mapStateToProps,
+//     {}
+//   )(Search);

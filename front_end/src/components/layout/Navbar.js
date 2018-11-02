@@ -123,7 +123,7 @@ class Navbar extends Component {
               </Link> */}
 
               <button onClick={() => this.setState({ modalShow: true })}>
-                Launch vertically centered modal
+                Cart
               </button>
 
               <ShoppingCartModal

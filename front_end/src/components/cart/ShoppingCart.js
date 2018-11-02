@@ -28,38 +28,97 @@ class ShoppingCart extends Component {
 
     if (cart.length) {
       var total = 0;
+
       const itemsList = cart.map(item => {
         total += item.count * item.price;
         return (
-          <div className="col-sm-2 product-in-cart" key={item._id}>
-            <img src={item.image} />
-            <br />
-            <div> {item.name} </div>
-            <div>
-              <button
-                className="btn btn-light"
-                onClick={() => this.onDecrementCountClick(item._id, false)}
-              >
-                <i className="fas fa-minus text-info mr-1" />
-              </button>
-              {item.count}
-              <button
-                className="btn btn-light"
-                onClick={() => this.onIncrementCountClick(item._id)}
-              >
-                <i className="fa fa-plus text-info mr-1" />
-              </button>
+          <div className="row justify-content-center" key={item._id}>
+            <div className="col-md-6 p-3">
+              <div className="product-bar d-flex border rounded shadow m-0 p-0">
+                <img
+                  src={item.image}
+                  // className="product-bar-img img-fluid border-right m-0 p-0"
+                  className="product-card-img img-fluid m-0"
+                />
+                <div className="product-bar-name d-flex justify-content-center align-items-center border-right m-0 p-0">
+                  <span className="font-weight-bold align-middle text-truncate m-0 p-0">
+                    {item.name}
+                  </span>
+                </div>
+                <div className="product-bar-quantity text-center border-right m-0 p-0">
+                  <span className="font-weight-bold m-0 p-0">
+                    Qty: {item.count}{" "}
+                  </span>
+                  <br />
+                  <button
+                    className="product-bar-quantity-btn btn font-weight-bold hidden-xs hidden-sm mt-2 mr-2 p-0"
+                    onClick={() => this.onDecrementCountClick(item._id, false)}
+                  >
+                    -
+                  </button>
+                  <span className="align-middle m-0 pt-2" />
+                  <button
+                    className="product-bar-quantity-btn btn font-weight-bold hidden-xs hidden-sm mt-2 ml-2 p-0"
+                    onClick={() => this.onIncrementCountClick(item._id)}
+                  >
+                    +
+                  </button>
+                </div>
+                <div className="product-bar-price text-center border-right m-0 p-0">
+                  <span className="d-float font-weight-bold m-0 p-0">
+                    Price:
+                  </span>
+                  <br />
+                  <span className="align-middle m-0 pt-1">
+                    ${((item.count * item.price) / 100).toFixed(2)}
+                  </span>
+                </div>
+                <div className="product-bar-btnBox d-flex justify-content-center align-items-center m-0 p-0">
+                  <button
+                    className="product-bar-btn btn m-auto"
+                    onClick={() => this.onDecrementCountClick(item._id, true)}
+                  >
+                    <i className="fas fa-trash-alt" />
+                  </button>
+                </div>
+              </div>
             </div>
-            <div>${((item.count * item.price) / 100).toFixed(2)}</div>
-            <button
-              className="btn btn-light"
-              onClick={() => this.onDecrementCountClick(item._id, true)}
-            >
-              <i className="fa fa-window-close text-info mr-1" />
-            </button>
           </div>
         );
       });
+
+      // const itemsList = cart.map(item => {
+      //   total += item.count * item.price;
+      //   return (
+      //     <div className="col-sm-2 product-in-cart" key={item._id}>
+      //       <img src={item.image} />
+      //       <br />
+      //       <div> {item.name} </div>
+      //       <div>
+      //         <button
+      //           className="btn btn-light"
+      //           onClick={() => this.onDecrementCountClick(item._id, false)}
+      //         >
+      //           <i className="fas fa-minus text-info mr-1" />
+      //         </button>
+      //         {item.count}
+      //         <button
+      //           className="btn btn-light"
+      //           onClick={() => this.onIncrementCountClick(item._id)}
+      //         >
+      //           <i className="fa fa-plus text-info mr-1" />
+      //         </button>
+      //       </div>
+      //       <div>${((item.count * item.price) / 100).toFixed(2)}</div>
+      //       <button
+      //         className="btn btn-light"
+      //         onClick={() => this.onDecrementCountClick(item._id, true)}
+      //       >
+      //         <i className="fa fa-window-close text-info mr-1" />
+      //       </button>
+      //     </div>
+      //   );
+      // });
 
       return (
         //empty cart, redirect to home page
