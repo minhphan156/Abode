@@ -33,12 +33,12 @@ class ShoppingCart extends Component {
         total += item.count * item.price;
         return (
           <div className="row justify-content-center" key={item._id}>
-            <div className="col-md-6 p-3">
+            <div className="col-md-10 p-1">
               <div className="product-bar d-flex border rounded shadow m-0 p-0">
                 <img
                   src={item.image}
-                  // className="product-bar-img img-fluid border-right m-0 p-0"
-                  className="product-card-img img-fluid m-0"
+                  className="product-bar-img img-fluid border-right m-0"
+                  alt={item.name}
                 />
                 <div className="product-bar-name d-flex justify-content-center align-items-center border-right m-0 p-0">
                   <span className="font-weight-bold align-middle text-truncate m-0 p-0">
@@ -47,18 +47,18 @@ class ShoppingCart extends Component {
                 </div>
                 <div className="product-bar-quantity text-center border-right m-0 p-0">
                   <span className="font-weight-bold m-0 p-0">
-                    Qty: {item.count}{" "}
+                    Qty:
                   </span>
                   <br />
                   <button
-                    className="product-bar-quantity-btn btn font-weight-bold hidden-xs hidden-sm mt-2 mr-2 p-0"
+                    className="product-bar-quantity-btn btn font-weight-bold mr-2 p-0"
                     onClick={() => this.onDecrementCountClick(item._id, false)}
                   >
                     -
                   </button>
-                  <span className="align-middle m-0 pt-2" />
+                  <span className="align-middle m-0 p-0">{item.count}</span>
                   <button
-                    className="product-bar-quantity-btn btn font-weight-bold hidden-xs hidden-sm mt-2 ml-2 p-0"
+                    className="product-bar-quantity-btn btn font-weight-bold ml-2 p-0"
                     onClick={() => this.onIncrementCountClick(item._id)}
                   >
                     +
@@ -75,7 +75,7 @@ class ShoppingCart extends Component {
                 </div>
                 <div className="product-bar-btnBox d-flex justify-content-center align-items-center m-0 p-0">
                   <button
-                    className="product-bar-btn btn m-auto"
+                    className="product-bar-btn btn m-0 p-2"
                     onClick={() => this.onDecrementCountClick(item._id, true)}
                   >
                     <i className="fas fa-trash-alt" />
@@ -121,6 +121,35 @@ class ShoppingCart extends Component {
       // });
 
       return (
+        <div>
+          {itemsList}
+          <hr className="shadow" />
+          <div className="cart-modal-subTotalBox text-right">
+            <span className="cart-modal-subTotalBox font-weight-bold">
+              Subtotal:
+            </span>
+            <span> ${(total / 100).toFixed(2)}</span>
+          </div>
+          <div className="btn-group d-flex justify-content-center" role="group">
+            <button
+              className="btn btn-light"
+              onClick={() =>
+                this.onDecrementCountClick("All Product Ids", false)
+              }
+            >
+              <i className="fas fa-cart-arrow-down text-info mr-1" />
+              Empty Cart
+            </button>
+            <Link to="/checkout" className="btn btn-light">
+              <i className="fas fa-credit-card text-info mr-1" />
+              Checkout
+            </Link>
+          </div>
+        </div>
+      );
+
+      /*
+      return (
         //empty cart, redirect to home page
         //checkout, redirect to checkout page
         <div>
@@ -149,15 +178,12 @@ class ShoppingCart extends Component {
           </div>
         </div>
       );
+      */
     }
 
     return (
       <div>
-        <div className="text-center">
-          <h1>Shopping Cart</h1>
-          <hr className="shadow-sm" />
-          <div>No Items in Cart</div>
-        </div>
+        <h5 className="text-center">You have no items in your cart.</h5>
       </div>
     );
   }

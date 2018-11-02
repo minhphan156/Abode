@@ -14,15 +14,14 @@ export default class ShoppingCartModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+            Shopping Cart
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
           <ShoppingCart />
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={this.props.onHide}>Close</button>
+          <button className="btn" onClick={this.props.onHide}>Close</button>
         </Modal.Footer>
       </Modal>
     );

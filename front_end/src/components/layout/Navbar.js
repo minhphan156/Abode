@@ -122,8 +122,8 @@ class Navbar extends Component {
                 <i className="fas fa-shopping-cart text-info " />
               </Link> */}
 
-              <button onClick={() => this.setState({ modalShow: true })}>
-                Cart
+              <button className="btn btn-info" onClick={() => this.setState({ modalShow: true })}>
+                <i className="fas fa-shopping-cart" />
               </button>
 
               <ShoppingCartModal
