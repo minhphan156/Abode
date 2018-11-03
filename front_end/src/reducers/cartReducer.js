@@ -27,7 +27,7 @@ export default function(state = initialState, action) {
       };
 
     case REMOVE_ITEM:
-      if (action.payload.productId == "All Product Ids") {
+      if (action.payload.productId == "Remove All Items In Cart") {
         //delete products in shopping cart
         state.shoppingCart = [];
       } else {

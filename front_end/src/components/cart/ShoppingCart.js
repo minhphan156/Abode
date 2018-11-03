@@ -99,7 +99,7 @@ class ShoppingCart extends Component {
             <button
               className="btn btn-light"
               onClick={() =>
-                this.onDecrementCountClick("All Product Ids", false)
+                this.onDecrementCountClick("Remove All Items In Cart", false)
               }
             >
               <i className="fas fa-cart-arrow-down text-info mr-1" />
