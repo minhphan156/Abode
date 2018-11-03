@@ -105,10 +105,6 @@ class ShoppingCart extends Component {
               <i className="fas fa-cart-arrow-down text-info mr-1" />
               Empty Cart
             </button>
-            <Link to="/checkout" className="btn btn-light">
-              <i className="fas fa-credit-card text-info mr-1" />
-              Checkout
-            </Link>
           </div>
         </div>
       );

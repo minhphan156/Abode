@@ -48,6 +48,10 @@ class CheckoutCart extends Component {
 
       return (
         <div>
+          <div className="text-center">
+            <h1>Check Out</h1>
+            <hr className="shadow-sm" />
+          </div>
           {itemsList}
           <hr className="shadow" />
           <div className="cart-modal-subTotalBox text-right">
@@ -67,7 +71,11 @@ class CheckoutCart extends Component {
     }
     return (
       <div>
-        <h5 className="text-center">You have no items in your cart.</h5>
+        <div className="text-center">
+          <h1>Checkout Cart</h1>
+          <hr className="shadow-sm" />
+          <div>You have no items in your cart.</div>
+        </div>
       </div>
     );
   }
