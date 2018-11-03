@@ -37,10 +37,7 @@ export default function(state = initialState, action) {
             state.shoppingCart[i].count--;
             //If after deletion, count is 0, OR deleting of all occurrences
             //of product being processed is requested, then remove Product object from cart
-            if (
-              state.shoppingCart[i].count == 0 ||
-              action.payload.removeAllItems
-            ) {
+            if (state.shoppingCart[i].count == 0 || action.payload.removeItem) {
               state.shoppingCart.splice(i, 1);
             }
             break;

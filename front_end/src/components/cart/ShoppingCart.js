@@ -15,10 +15,10 @@ class ShoppingCart extends Component {
     this.props.incrementItemCount(productId);
   }
 
-  onDecrementCountClick(e, isRemoveAllItems) {
+  onDecrementCountClick(e, isRemoveItem) {
     const product = {
       productId: e,
-      removeAllItems: isRemoveAllItems
+      removeItem: isRemoveItem
     };
     this.props.removeItem(product);
   }
