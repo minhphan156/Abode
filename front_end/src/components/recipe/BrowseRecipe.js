@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-import ProductBar from "../product-tiles/ProductBar";
-import ProductCard from "../product-tiles/ProductCard";
+import RecipeBar from "./RecipeBar";
 
 class recipePage extends Component {
   render() {
@@ -10,13 +9,12 @@ class recipePage extends Component {
     {
       const itemsList = category.map(item => {
         return (
-          <div className="col-md-2" key={item._id}>
-            <ProductCard
-              productKey={item._id}
-              productImage={item.image}
-              productName={item.name}
-              productPrice={item.price}
-            />
+          <div className="row justify-content-center" key={item._id}>
+            <div className="col-md-10">
+              <RecipeBar
+              {/*img = name = author = desc = */}
+              />
+            </div>
           </div>
         );
       });
@@ -27,7 +25,6 @@ class recipePage extends Component {
         </div>
       );
     }
-    
 
     <div />;
   }
