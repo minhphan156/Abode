@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const product = require("./routes/api/product");
+const cart = require("./routes/api/cart");
 
 // get some functionalities from express library like get() function
 const app = express();
@@ -48,6 +49,8 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 // this will append to home route 'localHost:5000/api/product/{what ever product.js dictate}
 app.use("/api/product", product);
+// this will append to home route 'localHost:5000/api/cart/{what ever product.js dictate}
+app.use("/api/cart", cart);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {

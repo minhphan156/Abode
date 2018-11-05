@@ -1,8 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { createCart } from "../../actions/cartActions";
 
 class CheckoutCart extends Component {
+  constructor(props) {
+    super(props);
+    this.onSubmitPayment = this.onSubmitPayment.bind(this);
+  }
+
+  onSubmitPayment() {
+    const cartWithEmail = {
+      email: "minh@gmail.com",
+      order: this.props.cart.shoppingCart
+    };
+    console.log("===CheckoutCart.js " + JSON.stringify(cartWithEmail));
+    this.props.createCart(cartWithEmail, this.props.history);
+  }
+
   render() {
     const cart = this.props.cart.shoppingCart;
     if (cart.length) {
@@ -61,7 +76,11 @@ class CheckoutCart extends Component {
             <span> ${(total / 100).toFixed(2)}</span>
           </div>
           <div className="btn-group d-flex justify-content-center" role="group">
-            <Link to="/receipt" className="btn btn-light">
+            <Link
+              to="/receipt"
+              className="btn btn-light"
+              onClick={this.onSubmitPayment}
+            >
               <i className="fas fa-credit-card text-info mr-1" />
               Confirm and Pay
             </Link>
@@ -88,5 +107,5 @@ const mapStateToProps = state => ({
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  {}
+  { createCart }
 )(CheckoutCart);
