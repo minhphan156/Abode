@@ -32,11 +32,14 @@ class BrowseByCategory extends Component {
                   alt="Test Image"
                   className="category-card-img img-fluid m-0 p-0"
                 />
-                <div className="category-card-nameBox text-center m-0 p-0">
+                <button
+                  type="button"
+                  className="category-card-nameBox btn rounded-0 text-center m-0 p-0"
+                >
                   <span className="category-card-name align-middle m-0">
                     Snacks
                   </span>
-                </div>
+                </button>
                 <div className="category-card-botBox" />
               </div>
             </Link>
@@ -49,11 +52,14 @@ class BrowseByCategory extends Component {
                   alt="Test Image"
                   className="category-card-img img-fluid m-0 p-0"
                 />
-                <div className="category-card-nameBox text-center m-0 p-0">
+                <button
+                  type="button"
+                  className="category-card-nameBox btn rounded-0 text-center m-0 p-0"
+                >
                   <span className="category-card-name align-middle m-0">
                     Drinks
                   </span>
-                </div>
+                </button>
                 <div className="category-card-botBox" />
               </div>
             </Link>
@@ -66,11 +72,14 @@ class BrowseByCategory extends Component {
                   alt="Test Image"
                   className="category-card-img img-fluid m-0 p-0"
                 />
-                <div className="category-card-nameBox text-center m-0 p-0">
+                <button
+                  type="button"
+                  className="category-card-nameBox btn rounded-0  text-center m-0 p-0"
+                >
                   <span className="category-card-name align-middle m-0">
                     Fruit
                   </span>
-                </div>
+                </button>
                 <div className="category-card-botBox" />
               </div>
             </Link>
@@ -85,11 +94,14 @@ class BrowseByCategory extends Component {
                   alt="Test Image"
                   className="category-card-img img-fluid m-0 p-0"
                 />
-                <div className="category-card-nameBox text-center m-0 p-0">
+                <button
+                  type="button"
+                  className="category-card-nameBox btn rounded-0  text-center m-0 p-0"
+                >
                   <span className="category-card-name align-middle m-0">
                     Bakery
                   </span>
-                </div>
+                </button>
                 <div className="category-card-botBox" />
               </div>
             </Link>
@@ -102,11 +114,14 @@ class BrowseByCategory extends Component {
                   alt="Test Image"
                   className="category-card-img img-fluid m-0 p-0"
                 />
-                <div className="category-card-nameBox text-center m-0 p-0">
+                <button
+                  type="button"
+                  className="category-card-nameBox btn rounded-0  text-center m-0 p-0"
+                >
                   <span className="category-card-name align-middle m-0">
                     Dairy
                   </span>
-                </div>
+                </button>
                 <div className="category-card-botBox" />
               </div>
             </Link>
@@ -119,11 +134,14 @@ class BrowseByCategory extends Component {
                   alt="Test Image"
                   className="category-card-img img-fluid m-0 p-0"
                 />
-                <div className="category-card-nameBox text-center m-0 p-0">
+                <button
+                  type="button"
+                  className="category-card-nameBox btn rounded-0  text-center m-0 p-0"
+                >
                   <span className="category-card-name align-middle m-0">
                     Meats
                   </span>
-                </div>
+                </button>
                 <div className="category-card-botBox" />
               </div>
             </Link>
@@ -136,11 +154,14 @@ class BrowseByCategory extends Component {
                   alt="Test Image"
                   className="category-card-img img-fluid m-0 p-0"
                 />
-                <div className="category-card-nameBox text-center m-0 p-0">
+                <button
+                  type="button"
+                  className="category-card-nameBox btn rounded-0  text-center m-0 p-0"
+                >
                   <span className="category-card-name align-middle m-0">
                     Alcohol
                   </span>
-                </div>
+                </button>
                 <div className="category-card-botBox" />
               </div>
             </Link>
