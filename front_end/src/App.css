@@ -55,7 +55,11 @@ img.shop-logo {
 .category-card-nameBox {
   width: 100%;
   height: auto;
-  background-color: rgb(90, 235, 90);
+  background-color: #0055A2;
+}
+
+.category-card-nameBox:hover {
+  background-color: #e5a823;
 }
 
 .category-card-name {
@@ -171,8 +175,17 @@ img.shop-logo {
 .product-card-btn {
   width: 25%;
   height: auto;
-  background-color: rgb(90, 235, 90);
+  background-color: #0055a2;
   color: white;
+  padding: auto;
+}
+
+.product-card-btn:hover {
+  background-color: #e5a823;
+}
+
+.product-card-btn:focus {
+  background-color: #e5a823;
 }
 
 .product-card-price {
@@ -185,4 +198,70 @@ img.shop-logo {
 .lobster-font {
   font-family: Lobster, Serif;
   color: #343a40;
+}
+
+/* Shopping Cart */
+.product-in-cart {
+  text-align: center;
+}
+
+/* Product Bar */
+.product-bar {
+  height: 10vh;
+  height: 68px;
+}
+
+.product-bar-img {
+  width: 20%;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-bar-name {
+  width: 35%;
+  height: auto;
+}
+
+.product-bar-quantity {
+  width: 15%;
+  height: auto;
+}
+
+.product-bar-price {
+  width: 20%;
+}
+
+.product-bar-btnBox {
+  width: 10%;
+}
+
+.product-bar-btn {
+  font-size: 15px;
+  background-color: lightgrey;
+  color: grey;
+}
+
+.product-bar-btn:hover {
+  background-color: red;
+  color: white;
+}
+
+.product-bar-quantity-btn {
+  width: 25%;
+}
+
+/* Shopping Cart Modal CSS */
+.cart-modal-title {
+  font-family: Roboto;
+  color: black;
+}
+
+.cart-modal-subTotalBox {
+  margin-right: 55px;
+}
+
+.cart-modal-subTotal {
+  font-family: Roboto;
+  color: black;
+  size: 15px;
 }

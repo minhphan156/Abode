@@ -1,8 +1,6 @@
 import { SET_QUERY } from "./types";
 import axios from "axios";
-// do post request at routes/product.js with newQuery object
-// newQuery = {description : someString }
-
+// do get request at routes/product.js with newQuery object
 export const submitQuery = newQuery => dispatch => {
   axios
     .get("/api/product/search/", { params: newQuery })

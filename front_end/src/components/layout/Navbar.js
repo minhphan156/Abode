@@ -5,12 +5,14 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { submitQuery } from "../../actions/queryActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
+import ShoppingCartModal from "../cart/ShoppingCartModal";
 
 class Navbar extends Component {
   constructor() {
     super();
     this.state = {
-      query: ""
+      query: "",
+      modalShow: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -40,6 +42,8 @@ class Navbar extends Component {
   }
 
   render() {
+    let modalClose = () => this.setState({ modalShow: false });
+
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
@@ -110,10 +114,18 @@ class Navbar extends Component {
                 </div>
               </div>
             </form>
-            <ul className="navbar-nav ml-auto">
-              <Link to="/cart" className="btn btn-light">
-                <i className="fas fa-shopping-cart text-info " />
-              </Link>
+            <ul class="navbar-nav ml-auto">
+              <button
+                className="btn btn-info"
+                onClick={() => this.setState({ modalShow: true })}
+              >
+                <i className="fas fa-shopping-cart" />
+              </button>
+
+              <ShoppingCartModal
+                show={this.state.modalShow}
+                onHide={modalClose}
+              />
             </ul>
             {isAuthenticated ? authLinks : guestLinks}
           </div>
