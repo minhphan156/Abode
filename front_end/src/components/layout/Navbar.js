@@ -110,7 +110,7 @@ class Navbar extends Component {
                 </div>
               </div>
             </form>
-            <ul class="navbar-nav ml-auto">
+            <ul className="navbar-nav ml-auto">
               <Link to="/cart" className="btn btn-light">
                 <i className="fas fa-shopping-cart text-info " />
               </Link>
