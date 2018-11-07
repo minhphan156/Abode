@@ -26,6 +26,14 @@ const RecipeSchema = new Schema({
     // ingredients is an array of products
     type: {},
     required: true
+  },
+  likes: {
+    // type is set to objects to prevent users from liking multiple times.
+    type: {}
+  },
+  unlikes: {
+    // type is set to objects to prevent users from unliking multiple times.
+    type: {}
   }
 });
 
