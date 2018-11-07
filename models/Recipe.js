@@ -3,9 +3,12 @@ const Schema = mongoose.Schema;
 
 const RecipeSchema = new Schema({
   // Assuming that we want authors to be identifiable
-  author: {
+  userID: {
     type: Schema.Types.ObjectId,
-    ref: "users"
+    ref: "user"
+  },
+  author: {
+    type: String
   },
   title: {
     type: String,
@@ -21,7 +24,7 @@ const RecipeSchema = new Schema({
   },
   ingredients: {
     // ingredients is an array of products
-    type: [],
+    type: {},
     required: true
   }
 });

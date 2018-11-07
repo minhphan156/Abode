@@ -11,9 +11,7 @@ class recipePage extends Component {
         return (
           <div className="row justify-content-center" key={item._id}>
             <div className="col-md-10">
-              <RecipeBar
-              {/*img = name = author = desc = */}
-              />
+              <RecipeBar />
             </div>
           </div>
         );
