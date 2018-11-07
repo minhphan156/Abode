@@ -46,26 +46,9 @@ const ProfileSchema = new Schema({
     }
   },
 
-  history: [
-    {
-      products: {
-        type: String,
-        required: true
-      },
-      date: {
-        type: String,
-        required: true
-      },
-      total: {
-        type: String,
-        required: true
-      },
-      discounts: {
-        type: String,
-        required: true
-      }
-    }
-  ],
+  history: {
+    type: Array
+  },
   recipe: {
     type: [String]
   }

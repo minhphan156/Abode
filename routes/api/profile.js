@@ -62,6 +62,8 @@ router.post(
     }
 
     // Get fields
+    console.log("====profile backend====" + JSON.stringify(req.body.history));
+
     const profileFields = {};
     profileFields.user = req.user.id;
 
@@ -79,6 +81,8 @@ router.post(
       profileFields.creditCard.ccNumber = req.body.ccNumber;
     if (req.body.ccExp) profileFields.creditCard.ccExp = req.body.ccExp;
     if (req.body.ccCvv) profileFields.creditCard.ccCvv = req.body.ccCvv;
+
+    if (req.body.history) profileFields.history = req.body.history;
 
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {

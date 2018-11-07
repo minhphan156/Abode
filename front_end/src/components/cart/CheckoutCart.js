@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createCart } from "../../actions/cartActions";
+import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 
 class CheckoutCart extends Component {
   constructor(props) {
@@ -9,13 +10,52 @@ class CheckoutCart extends Component {
     this.onSubmitPayment = this.onSubmitPayment.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
   onSubmitPayment() {
-    const cartWithEmail = {
-      email: "minh@gmail.com",
-      order: this.props.cart.shoppingCart
+    const profileReducer = this.props.profile.profile;
+
+    //getting current date and time
+    var today = new Date();
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+
+    var time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    var dateTime = date + " " + time;
+
+    // pushing order to history array
+    let history;
+    if (
+      this.props.cart.shoppingCart != null &&
+      profileReducer.history != null
+    ) {
+      let cart = JSON.parse(JSON.stringify(this.props.cart.shoppingCart)); // create deep copy of shopping cart
+      cart.unshift({ date: dateTime }); // insert date to order
+      profileReducer.history.push(cart); // insert new order into current history
+      history = profileReducer.history;
+    }
+
+    const profileData = {
+      street: profileReducer.address.street,
+      apartment: profileReducer.address.apartment,
+      city: profileReducer.address.city,
+      zip: profileReducer.address.zip,
+      homeState: profileReducer.address.homeState,
+      ccNumber: profileReducer.creditCard.ccNumber,
+      ccExp: profileReducer.creditCard.ccExp,
+      ccCvv: profileReducer.creditCard.ccCvv,
+      history: history
     };
-    console.log("===CheckoutCart.js " + JSON.stringify(cartWithEmail));
-    this.props.createCart(cartWithEmail, this.props.history);
+
+    this.props.createProfile(profileData, this.props.history);
   }
 
   render() {
@@ -101,11 +141,12 @@ class CheckoutCart extends Component {
 }
 
 const mapStateToProps = state => ({
+  profile: state.profile,
   cart: state.cart
 });
 
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  { createCart }
+  { createCart, createProfile, getCurrentProfile }
 )(CheckoutCart);
