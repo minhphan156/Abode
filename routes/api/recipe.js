@@ -12,7 +12,7 @@ const Profile = require("../../models/Profile");
 // Validation
 const validateRecipeInput = require("../../validation/recipe");
 
-// @route   POST api/recipe/create
+// @route   POST api/recipes/create
 // @desc    Create a new recipe made by logged-in users
 // @access  Private
 router.post(
@@ -53,7 +53,7 @@ router.post(
   }
 );
 
-// @route   GET api/recipe/viewall
+// @route   GET api/recipes/viewall
 // @desc    Get all recipes
 // @access  Public
 router.get("/", (req, res) => {
@@ -63,7 +63,7 @@ router.get("/", (req, res) => {
     .catch(err => res.status(404).json({ norecipesfound: "No recipes found" }));
 });
 
-// @route   GET api/recipe/:id
+// @route   GET api/recipes/:id
 // @desc    Get a specific recipe
 // @access  Public
 router.get("/:id", (req, res) => {
@@ -84,7 +84,7 @@ router.get("/:id", (req, res) => {
     );
 });
 
-// @route DELETE api/recipe/:id
+// @route DELETE api/recipes/:id
 // @desc  Delete a recipe made by the user who made it
 // @access Private
 router.delete(
@@ -113,7 +113,7 @@ router.delete(
   }
 );
 
-//  @route  PUT api/recipe/:id
+//  @route  PUT api/recipes/:id
 //  @desc   Edits an existing recipe created by a user
 //  @access Private
 router.put(
@@ -129,6 +129,14 @@ router.put(
                 return res
                   .status(401)
                   .json({ notauthorized: "User not authorized " });
+              }
+
+              const { errors, isValid } = validateRecipeInput(req.body);
+
+              // Check Validation
+              if (!isValid) {
+                // if any errors, send 400 with errors object
+                return res.status(400).json(errors);
               }
 
               (recipe.title = req.body.title),
@@ -152,6 +160,36 @@ router.put(
       .catch(err =>
         res.status(401).json({ notauthorized: "user must be logged in" })
       );
+  }
+);
+
+//  @route  POST api/recipes/like/:id
+//  @desc   Registered users can like recipes
+//  @access Private
+router.post(
+  "/like/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Recipe.findById(req.params.id)
+        .then(recipe => {
+          if (
+            recipe.likes.filter(like => like.user.toString() === req.user.id)
+              .length > 0
+          ) {
+            return res
+              .status(400)
+              .json({ alreadyliked: "User already liked this recipe" });
+          }
+
+          recipe.likes.unshift({ user: req.user.id });
+
+          recipe.save().then(recipe => res.json(recipe));
+        })
+        .catch(err =>
+          res.status(404).json({ norecipefound: "No such recipe exists" })
+        );
+    });
   }
 );
 
