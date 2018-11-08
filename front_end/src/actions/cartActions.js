@@ -31,19 +31,6 @@ export const incrementItemCount = product => dispatch => {
   });
 };
 
-// Create cart in MLab
-export const createCart = (cartData, history) => {
-  console.log("===cartAction.js " + JSON.stringify(cartData));
-
-  axios
-    .post("/api/cart/create", cartData)
-    .then(res => {
-      console.log("===cartAction.js THEN from backend" + JSON.stringify(res));
-      history.push("/receipt");
-    })
-    .catch(err => console.log(err));
-};
-
 //Apply Discount
 export const submitDiscount = newDiscount => dispatch => {
   dispatch({

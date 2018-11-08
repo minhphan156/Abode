@@ -83,7 +83,6 @@ router.post(
     if (req.body.ccCvv) profileFields.creditCard.ccCvv = req.body.ccCvv;
 
     if (req.body.history) profileFields.history = req.body.history;
-
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {
         // there is a profile -> Update
