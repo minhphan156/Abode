@@ -29,7 +29,12 @@ class CheckoutCart extends Component {
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     var dateTime = date + " " + time;
-    let discountPercent = 0.4;
+
+    let discountPercent = 1.0;
+    // if(this.props.cart.discount != 0.00){
+    //   discountPercent = this.props.cart.discount;
+    // }
+
     let totalPrice = 0;
     const itemsList = this.props.cart.shoppingCart.map(item => {
       totalPrice += item.count * item.price;
