@@ -23,7 +23,7 @@ module.exports = function validateRecipeInput(data) {
     errors.description = "Description field is required";
   }
 
-  if (Validator.isEmpty(data.ingredients)) {
+  if (isEmpty(data.ingredients)) {
     errors.ingredients = "Ingredients are required";
   }
 
