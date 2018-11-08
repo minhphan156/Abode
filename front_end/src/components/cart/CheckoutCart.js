@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createCart } from "../../actions/cartActions";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 
 class CheckoutCart extends Component {
@@ -155,5 +154,5 @@ const mapStateToProps = state => ({
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  { createCart, createProfile, getCurrentProfile }
+  { createProfile, getCurrentProfile }
 )(CheckoutCart);
