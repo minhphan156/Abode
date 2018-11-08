@@ -41,10 +41,12 @@ class CheckoutCart extends Component {
       this.props.cart.shoppingCart != null &&
       profileReducer.history != null
     ) {
+      const newCart = {};
       let cart = JSON.parse(JSON.stringify(this.props.cart.shoppingCart)); // create deep copy of shopping cart
-      cart.unshift({ total: totalPrice });
-      cart.unshift({ date: dateTime }); // insert date to order
-      profileReducer.history.push(cart); // insert new order into current history
+      newCart["total"] = totalPrice;
+      newCart["date"] = dateTime;
+      newCart["items"] = cart;
+      profileReducer.history.push(newCart);
       history = profileReducer.history;
     }
 
