@@ -1,7 +1,15 @@
-import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT } from "../actions/types";
+import {
+  ADD_ITEM,
+  REMOVE_ITEM,
+  INCREMENT_ITEM_COUNT,
+  DISCOUNT
+} from "../actions/types";
 
+const discountCodes = ["15OFF", "BlackFriday"];
+const discountValue = [0.85, 0.9];
 const initialState = {
-  shoppingCart: [] //initial shopping cart is empty
+  shoppingCart: [], //initial shopping cart is empty
+  discount: 1.0 // initially there is no discount, so it is 1*original price
 };
 
 export default function(state = initialState, action) {
@@ -59,6 +67,18 @@ export default function(state = initialState, action) {
           return {
             ...state,
             shoppingCart: state.shoppingCart
+          };
+        }
+      }
+
+    case DISCOUNT:
+      for (let i = 0; i < discountCodes.length; i++) {
+        if (action.payload.discountCode == discountCodes[i]) {
+          state.discount = discountValue[i];
+          return {
+            ...state,
+            shoppingCart: state.shoppingCart,
+            discount: state.discount
           };
         }
       }

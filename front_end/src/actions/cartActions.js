@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT } from "./types";
+import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM_COUNT, DISCOUNT } from "./types";
 import axios from "axios";
 
 //do get request at routes/product.js with productName object
@@ -42,4 +42,12 @@ export const createCart = (cartData, history) => {
       history.push("/receipt");
     })
     .catch(err => console.log(err));
+};
+
+//Apply Discount
+export const submitDiscount = newDiscount => dispatch => {
+  dispatch({
+    type: DISCOUNT,
+    payload: newDiscount
+  });
 };

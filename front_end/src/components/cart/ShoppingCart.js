@@ -25,7 +25,7 @@ class ShoppingCart extends Component {
 
   render() {
     const cart = this.props.cart.shoppingCart;
-
+    const discount = this.props.cart.discount;
     if (cart.length) {
       var total = 0;
 
@@ -94,6 +94,12 @@ class ShoppingCart extends Component {
               Subtotal:
             </span>
             <span> ${(total / 100).toFixed(2)}</span>
+          </div>
+          <div className="cart-modal-subTotalBox text-right">
+            <span className="cart-modal-subTotalBox font-weight-bold">
+              After Discount:
+            </span>
+            <span> ${((discount * total) / 100).toFixed(2)}</span>
           </div>
           <div className="btn-group d-flex justify-content-center" role="group">
             <button

@@ -1,13 +1,31 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createCart } from "../../actions/cartActions";
+import { createCart, submitDiscount } from "../../actions/cartActions";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 
 class CheckoutCart extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      discount: ""
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onDiscountClick = this.onDiscountClick.bind(this);
     this.onSubmitPayment = this.onSubmitPayment.bind(this);
+  }
+
+  onChange(e) {
+    this.setState({ discount: e.target.value });
+  }
+
+  onDiscountClick() {
+    const newDiscount = {
+      discountCode: this.state.discount
+    };
+    console.log(newDiscount.discountCode);
+    this.props.submitDiscount(newDiscount);
+    this.setState({ discount: "" });
   }
 
   componentDidMount() {
@@ -60,6 +78,7 @@ class CheckoutCart extends Component {
 
   render() {
     const cart = this.props.cart.shoppingCart;
+    const discount = this.props.cart.discount;
     if (cart.length) {
       var total = 0;
 
@@ -115,6 +134,35 @@ class CheckoutCart extends Component {
             </span>
             <span> ${(total / 100).toFixed(2)}</span>
           </div>
+          <div className="cart-modal-subTotalBox text-right">
+            <span className="cart-modal-subTotalBox font-weight-bold">
+              After Discount:
+            </span>
+            <span> ${((discount * total) / 100).toFixed(2)}</span>
+          </div>
+
+          <div className="input-group mr-auto">
+            <input
+              style={{ height: 36 }}
+              type="input"
+              className="form-control"
+              name="discount"
+              value={this.state.discount}
+              onChange={this.onChange}
+            />
+            <div className="btn-group d-flex float-right" role="group">
+              <button
+                className="btn"
+                type="button"
+                onClick={this.onDiscountClick}
+                type="submit"
+              >
+                <i className="fas fa-cart-arrow-down text-info mr-1" />
+                Apply Discount
+              </button>
+            </div>
+          </div>
+
           <div className="btn-group d-flex justify-content-center" role="group">
             <Link
               to="/receipt"
@@ -148,5 +196,5 @@ const mapStateToProps = state => ({
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  { createCart, createProfile, getCurrentProfile }
+  { createCart, submitDiscount, createProfile, getCurrentProfile }
 )(CheckoutCart);
