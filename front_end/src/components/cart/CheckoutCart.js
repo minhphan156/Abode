@@ -48,7 +48,7 @@ class CheckoutCart extends Component {
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     var dateTime = date + " " + time;
-
+    let discountPercent = 0.4;
     let totalPrice = 0;
     const itemsList = this.props.cart.shoppingCart.map(item => {
       totalPrice += item.count * item.price;
@@ -62,7 +62,9 @@ class CheckoutCart extends Component {
     ) {
       const newCart = {};
       let cart = JSON.parse(JSON.stringify(this.props.cart.shoppingCart)); // create deep copy of shopping cart
-      newCart["total"] = totalPrice;
+      newCart["subtotal"] = totalPrice;
+      newCart["total"] = (totalPrice * discountPercent).toFixed(0);
+      newCart["discount"] = discountPercent;
       newCart["date"] = dateTime;
       newCart["items"] = cart;
       profileReducer.history.push(newCart);
