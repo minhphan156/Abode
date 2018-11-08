@@ -49,7 +49,7 @@ class CheckoutCart extends Component {
 
     var dateTime = date + " " + time;
 
-    let discountPercent = 1.0;
+    let discountPercent = this.props.cart.discount;
     // if(this.props.cart.discount != 0.00){
     //   discountPercent = this.props.cart.discount;
     // }
@@ -94,118 +94,113 @@ class CheckoutCart extends Component {
   render() {
     const cart = this.props.cart.shoppingCart;
     const discount = this.props.cart.discount;
+    var total = 0;
+
     if (cart.length) {
-      var total = 0;
-
-      if (cart.length) {
-        const itemsList = cart.map(item => {
-          total += item.count * item.price;
-
-          return (
-            <div className="row justify-content-center" key={item._id}>
-              <div className="col-md-10 p-1">
-                <div className="product-bar d-flex border rounded shadow m-0 p-0">
-                  <img
-                    src={item.image}
-                    className="product-bar-img img-fluid border-right m-0"
-                    alt={item.name}
-                  />
-                  <div className="product-bar-name d-flex justify-content-center align-items-center border-right m-0 p-0">
-                    <span className="font-weight-bold align-middle text-truncate m-0 p-0">
-                      {item.name}
-                    </span>
-                  </div>
-                  <div className="product-bar-quantity text-center border-right m-0 p-0">
-                    <span className="font-weight-bold m-0 p-0">Qty:</span>
-                    <br />
-
-                    <span className="align-middle m-0 p-0">{item.count}</span>
-                  </div>
-                  <div className="product-bar-price text-center border-right m-0 p-0">
-                    <span className="d-float font-weight-bold m-0 p-0">
-                      Price:
-                    </span>
-                    <br />
-                    <span className="align-middle m-0 pt-1">
-                      ${((item.count * item.price) / 100).toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="product-bar-btnBox d-flex justify-content-center align-items-center m-0 p-0" />
-                </div>
-              </div>
-            </div>
-          );
-        });
+      const itemsList = cart.map(item => {
+        total += item.count * item.price;
 
         return (
-          <div>
-            <div className="text-center">
-              <h1>Check Out</h1>
-              <hr className="shadow-sm" />
-            </div>
-            {itemsList}
-            <hr className="shadow" />
-            <div className="cart-modal-subTotalBox text-right">
-              <span className="cart-modal-subTotalBox font-weight-bold">
-                Subtotal:
-              </span>
-              <span> ${(total / 100).toFixed(2)}</span>
-            </div>
-            <div className="cart-modal-subTotalBox text-right">
-              <span className="cart-modal-subTotalBox font-weight-bold">
-                After Discount:
-              </span>
-              <span> ${((discount * total) / 100).toFixed(2)}</span>
-            </div>
+          <div className="row justify-content-center" key={item._id}>
+            <div className="col-md-10 p-1">
+              <div className="product-bar d-flex border rounded shadow m-0 p-0">
+                <img
+                  src={item.image}
+                  className="product-bar-img img-fluid border-right m-0"
+                  alt={item.name}
+                />
+                <div className="product-bar-name d-flex justify-content-center align-items-center border-right m-0 p-0">
+                  <span className="font-weight-bold align-middle text-truncate m-0 p-0">
+                    {item.name}
+                  </span>
+                </div>
+                <div className="product-bar-quantity text-center border-right m-0 p-0">
+                  <span className="font-weight-bold m-0 p-0">Qty:</span>
+                  <br />
 
-            <div className="input-group mr-auto">
-              <input
-                style={{ height: 36 }}
-                type="input"
-                className="form-control"
-                name="discount"
-                value={this.state.discount}
-                onChange={this.onChange}
-              />
-              <div className="btn-group d-flex float-right" role="group">
-                <button
-                  className="btn"
-                  type="button"
-                  onClick={this.onDiscountClick}
-                  type="submit"
-                >
-                  <i className="fas fa-cart-arrow-down text-info mr-1" />
-                  Apply Discount
-                </button>
+                  <span className="align-middle m-0 p-0">{item.count}</span>
+                </div>
+                <div className="product-bar-price text-center border-right m-0 p-0">
+                  <span className="d-float font-weight-bold m-0 p-0">
+                    Price:
+                  </span>
+                  <br />
+                  <span className="align-middle m-0 pt-1">
+                    ${((item.count * item.price) / 100).toFixed(2)}
+                  </span>
+                </div>
+                <div className="product-bar-btnBox d-flex justify-content-center align-items-center m-0 p-0" />
               </div>
-            </div>
-
-            <div
-              className="btn-group d-flex justify-content-center"
-              role="group"
-            >
-              <Link
-                to="/receipt"
-                className="btn btn-light"
-                onClick={this.onSubmitPayment}
-              >
-                <i className="fas fa-credit-card text-info mr-1" />
-                Confirm and Pay
-              </Link>
             </div>
           </div>
         );
-      }
+      });
+
       return (
         <div>
           <div className="text-center">
-            <h1>Checkout Cart</h1>
+            <h1>Check Out</h1>
             <hr className="shadow-sm" />
-            <div>You have no items in your cart.</div>
+          </div>
+          {itemsList}
+          <hr className="shadow" />
+          <div className="cart-modal-subTotalBox text-right">
+            <span className="cart-modal-subTotalBox font-weight-bold">
+              Subtotal:
+            </span>
+            <span> ${(total / 100).toFixed(2)}</span>
+          </div>
+          <div className="cart-modal-subTotalBox text-right">
+            <span className="cart-modal-subTotalBox font-weight-bold">
+              After Discount:
+            </span>
+            <span> ${((discount * total) / 100).toFixed(2)}</span>
+          </div>
+
+          <div className="input-group mr-auto">
+            <input
+              style={{ height: 36 }}
+              type="input"
+              className="form-control"
+              name="discount"
+              value={this.state.discount}
+              onChange={this.onChange}
+            />
+            <div className="btn-group d-flex float-right" role="group">
+              <button
+                className="btn"
+                type="button"
+                onClick={this.onDiscountClick}
+                type="submit"
+              >
+                <i className="fas fa-cart-arrow-down text-info mr-1" />
+                Apply Discount
+              </button>
+            </div>
+          </div>
+
+          <div className="btn-group d-flex justify-content-center" role="group">
+            <Link
+              to="/receipt"
+              className="btn btn-light"
+              onClick={this.onSubmitPayment}
+            >
+              <i className="fas fa-credit-card text-info mr-1" />
+              Confirm and Pay
+            </Link>
           </div>
         </div>
       );
     }
+    return (
+      <div>
+        <div className="text-center">
+          <h1>Checkout Cart</h1>
+          <hr className="shadow-sm" />
+          <div>You have no items in your cart.</div>
+        </div>
+      </div>
+    );
   }
 }
 
