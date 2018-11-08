@@ -20,3 +20,9 @@ export const CLEAR_CURRENT_PRODUCT = "CLEAR_CURRENT_PRODUCT";
 export const ADD_ITEM = "ADD_ITEM";
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export const INCREMENT_ITEM_COUNT = "INCREMENT_ITEM_COUNT";
+
+// RECIPE TYPES
+export const ADD_RECIPE = "ADD_RECIPE";
+export const GET_RECIPES = "GET_RECIPES";
+export const GET_RECIPE = "GET_RECIPE"; // get single recipe
+export const RECIPE_LOADING = "RECIPE_LOADING";
