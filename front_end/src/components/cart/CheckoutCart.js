@@ -31,6 +31,11 @@ class CheckoutCart extends Component {
 
     var dateTime = date + " " + time;
 
+    let totalPrice = 0;
+    const itemsList = this.props.cart.shoppingCart.map(item => {
+      totalPrice += item.count * item.price;
+    });
+
     // pushing order to history array
     let history;
     if (
@@ -38,6 +43,7 @@ class CheckoutCart extends Component {
       profileReducer.history != null
     ) {
       let cart = JSON.parse(JSON.stringify(this.props.cart.shoppingCart)); // create deep copy of shopping cart
+      cart.unshift({ total: totalPrice });
       cart.unshift({ date: dateTime }); // insert date to order
       profileReducer.history.push(cart); // insert new order into current history
       history = profileReducer.history;
@@ -60,11 +66,12 @@ class CheckoutCart extends Component {
 
   render() {
     const cart = this.props.cart.shoppingCart;
-    if (cart.length) {
-      var total = 0;
+    var total = 0;
 
+    if (cart.length) {
       const itemsList = cart.map(item => {
         total += item.count * item.price;
+
         return (
           <div className="row justify-content-center" key={item._id}>
             <div className="col-md-10 p-1">
