@@ -1,12 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Spinner from "../common/Spinner";
+import { getCurrentProfile} from "../../actions/profileActions";
+import PropTypes from "prop-types";
 
 class CheckoutCart extends Component {
-  render() {
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+  render(){
+    const {profile, loading} = this.props.profile
+
+    let dashboardContent
+    if(profile === null || loading){
+      dashboardContent = <Spinner />; // show the spinner while loading
+    }else{
+      dashboardContent = this._render(profile);
+    }
+    return <div>{dashboardContent}</div>
+  }
+  _render(profile) {
     const cart = this.props.cart.shoppingCart;
+    var submitButton
+
     if (cart.length) {
       var total = 0;
+
+      submitButton = Object.keys(profile).length > 0 ?  {redirect: "/recipt", description: "Go to payment"}
+      : {redirect: "/delivery", description: "Add delivery information"}
 
       const itemsList = cart.map(item => {
         total += item.count * item.price;
@@ -61,9 +83,10 @@ class CheckoutCart extends Component {
             <span> ${(total / 100).toFixed(2)}</span>
           </div>
           <div className="btn-group d-flex justify-content-center" role="group">
-            <Link to="/receipt" className="btn btn-light">
-              <i className="fas fa-credit-card text-info mr-1" />
-              Confirm and Pay
+            <Link to={submitButton.redirect} className="btn btn-light">
+              <i className="fas fa-credit-card text-info mr-1">
+                {submitButton.description}
+              </i>
             </Link>
           </div>
         </div>
@@ -80,13 +103,17 @@ class CheckoutCart extends Component {
     );
   }
 }
-
+CheckoutCart.PropTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
+};
 const mapStateToProps = state => ({
+  profile: state.profile,
   cart: state.cart
 });
 
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  {}
+  { getCurrentProfile }
 )(CheckoutCart);
