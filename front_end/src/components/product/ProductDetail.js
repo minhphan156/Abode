@@ -4,8 +4,21 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import { getProductByName } from "../../actions/productActions";
+import { addItem } from "../../actions/cartActions";
 
 class ProductDetail extends Component {
+  constructor() {
+    super();
+    this.onCartClick = this.onCartClick.bind(this);
+  }
+
+  onCartClick(e) {
+    const product = {
+      name: e
+    };
+    this.props.addItem(product);
+  }
+
   componentDidMount() {
     if (this.props.match.params.productname) {
       this.props.getProductByName(this.props.match.params.productname);
@@ -15,7 +28,9 @@ class ProductDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.product.product === null && this.props.product.loading) {
-      this.props.history.push(`/not-found/${this.props.match.params.productname}`);
+      this.props.history.push(
+        `/not-found/${this.props.match.params.productname}`
+      );
     }
   }
 
@@ -32,45 +47,58 @@ class ProductDetail extends Component {
             <div className="row">
               <div className="col-md-8">
                 <div className="left-column">
-                  <img
-                    data-image="red"
-                    src={product.image}
-                    alt=""
-                  />
+                  <img data-image="red" src={product.image} alt="" />
                 </div>
               </div>
               <div className="col-md-4">
-              <div className="right-column">
-            <div className="product-description">
-              <span>{product.category}</span>
+                <div className="right-column">
+                  <div className="product-description">
+                    <span>{product.category}</span>
 
-              <h1>{product.name}</h1>
-              <p>
-                Sold by <b>{product.brand}</b>
-              </p>
+                    <h1>{product.name}</h1>
+                    <p>
+                      Sold by <b>{product.brand}</b>
+                    </p>
 
-              <p>{product.description}</p>
-            </div>
+                    <p>{product.description}</p>
+                  </div>
 
-            <div className="product-price">
-              <span>${(product.price / 100).toFixed(2)}</span>
-              <a href="#" className="cart-btn">
-                Add to Cart
-              </a>
-            </div>
-          </div>
+                  <div className="product-price">
+                    <span>${(product.price / 100).toFixed(2)}</span>
+                    <a
+                      href="#"
+                      className="cart-btn"
+                      onClick={() => this.onCartClick(product.name)}
+                    >
+                      Add to Cart
+                    </a>
+                  </div>
+                </div>
               </div>
           
-          <div className = "row">
-            <div className = "list-group">
-              {product.otherproducts.map(relatedProduct => 
-                <Link to={`/product/${relatedProduct.name}`} class="list-group-item">
-                  <img  style={{ height: 50, width:50 }} src={relatedProduct.image}/>
-                    {`${relatedProduct.name} - $${(relatedProduct.price/100).toFixed(2)}`}
-                </Link>
-              )}
-            </div>
-          </div>
+          <hr/>
+          <h4 >Related Products:</h4>
+          <div class="container">
+          <div class="row">
+
+          {product.otherproducts.map(relatedProduct => 
+
+            <div key={relatedProduct.productKey} className="product-card col-md-4 border m-0 p-0">
+            <a href={`/product/${relatedProduct.name}`}>
+              <img
+                src={relatedProduct.image}
+                className="product-card-img img-fluid m-0"
+                alt="Responsive image"
+              />
+              <span className="product-card-name text-center m-0 p-2">
+                {relatedProduct.name}
+              </span>
+            </a>            
+            </div> 
+             
+            )}       
+        </div>
+        </div>
 
             </div>
           </div>
@@ -93,5 +121,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProductByName }
+  { getProductByName, addItem }
 )(ProductDetail);
