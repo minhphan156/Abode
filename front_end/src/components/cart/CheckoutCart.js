@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { submitDiscount } from "../../actions/cartActions";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
@@ -8,7 +9,25 @@ import Spinner from "../common/Spinner";
 class CheckoutCart extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      discount: ""
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onDiscountClick = this.onDiscountClick.bind(this);
     this.onSubmitPayment = this.onSubmitPayment.bind(this);
+  }
+
+  onChange(e) {
+    this.setState({ discount: e.target.value });
+  }
+
+  onDiscountClick() {
+    const newDiscount = {
+      discountCode: this.state.discount
+    };
+    console.log(newDiscount.discountCode);
+    this.props.submitDiscount(newDiscount);
+    this.setState({ discount: "" });
   }
 
   componentDidMount() {
@@ -32,6 +51,11 @@ class CheckoutCart extends Component {
 
     var dateTime = date + " " + time;
 
+    let discountPercent = this.props.cart.discount;
+    // if(this.props.cart.discount != 0.00){
+    //   discountPercent = this.props.cart.discount;
+    // }
+
     let totalPrice = 0;
     const itemsList = this.props.cart.shoppingCart.map(item => {
       totalPrice += item.count * item.price;
@@ -45,7 +69,9 @@ class CheckoutCart extends Component {
     ) {
       const newCart = {};
       let cart = JSON.parse(JSON.stringify(this.props.cart.shoppingCart)); // create deep copy of shopping cart
-      newCart["total"] = totalPrice;
+      newCart["subtotal"] = totalPrice;
+      newCart["total"] = (totalPrice * discountPercent).toFixed(0);
+      newCart["discount"] = discountPercent;
       newCart["date"] = dateTime;
       newCart["items"] = cart;
       profileReducer.history.push(newCart);
@@ -79,6 +105,7 @@ class CheckoutCart extends Component {
   }
   _render(profile) {
     const cart = this.props.cart.shoppingCart;
+    const discount = this.props.cart.discount;
     var total = 0;
     
     var submitButton = Object.keys(profile).length > 0 ?  {redirect: "/recipt", description: "Go to payment"}
@@ -114,10 +141,18 @@ class CheckoutCart extends Component {
                   </span>
                   <br />
                   <span className="align-middle m-0 pt-1">
+                    ${(item.price / 100).toFixed(2)}
+                  </span>
+                </div>
+                <div className="product-bar-price text-center border-right m-0 p-0">
+                  <span className="d-float font-weight-bold m-0 p-0">
+                    Qty x Price:
+                  </span>
+                  <br />
+                  <span className="align-middle m-0 pt-1">
                     ${((item.count * item.price) / 100).toFixed(2)}
                   </span>
                 </div>
-                <div className="product-bar-btnBox d-flex justify-content-center align-items-center m-0 p-0" />
               </div>
             </div>
           </div>
@@ -137,6 +172,44 @@ class CheckoutCart extends Component {
               Subtotal:
             </span>
             <span> ${(total / 100).toFixed(2)}</span>
+          </div>
+          {discount < 1 ? (
+            <div>
+              <div className="cart-modal-subTotalBox text-right">
+                <span className="cart-modal-subTotalBox font-weight-bold">
+                  Discount Value:
+                </span>
+                <span> {((1 - discount) * 100).toFixed(0)}% </span>
+              </div>
+              <div className="cart-modal-subTotalBox text-right">
+                <span className="cart-modal-subTotalBox font-weight-bold">
+                  After Discount:
+                </span>
+                <span> ${((discount * total) / 100).toFixed(2)}</span>
+              </div>
+            </div>
+          ) : null}
+
+          <div className="input-group mr-auto">
+            <input
+              style={{ height: 36 }}
+              type="input"
+              className="form-control"
+              name="discount"
+              value={this.state.discount}
+              onChange={this.onChange}
+            />
+            <div className="btn-group d-flex float-right" role="group">
+              <button
+                className="btn"
+                type="button"
+                onClick={this.onDiscountClick}
+                type="submit"
+              >
+                <i className="fas fa-cart-arrow-down text-info mr-1" />
+                Apply Discount
+              </button>
+            </div>
           </div>
           <div className="btn-group d-flex justify-content-center" role="group">
             <Link
@@ -175,5 +248,5 @@ const mapStateToProps = state => ({
 //connect to cartReducer to display items in cart
 export default connect(
   mapStateToProps,
-  { createProfile, getCurrentProfile }
+  { submitDiscount, createProfile, getCurrentProfile }
 )(CheckoutCart);
