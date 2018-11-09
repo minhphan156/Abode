@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
+import PropTypes from "prop-types";
+import Spinner from "../common/Spinner";
 
 class CheckoutCart extends Component {
   constructor(props) {
@@ -64,10 +66,23 @@ class CheckoutCart extends Component {
 
     this.props.createProfile(profileData, this.props.history);
   }
+  render(){
+    const {profile, loading} = this.props.profile
 
-  render() {
+    let dashboardContent
+    if(profile === null || loading){
+      dashboardContent = <Spinner />; // show the spinner while loading
+    }else{
+      dashboardContent = this._render(profile);
+    }
+    return <div>{dashboardContent}</div>
+  }
+  _render(profile) {
     const cart = this.props.cart.shoppingCart;
     var total = 0;
+    
+    var submitButton = Object.keys(profile).length > 0 ?  {redirect: "/recipt", description: "Go to payment"}
+    : {redirect: "/delivery", description: "Add delivery information"}
 
     if (cart.length) {
       const itemsList = cart.map(item => {
@@ -125,12 +140,12 @@ class CheckoutCart extends Component {
           </div>
           <div className="btn-group d-flex justify-content-center" role="group">
             <Link
-              to="/receipt"
+              to={submitButton.redirect}
               className="btn btn-light"
               onClick={this.onSubmitPayment}
             >
               <i className="fas fa-credit-card text-info mr-1" />
-              Confirm and Pay
+              {submitButton.description}
             </Link>
           </div>
         </div>
@@ -148,6 +163,10 @@ class CheckoutCart extends Component {
   }
 }
 
+CheckoutCart.PropTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
+};
 const mapStateToProps = state => ({
   profile: state.profile,
   cart: state.cart
