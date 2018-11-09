@@ -126,10 +126,18 @@ class CheckoutCart extends Component {
                   </span>
                   <br />
                   <span className="align-middle m-0 pt-1">
+                    ${(item.price / 100).toFixed(2)}
+                  </span>
+                </div>
+                <div className="product-bar-price text-center border-right m-0 p-0">
+                  <span className="d-float font-weight-bold m-0 p-0">
+                    Qty x Price:
+                  </span>
+                  <br />
+                  <span className="align-middle m-0 pt-1">
                     ${((item.count * item.price) / 100).toFixed(2)}
                   </span>
                 </div>
-                <div className="product-bar-btnBox d-flex justify-content-center align-items-center m-0 p-0" />
               </div>
             </div>
           </div>
@@ -151,11 +159,19 @@ class CheckoutCart extends Component {
             <span> ${(total / 100).toFixed(2)}</span>
           </div>
           {discount < 1 ? (
-            <div className="cart-modal-subTotalBox text-right">
-              <span className="cart-modal-subTotalBox font-weight-bold">
-                After Discount:
-              </span>
-              <span> ${((discount * total) / 100).toFixed(2)}</span>
+            <div>
+              <div className="cart-modal-subTotalBox text-right">
+                <span className="cart-modal-subTotalBox font-weight-bold">
+                  Discount Value:
+                </span>
+                <span> {((1 - discount) * 100).toFixed(0)}% </span>
+              </div>
+              <div className="cart-modal-subTotalBox text-right">
+                <span className="cart-modal-subTotalBox font-weight-bold">
+                  After Discount:
+                </span>
+                <span> ${((discount * total) / 100).toFixed(2)}</span>
+              </div>
             </div>
           ) : null}
 
