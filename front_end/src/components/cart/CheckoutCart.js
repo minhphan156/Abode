@@ -162,7 +162,7 @@ class CheckoutCart extends Component {
             <div>
               <div className="cart-modal-subTotalBox text-right">
                 <span className="cart-modal-subTotalBox font-weight-bold">
-                  Discount Value:
+                  Discount%:
                 </span>
                 <span> {((1 - discount) * 100).toFixed(0)}% </span>
               </div>
@@ -175,27 +175,6 @@ class CheckoutCart extends Component {
             </div>
           ) : null}
 
-          <div className="input-group mr-auto">
-            <input
-              style={{ height: 36 }}
-              type="input"
-              className="form-control"
-              name="discount"
-              value={this.state.discount}
-              onChange={this.onChange}
-            />
-            <div className="btn-group d-flex float-right" role="group">
-              <button
-                className="btn"
-                type="button"
-                onClick={this.onDiscountClick}
-                type="submit"
-              >
-                <i className="fas fa-cart-arrow-down text-info mr-1" />
-                Apply Discount
-              </button>
-            </div>
-          </div>
           <div className="btn-group d-flex justify-content-center" role="group">
             <Link
               to="/receipt"
@@ -205,6 +184,28 @@ class CheckoutCart extends Component {
               <i className="fas fa-credit-card text-info mr-1" />
               Confirm and Pay
             </Link>
+          </div>
+          <div className="product-bar-name float-right">
+            <div className="input-group mr-auto">
+              <input
+                style={{ height: 36 }}
+                type="input"
+                className="form-control"
+                name="discount"
+                value={this.state.discount}
+                onChange={this.onChange}
+              />
+
+              <button
+                className="btn btn-light"
+                type="button"
+                onClick={this.onDiscountClick}
+                type="submit"
+              >
+                <i className="fas fa-cart-arrow-down text-info mr-1" />
+                Apply Discount
+              </button>
+            </div>
           </div>
         </div>
       );
