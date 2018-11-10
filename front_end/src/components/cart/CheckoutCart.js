@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { submitDiscount } from "../../actions/cartActions";
-import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
+import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 
 class CheckoutCart extends Component {
   constructor(props) {
