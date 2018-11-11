@@ -34,6 +34,13 @@ class CheckoutCart extends Component {
     this.props.getCurrentProfile();
   }
 
+  addZeroToNum(number) {
+    if (number < 10) {
+      return "0" + number;
+    }
+    return number;
+  }
+
   onSubmitPayment() {
     const profileReducer = this.props.profile.profile;
 
@@ -42,12 +49,16 @@ class CheckoutCart extends Component {
     var date =
       today.getFullYear() +
       "-" +
-      (today.getMonth() + 1) +
+      this.addZeroToNum(today.getMonth() + 1) +
       "-" +
-      today.getDate();
+      this.addZeroToNum(today.getDate());
 
     var time =
-      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      this.addZeroToNum(today.getHours()) +
+      ":" +
+      this.addZeroToNum(today.getMinutes()) +
+      ":" +
+      this.addZeroToNum(today.getSeconds());
 
     var dateTime = date + " " + time;
 
@@ -92,24 +103,26 @@ class CheckoutCart extends Component {
 
     this.props.createProfile(profileData, this.props.history);
   }
-  render(){
-    const {profile, loading} = this.props.profile
+  render() {
+    const { profile, loading } = this.props.profile;
 
-    let dashboardContent
-    if(profile === null || loading){
+    let dashboardContent;
+    if (profile === null || loading) {
       dashboardContent = <Spinner />; // show the spinner while loading
-    }else{
+    } else {
       dashboardContent = this._render(profile);
     }
-    return <div>{dashboardContent}</div>
+    return <div>{dashboardContent}</div>;
   }
   _render(profile) {
     const cart = this.props.cart.shoppingCart;
     const discount = this.props.cart.discount;
     var total = 0;
-    
-    var submitButton = Object.keys(profile).length > 0 ?  {redirect: "/recipt", description: "Go to payment"}
-    : {redirect: "/delivery", description: "Add delivery information"}
+
+    var submitButton =
+      Object.keys(profile).length > 0
+        ? { redirect: "/recipt", description: "Go to payment" }
+        : { redirect: "/delivery", description: "Add delivery information" };
 
     if (cart.length) {
       const itemsList = cart.map(item => {
