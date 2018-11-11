@@ -62,8 +62,6 @@ router.post(
     }
 
     // Get fields
-    console.log("====profile backend====" + JSON.stringify(req.body.history));
-
     const profileFields = {};
     profileFields.user = req.user.id;
 

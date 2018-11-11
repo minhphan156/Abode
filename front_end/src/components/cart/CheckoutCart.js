@@ -25,7 +25,6 @@ class CheckoutCart extends Component {
     const newDiscount = {
       discountCode: this.state.discount
     };
-    console.log(newDiscount.discountCode);
     this.props.submitDiscount(newDiscount);
     this.setState({ discount: "" });
   }
@@ -61,11 +60,7 @@ class CheckoutCart extends Component {
       this.addZeroToNum(today.getSeconds());
 
     var dateTime = date + " " + time;
-
     let discountPercent = this.props.cart.discount;
-    // if(this.props.cart.discount != 0.00){
-    //   discountPercent = this.props.cart.discount;
-    // }
 
     let totalPrice = 0;
     const itemsList = this.props.cart.shoppingCart.map(item => {
@@ -121,8 +116,8 @@ class CheckoutCart extends Component {
 
     var submitButton =
       Object.keys(profile).length > 0
-        ? { redirect: "/recipt", description: "Go to payment" }
-        : { redirect: "/delivery", description: "Add delivery information" };
+        ? { redirect: "/receipt", description: "Go to Payment" }
+        : { redirect: "/delivery", description: "Add Delivery Information" };
 
     if (cart.length) {
       const itemsList = cart.map(item => {
@@ -190,7 +185,7 @@ class CheckoutCart extends Component {
             <div>
               <div className="cart-modal-subTotalBox text-right">
                 <span className="cart-modal-subTotalBox font-weight-bold">
-                  Discount Value:
+                  Discount%:
                 </span>
                 <span> {((1 - discount) * 100).toFixed(0)}% </span>
               </div>
@@ -203,27 +198,6 @@ class CheckoutCart extends Component {
             </div>
           ) : null}
 
-          <div className="input-group mr-auto">
-            <input
-              style={{ height: 36 }}
-              type="input"
-              className="form-control"
-              name="discount"
-              value={this.state.discount}
-              onChange={this.onChange}
-            />
-            <div className="btn-group d-flex float-right" role="group">
-              <button
-                className="btn"
-                type="button"
-                onClick={this.onDiscountClick}
-                type="submit"
-              >
-                <i className="fas fa-cart-arrow-down text-info mr-1" />
-                Apply Discount
-              </button>
-            </div>
-          </div>
           <div className="btn-group d-flex justify-content-center" role="group">
             <Link
               to={submitButton.redirect}
@@ -233,6 +207,28 @@ class CheckoutCart extends Component {
               <i className="fas fa-credit-card text-info mr-1" />
               {submitButton.description}
             </Link>
+          </div>
+          <div className="product-bar-name float-right">
+            <div className="input-group mr-auto">
+              <input
+                style={{ height: 36 }}
+                type="input"
+                className="form-control"
+                name="discount"
+                value={this.state.discount}
+                onChange={this.onChange}
+              />
+
+              <button
+                className="btn btn-light"
+                type="button"
+                onClick={this.onDiscountClick}
+                type="submit"
+              >
+                <i className="fas fa-cart-arrow-down text-info mr-1" />
+                Apply Discount
+              </button>
+            </div>
           </div>
         </div>
       );
