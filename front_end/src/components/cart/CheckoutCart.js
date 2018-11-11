@@ -88,24 +88,26 @@ class CheckoutCart extends Component {
 
     this.props.createProfile(profileData, this.props.history);
   }
-  render(){
-    const {profile, loading} = this.props.profile
+  render() {
+    const { profile, loading } = this.props.profile;
 
-    let dashboardContent
-    if(profile === null || loading){
+    let dashboardContent;
+    if (profile === null || loading) {
       dashboardContent = <Spinner />; // show the spinner while loading
-    }else{
+    } else {
       dashboardContent = this._render(profile);
     }
-    return <div>{dashboardContent}</div>
+    return <div>{dashboardContent}</div>;
   }
   _render(profile) {
     const cart = this.props.cart.shoppingCart;
     const discount = this.props.cart.discount;
     var total = 0;
-    
-    var submitButton = Object.keys(profile).length > 0 ?  {redirect: "/recipt", description: "Go to payment"}
-    : {redirect: "/delivery", description: "Add delivery information"}
+
+    var submitButton =
+      Object.keys(profile).length > 0
+        ? { redirect: "/receipt", description: "Go to Payment" }
+        : { redirect: "/delivery", description: "Add Delivery Information" };
 
     if (cart.length) {
       const itemsList = cart.map(item => {
