@@ -45,31 +45,15 @@ const ProfileSchema = new Schema({
       required: true
     }
   },
-
-  history: [
+  history: {
+    type: Array
+  },
+  recipe: [
     {
-      products: {
-        type: String,
-        required: true
-      },
-      date: {
-        type: String,
-        required: true
-      },
-      total: {
-        type: String,
-        required: true
-      },
-      discounts: {
-        type: String,
-        required: true
-      }
+      type: Schema.Types.ObjectId,
+      ref: "recipe"
     }
-  ],
-  recipe: [{
-    type: Schema.Types.ObjectId,
-    ref: "recipe"
-  }]
+  ]
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);
