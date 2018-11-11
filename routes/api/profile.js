@@ -94,34 +94,31 @@ router.post(
         new Profile(profileFields).save().then(profile => res.json(profile));
       }
     });
-    // TODO:
-    // add Recipe
-    // add History
   }
 );
 
 // @route POST api/profile/history
 // @desc Add order to history
 // @access Private
-router.post(
-  "/history",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      const newHist = {
-        products: req.body.products,
-        date: req.body.date,
-        total: req.body.total,
-        discount: req.body.discount
-      };
+// router.post(
+//   "/history",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     Profile.findOne({ user: req.user.id }).then(profile => {
+//       const newHist = {
+//         products: req.body.products,
+//         date: req.body.date,
+//         total: req.body.total,
+//         discount: req.body.discount
+//       };
 
-      // add to history array
-      profile.history.push(newHist);
+//       // add to history array
+//       profile.history.push(newHist);
 
-      profile.save().then(profile => res.json(profile));
-    });
-  }
-);
+//       profile.save().then(profile => res.json(profile));
+//     });
+//   }
+// );
 
 // @route   DELETE api/profile
 // @desc    Delete user and profile
