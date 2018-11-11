@@ -25,7 +25,6 @@ class CheckoutCart extends Component {
     const newDiscount = {
       discountCode: this.state.discount
     };
-    console.log(newDiscount.discountCode);
     this.props.submitDiscount(newDiscount);
     this.setState({ discount: "" });
   }
