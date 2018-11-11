@@ -114,7 +114,7 @@ class Navbar extends Component {
                 </div>
               </div>
             </form>
-            <ul class="navbar-nav ml-auto">
+            <ul className="navbar-nav ml-auto">
               <button
                 className="btn btn-info"
                 onClick={() => this.setState({ modalShow: true })}

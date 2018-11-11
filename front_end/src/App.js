@@ -25,6 +25,7 @@ import CheckoutCart from "./components/cart/CheckoutCart";
 import CategoryShowProducts from "./components/browse/CategoryShowProducts";
 import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
+import Delivery from "./components/cart/Delivery";
 
 import "./App.css";
 
@@ -74,6 +75,7 @@ class App extends Component {
               <Route exact path="/checkout" component={CheckoutCart} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/delivery" component={Delivery} />
               <Route
                 exact
                 path="/product/:productname"
