@@ -8,9 +8,7 @@ class HistorySingleOrder extends Component {
   constructor() {
     super();
     this.state = {
-      history_array: [],
       product_array: []
-      // orderElement: -1
     };
   }
   componentDidMount() {
@@ -19,12 +17,10 @@ class HistorySingleOrder extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
+      
       // Set profile_array
-
       const element = this.searchArray(profile);
       this.setState({
-        // orderElement: element,
-        history_array: profile.history,
         product_array: profile.history[element].items
       });
     }
