@@ -20,3 +20,6 @@ export const CLEAR_CURRENT_PRODUCT = "CLEAR_CURRENT_PRODUCT";
 export const ADD_ITEM = "ADD_ITEM";
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export const INCREMENT_ITEM_COUNT = "INCREMENT_ITEM_COUNT";
+export const DISCOUNT = "DISCOUNT";
+
+export const GET_DELIVERY = "GET_DELIVERY";
