@@ -26,3 +26,4 @@ export const ADD_RECIPE = "ADD_RECIPE";
 export const GET_RECIPES = "GET_RECIPES";
 export const GET_RECIPE = "GET_RECIPE"; // get single recipe
 export const RECIPE_LOADING = "RECIPE_LOADING";
+export const DELETE_RECIPE = "DELETE_RECIPE";

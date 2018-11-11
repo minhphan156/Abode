@@ -282,3 +282,19 @@ img.shop-logo {
   width: 85%;
   height: auto;
 }
+
+/* Create Recipe Page */
+.create-recipe-25 {
+  width: 25%;
+  min-width: 150px;
+}
+
+.create-recipe-btn {
+  font-size: 12px;
+  background-color: #0055a2;
+  color: white;
+}
+
+.create-recipe-btn:hover {
+  background-color: #e5a823;
+}
