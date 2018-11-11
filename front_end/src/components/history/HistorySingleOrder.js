@@ -31,7 +31,6 @@ class HistorySingleOrder extends Component {
     const stringDate = URL.substring(9, 19);
     const stringTime = URL.substring(22, 30);
     const stringDT = stringDate + " " + stringTime;
-    console.log("hello");
 
     var i;
     for (i = 0; i < 99; i++) {
@@ -55,8 +54,6 @@ class HistorySingleOrder extends Component {
   }
 
   _render(profile) {
-    console.log("hello");
-
     const element = this.searchArray(profile);
 
     const subtotal = profile.history[element].subtotal;
