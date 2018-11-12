@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { PropTypes } from "prop-types";
-import { connect } from "react-redux";
-import axios from 'axios';
 
 /**
  * Main component for the 'Create Recipe' page.
@@ -17,9 +14,9 @@ export default class CreateRecipe extends Component {
       image: "",
       steps: [],
       ingredients: []
-    }
+    };
 
-    let newIngredient = "";   // This variable is needed for ingredient input field
+    let newIngredient = ""; // This variable is needed for ingredient input field
 
     this.onChange = this.onChange.bind(this);
     this.onIngredientChange = this.onIngredientChange.bind(this);
@@ -30,7 +27,7 @@ export default class CreateRecipe extends Component {
 
   /**
    * Mutates the states as text is entered to textfields
-   * @param {*} event 
+   * @param {*} event
    */
   onChange(event) {
     this.setState({
@@ -40,7 +37,7 @@ export default class CreateRecipe extends Component {
 
   /**
    * Mutates the newIngredient variable as text is entered on the ingredient textfield
-   * @param {*} event 
+   * @param {*} event
    */
   onIngredientChange(event) {
     this.newIngredient = event.target.value;
@@ -50,24 +47,27 @@ export default class CreateRecipe extends Component {
    * Adds a new step to the steps[] state.
    * This new step is still changeable by the steps' text field
    */
-  addStep() {
+  addStep(event) {
+    event.preventDefault();
+
     let mutate = this.state.steps.slice();
     mutate.push("");
     this.setState({
       steps: mutate
-    })
+    });
   }
 
   /**
    * Adds a new ingredient to the ingredients[] state
    */
-  addIngredient() {
+  addIngredient(event) {
+    event.preventDefault();
     if (this.newIngredient !== "") {
       let mutate = this.state.ingredients.slice();
       mutate.push(this.newIngredient);
       this.setState({
         ingredients: mutate
-      })
+      });
       this.newIngredient = "";
     }
   }
@@ -75,7 +75,7 @@ export default class CreateRecipe extends Component {
   /**
    * Removes an ingredient from the ingredients[] state.
    * This function is passed to IngredientBoxComponents
-   * @param {*} ingredient 
+   * @param {*} ingredient
    */
   removeIngredient(ingredient) {
     let mutate = this.state.ingredients.slice();
@@ -91,10 +91,10 @@ export default class CreateRecipe extends Component {
   render() {
     this.newIngredient = "";
 
-    let stepCounter = 0;  // This variable is needed to keep track of the order of steps
+    let stepCounter = 0; // This variable is needed to keep track of the order of steps
     const stepsList = this.state.steps.map(step => (
       <StepComponent
-        name={"steps[" + (this.state.steps) + "].text"}
+        name={"steps[" + this.state.steps + "].text"}
         stepCount={stepCounter++}
         onStepChange={(key, value) => {
           let mutate = this.state.steps.slice();
@@ -116,11 +116,12 @@ export default class CreateRecipe extends Component {
     return (
       <div>
         <h2 className="category-title text-center font-weight-bold">
-          Create A Recipe
+          Post Your Recipe
         </h2>
+        <hr className="shadow" />
         <form>
           <div className="form-group">
-            <label for="title">Title:</label>
+            <label htmlFor="title">Title:</label>
             <input
               type="text"
               name="title"
@@ -131,7 +132,7 @@ export default class CreateRecipe extends Component {
             />
           </div>
           <div className="form-group">
-            <label for="description">Description:</label>
+            <label htmlFor="description">Description:</label>
             <textarea
               name="description"
               className="form-control"
@@ -142,7 +143,7 @@ export default class CreateRecipe extends Component {
             />
           </div>
           <div className="form-group">
-            <label for="image link">Image Links:</label>
+            <label htmlFor="image link">Image Links:</label>
             <input
               type="text"
               name="image"
@@ -155,12 +156,16 @@ export default class CreateRecipe extends Component {
           {/* START OF STEP(S) */}
           {stepsList}
           {/* END OF STEP(S) */}
-          <button type="button" className="create-recipe-btn btn align-middle p-1 mb-2" onClick={this.addStep}>
+          <button
+            type="button"
+            className="create-recipe-btn btn align-middle p-1 mb-2"
+            onClick={this.addStep}
+          >
             <i className="fas fa-plus" /> Add A Step
           </button>
           <br />
-          <div className="form-group">
-            <label for="ingredients">Ingredients:</label>
+          <div className="form-group inline">
+            <label htmlFor="ingredients">Ingredients:</label>
             <div className="input-group create-recipe-25">
               <input
                 type="text"
@@ -181,10 +186,16 @@ export default class CreateRecipe extends Component {
             </div>
           </div>
         </form>
-        <div className="row m-1">
+        <div className="d-flex flex-wrap border justify-content-center p-1">
           {/* START OF INGREDIENT BOXES */}
           {ingredientsList}
           {/* END OF INGREDIENT BOXES */}
+        </div>
+        <br />
+        <div className="d-flex justify-content-center">
+          <button type="button" className="btn btn-success">
+            Post Recipe
+          </button>
         </div>
       </div>
     );
@@ -193,49 +204,50 @@ export default class CreateRecipe extends Component {
 
 /**
  * Functional component for steps.
- * It has a label (Step X:) and a textarea for adding steps to the recipe. 
- * @param {*} props 
+ * It has a label (Step X:) and a textarea for adding steps to the recipe.
+ * @param {*} props
  */
-const StepComponent = (props) => {
+const StepComponent = props => {
   return (
-    <div className="form-group" >
-      <label for="step">Step {props.stepCount + 1}:</label>
+    <div className="form-group">
+      <label htmlFor="step">Step {props.stepCount + 1}:</label>
       <textarea
         type="text"
         name={props.name}
         className="form-control"
         id="step"
-        rows="1"
+        rows="2"
         placeholder="Describe this step of the recipe..."
-        onChange={(event) => {
+        onChange={event => {
           props.onStepChange(props.stepCount, event.target.value);
         }}
       />
     </div>
   );
-}
+};
 
 /**
  * Functional component for ingredients.
  * It will show the ingredient the user has listed as well as a remove button
  * TO-DO: Include search database functionality when ingredient box is clicked
- * @param {*} props 
+ * @param {*} props
  */
-const IngredientBoxComponent = (props) => {
+const IngredientBoxComponent = props => {
   return (
-    <div className="col-md-1">
-      <div className="btn-group create-recipe-ingredient-box m-0" role="group">
-        <button type="button" className="btn">
-          {props.ingred}
-        </button>
-        <button
-          type="button"
-          className="btn"
-          onClick={() => props.removeIngredient(props.ingred)}
-        >
-          <i className="fas fa-times" />
-        </button>
-      </div>
+    <div className="btn-group d-flex m-1" role="group">
+      <button type="button" className="btn border-right">
+        {props.ingred}
+      </button>
+      <button
+        type="button"
+        className="btn border-left"
+        onClick={event => {
+          event.preventDefault();
+          props.removeIngredient(props.ingred);
+        }}
+      >
+        <i className="fas fa-times" />
+      </button>
     </div>
   );
 };

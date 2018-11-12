@@ -90,6 +90,10 @@ class Navbar extends Component {
             <Link className="navbar-brand" to="/categories">
               Categories
             </Link>
+            <Link className="navbar-brand" to="/recipe">
+              Recipes
+              {/* Links to 'Create Recipe' Page for now */}
+            </Link>
             <form onSubmit={this.onSearchClick}>
               <div className="input-group mr-auto">
                 <input
