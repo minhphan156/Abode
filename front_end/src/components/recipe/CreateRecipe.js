@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
+import axios from 'axios';
 
+/**
+ * Main component for the 'Create Recipe' page.
+ * It uses 2 functional components (StepComponent & IngredientsBoxComponent) for each new step/ingredient
+ */
 export default class CreateRecipe extends Component {
   constructor(props) {
     super(props);
@@ -14,35 +19,38 @@ export default class CreateRecipe extends Component {
       ingredients: []
     }
 
-    let newIngredient = "";
+    let newIngredient = "";   // This variable is needed for ingredient input field
 
     this.onChange = this.onChange.bind(this);
-    this.onStepChange = this.onStepChange.bind(this);
     this.onIngredientChange = this.onIngredientChange.bind(this);
     this.addStep = this.addStep.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
     this.removeIngredient = this.removeIngredient.bind(this);
   }
 
+  /**
+   * Mutates the states as text is entered to textfields
+   * @param {*} event 
+   */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  onStepChange(key, value) {
-    let mutate = this.state.steps.slice();
-    mutate[key] = value;
-    this.setState({
-      steps: mutate
-    });
-  }
-
+  /**
+   * Mutates the newIngredient variable as text is entered on the ingredient textfield
+   * @param {*} event 
+   */
   onIngredientChange(event) {
     this.newIngredient = event.target.value;
   }
 
-  addStep(event) {
+  /**
+   * Adds a new step to the steps[] state.
+   * This new step is still changeable by the steps' text field
+   */
+  addStep() {
     let mutate = this.state.steps.slice();
     mutate.push("");
     this.setState({
@@ -50,15 +58,25 @@ export default class CreateRecipe extends Component {
     })
   }
 
+  /**
+   * Adds a new ingredient to the ingredients[] state
+   */
   addIngredient() {
-    let mutate = this.state.ingredients.slice();
-    mutate.push(this.newIngredient);
-    this.setState({
-      ingredients: mutate
-    })
-    this.newIngredient = "";
+    if (this.newIngredient !== "") {
+      let mutate = this.state.ingredients.slice();
+      mutate.push(this.newIngredient);
+      this.setState({
+        ingredients: mutate
+      })
+      this.newIngredient = "";
+    }
   }
 
+  /**
+   * Removes an ingredient from the ingredients[] state.
+   * This function is passed to IngredientBoxComponents
+   * @param {*} ingredient 
+   */
   removeIngredient(ingredient) {
     let mutate = this.state.ingredients.slice();
     let indexTarg = mutate.indexOf(ingredient);
@@ -71,12 +89,20 @@ export default class CreateRecipe extends Component {
   }
 
   render() {
-    let stepCounter = 0;
+    this.newIngredient = "";
+
+    let stepCounter = 0;  // This variable is needed to keep track of the order of steps
     const stepsList = this.state.steps.map(step => (
       <StepComponent
-        name={"steps[" + (stepCounter) + "].text"}
-        stepCount={++stepCounter}
-        onStepChange={this.onStepChange}
+        name={"steps[" + (this.state.steps) + "].text"}
+        stepCount={stepCounter++}
+        onStepChange={(key, value) => {
+          let mutate = this.state.steps.slice();
+          mutate[key] = value;
+          this.setState({
+            steps: mutate
+          });
+        }}
       />
     ));
 
@@ -90,7 +116,7 @@ export default class CreateRecipe extends Component {
     return (
       <div>
         <h2 className="category-title text-center font-weight-bold">
-          Create Recipe
+          Create A Recipe
         </h2>
         <form>
           <div className="form-group">
@@ -126,7 +152,7 @@ export default class CreateRecipe extends Component {
               onChange={this.onChange}
             />
           </div>
-          {/* START OF STEPS */}
+          {/* START OF STEP(S) */}
           {stepsList}
           {/* END OF STEP(S) */}
           <button type="button" className="create-recipe-btn btn align-middle p-1 mb-2" onClick={this.addStep}>
@@ -140,7 +166,7 @@ export default class CreateRecipe extends Component {
                 type="text"
                 name={"ingredients[" + this.state.ingredients.length + "]"}
                 className="form-control"
-                placeholder="Ingredient..."
+                placeholder="Add an ingredient..."
                 onChange={this.onIngredientChange}
               />
               <div className="input-group-append">
@@ -165,45 +191,47 @@ export default class CreateRecipe extends Component {
   }
 }
 
-class StepComponent extends Component {
-  constructor(props) {
-    super(props);
+/**
+ * Functional component for steps.
+ * It has a label (Step X:) and a textarea for adding steps to the recipe. 
+ * @param {*} props 
+ */
+const StepComponent = (props) => {
+  return (
+    <div className="form-group" >
+      <label for="step">Step {props.stepCount + 1}:</label>
+      <textarea
+        type="text"
+        name={props.name}
+        className="form-control"
+        id="step"
+        rows="1"
+        placeholder="Describe this step of the recipe..."
+        onChange={(event) => {
+          props.onStepChange(props.stepCount, event.target.value);
+        }}
+      />
+    </div>
+  );
+}
 
-    this.getKey = this.getKey.bind(this);
-  }
-
-  getKey(event) {
-    this.props.onStepChange(this.props.stepCount - 1, event.target.value);
-  }
-
-  render() {
-    return (
-      <div className="form-group" >
-        <label for="step">Step {this.props.stepCount}:</label>
-        <textarea
-          type="text"
-          name={this.props.name}
-          className="form-control"
-          id="step"
-          rows="1"
-          placeholder="Describe this step of the recipe..."
-          onChange={this.getKey}
-        />
-      </div>
-    );
-  }
-};
-
+/**
+ * Functional component for ingredients.
+ * It will show the ingredient the user has listed as well as a remove button
+ * TO-DO: Include search database functionality when ingredient box is clicked
+ * @param {*} props 
+ */
 const IngredientBoxComponent = (props) => {
   return (
     <div className="col-md-1">
-      <div className="btn-group m-0" role="group">
+      <div className="btn-group create-recipe-ingredient-box m-0" role="group">
         <button type="button" className="btn">
           {props.ingred}
         </button>
         <button
           type="button"
           className="btn"
+          onClick={() => props.removeIngredient(props.ingred)}
         >
           <i className="fas fa-times" />
         </button>

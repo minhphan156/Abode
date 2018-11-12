@@ -172,6 +172,12 @@ img.shop-logo {
   }
 }
 
+#Related-Card {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
 /* Product Card component CSS */
 .product-card-img {
   width: 100%;
@@ -314,8 +320,6 @@ img.shop-logo {
   background-color: #e5a823;
 }
 
-#Related-Card {
+.create-recipe-ingredient-box {
   width: 100%;
-  height: 15vw;
-  object-fit: cover;
 }
