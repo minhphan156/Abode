@@ -328,3 +328,9 @@ img.shop-logo {
 .Roboto {
   font-family: Roboto;
 }
+
+.review-recipe-img {
+  width: 70%;
+  height: 65vh;
+  min-height: 250px;
+}

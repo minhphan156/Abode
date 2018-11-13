@@ -53,10 +53,11 @@ export default class ReviewRecipe extends Component {
     return (
       <div>
         <img
-          src="test/recipe-test.jpg"
+          src="/test/recipe-test.jpg"
           alt="recipe-img"
-          className="img-fluid rounded mx-auto shadow"
+          className="review-recipe-img img-fluid d-block mx-auto rounded shadow mb-3"
         />
+        <hr className="shadow" />
         <h2 className="Roboto">TEST TITLE</h2>
         <label htmlFor="description" className="Roboto">
           Description:
