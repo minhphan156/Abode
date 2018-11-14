@@ -7,6 +7,7 @@ import SelectListGroup from "../common/SelectListGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import { setDelivery} from "../../actions/cartActions";
+import {CardElement, injectStripe, PaymentRequestButtonElement} from 'react-stripe-elements';
 
 // Delivery is a form that asks user to provide address, credit card info
 class Delivery extends Component {
@@ -72,11 +73,11 @@ class Delivery extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Add Delivery Details</h1>
-              <small className="d-block pb-3">* = required fields</small>
+              <small className="d-block pb-3 text-right text-muted">* = required fields</small>
               <form onSubmit={this.onSubmit}>
                 <h4 className="d-block pb-3" />
-                <h4 className="d-block pb-3">Your address for Deliveries</h4>
-
+                <p className="lead">Your address for Deliveries</p>
+      
                 <TextFieldGroup
                   placeholder="* Street and number"
                   name="street"
@@ -122,7 +123,9 @@ class Delivery extends Component {
                   error={errors.homeState}
                   info=""
                 />
-
+                
+                <p class="lead">Please enter payment info</p>
+                <CardElement />
                 <input
                   type="submit"
                   value="Submit"
@@ -149,7 +152,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
+export default injectStripe(connect(
   mapStateToProps,
   { getCurrentProfile, setDelivery}
-)(Delivery);
+)(Delivery));
