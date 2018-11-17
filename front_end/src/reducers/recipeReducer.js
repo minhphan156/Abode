@@ -1,4 +1,4 @@
-import { GET_RECIPE, RECIPE_LOADING, DELETE_RECIPE } from "../actions/types";
+import { GET_RECIPE, GET_RECIPES, RECIPE_LOADING, DELETE_RECIPE } from "../actions/types";
 
 const initialState = {
   recipes: [],
@@ -6,7 +6,7 @@ const initialState = {
   loading: false
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case RECIPE_LOADING:
       return {
@@ -19,6 +19,12 @@ export default function(state = initialState, action) {
         recipe: action.payload,
         loading: false
       };
+    case GET_RECIPES:
+      return {
+        ...state,
+        recipes: action.payload,
+        loading: false
+      }
     case DELETE_RECIPE:
       return {
         ...state,

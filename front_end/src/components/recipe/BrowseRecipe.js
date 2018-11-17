@@ -23,8 +23,6 @@ class recipePage extends Component {
         </div>
       );
     }
-
-    <div />;
   }
 }
 

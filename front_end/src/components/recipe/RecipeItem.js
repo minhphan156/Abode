@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import ProductCard from "../product-tiles/ProductCard";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getRecipes } from "../../actions/recipeActions";
 
 /**
  * TODO: Still need to connect to back end and replace test values with props
  */
-export default class ReviewRecipe extends Component {
+class RecipeItem extends Component {
   constructor(props) {
     super(props);
 
@@ -16,6 +19,20 @@ export default class ReviewRecipe extends Component {
       ingredients: [],
       ingredientProducts: []
     };
+  }
+
+  componentDidMount() {
+    this.props.getRecipes();
+
+    // console.log(this.props.recipe);
+
+    const { recipes, loading } = this.props.recipe;
+
+    this.setState({
+      title: recipes[0].title,
+      description: recipes.description,
+      ingredients: recipes.ingredients
+    });
   }
 
   render() {
@@ -58,25 +75,39 @@ export default class ReviewRecipe extends Component {
           className="review-recipe-img img-fluid d-block mx-auto rounded shadow mb-3"
         />
         <hr className="shadow" />
-        <h2 className="Roboto">TEST TITLE</h2>
+        <h2 className="Roboto">
+          {this.state.title}
+        </h2>
         <label htmlFor="description" className="Roboto">
           Description:
         </label>
         <p id="description" className="Roboto">
-          Aeneanero sit amet quam egestas semp ultricies mi vitae est.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum.
+          {this.state.description}
         </p>
         {stepsList}
         <label htmlFor="ingredients" className="Roboto">
-          Ingredients:{" "}
+          Ingredients:
         </label>
         {ingredientsList}
         <label htmlFor="" className="Roboto">
-          Available products from ingredients:{" "}
+          Available products from ingredients:
         </label>
         <div className="row border p-1" />
       </div>
     );
   }
 }
+
+RecipeItem.propTypes = {
+  getRecipes: PropTypes.func.isRequired,
+  recipe: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+  console.log(state);
+  return ({
+    recipe: state.recipe
+  })
+};
+
+export default connect(mapStateToProps, { getRecipes })(RecipeItem);

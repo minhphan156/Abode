@@ -1,25 +1,21 @@
 import axios from "axios";
 
-import { ADD_RECIPE, GET_RECIPE, RECIPE_LOADING, GET_ERRORS } from "./types";
+import { ADD_RECIPE, GET_RECIPES, GET_RECIPE, RECIPE_LOADING, GET_ERRORS } from "./types";
 
-// Get recipe by name
-export const getRecipeByName = recipename => dispatch => {
-  dispatch(setRecipeLoading());
+// Get all recipes
+export const getRecipes = () => dispatch => {
+  dispatch(setRecipeLoading);
   axios
-    .get(`/api/recipe/${recipename}`)
-    .then(res =>
-      dispatch({
-        type: GET_RECIPE,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_RECIPE,
-        payload: null
-      })
-    );
-};
+    .get("/api/recipes/")
+    .then(res => dispatch({
+      type: GET_RECIPES,
+      payload: res.data
+    }))
+    .catch(res => dispatch({
+      type: GET_RECIPES,
+      payload: null
+    }))
+}
 
 // Add Recipe
 export const addRecipe = (recipeData, history) => dispatch => {
@@ -39,7 +35,7 @@ export const addRecipe = (recipeData, history) => dispatch => {
     );
 };
 
-// Recipe loading
+// Set loading state
 export const setRecipeLoading = () => {
   return {
     type: RECIPE_LOADING
