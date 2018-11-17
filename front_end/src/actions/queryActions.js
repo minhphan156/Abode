@@ -7,7 +7,6 @@ export const submitQuery = newQuery => dispatch => {
     // /api/product/search/?description=searchString
     // if success then res.data will be the product object we looking for
     .then(res => {
-      console.log("query product json====" + JSON.stringify(res.data));
       dispatch({
         type: SET_QUERY,
         payload: res.data

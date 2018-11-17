@@ -27,6 +27,8 @@ import CheckoutCart from "./components/cart/CheckoutCart";
 import CategoryShowProducts from "./components/browse/CategoryShowProducts";
 import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
+import HistoryOverview from "./components/history/HistoryOverview";
+import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import Delivery from "./components/cart/Delivery";
 
 import "./App.css";
@@ -93,6 +95,20 @@ class App extends Component {
               <Route exact path="/not-found/:attempt" component={NotFound} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/history"
+                  component={HistoryOverview}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/history/:order"
+                  component={HistorySingleOrder}
+                />
               </Switch>
               <Switch>
                 <PrivateRoute
