@@ -11,53 +11,36 @@ import Spinner from "../common/Spinner";
 class RecipeItem extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      title: "",
-      description: "",
-      img: "",
-      steps: [],
-      ingredients: [],
-      ingredientProducts: []
-    };
   }
 
   componentDidMount() {
-    this.props.getRecipes()
+    this.props.getRecipes();
   }
 
   render() {
     const { recipes, loading } = this.props.recipe;
 
-    if (loading) {
+    if (recipes[0] === null || loading) {
       return (
         <div>
           <Spinner />
         </div>
       );
-    }
-    else {
-
-      let stepCount = 1;
-      const stepsList = this.state.steps.map(step => {
+    } else {
+      const stepsList = recipes[0].steps.map(step => (
         <div>
-          <label htmlFor={"step" + stepCount} className="Roboto">
-            Step {stepCount}
-          </label>
-          <p id={"step" + stepCount++} className="Roboto">
-            {step}
-          </p>
-        </div>;
-      });
+          <li>{step}</li>
+        </div>
+      ));
 
-      const ingredientsList = this.state.ingredients.map(ingredient => {
+      const ingredientsList = recipes[0].ingredients.map(ingredient => (
         <div>
-          <p className="Roboto">ingredient</p>
-        </div>;
-      });
+          <li className="Roboto">{ingredient}</li>
+        </div>
+      ));
 
       const ingredientProductsList = this.state.ingredientProducts.map(
-        ingredientProduct => {
+        ingredientProduct => (
           <div className="col-md-3 m-1">
             <ProductCard
               productKey=""
@@ -65,35 +48,37 @@ class RecipeItem extends Component {
               productName=""
               productPrice=""
             />
-          </div>;
-        }
+          </div>
+        )
       );
 
       return (
         <div>
           <img
-            src="/test/recipe-test.jpg"
+            src={recipes[0].img}
             alt="recipe-img"
             className="review-recipe-img img-fluid d-block mx-auto rounded shadow mb-3"
           />
           <hr className="shadow" />
-          <h2 className="Roboto">
-            {this.state.title}
-          </h2>
-          <label htmlFor="description" className="Roboto">
+          <h2 className="Roboto text-center">{recipes[0].title}</h2>
+          <span className="d-block text-center font-italic">
+            by {recipes[0].author}
+          </span>
+          <label htmlFor="description" className="Roboto font-weight-bold">
             Description:
-        </label>
+          </label>
           <p id="description" className="Roboto">
-            {this.state.description}
+            {recipes[0].description}
           </p>
-          {stepsList}
-          <label htmlFor="ingredients" className="Roboto">
+          <label htmlFor="ingredients" className="Roboto font-weight-bold">
             Ingredients:
           </label>
-          <div id="ingredients">
-            {ingredientsList}
-          </div>
-          <label htmlFor="" className="Roboto">
+          <ul id="ingredients">{ingredientsList}</ul>
+          <label htmlFor="steps" className="Roboto font-weight-bold">
+            Directions:
+          </label>
+          <ol id="steps">{stepsList}</ol>
+          <label htmlFor="" className="Roboto font-weight-bold">
             Available products from ingredients:
           </label>
           <div className="row border p-1" />
@@ -108,8 +93,11 @@ RecipeItem.propTypes = {
   recipe: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   recipe: state.recipe
-})
+});
 
-export default connect(mapStateToProps, { getRecipes })(RecipeItem);
+export default connect(
+  mapStateToProps,
+  { getRecipes }
+)(RecipeItem);
