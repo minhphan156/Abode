@@ -3,7 +3,7 @@ import { GET_RECIPE, GET_RECIPES, RECIPE_LOADING, DELETE_RECIPE } from "../actio
 const initialState = {
   recipes: [],
   recipe: {},
-  loading: false
+  loading: true
 };
 
 export default function (state = initialState, action) {
