@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import ProductCard from "../product-tiles/ProductCard";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getRecipes } from "../../actions/recipeActions";
+import { getRecipe } from "../../actions/recipeActions";
 import Spinner from "../common/Spinner";
+import isEmpty from "../../validation/is-empty";
 
 /**
  * TODO: Still need to connect to back end and replace test values with props
@@ -14,61 +15,43 @@ class RecipeItem extends Component {
   }
 
   componentDidMount() {
-    this.props.getRecipes();
+    this.props.getRecipe(this.props.match.params.id);
   }
 
-  render() {
-    const { recipes, loading } = this.props.recipe;
+  // PROBLEM: Updating the props after re-rendering causes aparrent lag when re-rendering component.
 
-    if (recipes[0] === null || loading) {
+  render() {
+    const { recipe, loading } = this.props.recipe;
+
+    if (isEmpty(recipe)) {
       return (
         <div>
           <Spinner />
         </div>
       );
     } else {
-      const stepsList = recipes[0].steps.map(step => (
-        <div>
-          <li>{step}</li>
-        </div>
+      const ingredientsList = recipe.ingredients.map(ingredient => (
+        <li>{ingredient}</li>
       ));
 
-      const ingredientsList = recipes[0].ingredients.map(ingredient => (
-        <div>
-          <li className="Roboto">{ingredient}</li>
-        </div>
-      ));
-
-      const ingredientProductsList = this.state.ingredientProducts.map(
-        ingredientProduct => (
-          <div className="col-md-3 m-1">
-            <ProductCard
-              productKey=""
-              productImage=""
-              productName=""
-              productPrice=""
-            />
-          </div>
-        )
-      );
-
+      const stepsList = recipe.steps.map(step => <li>{step}</li>);
       return (
         <div>
           <img
-            src={recipes[0].img}
+            src={recipe.img}
             alt="recipe-img"
-            className="review-recipe-img img-fluid d-block mx-auto rounded shadow mb-3"
+            className="review-recipe-img img-fluid d-block mx-auto rounded border mb-3"
           />
           <hr className="shadow" />
-          <h2 className="Roboto text-center">{recipes[0].title}</h2>
+          <h2 className="Roboto text-center">{recipe.title}</h2>
           <span className="d-block text-center font-italic">
-            by {recipes[0].author}
+            by {recipe.author}
           </span>
           <label htmlFor="description" className="Roboto font-weight-bold">
             Description:
           </label>
           <p id="description" className="Roboto">
-            {recipes[0].description}
+            {recipe.description}
           </p>
           <label htmlFor="ingredients" className="Roboto font-weight-bold">
             Ingredients:
@@ -88,16 +71,16 @@ class RecipeItem extends Component {
   }
 }
 
-RecipeItem.propTypes = {
-  getRecipes: PropTypes.func.isRequired,
-  recipe: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => ({
   recipe: state.recipe
 });
 
+RecipeItem.propTypes = {
+  getRecipe: PropTypes.func.isRequired,
+  recipe: PropTypes.object.isRequired
+};
+
 export default connect(
   mapStateToProps,
-  { getRecipes }
+  { getRecipe }
 )(RecipeItem);

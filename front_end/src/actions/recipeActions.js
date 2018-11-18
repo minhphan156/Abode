@@ -1,21 +1,50 @@
 import axios from "axios";
 
-import { ADD_RECIPE, GET_RECIPES, GET_RECIPE, RECIPE_LOADING, GET_ERRORS } from "./types";
+import {
+  ADD_RECIPE,
+  GET_RECIPES,
+  GET_RECIPE,
+  RECIPE_LOADING,
+  GET_ERRORS
+} from "./types";
 
 // Get all recipes
 export const getRecipes = () => dispatch => {
   dispatch(setRecipeLoading);
   axios
     .get("/api/recipes/")
-    .then(res => dispatch({
-      type: GET_RECIPES,
-      payload: res.data
-    }))
-    .catch(res => dispatch({
-      type: GET_RECIPES,
-      payload: null
-    }))
-}
+    .then(res =>
+      dispatch({
+        type: GET_RECIPES,
+        payload: res.data
+      })
+    )
+    .catch(res =>
+      dispatch({
+        type: GET_RECIPES,
+        payload: null
+      })
+    );
+};
+
+// Get a specific recipe by ID
+export const getRecipe = id => dispatch => {
+  dispatch(setRecipeLoading);
+  axios
+    .get(`/api/recipes/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_RECIPE,
+        payload: res.data
+      })
+    )
+    .catch(res => {
+      dispatch({
+        type: GET_RECIPE,
+        payload: null
+      });
+    });
+};
 
 // Add Recipe
 export const addRecipe = (recipeData, history) => dispatch => {

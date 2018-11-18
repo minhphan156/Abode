@@ -1,38 +1,77 @@
 import React, { Component } from "react";
-import { PropTypes } from "prop-types";
-import { connect } from "react-redux";
 import RecipeBar from "./RecipeBar";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getRecipes } from "../../actions/recipeActions";
+import Spinner from "../common/Spinner";
+import { Link } from "react-router-dom";
+import isEmpty from "../../validation/is-empty";
 
-class recipePage extends Component {
+class BrowseRecipe extends Component {
+  componentDidMount() {
+    this.props.getRecipes();
+  }
+
   render() {
-    const recipe = this.props.recipe.recipeQueue;
-    {
-      const itemsList = category.map(item => {
-        return (
-          <div className="row justify-content-center" key={item._id}>
-            <div className="col-md-10">
-              <RecipeBar />
-            </div>
-          </div>
-        );
-      });
+    const { recipes, loading } = this.props.recipe;
+
+    if (loading || isEmpty(recipes)) {
+      return (
+        <div>
+          <Spinner />
+        </div>
+      );
+    } else if (recipes) {
+      const recipeFeed = recipes.map(recipe => (
+        <div className="col-md-10 mb-2">
+          <Link to={`/recipe/${recipe._id}/`}>
+            <RecipeBar
+              key={recipe.title}
+              title={recipe.title}
+              author={recipe.author}
+              img={recipe.img}
+              desc={recipe.description}
+              likes={recipe.likes}
+            />
+          </Link>
+        </div>
+      ));
 
       return (
-        <div className="container">
-          <div className="row">{itemsList}</div>
+        <div>
+          <h2 className="Roboto text-center font-weight-bold">
+            Browse our Recipes
+          </h2>
+          <hr className="shadow" />
+          <div className="row justify-content-center">{recipeFeed}</div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h2 className="Roboto text-center font-weight-bold">
+            Browse our Recipes
+          </h2>
+          <hr className="shadow" />
+          <p className="Roboto text-center">
+            We do not have any recipes at the moment.
+          </p>
         </div>
       );
     }
   }
 }
 
+PropTypes.BrowseRecipe = {
+  getRecipes: PropTypes.func.isRequired,
+  recipe: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
-  category: state.category
+  recipe: state.recipe
 });
-// this.props.category = { productcategory : data}
-// if this.props.category is empty we will not show the categoryPage page
 
 export default connect(
   mapStateToProps,
-  {}
-)(categoryPage);
+  { getRecipes }
+)(BrowseRecipe);

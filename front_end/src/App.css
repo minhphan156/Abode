@@ -291,6 +291,13 @@ img.shop-logo {
 .recipe-bar {
   width: 100%;
   height: 100px;
+  color: black;
+}
+
+.recipe-bar:hover {
+  width: 100%;
+  height: 100px;
+  color: #0055a2;
 }
 
 .recipe-bar-img {
@@ -333,4 +340,11 @@ img.shop-logo {
   width: 70%;
   height: 65vh;
   min-height: 250px;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none !important;
 }
