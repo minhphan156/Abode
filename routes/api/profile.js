@@ -60,7 +60,6 @@ router.post(
       // Return any errors with 400 status
       return res.status(400).json(errors);
     }
-
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
@@ -73,7 +72,7 @@ router.post(
     if (req.body.zip) profileFields.address.zip = req.body.zip;
     if (req.body.homeState)
       profileFields.address.homeState = req.body.homeState;
-
+      
     profileFields.creditCard = {};
     if (req.body.ccNumber)
       profileFields.creditCard.ccNumber = req.body.ccNumber;
@@ -96,6 +95,7 @@ router.post(
     });
   }
 );
+
 
 // @route POST api/profile/history
 // @desc Add order to history
@@ -134,6 +134,5 @@ router.delete(
     });
   }
 );
-
 // export so server.js can use this
 module.exports = router;
