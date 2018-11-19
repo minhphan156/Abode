@@ -11,7 +11,7 @@ const initialState = {
   loading: false
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case RECIPE_LOADING:
       return {
@@ -28,6 +28,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         recipes: action.payload,
+        recipe: {},
         loading: false
       };
     case DELETE_RECIPE:

@@ -43,28 +43,32 @@ class RecipeItem extends Component {
             className="review-recipe-img img-fluid d-block mx-auto rounded border mb-3"
           />
           <hr className="shadow" />
-          <h2 className="Roboto text-center">{recipe.title}</h2>
-          <span className="d-block text-center font-italic">
-            by {recipe.author}
-          </span>
-          <label htmlFor="description" className="Roboto font-weight-bold">
-            Description:
+          <div className="border rounded p-2">
+            <h2 className="Roboto text-center font-weight-bold">{recipe.title}</h2>
+            <span className="d-block text-center font-italic">
+              by {recipe.author}
+            </span>
+            <label htmlFor="description" className="Roboto font-weight-bold">
+              Description:
           </label>
-          <p id="description" className="Roboto">
-            {recipe.description}
-          </p>
-          <label htmlFor="ingredients" className="Roboto font-weight-bold">
-            Ingredients:
+            <p id="description" className="Roboto">
+              {recipe.description}
+            </p>
+            <label htmlFor="ingredients" className="Roboto font-weight-bold">
+              Ingredients:
           </label>
-          <ul id="ingredients">{ingredientsList}</ul>
-          <label htmlFor="steps" className="Roboto font-weight-bold">
-            Directions:
+            <ul id="ingredients">{ingredientsList}</ul>
+            <label htmlFor="steps" className="Roboto font-weight-bold">
+              Directions:
           </label>
-          <ol id="steps">{stepsList}</ol>
-          <label htmlFor="" className="Roboto font-weight-bold">
-            Available products from ingredients:
+            <ol id="steps">{stepsList}</ol>
+            <label htmlFor="" className="Roboto font-weight-bold">
+              Available products from ingredients:
           </label>
-          <div className="row border p-1" />
+            <div className="container">
+              <div className="row border p-1" />
+            </div>
+          </div>
         </div>
       );
     }

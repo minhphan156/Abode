@@ -15,33 +15,42 @@ class BrowseRecipe extends Component {
   render() {
     const { recipes, loading } = this.props.recipe;
 
+    let recipeListContent = (
+      <div>
+        <div className="browse-recipe-overlay-container">
+          <div className="browse-recipe-overlay" />
+          <img
+            src="/recipes/recipes-header.jpg"
+            alt="recipes-header"
+            className="browse-recipe-headerimg"
+          />
+        </div>
+        <h1 className="Roboto text-center font-weight-bold">
+          Browse our Recipes
+        </h1>
+      </div>
+    );
+
     if (loading || isEmpty(recipes)) {
       return (
         <div>
+          {recipeListContent}
           <Spinner />
         </div>
       );
     } else if (recipes) {
       const recipeFeed = recipes.map(recipe => (
         <div className="col-md-10 mb-2">
-          <Link to={`/recipe/${recipe._id}/`}>
-            <RecipeBar
-              key={recipe.title}
-              title={recipe.title}
-              author={recipe.author}
-              img={recipe.img}
-              desc={recipe.description}
-              likes={recipe.likes}
-            />
-          </Link>
+          <RecipeBar
+            recipe={recipe}
+            auth={this.props.auth}
+          />
         </div>
       ));
 
       return (
         <div>
-          <h2 className="Roboto text-center font-weight-bold">
-            Browse our Recipes
-          </h2>
+          {recipeListContent}
           <hr className="shadow" />
           <div className="row justify-content-center">{recipeFeed}</div>
         </div>
@@ -49,9 +58,7 @@ class BrowseRecipe extends Component {
     } else {
       return (
         <div>
-          <h2 className="Roboto text-center font-weight-bold">
-            Browse our Recipes
-          </h2>
+          {recipeListContent}
           <hr className="shadow" />
           <p className="Roboto text-center">
             We do not have any recipes at the moment.
@@ -68,7 +75,8 @@ PropTypes.BrowseRecipe = {
 };
 
 const mapStateToProps = state => ({
-  recipe: state.recipe
+  recipe: state.recipe,
+  auth: state.auth
 });
 
 export default connect(
