@@ -5,7 +5,8 @@ import {
   GET_RECIPES,
   GET_RECIPE,
   RECIPE_LOADING,
-  GET_ERRORS
+  GET_ERRORS,
+  ADD_LIKE
 } from "./types";
 
 // Get all recipes
@@ -49,7 +50,7 @@ export const getRecipe = id => dispatch => {
 // Add Recipe
 export const addRecipe = (recipeData, history) => dispatch => {
   axios
-    .post("/api/recipe", recipeData)
+    .post("/api/recipes", recipeData)
     .then(res =>
       dispatch({
         type: ADD_RECIPE,
@@ -60,6 +61,24 @@ export const addRecipe = (recipeData, history) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
+      })
+    );
+};
+
+// Add a like
+export const addLike = id => dispatch => {
+  axios
+    .post(`api/recipes/like/${id}`)
+    .then(res =>
+      dispatch({
+        type: ADD_LIKE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: ADD_LIKE,
+        payload: null
       })
     );
 };

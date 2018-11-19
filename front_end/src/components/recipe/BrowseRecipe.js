@@ -17,12 +17,12 @@ class BrowseRecipe extends Component {
 
     let recipeListContent = (
       <div>
-        <div className="browse-recipe-overlay-container">
-          <div className="browse-recipe-overlay" />
+        <div className="browse-recipe-overlay-container rounded mb-1">
+          <div className="browse-recipe-overlay rounded" />
           <img
             src="/recipes/recipes-header.jpg"
             alt="recipes-header"
-            className="browse-recipe-headerimg"
+            className="browse-recipe-headerimg rounded"
           />
         </div>
         <h1 className="Roboto text-center font-weight-bold">
@@ -41,10 +41,7 @@ class BrowseRecipe extends Component {
     } else if (recipes) {
       const recipeFeed = recipes.map(recipe => (
         <div className="col-md-10 mb-2">
-          <RecipeBar
-            recipe={recipe}
-            auth={this.props.auth}
-          />
+          <RecipeBar recipe={recipe} auth={this.props.auth} />
         </div>
       ));
 
