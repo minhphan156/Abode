@@ -1,10 +1,14 @@
 import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
+import { addRecipe } from "../../actions/recipeActions";
+import { withRouter } from "react-router-dom";
 
 /**
  * Main component for the 'Create Recipe' page.
  * It uses 2 functional components (StepComponent & IngredientsBoxComponent) for each new step/ingredient
  */
-export default class CreateRecipe extends Component {
+class CreateRecipe extends Component {
   constructor(props) {
     super(props);
 
@@ -19,10 +23,41 @@ export default class CreateRecipe extends Component {
     let newIngredient = ""; // This variable is needed for ingredient input field
 
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onIngredientChange = this.onIngredientChange.bind(this);
     this.addStep = this.addStep.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
     this.removeIngredient = this.removeIngredient.bind(this);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.errors) {
+      this.setState({ errors: newProps.errors });
+    }
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    // const { author } = this.props.auth;
+
+    const recipeData = {
+      title: this.state.title,
+      description: this.state.description,
+      image: this.state.image,
+      steps: this.state.steps,
+      ingredients: this.state.ingredients
+      // author: author.name
+    };
+
+    this.props.addRecipe(recipeData);
+    this.setState({
+      title: "",
+      description: "",
+      image: "",
+      steps: [],
+      ingredients: []
+    });
   }
 
   /**
@@ -103,6 +138,7 @@ export default class CreateRecipe extends Component {
             steps: mutate
           });
         }}
+        // value = {this.state.steps}
       />
     ));
 
@@ -119,7 +155,7 @@ export default class CreateRecipe extends Component {
           Post Your Recipe
         </h2>
         <hr className="shadow" />
-        <form>
+        <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title:</label>
             <input
@@ -129,6 +165,7 @@ export default class CreateRecipe extends Component {
               id="title"
               placeholder="Title of your recipe..."
               onChange={this.onChange}
+              value={this.state.title}
             />
           </div>
           <div className="form-group">
@@ -140,6 +177,7 @@ export default class CreateRecipe extends Component {
               rows="2"
               placeholder="Short description of your recipe..."
               onChange={this.onChange}
+              value={this.state.description}
             />
           </div>
           <div className="form-group">
@@ -151,6 +189,7 @@ export default class CreateRecipe extends Component {
               id="img-links"
               placeholder="Link to image..."
               onChange={this.onChange}
+              value={this.state.image}
             />
           </div>
           {/* START OF STEP(S) */}
@@ -185,6 +224,12 @@ export default class CreateRecipe extends Component {
               </div>
             </div>
           </div>
+          {/* <div className="d-flex justify-content-center">
+            <button type="submit" className="btn btn-success">
+              Post Recipe
+            </button>
+          </div> */}
+          <input type="submit" value="Submit" className="btn btn-success" />
         </form>
         <div className="d-flex flex-wrap border justify-content-center p-1">
           {/* START OF INGREDIENT BOXES */}
@@ -192,11 +237,11 @@ export default class CreateRecipe extends Component {
           {/* END OF INGREDIENT BOXES */}
         </div>
         <br />
-        <div className="d-flex justify-content-center">
-          <button type="button" className="btn btn-success">
+        {/* <div className="d-flex justify-content-center">
+          <button type="submit" className="btn btn-success">
             Post Recipe
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -251,3 +296,20 @@ const IngredientBoxComponent = props => {
     </div>
   );
 };
+
+CreateRecipe.propTypes = {
+  addRecipe: PropTypes.func.isRequired,
+  // auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  // auth: state.auth,
+  recipe: state.recipe,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { addRecipe }
+)(withRouter(CreateRecipe));
