@@ -175,18 +175,19 @@ class HistorySingleOrder extends Component {
             <span> ${(subtotal / 100).toFixed(2)}</span>
           </div>
         )}
-        <Link to="/history" className="btn btn-light">
-          <i className="fas fa-arrow-circle-left" />
-          Back
-        </Link>
         <button
           onClick={() => this.onAddAllCartClick()}
           type="button"
-          className="align-right m-0 pt-1 product-card-btn btn rounded-0 m-0 p-2"
+          className="float-right m-0 pt-1 product-card-btn btn rounded-0 m-0 p-2"
         >
           Order All Again
           <i className="fas fa-cart-plus" />
         </button>
+
+        <Link to="/history" className="btn btn-light">
+          <i className="fas fa-arrow-circle-left" />
+          Back
+        </Link>
       </div>
     );
   }
