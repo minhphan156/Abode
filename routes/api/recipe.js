@@ -23,6 +23,7 @@ router.post(
 
     // Check Validation
     if (!isValid) {
+      console.log("test");
       // if any errors, send 400 with errors object
       return res.status(400).json(errors);
     }
@@ -37,19 +38,18 @@ router.post(
         } else {
           const newRecipe = new Recipe({
             userID: req.user.id,
-            author: req.user.name,
+            author: req.user.author,
             title: req.body.title,
             image: req.body.image,
             steps: req.body.steps,
             date: Date(),
             description: req.body.description,
-            ingredients: req.body.ingredients,
-            ingredientsProducts: [],
-            // todo: add ingredients feature
-            likes: []
+            ingredients: req.body.ingredients
+            // ingredientsProducts: req.body.ingredientsProducts,
+            // TO-DO: add ingredients feature
+            // likes: []
           });
-
-          console.log("recipe.js backend=====" + JSON.stringify(newRecipe));
+          
 
           Profile.findOne({ user: req.user.id })
             .then(profile => {
@@ -59,9 +59,7 @@ router.post(
                 profile.save();
               }
             })
-            .catch(err =>
-              res.status(500).json({ error: "Profile failed to save" })
-            );
+            .catch(err => res.status(200).json(newRecipe));
 
           newRecipe
             .save()
@@ -71,7 +69,9 @@ router.post(
             });
         }
       })
-      .catch(res.status(404));
+      .catch(
+        
+        res.status(404));
   }
 );
 

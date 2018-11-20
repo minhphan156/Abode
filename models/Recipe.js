@@ -18,10 +18,12 @@ const RecipeSchema = new Schema({
     type: String,
     required: true
   },
-  steps: {
-    type: Array,
-    required: true
-  },
+  steps: [
+    {
+      type: String,
+      required: true
+    }
+  ],
   date: {
     type: Date,
     default: Date.now
@@ -35,23 +37,23 @@ const RecipeSchema = new Schema({
       type: String,
       required: true
     }
-  ],
-  ingredientsProducts: [
-    {
-      product: {
-        type: Schema.Types.ObjectId,
-        ref: "product"
-      }
-    }
-  ],
-  likes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      }
-    }
-  ]
+  ] //,
+  // ingredientsProducts: [
+  //   {
+  //     product: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "product"
+  //     }
+  //   }
+  // ],
+  // likes: [
+  //   {
+  //     user: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "users"
+  //     }
+  //   }
+  // ]
 });
 
 module.exports = Recipe = mongoose.model("recipes", RecipeSchema);

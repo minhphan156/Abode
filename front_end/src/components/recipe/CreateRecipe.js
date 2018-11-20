@@ -51,7 +51,7 @@ class CreateRecipe extends Component {
     };
     console.log("CreateRecipe.js=====" + JSON.stringify(recipeData));
 
-    this.props.addRecipe(recipeData);
+    this.props.addRecipe(recipeData, this.props.history);
     this.setState({
       title: "",
       description: "",
