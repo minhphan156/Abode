@@ -33,6 +33,13 @@ class CheckoutCart extends Component {
     this.props.getCurrentProfile();
   }
 
+  addZeroToNum(number) {
+    if (number < 10) {
+      return "0" + number;
+    }
+    return number;
+  }
+
   onSubmitPayment() {
     const profileReducer = this.props.profile.profile;
 
@@ -41,12 +48,16 @@ class CheckoutCart extends Component {
     var date =
       today.getFullYear() +
       "-" +
-      (today.getMonth() + 1) +
+      this.addZeroToNum(today.getMonth() + 1) +
       "-" +
-      today.getDate();
+      this.addZeroToNum(today.getDate());
 
     var time =
-      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      this.addZeroToNum(today.getHours()) +
+      ":" +
+      this.addZeroToNum(today.getMinutes()) +
+      ":" +
+      this.addZeroToNum(today.getSeconds());
 
     var dateTime = date + " " + time;
     let discountPercent = this.props.cart.discount;
