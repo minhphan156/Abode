@@ -57,9 +57,11 @@ class Delivery extends Component {
       homeState: this.state.homeState,
       ccNumber: "",
       ccExp: "",
-      ccCvv: ""
+      ccCvv: "",
+      delivery: true
     };
-    this.props.setDelivery(profileData, this.props.history);
+    console.log(this.props.auth.isAuthenticated)
+    this.props.setDelivery(profileData, this.props.history, this.props.auth.isAuthenticated);
   }
 
   render() {
@@ -154,12 +156,14 @@ Delivery.PropTypes = {
   setDelivery: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  errors: state.errors
+  errors: state.errors,
+  auth: state.auth
 });
 
 export default injectStripe(
