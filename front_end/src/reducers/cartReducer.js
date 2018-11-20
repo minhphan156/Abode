@@ -2,7 +2,8 @@ import {
   ADD_ITEM,
   REMOVE_ITEM,
   INCREMENT_ITEM_COUNT,
-  DISCOUNT
+  DISCOUNT,
+  ADD_ITEM_HISTORY
 } from "../actions/types";
 
 const discountCodes = ["15OFF", "BlackFriday"];
@@ -13,7 +14,10 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
+  var itemHistoryCount = 0; //default item count in history is 0
   switch (action.type) {
+    case ADD_ITEM_HISTORY: //item count in history is set to value > 0 when we add an item from history
+      itemHistoryCount = action.itemCount;
     case ADD_ITEM:
       //If there are already products in cart array, enter for loop
       for (var i = 0; i < state.shoppingCart.length; i++) {
@@ -28,7 +32,14 @@ export default function(state = initialState, action) {
       }
       //If cart array empty OR there is NO occurrence of this product being
       //processed, then this code gets executed
-      action.payload[0]["count"] = "1"; //Product object gets field count set to 1
+      if (itemHistoryCount) {
+        //If we are adding items from history
+        action.payload[0]["count"] = itemHistoryCount;
+      } else {
+        //If we are adding items from product card or product detail
+        action.payload[0]["count"] = "1"; //Product object gets field count set to 1
+      }
+
       return {
         ...state,
         shoppingCart: [...state.shoppingCart, action.payload[0]]

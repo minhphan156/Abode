@@ -4,20 +4,31 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getCurrentProfile } from "../../actions/profileActions";
 import { Link } from "react-router-dom";
+import { addItemFromHistory } from "../../actions/cartActions";
+
 class HistorySingleOrder extends Component {
   constructor() {
     super();
     this.state = {
       product_array: []
     };
+    this.onCartClick = this.onCartClick.bind(this);
   }
+
+  onCartClick(e, count) {
+    const product = {
+      name: e
+    };
+    this.props.addItemFromHistory(product, count);
+  }
+
   componentDidMount() {
     this.props.getCurrentProfile();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
-      
+
       // Set profile_array
       const element = this.searchArray(profile);
       this.setState({
@@ -98,15 +109,20 @@ class HistorySingleOrder extends Component {
                   ${((item.count * item.price) / 100).toFixed(2)}
                 </span>
               </div>
-              <div className="product-bar-price text-center border-right m-0 p-0">
-                <span className="align-middle m-0 pt-1">ADD TO CART</span>
-              </div>
+
+              <button
+                onClick={() => this.onCartClick(item.name, item.count)}
+                type="button"
+                className="product-bar-price text-center border-right m-0 p-0 align-middle m-0 pt-1 product-card-btn btn rounded-0 m-0 p-2"
+              >
+                <i className="fas fa-cart-plus" />
+              </button>
             </div>
           </div>
         </div>
       );
     });
-
+    //className="align-middle m-0 pt-1"
     return (
       <div>
         <div className="text-center">
@@ -165,5 +181,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, addItemFromHistory }
 )(HistorySingleOrder);

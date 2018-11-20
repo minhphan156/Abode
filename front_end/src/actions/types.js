@@ -21,5 +21,6 @@ export const ADD_ITEM = "ADD_ITEM";
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export const INCREMENT_ITEM_COUNT = "INCREMENT_ITEM_COUNT";
 export const DISCOUNT = "DISCOUNT";
+export const ADD_ITEM_HISTORY = "ADD_ITEM_HISTORY";
 
 export const GET_DELIVERY = "GET_DELIVERY";
