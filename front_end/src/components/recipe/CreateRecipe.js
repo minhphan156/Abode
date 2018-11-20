@@ -49,6 +49,7 @@ class CreateRecipe extends Component {
       ingredients: this.state.ingredients
       // author: author.name
     };
+    console.log("CreateRecipe.js=====" + JSON.stringify(recipeData));
 
     this.props.addRecipe(recipeData);
     this.setState({

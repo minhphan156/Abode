@@ -39,11 +39,17 @@ router.post(
             userID: req.user.id,
             author: req.user.name,
             title: req.body.title,
+            image: req.body.image,
+            steps: req.body.steps,
             date: Date(),
             description: req.body.description,
             ingredients: req.body.ingredients,
-            ingredientsProducts: req.body.ingredientsProducts
+            ingredientsProducts: [],
+            // todo: add ingredients feature
+            likes: []
           });
+
+          console.log("recipe.js backend=====" + JSON.stringify(newRecipe));
 
           Profile.findOne({ user: req.user.id })
             .then(profile => {
@@ -53,11 +59,16 @@ router.post(
                 profile.save();
               }
             })
-            .catch(err => res.status(500).json({ error: "Profile failed to save" }));
+            .catch(err =>
+              res.status(500).json({ error: "Profile failed to save" })
+            );
 
-          newRecipe.save()
+          newRecipe
+            .save()
             .then(recipe => res.json(recipe))
-            .catch(err => { res.status(500).json({ error: "Recipe failed to save" }) });
+            .catch(err => {
+              res.status(500).json({ error: "Recipe failed to save" });
+            });
         }
       })
       .catch(res.status(404));
@@ -115,9 +126,18 @@ router.delete(
 
             // If the user had set up their profile, the recipe will be deleted from their recipe array.
             if (profile) {
-              const removeIndex = profile.recipes.map(item => item.id.indexOf(req.params.id));
+              const removeIndex = profile.recipes.map(item =>
+                item.id.indexOf(req.params.id)
+              );
               profile.recipes.splice(removeIndex, 1);
-              profile.save().then().catch(err => res.status(500).json({ error: "Failed to remove recipe from profile" }));
+              profile
+                .save()
+                .then()
+                .catch(err =>
+                  res
+                    .status(500)
+                    .json({ error: "Failed to remove recipe from profile" })
+                );
             }
 
             recipe.remove().then(() => res.json({ success: true }));
@@ -160,11 +180,14 @@ router.put(
                 (recipe.date = Date()),
                 (recipe.description = req.body.description),
                 (recipe.ingredients = req.body.ingredients),
-                (recipe.ingredientsProducts = req.body.ingredientsProducts)
+                (recipe.ingredientsProducts = req.body.ingredientsProducts);
 
-              return recipe.save()
+              return recipe
+                .save()
                 .then(recipe => res.json(recipe))
-                .catch(err => { res.status(500).json({ error: "Failed to save" }) })
+                .catch(err => {
+                  res.status(500).json({ error: "Failed to save" });
+                });
             } else {
               return res
                 .status(404)
@@ -193,7 +216,9 @@ router.post(
         Recipe.findById(req.params.id)
           .then(recipe => {
             if (
-              recipe.likes.filter(likes => likes.user.toString() === req.user.id).length > 0
+              recipe.likes.filter(
+                likes => likes.user.toString() === req.user.id
+              ).length > 0
             ) {
               return res
                 .status(400)
@@ -207,7 +232,9 @@ router.post(
             res.status(404).json({ norecipefound: "No such recipe exists" })
           );
       })
-      .catch(err => res.status(401).json({ notauthorized: "User must be logged in" }));
+      .catch(err =>
+        res.status(401).json({ notauthorized: "User must be logged in" })
+      );
   }
 );
 
@@ -223,14 +250,18 @@ router.post(
         Recipe.findById(req.params.id)
           .then(recipe => {
             if (
-              recipe.likes.filter(likes => likes.user.toString() === req.user.id).length === 0
+              recipe.likes.filter(
+                likes => likes.user.toString() === req.user.id
+              ).length === 0
             ) {
               return res
                 .status(400)
                 .json({ notLiked: "User has not liked this post" });
             }
 
-            const removeIndex = recipe.likes.map(item => item.user.toString()).indexOf(req.user.id)
+            const removeIndex = recipe.likes
+              .map(item => item.user.toString())
+              .indexOf(req.user.id);
             recipe.likes.splice(removeIndex, 1);
 
             recipe.save().then(recipe => res.json(recipe));
@@ -239,7 +270,9 @@ router.post(
             res.status(404).json({ norecipefound: "No such recipe exists" })
           );
       })
-      .catch(err => res.status(401).json({ notauthorized: "User must be logged in" }));
+      .catch(err =>
+        res.status(401).json({ notauthorized: "User must be logged in" })
+      );
   }
 );
 
