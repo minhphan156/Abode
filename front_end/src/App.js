@@ -25,6 +25,10 @@ import CheckoutCart from "./components/cart/CheckoutCart";
 import CategoryShowProducts from "./components/browse/CategoryShowProducts";
 import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
+
+import CreateRecipe from "./components/recipe/CreateRecipe";
+import MyRecipe from "./components/recipe/MyRecipe";
+
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import Delivery from "./components/cart/Delivery";
@@ -77,6 +81,10 @@ class App extends Component {
               <Route exact path="/checkout" component={CheckoutCart} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+
+              <Route exact path="/MyRecipe" component={MyRecipe} />
+              <Route exact path="/CreateRecipe" component={CreateRecipe} />
+
               <Route exact path="/delivery" component={Delivery} />
               <Route
                 exact
