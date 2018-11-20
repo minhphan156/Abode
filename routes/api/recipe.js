@@ -9,9 +9,6 @@ const Recipe = require("../../models/Recipe");
 // Load Profile model
 const Profile = require("../../models/Profile");
 
-// Validation
-const validateRecipeInput = require("../../validation/recipe");
-
 // @route   POST api/recipes/create
 // @desc    Create a new recipe made by logged-in users
 // @access  Private
@@ -19,15 +16,6 @@ router.post(
   "/create",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateRecipeInput(req.body);
-
-    // Check Validation
-    if (!isValid) {
-      console.log("test");
-      // if any errors, send 400 with errors object
-      return res.status(400).json(errors);
-    }
-
     Recipe.findOne({ title: req.body.title }).then(recipe => {
       // If there is already a recipe of the same title..
       if (recipe) {
