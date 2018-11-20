@@ -66,4 +66,5 @@ const port = process.env.PORT || 5000;
 
 // listen to port when server is running
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
 // NOTE: At this point , go to terminal and do $ npm run server

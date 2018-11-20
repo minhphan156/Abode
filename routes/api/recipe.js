@@ -44,20 +44,40 @@ router.post(
             steps: req.body.steps,
             date: Date(),
             description: req.body.description,
-            ingredients: req.body.ingredients
+            ingredients: req.body.ingredients,
             // ingredientsProducts: req.body.ingredientsProducts,
             // TO-DO: add ingredients feature
-            // likes: []
+            likes: []
           });
-          
+
+          const profileRecipe = {
+            userID: req.user.id,
+            author: req.user.author,
+            title: req.body.title,
+            image: req.body.image,
+            steps: req.body.steps,
+            date: Date(),
+            description: req.body.description,
+            ingredients: req.body.ingredients,
+            // ingredientsProducts: req.body.ingredientsProducts,
+            // TO-DO: add ingredients feature
+            likes: []
+          };
 
           Profile.findOne({ user: req.user.id })
             .then(profile => {
               // If the user had set up their profile, their recipe will be saved to their recipe array
-              if (profile) {
-                profile.recipes.unShift(newRecipe);
-                profile.save();
-              }
+
+              profile.recipe.unshift(profileRecipe);
+
+              console.log(profile);
+              Profile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profile },
+                { new: true }
+              )
+                .then(() => console.log("success"))
+                .catch(() => console.log("erroreero in profiel "));
             })
             .catch(err => res.status(200).json(newRecipe));
 
@@ -69,9 +89,7 @@ router.post(
             });
         }
       })
-      .catch(
-        
-        res.status(404));
+      .catch(res.status(404));
   }
 );
 
@@ -99,11 +117,11 @@ router.get("/:id", (req, res) => {
           .json({ norecipefound: "Such recipe does not exist" });
       }
     })
-    .catch(err =>
+    .catch(err => {
       res.status(400).json({
         norecipefound: "Such recipe does not exist"
-      })
-    );
+      });
+    });
 });
 
 // @route DELETE api/recipes/:id

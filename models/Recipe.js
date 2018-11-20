@@ -37,7 +37,7 @@ const RecipeSchema = new Schema({
       type: String,
       required: true
     }
-  ] //,
+  ],
   // ingredientsProducts: [
   //   {
   //     product: {
@@ -46,14 +46,14 @@ const RecipeSchema = new Schema({
   //     }
   //   }
   // ],
-  // likes: [
-  //   {
-  //     user: {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "users"
-  //     }
-  //   }
-  // ]
+  likes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      }
+    }
+  ]
 });
 
 module.exports = Recipe = mongoose.model("recipes", RecipeSchema);

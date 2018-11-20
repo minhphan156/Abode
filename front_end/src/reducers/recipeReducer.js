@@ -1,4 +1,10 @@
-import { GET_RECIPE, RECIPE_LOADING, DELETE_RECIPE } from "../actions/types";
+import {
+  GET_RECIPE,
+  GET_RECIPES,
+  RECIPE_LOADING,
+  DELETE_RECIPE,
+  ADD_LIKE
+} from "../actions/types";
 
 const initialState = {
   recipes: [],
@@ -19,10 +25,23 @@ export default function(state = initialState, action) {
         recipe: action.payload,
         loading: false
       };
+    case GET_RECIPES:
+      return {
+        ...state,
+        recipes: action.payload,
+        recipe: {},
+        loading: false
+      };
     case DELETE_RECIPE:
       return {
         ...state,
         recipe: {}
+      };
+    case ADD_LIKE:
+      return {
+        ...state,
+        recipe: action.payload,
+        loading: false
       };
     default:
       return state;
