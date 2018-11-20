@@ -1,19 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addLike } from "../../actions/recipeActions";
+import { addLike, removeLike } from "../../actions/recipeActions";
 import PropTypes from "prop-types";
 
-class RecipeBar extends Component {
+export default class RecipeBar extends Component {
   constructor(props) {
     super(props);
-
-    this.addLikeOnClick = this.addLikeOnClick.bind(this);
-  }
-
-  addLikeOnClick(event) {
-    event.preventDefault();
-    this.props.addLike(this.props.recipe._id);
   }
 
   render() {
@@ -57,8 +50,7 @@ class RecipeBar extends Component {
               </Link>
               <button
                 type="button"
-                className="btn btn-primary btn-sm rounded-0 m-0 p-1"
-                onClick={this.addLikeOnClick}
+                className="btn btn-danger btn-sm rounded-0 m-0 p-1"
               >
                 <i className="fas fa-heart" />{" "}
                 <span className="badge badge-light">{likes.length}</span>
@@ -75,12 +67,3 @@ class RecipeBar extends Component {
     );
   }
 }
-
-RecipeBar.propTypes = {
-  addLike: PropTypes.func.isRequired
-};
-
-export default connect(
-  null,
-  { addLike }
-)(RecipeBar);

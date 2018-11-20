@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getRecipes } from "../../actions/recipeActions";
 import Spinner from "../common/Spinner";
-import { Link } from "react-router-dom";
 import isEmpty from "../../validation/is-empty";
 
 class BrowseRecipe extends Component {
