@@ -63,7 +63,7 @@ class HistoryOverview extends Component {
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Date + {test}</th>
+                <th>Date</th>
                 <th>Subtotal</th>
                 <th>Discount</th>
                 <th>Total</th>
