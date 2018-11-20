@@ -13,6 +13,7 @@ class HistorySingleOrder extends Component {
       product_array: []
     };
     this.onCartClick = this.onCartClick.bind(this);
+    this.onAddAllCartClick = this.onAddAllCartClick.bind(this);
   }
 
   onCartClick(e, count) {
@@ -20,6 +21,17 @@ class HistorySingleOrder extends Component {
       name: e
     };
     this.props.addItemFromHistory(product, count);
+  }
+
+  onAddAllCartClick() {
+    this.state.product_array.map(item => {
+      this.props.addItemFromHistory(
+        {
+          name: item.name
+        },
+        item.count
+      );
+    });
   }
 
   componentDidMount() {
@@ -167,6 +179,14 @@ class HistorySingleOrder extends Component {
           <i className="fas fa-arrow-circle-left" />
           Back
         </Link>
+        <button
+          onClick={() => this.onAddAllCartClick()}
+          type="button"
+          className="align-right m-0 pt-1 product-card-btn btn rounded-0 m-0 p-2"
+        >
+          Order All Again
+          <i className="fas fa-cart-plus" />
+        </button>
       </div>
     );
   }
