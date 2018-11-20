@@ -30,5 +30,6 @@ export const DELETE_RECIPE = "DELETE_RECIPE";
 export const ADD_LIKE = "ADD_LIKE";
 
 export const DISCOUNT = "DISCOUNT";
+export const ADD_ITEM_HISTORY = "ADD_ITEM_HISTORY";
 
 export const GET_DELIVERY = "GET_DELIVERY";
