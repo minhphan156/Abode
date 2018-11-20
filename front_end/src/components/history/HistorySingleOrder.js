@@ -134,7 +134,7 @@ class HistorySingleOrder extends Component {
         </div>
       );
     });
-    //className="align-middle m-0 pt-1"
+
     return (
       <div>
         <div className="text-center">
