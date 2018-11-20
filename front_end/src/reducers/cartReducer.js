@@ -23,7 +23,14 @@ export default function(state = initialState, action) {
       for (var i = 0; i < state.shoppingCart.length; i++) {
         //If there is an existing occurrence of this product being processed in cart
         if (action.payload[0]._id == state.shoppingCart[i]._id) {
-          state.shoppingCart[i].count++;
+          if (itemHistoryCount > 1) {
+            //Has to be >1 because of a bug when itemHistoryCount = 1, it treats count as a string and appends to it somehow
+            //If we are adding items from history
+            state.shoppingCart[i].count += itemHistoryCount;
+          } else {
+            //If we are adding items from product card or product detail
+            state.shoppingCart[i].count++;
+          }
           return {
             ...state,
             shoppingCart: state.shoppingCart
