@@ -48,12 +48,9 @@ const ProfileSchema = new Schema({
   history: {
     type: Array
   },
-  recipe: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "recipe"
-    }
-  ]
+  recipe: {
+    type: Array
+  }
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);
