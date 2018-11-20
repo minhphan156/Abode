@@ -44,26 +44,40 @@ class HistoryOverview extends Component {
         </tbody>
       );
     });
-    return (
-      <div class="container">
-        <h2>Order History</h2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Subtotal</th>
-              <th>Discount</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          {listItem}
-        </table>
-        <Link to="/dashboard" className="btn btn-light">
-          <i className="fas fa-arrow-circle-left" />
-          Back
-        </Link>
-      </div>
-    );
+
+    if (this.state.history_array.length === 0) {
+      return (
+        <div class="container">
+          <h2>Order History</h2> <h4 className="d-block pb-3" />
+          <h5 className="d-block pb-3"> There are no Orders in your History</h5>
+          <Link to="/dashboard" className="btn btn-light">
+            <i className="fas fa-arrow-circle-left" />
+            Back
+          </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div class="container">
+          <h2>Order History</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date + {test}</th>
+                <th>Subtotal</th>
+                <th>Discount</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            {listItem}
+          </table>
+          <Link to="/dashboard" className="btn btn-light">
+            <i className="fas fa-arrow-circle-left" />
+            Back
+          </Link>
+        </div>
+      );
+    }
   }
 }
 HistoryOverview.propTypes = {

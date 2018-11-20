@@ -30,8 +30,12 @@ class Dashboard extends Component {
         // User has already set up the profile
         dashboardContent = (
           <div>
+            <h4 className="d-block pb-3" />
             <p className="lead test-muted">This is your Profile </p>
+
             <p>Please choose one of the following options</p>
+            <h4 className="d-block pb-3" />
+
             <ProfileActions />
 
             <div style={{ marginBottom: "60px" }} />
@@ -47,10 +51,11 @@ class Dashboard extends Component {
         // User is logged in, but profile it not set up yet
         dashboardContent = (
           <div>
-            <p className="lead test-muted">Welcome {user.name} </p>
-            <p>You have not yet set up your profile. Please add your info</p>
+            <h4 className="d-block pb-3" />
+
+            <p>You have not yet added a Delivery Address.</p>
             <Link to="/create-profile" className="btn btn-lg btn-info">
-              Set up Profile
+              Add Delivery Address
             </Link>
           </div>
         );
