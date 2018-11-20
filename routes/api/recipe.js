@@ -133,7 +133,7 @@ router.delete(
                     .json({ error: "Failed to remove recipe from profile" })
                 );
             }
-
+            console.log("huh");
             recipe.remove().then(() => res.json({ success: true }));
           })
           .catch(err =>

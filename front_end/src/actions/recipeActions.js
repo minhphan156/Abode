@@ -1,32 +1,6 @@
 import axios from "axios";
 
-import {
-  ADD_RECIPE,
-  GET_RECIPES,
-  GET_RECIPE,
-  RECIPE_LOADING,
-  GET_ERRORS,
-  ADD_LIKE
-} from "./types";
-
-// Get all recipes
-export const getRecipes = () => dispatch => {
-  dispatch(setRecipeLoading);
-  axios
-    .get("/api/recipes/")
-    .then(res =>
-      dispatch({
-        type: GET_RECIPES,
-        payload: res.data
-      })
-    )
-    .catch(res =>
-      dispatch({
-        type: GET_RECIPES,
-        payload: null
-      })
-    );
-};
+import { GET_RECIPE, RECIPE_LOADING, ADD_LIKE, REMOVE_LIKE } from "./types";
 
 // Get a specific recipe by ID
 export const getRecipe = id => dispatch => {
@@ -47,37 +21,37 @@ export const getRecipe = id => dispatch => {
     });
 };
 
-// Add Recipe
-export const addRecipe = (recipeData, history) => dispatch => {
+// Add a like
+export const addLike = id => dispatch => {
   axios
-    .post("/api/recipes", recipeData)
+    .post(`/api/recipes/like/${id}`)
     .then(res =>
       dispatch({
-        type: ADD_RECIPE,
+        type: ADD_LIKE,
         payload: res.data
       })
     )
     .catch(err =>
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: ADD_LIKE,
+        payload: null
       })
     );
 };
 
-// Add a like
-export const addLike = id => dispatch => {
+// Remove a like
+export const removeLike = id => dispatch => {
   axios
-    .post(`api/recipes/like/${id}`)
+    .post(`/api/recipes/unlike/${id}`)
     .then(res =>
       dispatch({
-        type: ADD_LIKE,
+        type: REMOVE_LIKE,
         payload: res.data
       })
     )
     .catch(err =>
       dispatch({
-        type: ADD_LIKE,
+        type: REMOVE_LIKE,
         payload: null
       })
     );

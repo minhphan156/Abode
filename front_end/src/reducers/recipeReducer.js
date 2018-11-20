@@ -1,9 +1,8 @@
 import {
   GET_RECIPE,
-  GET_RECIPES,
   RECIPE_LOADING,
-  DELETE_RECIPE,
-  ADD_LIKE
+  ADD_LIKE,
+  REMOVE_LIKE
 } from "../actions/types";
 
 const initialState = {
@@ -25,19 +24,13 @@ export default function(state = initialState, action) {
         recipe: action.payload,
         loading: false
       };
-    case GET_RECIPES:
+    case ADD_LIKE:
       return {
         ...state,
-        recipes: action.payload,
-        recipe: {},
+        recipe: action.payload,
         loading: false
       };
-    case DELETE_RECIPE:
-      return {
-        ...state,
-        recipe: {}
-      };
-    case ADD_LIKE:
+    case REMOVE_LIKE:
       return {
         ...state,
         recipe: action.payload,
