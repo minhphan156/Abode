@@ -56,7 +56,8 @@ module.exports = function validateProfileInput(data) {
   }
   if(data.ccNumber ==="" &&
     data.ccExp === "" &&
-    data.ccCvv === ""){}
+    data.ccCvv === "" &&
+    data.delivery){}
   else{
     errors = {...errors, ...ccErrors}
   }
