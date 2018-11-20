@@ -50,6 +50,8 @@ class CreateRecipe extends Component {
       // author: author.name
     };
 
+    console.log(recipeData);
+
     this.props.addRecipe(recipeData);
     this.setState({
       title: "",

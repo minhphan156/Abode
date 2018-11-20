@@ -6,7 +6,7 @@ import { ADD_RECIPE, GET_RECIPE, RECIPE_LOADING, GET_ERRORS } from "./types";
 export const getRecipeByName = recipename => dispatch => {
   dispatch(setRecipeLoading());
   axios
-    .get(`/api/recipe/${recipename}`)
+    .get(`/api/recipes/${recipename}`)
     .then(res =>
       dispatch({
         type: GET_RECIPE,
@@ -24,13 +24,8 @@ export const getRecipeByName = recipename => dispatch => {
 // Add Recipe
 export const addRecipe = (recipeData, history) => dispatch => {
   axios
-    .post("/api/recipe", recipeData)
-    .then(res =>
-      dispatch({
-        type: ADD_RECIPE,
-        payload: res.data
-      })
-    )
+    .post("/api/recipes/create", recipeData)
+    .then(res => history.push("/dashboard"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
