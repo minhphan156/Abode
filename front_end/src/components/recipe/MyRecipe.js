@@ -6,7 +6,6 @@ class MyRecipe extends Component {
     return (
       <div>
         <Link to="/CreateRecipe" className="btn btn-light">
-          <i className="fas fa-user-circle text-info mr-1" />
           Create Recipe
         </Link>
       </div>

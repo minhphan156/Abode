@@ -19,9 +19,6 @@ class CreateRecipe extends Component {
       steps: [],
       ingredients: []
     };
-
-    let newIngredient = ""; // This variable is needed for ingredient input field
-
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onIngredientChange = this.onIngredientChange.bind(this);
@@ -39,17 +36,16 @@ class CreateRecipe extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    // const { author } = this.props.auth;
-
+    const { user } = this.props.auth;
+    console.log(this.props.auth);
     const recipeData = {
       title: this.state.title,
       description: this.state.description,
       image: this.state.image,
       steps: this.state.steps,
-      ingredients: this.state.ingredients
-      // author: author.name
+      ingredients: this.state.ingredients,
+      author: user.name
     };
-    console.log("CreateRecipe.js=====" + JSON.stringify(recipeData));
 
     this.props.addRecipe(recipeData, this.props.history);
     this.setState({
@@ -139,7 +135,6 @@ class CreateRecipe extends Component {
             steps: mutate
           });
         }}
-        // value = {this.state.steps}
       />
     ));
 
@@ -225,24 +220,18 @@ class CreateRecipe extends Component {
               </div>
             </div>
           </div>
-          {/* <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-success">
-              Post Recipe
-            </button>
-          </div> */}
+
+          {this.state.ingredients.length != 0 ? (
+            <div className="d-flex flex-wrap border justify-content-center p-1">
+              {/* START OF INGREDIENT BOXES */}
+              {ingredientsList}
+              {/* END OF INGREDIENT BOXES */}
+            </div>
+          ) : null}
+          <br />
           <input type="submit" value="Submit" className="btn btn-success" />
         </form>
-        <div className="d-flex flex-wrap border justify-content-center p-1">
-          {/* START OF INGREDIENT BOXES */}
-          {ingredientsList}
-          {/* END OF INGREDIENT BOXES */}
-        </div>
         <br />
-        {/* <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-success">
-            Post Recipe
-          </button>
-        </div> */}
       </div>
     );
   }
@@ -300,12 +289,12 @@ const IngredientBoxComponent = props => {
 
 CreateRecipe.propTypes = {
   addRecipe: PropTypes.func.isRequired,
-  // auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  // auth: state.auth,
+  auth: state.auth,
   recipe: state.recipe,
   errors: state.errors
 });
