@@ -33,16 +33,13 @@ const ProfileSchema = new Schema({
 
   creditCard: {
     ccNumber: {
-      type: String,
-      required: true
+      type: String
     },
     ccExp: {
-      type: String,
-      required: true
+      type: String
     },
     ccCvv: {
-      type: String,
-      required: true
+      type: String
     }
   },
 

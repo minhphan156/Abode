@@ -39,6 +39,18 @@ export const createProfile = (profileData, history) => dispatch => {
     );
 };
 
+export const createDelivery = (profileData, history) => dispatch => {
+  axios
+    .post("/api/profile", profileData)
+    .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Delete Account and Profile
 export const deleteAccount = () => dispatch => {
   if (window.confirm("Are you sure you want to delete the Account?")) {
