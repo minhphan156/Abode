@@ -22,7 +22,6 @@ class ProductDetail extends Component {
   componentDidMount() {
     if (this.props.match.params.productname) {
       this.props.getProductByName(this.props.match.params.productname);
-      console.log(this.props.match.params.productname);
     }
   }
 
@@ -83,14 +82,17 @@ class ProductDetail extends Component {
             <br />
 
             <h4>Related Products:</h4>
-            <div class="container">
-              <div class="row">
+            <div className="container">
+              <div className="row">
                 {product.otherproducts.map(relatedProduct => (
-                  <div
+                  < div
                     key={relatedProduct.productKey}
                     className="product-card col-md-4 border m-0 p-0"
                   >
-                    <a href={`/product/${relatedProduct.name}`}>
+                    <a onClick={(event) => {
+                      event.preventDefault();
+                      this.props.getProductByName(relatedProduct.name);
+                    }}>
                       <img
                         src={relatedProduct.image}
                         className="product-card-img img-fluid m-0"
