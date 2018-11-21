@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const product = require("./routes/api/product");
+const recipe = require("./routes/api/recipe");
 
 // get some functionalities from express library like get() function
 const app = express();
@@ -42,12 +43,14 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Use Routes
-// this will append to home route 'localHost:5000/api/users/{what ever users.js dictate}
+// this will append to home route 'localHost:5000/api/users/{what ever users.js dictate}'
 app.use("/api/users", users);
-// this will append to home route 'localHost:5000/api/profile/{what ever profile.js dictate}
+// this will append to home route 'localHost:5000/api/profile/{what ever profile.js dictate}'
 app.use("/api/profile", profile);
-// this will append to home route 'localHost:5000/api/product/{what ever product.js dictate}
+// this will append to home route 'localHost:5000/api/product/{what ever product.js dictate}'
 app.use("/api/product", product);
+// this will append to home route 'localHost:5000/api/recipe/{what ever recipe.js dictate}'
+app.use("/api/recipes", recipe);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
@@ -63,4 +66,5 @@ const port = process.env.PORT || 5000;
 
 // listen to port when server is running
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
 // NOTE: At this point , go to terminal and do $ npm run server

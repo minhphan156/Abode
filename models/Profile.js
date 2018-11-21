@@ -45,12 +45,11 @@ const ProfileSchema = new Schema({
       required: true
     }
   },
-
   history: {
     type: Array
   },
   recipe: {
-    type: [String]
+    type: Array
   }
 });
 
