@@ -31,29 +31,12 @@ const ProfileSchema = new Schema({
     }
   },
 
-  creditCard: {
-    ccNumber: {
-      type: String,
-      required: true
-    },
-    ccExp: {
-      type: String,
-      required: true
-    },
-    ccCvv: {
-      type: String,
-      required: true
-    }
-  },
   history: {
     type: Array
   },
-  recipe: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "recipe"
-    }
-  ]
+  recipe: {
+    type: Array
+  }
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);

@@ -23,10 +23,12 @@ export const INCREMENT_ITEM_COUNT = "INCREMENT_ITEM_COUNT";
 
 // RECIPE TYPES
 export const GET_RECIPE = "GET_RECIPE"; // get single recipe
+export const GET_RECIPES = "GET_RECIPES";
 export const RECIPE_LOADING = "RECIPE_LOADING";
 export const ADD_LIKE = "ADD_LIKE";
 export const REMOVE_LIKE = "REMOVE_LIKE";
 
 export const DISCOUNT = "DISCOUNT";
+export const ADD_ITEM_HISTORY = "ADD_ITEM_HISTORY";
 
 export const GET_DELIVERY = "GET_DELIVERY";

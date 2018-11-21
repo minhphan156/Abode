@@ -1,4 +1,6 @@
 import {
+  GET_RECIPES,
+  RECIPE_LOADING,
   GET_RECIPE,
   RECIPE_LOADING,
   ADD_LIKE,
@@ -25,6 +27,12 @@ export default function(state = initialState, action) {
         loading: false
       };
     case ADD_LIKE:
+      return {
+        ...state,
+        recipe: action.payload,
+        loading: false
+      };
+    case GET_RECIPES:
       return {
         ...state,
         recipe: action.payload,
