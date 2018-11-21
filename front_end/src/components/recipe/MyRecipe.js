@@ -67,7 +67,7 @@ class MyRecipe extends Component {
             </thead>
             {listItem}
           </table>
-          <Link to="/CreateRecipe" className="btn btn-info">
+          <Link to="/recipe/create" className="btn btn-info">
             Create New Recipe
           </Link>
         </div>
