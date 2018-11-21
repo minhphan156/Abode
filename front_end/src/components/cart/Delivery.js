@@ -5,8 +5,12 @@ import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
+<<<<<<< HEAD
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import { setDelivery} from "../../actions/cartActions";
+=======
+import { Delivery } from "../../actions/profileActions";
+>>>>>>> dev
 
 // Delivery is a form that asks user to provide address, credit card info
 class Delivery extends Component {
@@ -50,7 +54,11 @@ class Delivery extends Component {
       ccExp: "",
       ccCvv: ""
     };
+<<<<<<< HEAD
     this.props.setDelivery(profileData, this.props.history);
+=======
+    this.props.Delivery(profileData, this.props.history);
+>>>>>>> dev
   }
 
   render() {
@@ -124,8 +132,13 @@ class Delivery extends Component {
                 />
 
                 <input
+<<<<<<< HEAD
                   type="submit"
                   value="Submit"
+=======
+                  type="Payment"
+                  value="Payment"
+>>>>>>> dev
                   className="btn btn-info btn-block mt-4"
                 />
               </form>
@@ -138,7 +151,10 @@ class Delivery extends Component {
 }
 
 Delivery.PropTypes = {
+<<<<<<< HEAD
   setDelivery: PropTypes.func.isRequired,
+=======
+>>>>>>> dev
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -151,5 +167,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
+<<<<<<< HEAD
   { getCurrentProfile, setDelivery}
 )(Delivery);
+=======
+  { getCurrentProfile}
+)(withRouter(Delivery));
+>>>>>>> dev

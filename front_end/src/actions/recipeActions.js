@@ -7,3 +7,10 @@ export const addRecipe = (recipeData, history) => dispatch => {
     .then(res => history.push("/MyRecipe"))
     .catch(err => console.log("error at recipe action " + err));
 };
+
+export const deleteRecipe = (recipeData, history) => dispatch => {
+  axios
+    .delete("/api/recipes", recipeData)
+    .then(res => history.push("/MyRecipe"))
+    .catch(err => console.log(`Recipe Error: ${err}`))
+}

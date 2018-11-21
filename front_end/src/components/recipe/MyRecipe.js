@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
+import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profileActions";
+import { deleteRecipe } from "../../actions/recipeActions";
 
 class MyRecipe extends Component {
   constructor() {
@@ -44,9 +47,25 @@ class MyRecipe extends Component {
             </td>
             <td>
               {" "}
-              <Link to="/EditRecipe" className="btn btn-info">
-                Delete Recipe
-              </Link>
+              <button
+                value="Delete Recipe"
+                className="btn btn-info"
+                onClick={event => {
+                  event.preventDefault()
+                  const { user } = this.props.auth;
+                  const recipeData = {
+                    title: this.state.title,
+                    description: this.state.description,
+                    image: this.state.image,
+                    steps: this.state.steps,
+                    ingredients: this.state.ingredients,
+                    author: user.name
+                  };
+                  this.props.deleteRecipe(recipeData, this.props.history)
+                }}
+              >
+              Delete Recipe
+              </button>
             </td>
           </tr>
         </tbody>
@@ -75,10 +94,16 @@ class MyRecipe extends Component {
     );
   }
 }
+MyRecipe.PropTypes = {
+  deleteRecipe: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  auth: state.auth,
 });
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, deleteRecipe }
 )(MyRecipe);

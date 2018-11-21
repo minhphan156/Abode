@@ -77,4 +77,33 @@ router.post(
   }
 );
 
+
+
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Recipe.deleteOne({title: req.body.title})
+    Profile.findOne({user: req.user.id}).then(profile => {
+      var removed
+      for(var i = 0; i < profile.recipe; i++){
+        if(profile.recipe[i].title == req.body.title){
+          profile.recipe.splice(i, 1)
+        }
+      }
+      Profile.findOneAndUpdate(
+        {user: req.user.id},
+        {$set: removed}
+      )
+    })
+  }
+)
+
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
 module.exports = router;
