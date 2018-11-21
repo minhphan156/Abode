@@ -83,9 +83,23 @@ router.delete(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log(req.body)
     Recipe.deleteOne({title: req.body.title})
     Profile.findOne({user: req.user.id}).then(profile => {
-      var removed
+      console.log(profile)
+      const profileFields = {};
+      profileFields.address = {};
+      if (profile.street) profileFields.address.street = profile.street;
+      if (profile.apartment) profileFields.address.apartment = profile.apartment;
+      if (profile.city) profileFields.address.city = profile.city;
+      if (profile.zip) profileFields.address.zip = profile.zip;
+      if (profile.homeState) profileFields.address.homeState = profile.homeState;
+
+      profileFields.creditCard = {};
+      if (profile.ccNumber) profileFields.creditCard.ccNumber = profile.ccNumber;
+      if (profile.ccExp) profileFields.creditCard.ccExp = profile.ccExp;
+      if (profile.ccCvv) profileFields.creditCard.ccCvv = profile.ccCvv;
+
       for(var i = 0; i < profile.recipe; i++){
         if(profile.recipe[i].title == req.body.title){
           profile.recipe.splice(i, 1)
@@ -93,17 +107,10 @@ router.delete(
       }
       Profile.findOneAndUpdate(
         {user: req.user.id},
-        {$set: removed}
+        {$set: profileFields}
       )
     })
   }
 )
-
-// Array Remove - By John Resig (MIT Licensed)
-Array.prototype.remove = function(from, to) {
-  var rest = this.slice((to || from) + 1 || this.length);
-  this.length = from < 0 ? this.length + from : from;
-  return this.push.apply(this, rest);
-};
 
 module.exports = router;

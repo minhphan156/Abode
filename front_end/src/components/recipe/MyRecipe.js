@@ -54,13 +54,13 @@ class MyRecipe extends Component {
                   event.preventDefault()
                   const { user } = this.props.auth;
                   const recipeData = {
-                    title: this.state.title,
-                    description: this.state.description,
-                    image: this.state.image,
-                    steps: this.state.steps,
-                    ingredients: this.state.ingredients,
-                    author: user.name
+                    title: item.title,
+                    description: item.description,
+                    image: item.image,
+                    steps: item.steps,
+                    ingredients: item.ingredients
                   };
+                  console.log(recipeData)
                   this.props.deleteRecipe(recipeData, this.props.history)
                 }}
               >
