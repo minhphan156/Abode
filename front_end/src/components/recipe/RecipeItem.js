@@ -54,6 +54,7 @@ class RecipeItem extends Component {
 
       const stepsList = recipe.steps.map(step => <li>{step}</li>);
 
+      /*
       const productList = recipe.ingredientProducts.map(product => {
         <div className="col-md-4">
           <ProductCard
@@ -64,6 +65,8 @@ class RecipeItem extends Component {
           />
         </div>;
       });
+      */
+
       return (
         <div>
           <img
@@ -93,12 +96,12 @@ class RecipeItem extends Component {
               Directions:
             </label>
             <ol id="steps">{stepsList}</ol>
-            <label htmlFor="" className="Roboto font-weight-bold">
+            {/* <label htmlFor="" className="Roboto font-weight-bold">
               Available products from ingredients:
             </label>
             <div className="container mb-2">
               <div className="row border p-1">{productList}</div>
-            </div>
+            </div> */}
             <button
               type="button"
               className="d-block btn btn-danger btn-sm mx-auto p-1"

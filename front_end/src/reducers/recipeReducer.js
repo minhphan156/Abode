@@ -2,7 +2,6 @@ import {
   GET_RECIPES,
   RECIPE_LOADING,
   GET_RECIPE,
-  RECIPE_LOADING,
   ADD_LIKE,
   REMOVE_LIKE
 } from "../actions/types";
@@ -35,7 +34,7 @@ export default function(state = initialState, action) {
     case GET_RECIPES:
       return {
         ...state,
-        recipe: action.payload,
+        recipes: action.payload,
         loading: false
       };
     case REMOVE_LIKE:
