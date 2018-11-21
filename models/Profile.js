@@ -35,7 +35,7 @@ const ProfileSchema = new Schema({
     type: Array
   },
   recipe: {
-    type: [String]
+    type: Array
   }
 });
 
