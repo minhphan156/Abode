@@ -77,4 +77,14 @@ router.post(
   }
 );
 
+// @route   GET api/recipes/viewall
+// @desc    Get all recipes
+// @access  Public
+router.get("/", (req, res) => {
+  Recipe.find()
+    .sort({ date: -1 })
+    .then(recipes => res.json(recipes))
+    .catch(err => res.status(404).json({ norecipesfound: "No recipes found" }));
+});
+
 module.exports = router;

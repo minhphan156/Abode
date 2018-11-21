@@ -75,31 +75,34 @@ class ProductDetail extends Component {
                   </div>
                 </div>
               </div>
-          
-          <hr/>
-          <h4 >Related Products:</h4>
-          <div class="container">
-          <div class="row">
 
-          {product.otherproducts.map(relatedProduct => 
+              <hr />
+              <br />
+            </div>
+            <br />
+            <br />
 
-            <div key={relatedProduct.productKey} className="product-card col-md-4 border m-0 p-0">
-            <a href={`/product/${relatedProduct.name}`}>
-              <img
-                src={relatedProduct.image}
-                className="product-card-img img-fluid m-0"
-                alt="Responsive image"
-              />
-              <span className="product-card-name text-center m-0 p-2">
-                {relatedProduct.name}
-              </span>
-            </a>            
-            </div> 
-             
-            )}       
-        </div>
-        </div>
-
+            <h4>Related Products:</h4>
+            <div class="container">
+              <div class="row">
+                {product.otherproducts.map(relatedProduct => (
+                  <div
+                    key={relatedProduct.productKey}
+                    className="product-card col-md-4 border m-0 p-0"
+                  >
+                    <a href={`/product/${relatedProduct.name}`}>
+                      <img
+                        src={relatedProduct.image}
+                        className="product-card-img img-fluid m-0"
+                        alt="Responsive image"
+                      />
+                      <span className="product-card-name text-center m-0 p-2">
+                        {relatedProduct.name}
+                      </span>
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </main>
