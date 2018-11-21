@@ -28,6 +28,7 @@ import NotFound from "./components/layout/NotFound";
 
 import CreateRecipe from "./components/recipe/CreateRecipe";
 import MyRecipe from "./components/recipe/MyRecipe";
+import EditRecipe from "./components/recipe/EditRecipe";
 
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
@@ -84,6 +85,7 @@ class App extends Component {
 
               <Route exact path="/MyRecipe" component={MyRecipe} />
               <Route exact path="/CreateRecipe" component={CreateRecipe} />
+              <Route exact path="/recipe/edit" component={EditRecipe} />
 
               <Route exact path="/delivery" component={Delivery} />
               <Route

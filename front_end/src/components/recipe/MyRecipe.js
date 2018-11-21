@@ -31,14 +31,12 @@ class MyRecipe extends Component {
         <tbody key={item.id}>
           <tr>
             <td>
-              <Link to={`/history/${date}`}>
-                {dateOnly}, {time}
-              </Link>
+              {dateOnly}, {time}
             </td>
             <td>{item.title}</td>
             <td>
               {" "}
-              <Link to="/EditRecipe" className="btn btn-info">
+              <Link to="/recipe/edit" className="btn btn-info">
                 Edit Recipe
               </Link>
             </td>
