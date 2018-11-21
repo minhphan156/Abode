@@ -94,6 +94,7 @@ class CheckoutCart extends Component {
     };
 
     this.props.createProfile(profileData, this.props.history);
+    this.props.cart.shoppingCart = [];
   }
   render() {
     const { profile, loading } = this.props.profile;
