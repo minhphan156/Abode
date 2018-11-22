@@ -53,14 +53,13 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // console.log(req.body);
-    // const { errors, isValid } = validateProfileInput(req.body);
+    const { errors, isValid } = validateProfileInput(req.body);
 
-    // //  Check validation
-    // if (!isValid) {
-    //   // Return any errors with 400 status
-    //   return res.status(400).json(errors);
-    // }
+    //  Check validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
 
     // Get fields
     const profileFields = {};
@@ -77,7 +76,6 @@ router.post(
 
     if (req.body.history) profileFields.history = req.body.history;
 
-    if (req.body.recipe) profileFields.recipe = req.body.recipe;
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {
         // there is a profile -> Update

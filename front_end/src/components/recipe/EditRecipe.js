@@ -15,7 +15,7 @@ class EditRecipe extends Component {
     super(props);
 
     this.state = {
-      index: 0,
+      index: -1,
       profile: null,
       recipeToUpdate: null,
       userID: "",
@@ -28,7 +28,7 @@ class EditRecipe extends Component {
       ingredients: [],
       likes: []
     };
-
+    window.oldTitle = "";
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onIngredientChange = this.onIngredientChange.bind(this);
@@ -44,15 +44,16 @@ class EditRecipe extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
-      console.log("profile daosdasdoasihd");
-      console.log(profile);
+
       const element = this.searchArray(profile);
 
       const recipeToUpdate = profile.recipe[element];
-      console.log("const recipeToUpdate");
-      console.log(recipeToUpdate);
+
       recipeToUpdate.userID = recipeToUpdate.userID;
       recipeToUpdate.author = recipeToUpdate.author;
+      if (this.state.index == -1) {
+        window.oldTitle = recipeToUpdate.title;
+      }
       recipeToUpdate.title = !isEmpty(recipeToUpdate.title)
         ? recipeToUpdate.title
         : "";
@@ -92,26 +93,13 @@ class EditRecipe extends Component {
 
   searchArray(profile) {
     const URL = window.location.pathname;
-    console.log("url is ==");
-    console.log(URL);
-
     const recipeStr = URL.substring(13);
-    // const stringTime = URL.substring(22, 30);
-    // const stringDT = stringDate + " " + stringTime;
-    console.log(recipeStr);
-    console.log(profile.recipe[0].title);
-
     for (var i = 0; i < 99; i++) {
-      console.log("i is " + i);
-      //   if (profile.recipe[i].title == undefined) {
-      //     break;
-      //   }
       let temp = profile.recipe[i].title;
       if (encodeURI(temp) == recipeStr) {
         return i;
       }
     }
-
     return 0;
   }
 
@@ -120,6 +108,8 @@ class EditRecipe extends Component {
 
     const { user } = this.props.auth;
     const recipeData = {
+      oldTitle: window.oldTitle,
+      index: this.state.index,
       userID: this.state.userID,
       author: this.state.author,
       title: this.state.title,
@@ -131,29 +121,27 @@ class EditRecipe extends Component {
       likes: this.state.likes
     };
 
-    // const recipeData = {
-    //   title: this.state.title,
-    //   description: this.state.description,
-    //   image: this.state.image,
-    //   steps: this.state.steps,
-    //   ingredients: this.state.ingredients,
-    //   author: user.name
-    // };
-
     let temprecipeToUpdate = this.state.recipeToUpdate;
     temprecipeToUpdate = recipeData;
-    // console.log(" temprecipeToUpdate====");
-    // console.log(temprecipeToUpdate);
-    // console.log(" this.state.profile");
-    // console.log(this.state.profile);
+
     let tempprofile = this.state.profile;
     tempprofile.recipe[this.state.index] = temprecipeToUpdate;
-    // this.props.createProfile;
-    // console.log(" tempprofile===");
-    // console.log(tempprofile);
 
-    this.props.createProfile(tempprofile, this.props.history);
     this.props.addRecipe(recipeData, this.props.history);
+    this.setState({
+      index: -1,
+      profile: null,
+      recipeToUpdate: null,
+      userID: "",
+      author: "",
+      title: "",
+      image: "",
+      steps: [],
+      date: "",
+      description: "",
+      ingredients: [],
+      likes: []
+    });
   }
 
   /**
@@ -253,7 +241,7 @@ class EditRecipe extends Component {
           Post Your Recipe
         </h2>
         <hr className="shadow" />
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} href="/MyRecipe">
           <div className="form-group">
             <label htmlFor="title">Title:</label>
             <input
