@@ -66,12 +66,22 @@ router.post(
           })
           .catch(err => res.status(200).json(profileRecipe));
 
-        newRecipe
-          .save()
-          .then(recipe => res.json(recipe))
-          .catch(err => {
-            res.status(500).json({ error: "Recipe failed to save" });
-          });
+        Recipe.findOne({ title: req.body.title }).then(recipe => {
+          if (recipe) {
+            Recipe.findOneAndUpdate(
+              { title: req.body.title },
+              { $set: newRecipe },
+              { new: true }
+            );
+          } else {
+            newRecipe
+              .save()
+              .then(recipe => res.json(recipe))
+              .catch(err => {
+                res.status(500).json({ error: "Recipe failed to save" });
+              });
+          }
+        });
       }
     });
   }
