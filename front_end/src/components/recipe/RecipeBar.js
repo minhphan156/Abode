@@ -45,7 +45,7 @@ export default class RecipeBar extends Component {
           />
           <div className="recipe-bar-desc border-left">
             <div className="d-flex m-0">
-              <Link to={`/recipe/${_id}/`} className="mr-auto">
+              <Link to={`/recipe/view/${_id}`} className="mr-auto">
                 <h4 className="font-weight-bold ml-2 m-0">{title}</h4>
               </Link>
               <button

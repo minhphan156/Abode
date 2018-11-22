@@ -84,12 +84,11 @@ class App extends Component {
               <Route exact path="/checkout" component={CheckoutCart} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/recipe/:id" component={RecipeItem} />
+              <Route exact path="/recipe/view/:id" component={RecipeItem} />
               <Route exact path="/recipe" component={BrowseRecipe} />
 
               <Route exact path="/MyRecipe" component={MyRecipe} />
               <Route exact path="/recipe/edit/:item" component={EditRecipe} />
-              <Route exact path="/recipe/create" component={CreateRecipe} />
 
               <Route exact path="/delivery" component={Delivery} />
               <Route
@@ -127,6 +126,13 @@ class App extends Component {
                   exact
                   path="/edit-profile"
                   component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/recipe/create"
+                  component={CreateRecipe}
                 />
               </Switch>
             </div>
