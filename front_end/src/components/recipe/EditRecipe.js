@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { addRecipe } from "../../actions/recipeActions";
 import { withRouter } from "react-router-dom";
-import { createProfile, getCurrentProfile } from "../../actions/profileActions";
+import { getCurrentProfile } from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
 
 /**
@@ -44,11 +44,8 @@ class EditRecipe extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
-
       const element = this.searchArray(profile);
-
       const recipeToUpdate = profile.recipe[element];
-
       recipeToUpdate.userID = recipeToUpdate.userID;
       recipeToUpdate.author = recipeToUpdate.author;
       if (this.state.index == -1) {
@@ -213,26 +210,30 @@ class EditRecipe extends Component {
     let stepCounter = 0; // This variable is needed to keep track of the order of steps
     const stepsList = this.state.steps.map(step => {
       return (
-        <StepComponent
-          name={"steps[" + this.state.steps + "].text"}
-          stepCount={stepCounter++}
-          step={step}
-          onStepChange={(key, value) => {
-            let mutate = this.state.steps.slice();
-            mutate[key] = value;
-            this.setState({
-              steps: mutate
-            });
-          }}
-        />
+        <div key={step}>
+          <StepComponent
+            name={"steps[" + this.state.steps + "].text"}
+            stepCount={stepCounter++}
+            step={step}
+            onStepChange={(key, value) => {
+              let mutate = this.state.steps.slice();
+              mutate[key] = value;
+              this.setState({
+                steps: mutate
+              });
+            }}
+          />
+        </div>
       );
     });
 
     const ingredientsList = this.state.ingredients.map(ingredient => (
-      <IngredientBoxComponent
-        ingred={ingredient}
-        removeIngredient={this.removeIngredient}
-      />
+      <div key={ingredient}>
+        <IngredientBoxComponent
+          ingred={ingredient}
+          removeIngredient={this.removeIngredient}
+        />
+      </div>
     ));
 
     return (
@@ -379,7 +380,6 @@ const IngredientBoxComponent = props => {
 };
 
 EditRecipe.propTypes = {
-  createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   addRecipe: PropTypes.func.isRequired,
@@ -396,5 +396,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addRecipe, createProfile, getCurrentProfile }
+  { addRecipe, getCurrentProfile }
 )(withRouter(EditRecipe));

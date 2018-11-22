@@ -28,7 +28,7 @@ class MyRecipe extends Component {
       const dateOnly = date.substring(0, 10);
       const time = date.substring(11, 16);
       return (
-        <tbody key={item.id}>
+        <tbody key={item.title}>
           <tr>
             <td>
               {dateOnly}, {time}
@@ -52,9 +52,9 @@ class MyRecipe extends Component {
     });
     return (
       <div>
-        <div class="container">
+        <div className="container">
           <h2>Your Recipes</h2>
-          <table class="table table-striped">
+          <table className="table table-striped">
             <thead>
               <tr>
                 <th>Date</th>
