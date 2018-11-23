@@ -59,7 +59,7 @@ export const setDelivery = (deliveryDetails, history, isUser) => dispatch => {
       type: GET_DELIVERY,
       payload: deliveryDetails
       })
-    history.push("/recipt")})
+    history.push("/receipt")})
   .catch(err =>
     dispatch({
       type: GET_ERRORS,
@@ -67,14 +67,6 @@ export const setDelivery = (deliveryDetails, history, isUser) => dispatch => {
     })
   )}
   
-// export const setDelivery = (deliveryDetails, history) => dispatch => {
-//   dispatch({
-//     type: GET_DELIVERY,
-//     payload: deliveryDetails
-//   });
-//   history.push("/receipt");
-// };
-
 export const addItemFromHistory = (productName, count) => dispatch => {
   axios
     .get("/api/product/search", { params: productName })

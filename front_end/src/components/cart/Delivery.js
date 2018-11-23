@@ -23,10 +23,12 @@ class Delivery extends Component {
       city: "",
       zip: "",
       homeState: "",
-      errors: {}
+      errors: {},
+      paymentField: false
     };
 
     this.onChange = this.onChange.bind(this);
+    this.stripeValidate = this.stripeValidate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -36,6 +38,7 @@ class Delivery extends Component {
 
   stripeValidate(e) {
     console.log([e.complete]);
+    this.setState({ paymentField: e.complete });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,7 +61,8 @@ class Delivery extends Component {
       ccNumber: "",
       ccExp: "",
       ccCvv: "",
-      delivery: true
+      delivery: true,
+      paymentField: this.state.paymentField,
     };
     console.log(this.props.auth.isAuthenticated)
     this.props.setDelivery(profileData, this.props.history, this.props.auth.isAuthenticated);
@@ -137,7 +141,10 @@ class Delivery extends Component {
                 />
 
                 <p class="lead">Please enter payment info</p>
-                <CardElement onChange={this.stripeValidate} />
+                <CardElement 
+                  name="paymentField"
+                  onChange={this.stripeValidate}
+                />
                 <input
                   type="submit"
                   value="Submit"

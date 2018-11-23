@@ -11,6 +11,7 @@ module.exports = function validateProfileInput(data) {
   data.city = !isEmpty(data.city) ? data.city : "";
   data.zip = !isEmpty(data.zip) ? data.zip : "";
   data.homeState = !isEmpty(data.homeState) ? data.homeState : "";
+  data.paymentField = !isEmpty(data.paymentField) ? data.paymentField : true;
 
   // Check Address
   if (Validator.isEmpty(data.street)) {
@@ -27,6 +28,9 @@ module.exports = function validateProfileInput(data) {
   }
   if (Validator.isEmpty(data.homeState)) {
     errors.homeState = "Please choose a State";
+  }
+  if (!data.paymentField){
+    errors.paymentField = "Complete the Stripe Payment field!"
   }
   // if errors isEmpty() is true -> no valid input
   return {
