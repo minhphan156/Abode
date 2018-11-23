@@ -35,6 +35,9 @@ class EditRecipe extends Component {
     this.addStep = this.addStep.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
     this.removeIngredient = this.removeIngredient.bind(this);
+    console.log("EditRecipe constructor is : ");
+    console.log(this.props.history);
+    this.props.history.location.pathname = "/MyRecipe";
   }
 
   componentDidMount() {
@@ -42,6 +45,8 @@ class EditRecipe extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("EditRecipe componentWillReceiveProps is : ");
+    console.log(this.props.history);
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
       const element = this.searchArray(profile);
@@ -123,7 +128,12 @@ class EditRecipe extends Component {
 
     let tempprofile = this.state.profile;
     tempprofile.recipe[this.state.index] = temprecipeToUpdate;
+    console.log("CreateRecipe pathname onSubmit is : ");
 
+    console.log(this.props.history.location.pathname);
+
+    console.log("EditRecipe onSubmit is : ");
+    console.log(this.props.history);
     this.props.addRecipe(recipeData, this.props.history);
     this.setState({
       index: -1,
@@ -239,7 +249,7 @@ class EditRecipe extends Component {
     return (
       <div>
         <h2 className="category-title text-center font-weight-bold">
-          Post Your Recipe
+          Edit Your Recipe
         </h2>
         <hr className="shadow" />
         <form onSubmit={this.onSubmit} href="/MyRecipe">

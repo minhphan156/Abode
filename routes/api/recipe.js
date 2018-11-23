@@ -67,14 +67,14 @@ router.post(
               { $set: profile },
               { new: true }
             )
-              .then(() => console.log("recipe added to profile"))
+              .then(profileRecipe => res.json(profileRecipe))
               .catch(err => console.log(err));
           })
           .catch(err => res.status(200).json(profileRecipe));
         if (!req.body.oldTitle) {
           newRecipe
             .save()
-            .then(recipe => res.json(recipe))
+            .then(profileRecipe => res.json(profileRecipe))
             .catch(err => {
               res.status(500).json({ error: "Recipe failed to save" });
             });
@@ -91,7 +91,7 @@ router.post(
               { $set: profileRecipe },
               { new: true }
             )
-              .then(() => console.log("new recipe added to recipe database"))
+              .then(profileRecipe => res.json(profileRecipe))
               .catch(err => console.log(err));
           } else {
             console.log("**** inside recipe else");
