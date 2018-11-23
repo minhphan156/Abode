@@ -18,9 +18,6 @@ class CreateProfile extends Component {
       city: "",
       zip: "",
       homeState: "",
-      ccNumber: "",
-      ccExp: "",
-      ccCvv: "",
       errors: {}
     };
 
@@ -53,15 +50,6 @@ class CreateProfile extends Component {
       profile.homeState = !isEmpty(profile.address.homeState)
         ? profile.address.homeState
         : "";
-      profile.ccNumber = !isEmpty(profile.creditCard.ccNumber)
-        ? profile.creditCard.ccNumber
-        : "";
-      profile.ccExp = !isEmpty(profile.creditCard.ccExp)
-        ? profile.creditCard.ccExp
-        : "";
-      profile.ccCvv = !isEmpty(profile.creditCard.ccCvv)
-        ? profile.creditCard.ccCvv
-        : "";
 
       // Set component fields state
       this.setState({
@@ -69,10 +57,7 @@ class CreateProfile extends Component {
         apartment: profile.apartment,
         city: profile.city,
         zip: profile.zip,
-        homeState: profile.homeState,
-        ccNumber: profile.ccNumber,
-        ccExp: profile.ccExp,
-        ccCvv: profile.ccCvv
+        homeState: profile.homeState
       });
     }
   }
@@ -86,10 +71,7 @@ class CreateProfile extends Component {
       apartment: this.state.apartment,
       city: this.state.city,
       zip: this.state.zip,
-      homeState: this.state.homeState,
-      ccNumber: this.state.ccNumber,
-      ccExp: this.state.ccExp,
-      ccCvv: this.state.ccCvv
+      homeState: this.state.homeState
     };
     this.props.createProfile(profileData, this.props.history);
   }
@@ -116,12 +98,15 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Edit Profile</h1>
-              <p className="lead text-center">Let us update your information</p>
-              <small className="d-block pb-3">* = required fields</small>
+              <h1 className="display-4 text-center">Edit Delivery Address</h1>
               <form onSubmit={this.onSubmit}>
                 <h4 className="d-block pb-3" />
-                <h4 className="d-block pb-3">Your address for Deliveries</h4>
+                <h4 className="d-block pb-3" />
+
+                <h4 className="d-block pb-3">
+                  Your Address for Home Deliveries
+                </h4>
+                <small className="d-block pb-3">* required fields</small>
 
                 <TextFieldGroup
                   placeholder="* Street and number"
@@ -169,33 +154,6 @@ class CreateProfile extends Component {
                   info=""
                 />
                 <h4 className="d-block pb-3" />
-                <h4 className="d-block pb-3">Your Credit Card</h4>
-
-                <TextFieldGroup
-                  placeholder="* Credit Card Number"
-                  name="ccNumber"
-                  value={this.state.ccNumber}
-                  onChange={this.onChange}
-                  error={errors.ccNumber}
-                  info=""
-                />
-                <TextFieldGroup
-                  placeholder="* Credit Card Expiration date"
-                  name="ccExp"
-                  value={this.state.ccExp}
-                  onChange={this.onChange}
-                  error={errors.ccExp}
-                  info="Expiration date in the format MM/YY"
-                />
-                <TextFieldGroup
-                  placeholder="* Card Verification Value"
-                  name="ccCvv"
-                  value={this.state.ccCvv}
-                  onChange={this.onChange}
-                  error={errors.ccCvv}
-                  info="CVV can be found on the back of your card"
-                />
-
                 <input
                   type="submit"
                   value="Submit"

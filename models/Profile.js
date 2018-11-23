@@ -31,23 +31,11 @@ const ProfileSchema = new Schema({
     }
   },
 
-  creditCard: {
-    ccNumber: {
-      type: String
-    },
-    ccExp: {
-      type: String
-    },
-    ccCvv: {
-      type: String
-    }
-  },
-
   history: {
     type: Array
   },
   recipe: {
-    type: [String]
+    type: Array
   }
 });
 

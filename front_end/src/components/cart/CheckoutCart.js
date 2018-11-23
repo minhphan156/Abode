@@ -90,13 +90,11 @@ class CheckoutCart extends Component {
       city: profileReducer.address.city,
       zip: profileReducer.address.zip,
       homeState: profileReducer.address.homeState,
-      ccNumber: profileReducer.creditCard.ccNumber,
-      ccExp: profileReducer.creditCard.ccExp,
-      ccCvv: profileReducer.creditCard.ccCvv,
       history: history
     };
 
     this.props.createProfile(profileData, this.props.history);
+    this.props.cart.shoppingCart = [];
   }
   render() {
     const { profile, loading } = this.props.profile;

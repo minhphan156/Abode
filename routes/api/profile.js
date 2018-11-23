@@ -76,12 +76,6 @@ router.post(
     if (req.body.homeState)
       profileFields.address.homeState = req.body.homeState;
 
-    profileFields.creditCard = {};
-    if (req.body.ccNumber)
-      profileFields.creditCard.ccNumber = req.body.ccNumber;
-    if (req.body.ccExp) profileFields.creditCard.ccExp = req.body.ccExp;
-    if (req.body.ccCvv) profileFields.creditCard.ccCvv = req.body.ccCvv;
-
     if (req.body.history) profileFields.history = req.body.history;
 
     Profile.findOne({ user: req.user.id }).then(profile => {

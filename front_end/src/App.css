@@ -31,6 +31,18 @@ img.shop-logo {
   height: 100%;
 }
 
+a {
+  color: black;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none !important;
+}
+
+
 .card-form {
   opacity: 0.9;
 }
@@ -55,7 +67,7 @@ img.shop-logo {
 .category-card-nameBox {
   width: 100%;
   height: auto;
-  background-color: #0055A2;
+  background-color: #0055a2;
 }
 
 .category-card-nameBox:hover {
@@ -170,6 +182,12 @@ img.shop-logo {
     width: 220px;
     top: -85px;
   }
+}
+
+#Related-Card {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
 }
 
 /* Product Card component CSS */
@@ -306,6 +324,75 @@ img.shop-logo {
 
 #Related-Card{
   width: 100%;
-  height: 15vw;
-  object-fit: cover;
+  height: 100px;
+  color: black;
+}
+
+.recipe-bar:hover {
+  width: 100%;
+  height: 100px;
+  color: #0055a2;
+}
+
+.recipe-bar-img {
+  width: 15%;
+  height: auto;
+  object-fit: contain;
+}
+
+.recipe-bar-desc {
+  width: 85%;
+  height: auto;
+}
+
+/* Create Recipe Page */
+.create-recipe-25 {
+  width: 25%;
+  min-width: 150px;
+}
+
+.create-recipe-btn {
+  font-size: 12px;
+  background-color: #0055a2;
+  color: white;
+}
+
+.create-recipe-btn:hover {
+  background-color: #e5a823;
+}
+
+.create-recipe-ingredient-box {
+  width: 100%;
+}
+
+/* Review Recipe Page */
+.Roboto {
+  font-family: Roboto;
+}
+
+.review-recipe-img {
+  width: 50%;
+  height: 35vh;
+  min-height: 250px;
+}
+
+/* Browse Recipe Page */
+
+.browse-recipe-overlay-container {
+  width: 100%;
+  height: 40vh;
+  position: relative;
+}
+
+.browse-recipe-overlay {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.browse-recipe-headerimg {
+  width: 100%;
+  height: 100%;
 }

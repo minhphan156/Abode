@@ -27,6 +27,12 @@ import CheckoutCart from "./components/cart/CheckoutCart";
 import CategoryShowProducts from "./components/browse/CategoryShowProducts";
 import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
+import RecipeItem from "./components/recipe/RecipeItem";
+import BrowseRecipe from "./components/recipe/BrowseRecipe";
+
+import CreateRecipe from "./components/recipe/CreateRecipe";
+import MyRecipe from "./components/recipe/MyRecipe";
+
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import Delivery from "./components/cart/Delivery";
@@ -87,6 +93,11 @@ class App extends Component {
                 </Elements>
               </StripeProvider>
 
+              <Route exact path="/recipe/view/:id" component={RecipeItem} />
+              <Route exact path="/recipe" component={BrowseRecipe} />
+
+              <Route exact path="/MyRecipe" component={MyRecipe} />
+
               <Route
                 exact
                 path="/product/:productname"
@@ -122,6 +133,11 @@ class App extends Component {
                   exact
                   path="/edit-profile"
                   component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact path="/recipe/create" component={CreateRecipe}
                 />
               </Switch>
             </div>

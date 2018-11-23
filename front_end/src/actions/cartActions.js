@@ -4,7 +4,8 @@ import {
   GET_ERRORS,
   INCREMENT_ITEM_COUNT,
   DISCOUNT,
-  GET_DELIVERY
+  GET_DELIVERY,
+  ADD_ITEM_HISTORY
 } from "./types";
 import axios from "axios";
 
@@ -66,3 +67,23 @@ export const setDelivery = (deliveryDetails, history, isUser) => dispatch => {
     })
   )}
   
+// export const setDelivery = (deliveryDetails, history) => dispatch => {
+//   dispatch({
+//     type: GET_DELIVERY,
+//     payload: deliveryDetails
+//   });
+//   history.push("/receipt");
+// };
+
+export const addItemFromHistory = (productName, count) => dispatch => {
+  axios
+    .get("/api/product/search", { params: productName })
+    .then(res => {
+      dispatch({
+        type: ADD_ITEM_HISTORY,
+        payload: res.data,
+        itemCount: count
+      });
+    })
+    .catch(err => console.log(err));
+};
