@@ -52,16 +52,11 @@ router.post(
         Profile.findOne({ user: req.user.id })
           .then(profile => {
             // If the user had set up their profile, their recipe will be saved to their recipe array
-            // console.log("****req.body.index is " + req.body.index);
             if (req.body.index != undefined) {
-              // console.log("**** inside req.body.index");
               profile.recipe[req.body.index] = profileRecipe;
             } else {
-              // console.log("**** inside unshift");
-
               profile.recipe.unshift(profileRecipe);
             }
-            // console.log(profile);
             Profile.findOneAndUpdate(
               { user: req.user.id },
               { $set: profile },
@@ -80,12 +75,7 @@ router.post(
             });
         }
         Recipe.findOne({ title: req.body.oldTitle }).then(recipe => {
-          console.log("recipe.title " + recipe.title);
-          console.log("req.body.oldTitle " + req.body.oldTitle);
           if (recipe) {
-            console.log("**** inside recipe");
-            console.log(req.body.oldTitle);
-            console.log(profileRecipe);
             Recipe.findOneAndUpdate(
               { title: req.body.oldTitle },
               { $set: profileRecipe },
@@ -94,8 +84,6 @@ router.post(
               .then(profileRecipe => res.json(profileRecipe))
               .catch(err => console.log(err));
           } else {
-            console.log("**** inside recipe else");
-            console.log(recipe);
             newRecipe
               .save()
               .then(recipe => res.json(recipe))

@@ -25,13 +25,9 @@ class CreateRecipe extends Component {
     this.addStep = this.addStep.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
     this.removeIngredient = this.removeIngredient.bind(this);
-    console.log("CreateRecipe constructor is : ");
-    console.log(this.props.history);
   }
 
   componentWillReceiveProps(newProps) {
-    console.log("CreateRecipe componentWillReceiveProps is : ");
-    console.log(this.props.history);
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
     }
@@ -49,12 +45,7 @@ class CreateRecipe extends Component {
       ingredients: this.state.ingredients,
       author: user.name
     };
-
-    console.log("CreateRecipe onSubmit is : ");
-    console.log(this.props.history);
-
     this.props.addRecipe(recipeData, this.props.history);
-
     this.setState({
       title: "",
       description: "",

@@ -128,13 +128,6 @@ class App extends Component {
                   component={EditProfile}
                 />
               </Switch>
-              {/* <Switch>
-                <PrivateRoute
-                  exact
-                  path="/recipe/edit/:item"
-                  component={EditRecipe}
-                />
-              </Switch> */}
               <Switch>
                 <PrivateRoute
                   exact
