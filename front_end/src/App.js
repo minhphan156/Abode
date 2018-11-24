@@ -25,6 +25,15 @@ import CheckoutCart from "./components/cart/CheckoutCart";
 import CategoryShowProducts from "./components/browse/CategoryShowProducts";
 import ProductDetail from "./components/product/ProductDetail";
 import NotFound from "./components/layout/NotFound";
+import RecipeItem from "./components/recipe/RecipeItem";
+import BrowseRecipe from "./components/recipe/BrowseRecipe";
+
+import CreateRecipe from "./components/recipe/CreateRecipe";
+import MyRecipe from "./components/recipe/MyRecipe";
+
+import HistoryOverview from "./components/history/HistoryOverview";
+import HistorySingleOrder from "./components/history/HistorySingleOrder";
+import Delivery from "./components/cart/Delivery";
 
 import "./App.css";
 
@@ -74,6 +83,12 @@ class App extends Component {
               <Route exact path="/checkout" component={CheckoutCart} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/recipe/view/:id" component={RecipeItem} />
+              <Route exact path="/recipe" component={BrowseRecipe} />
+
+              <Route exact path="/MyRecipe" component={MyRecipe} />
+
+              <Route exact path="/delivery" component={Delivery} />
               <Route
                 exact
                 path="/product/:productname"
@@ -82,6 +97,20 @@ class App extends Component {
               <Route exact path="/not-found/:attempt" component={NotFound} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/history"
+                  component={HistoryOverview}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/history/:order"
+                  component={HistorySingleOrder}
+                />
               </Switch>
               <Switch>
                 <PrivateRoute
@@ -95,6 +124,11 @@ class App extends Component {
                   exact
                   path="/edit-profile"
                   component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact path="/recipe/create" component={CreateRecipe}
                 />
               </Switch>
             </div>

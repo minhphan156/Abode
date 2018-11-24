@@ -22,7 +22,6 @@ class ProductDetail extends Component {
   componentDidMount() {
     if (this.props.match.params.productname) {
       this.props.getProductByName(this.props.match.params.productname);
-      console.log(this.props.match.params.productname);
     }
   }
 
@@ -76,23 +75,35 @@ class ProductDetail extends Component {
                 </div>
               </div>
 
+              <hr />
+              <br />
+            </div>
+            <br />
+            <br />
+
+            <h4>Related Products:</h4>
+            <div className="container">
               <div className="row">
-                <div className="list-group">
-                  {product.otherproducts.map(relatedProduct => (
-                    <Link
-                      to={`/product/${relatedProduct.name}`}
-                      class="list-group-item"
-                    >
+                {product.otherproducts.map(relatedProduct => (
+                  < div
+                    key={relatedProduct.productKey}
+                    className="product-card col-md-4 border m-0 p-0"
+                  >
+                    <a onClick={(event) => {
+                      event.preventDefault();
+                      this.props.getProductByName(relatedProduct.name);
+                    }}>
                       <img
-                        style={{ height: 50, width: 50 }}
                         src={relatedProduct.image}
+                        className="product-card-img img-fluid m-0"
+                        alt="Responsive image"
                       />
-                      {`${relatedProduct.name} - $${(
-                        relatedProduct.price / 100
-                      ).toFixed(2)}`}
-                    </Link>
-                  ))}
-                </div>
+                      <span className="product-card-name text-center m-0 p-2">
+                        {relatedProduct.name}
+                      </span>
+                    </a>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

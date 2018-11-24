@@ -74,12 +74,7 @@ router.post(
     if (req.body.homeState)
       profileFields.address.homeState = req.body.homeState;
 
-    profileFields.creditCard = {};
-    if (req.body.ccNumber)
-      profileFields.creditCard.ccNumber = req.body.ccNumber;
-    if (req.body.ccExp) profileFields.creditCard.ccExp = req.body.ccExp;
-    if (req.body.ccCvv) profileFields.creditCard.ccCvv = req.body.ccCvv;
-
+    if (req.body.history) profileFields.history = req.body.history;
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {
         // there is a profile -> Update
@@ -93,34 +88,31 @@ router.post(
         new Profile(profileFields).save().then(profile => res.json(profile));
       }
     });
-    // TODO:
-    // add Recipe
-    // add History
   }
 );
 
 // @route POST api/profile/history
 // @desc Add order to history
 // @access Private
-router.post(
-  "/history",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      const newHist = {
-        products: req.body.products,
-        date: req.body.date,
-        total: req.body.total,
-        discount: req.body.discount
-      };
+// router.post(
+//   "/history",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     Profile.findOne({ user: req.user.id }).then(profile => {
+//       const newHist = {
+//         products: req.body.products,
+//         date: req.body.date,
+//         total: req.body.total,
+//         discount: req.body.discount
+//       };
 
-      // add to history array
-      profile.history.push(newHist);
+//       // add to history array
+//       profile.history.push(newHist);
 
-      profile.save().then(profile => res.json(profile));
-    });
-  }
-);
+//       profile.save().then(profile => res.json(profile));
+//     });
+//   }
+// );
 
 // @route   DELETE api/profile
 // @desc    Delete user and profile
