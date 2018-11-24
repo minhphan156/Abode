@@ -31,20 +31,6 @@ const ProfileSchema = new Schema({
     }
   },
 
-  creditCard: {
-    ccNumber: {
-      type: String,
-      required: true
-    },
-    ccExp: {
-      type: String,
-      required: true
-    },
-    ccCvv: {
-      type: String,
-      required: true
-    }
-  },
   history: {
     type: Array
   },

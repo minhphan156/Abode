@@ -37,7 +37,6 @@ class CreateRecipe extends Component {
     e.preventDefault();
 
     const { user } = this.props.auth;
-    console.log(this.props.auth);
     const recipeData = {
       title: this.state.title,
       description: this.state.description,
