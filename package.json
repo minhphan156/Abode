@@ -20,7 +20,6 @@
     "concurrently": "^4.0.1",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
-<<<<<<< HEAD
     "mongoose": "^5.3.10",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
@@ -30,16 +29,5 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.6"
-=======
-    "mongoose": "^5.2.9",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "react-bootstrap": "^1.0.0-beta.1",
-    "validator": "^10.6.0",
-    "winston": "^3.1.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.3"
->>>>>>> 302f099d1cb130e98a8c62c4372716005ffd8b59
   }
 }

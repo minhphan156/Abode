@@ -77,7 +77,6 @@ router.post(
   }
 );
 
-<<<<<<< HEAD
 
 
 router.delete(
@@ -148,7 +147,6 @@ router.delete(
     })
   }
 )
-=======
 // @route   GET api/recipes/viewall
 // @desc    Get all recipes
 // @access  Public
@@ -348,6 +346,5 @@ router.post(
       );
   }
 );
->>>>>>> dev
 
 module.exports = router;
