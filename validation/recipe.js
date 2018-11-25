@@ -4,10 +4,13 @@ const isEmpty = require("./is-empty");
 module.exports = function validateRecipeInput(data) {
   let errors = {};
 
-  data.title = !isEmpty(data.title) ? data.title : "";
-  data.description = !isEmpty(data.description) ? data.description : "";
+  // data.title = !isEmpty(data.title) ? data.title : "";
+  // data.description = !isEmpty(data.description) ? data.description : "";
+  // data.ingredients = !isEmpty(data.ingredients) ? data.ingredients : [];
+  // data.image = !isEmpty(data.image) ? data.image : "";
+  // data.steps = !isEmpty(data.steps) ? data.steps : [];
 
-  if (!Validator.isLength(data.title, { min: 5, max: 50 })) {
+  if (!Validator.isLength(data.title, { min: 2, max: 50 })) {
     errors.title = "Title must be between 5 and 50 characters long";
   }
 
@@ -23,10 +26,17 @@ module.exports = function validateRecipeInput(data) {
     errors.description = "Description field is required";
   }
 
-  if (isEmpty(data.ingredients)) {
-    errors.ingredients = "Ingredients are required";
+  if (Validator.isEmpty(data.image)) {
+    errors.image = "image field is required";
   }
 
+  if (Validator.isEmpty(data.steps)) {
+    errors.steps = "steps field is required";
+  }
+
+  if (Validator.isEmpty(data.ingredients)) {
+    errors.ingredients = "Description field is required";
+  }
   return {
     errors,
     isValid: isEmpty(errors)

@@ -6,6 +6,8 @@ const passport = require("passport");
 // Load Recipe model
 const Recipe = require("../../models/Recipe");
 
+// const validateRecipeInput = require("../../validation/recipe");
+
 // Load Profile model
 const Profile = require("../../models/Profile");
 
@@ -16,6 +18,13 @@ router.post(
   "/create",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    // const { errors, isValid } = validateRecipeInput(req.body);
+
+    // if (!isValid) {
+    //   // Return any errors with 400 status
+    //   return res.status(400).json(errors);
+    // }
+
     Recipe.findOne({ title: req.body.title }).then(recipe => {
       // If there is already a recipe of the same title..
       if (recipe && req.body.index == -1) {

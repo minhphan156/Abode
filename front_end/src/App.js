@@ -88,7 +88,6 @@ class App extends Component {
               <Route exact path="/recipe" component={BrowseRecipe} />
 
               <Route exact path="/MyRecipe" component={MyRecipe} />
-              <Route exact path="/recipe/edit/:item" component={EditRecipe} />
 
               <Route exact path="/delivery" component={Delivery} />
               <Route
@@ -133,6 +132,13 @@ class App extends Component {
                   exact
                   path="/recipe/create"
                   component={CreateRecipe}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/recipe/edit/:item"
+                  component={EditRecipe}
                 />
               </Switch>
             </div>

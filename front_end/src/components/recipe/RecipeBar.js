@@ -25,12 +25,14 @@ export default class RecipeBar extends Component {
     if (isAuthenticated && user.id === userID) {
       sameUser = (
         <div className="d-inline">
-          <button
-            type="button"
-            className="btn btn-info btn-sm p-0 pl-1 pr-1 m-0 ml-2"
-          >
-            Edit Recipe
-          </button>
+          <Link to={`/recipe/edit/${title}`} className="mr-auto">
+            <button
+              type="button"
+              className="btn btn-info btn-sm p-0 pl-1 pr-1 m-0 ml-2"
+            >
+              Edit Recipe
+            </button>
+          </Link>
         </div>
       );
     }

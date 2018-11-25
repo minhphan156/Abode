@@ -5,6 +5,7 @@ import { addRecipe } from "../../actions/recipeActions";
 import { withRouter } from "react-router-dom";
 import { getCurrentProfile } from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
+import Spinner from "../common/Spinner";
 
 /**
  * Main component for the 'Create Recipe' page.
@@ -213,31 +214,38 @@ class EditRecipe extends Component {
   }
 
   render() {
-    this.newIngredient = "";
+    const { profile, loading } = this.props.profile;
+    let stepsList;
+    let ingredientsList;
 
-    let stepCounter = 0; // This variable is needed to keep track of the order of steps
-    const stepsList = this.state.steps.map(step => {
-      return (
-        <div key={"step" + stepCounter}>
-          <StepComponent
-            name={"steps[" + this.state.steps + "].text"}
-            stepCount={stepCounter++}
-            step={step}
-            onStepChange={this.onStepChange}
+    if (this.state.title === "" || loading) {
+      stepsList = <Spinner />; // show the spinner while loading
+    } else {
+      this.newIngredient = "";
+
+      let stepCounter = 0; // This variable is needed to keep track of the order of steps
+      stepsList = this.state.steps.map(step => {
+        return (
+          <div key={"step" + stepCounter}>
+            <StepComponent
+              name={"steps[" + this.state.steps + "].text"}
+              stepCount={stepCounter++}
+              step={step}
+              onStepChange={this.onStepChange}
+            />
+          </div>
+        );
+      });
+
+      ingredientsList = this.state.ingredients.map(ingredient => (
+        <div key={ingredient}>
+          <IngredientBoxComponent
+            ingred={ingredient}
+            removeIngredient={this.removeIngredient}
           />
         </div>
-      );
-    });
-
-    const ingredientsList = this.state.ingredients.map(ingredient => (
-      <div key={ingredient}>
-        <IngredientBoxComponent
-          ingred={ingredient}
-          removeIngredient={this.removeIngredient}
-        />
-      </div>
-    ));
-
+      ));
+    }
     return (
       <div>
         <h2 className="category-title text-center font-weight-bold">

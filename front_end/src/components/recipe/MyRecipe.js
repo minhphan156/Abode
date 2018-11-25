@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileActions";
+import Spinner from "../common/Spinner";
 
 class MyRecipe extends Component {
   constructor() {
@@ -23,33 +24,42 @@ class MyRecipe extends Component {
   }
 
   render() {
-    const listItem = this.state.recipes.map(item => {
-      const date = item.date;
-      const dateOnly = date.substring(0, 10);
-      const time = date.substring(11, 16);
-      return (
-        <tbody key={item.title}>
-          <tr>
-            <td>
-              {dateOnly}, {time}
-            </td>
-            <td>{item.title}</td>
-            <td>
-              {" "}
-              <Link to={`/recipe/edit/${item.title}`} className="btn btn-info">
-                Edit Recipe
-              </Link>
-            </td>
-            <td>
-              {" "}
-              <Link to="/EditRecipe" className="btn btn-info">
-                Delete Recipe
-              </Link>
-            </td>
-          </tr>
-        </tbody>
-      );
-    });
+    const { profile, loading } = this.props.profile;
+    let listItem;
+    if (profile === null || loading) {
+      listItem = <Spinner />; // show the spinner while loading
+    } else {
+      listItem = this.state.recipes.map(item => {
+        const date = item.date;
+        const dateOnly = date.substring(0, 10);
+        const time = date.substring(11, 16);
+        return (
+          <tbody key={item.title}>
+            <tr>
+              <td>
+                {dateOnly}, {time}
+              </td>
+              <td>{item.title}</td>
+              <td>
+                {" "}
+                <Link
+                  to={`/recipe/edit/${item.title}`}
+                  className="btn btn-info"
+                >
+                  Edit Recipe
+                </Link>
+              </td>
+              <td>
+                {" "}
+                <Link to="/EditRecipe" className="btn btn-info">
+                  Delete Recipe
+                </Link>
+              </td>
+            </tr>
+          </tbody>
+        );
+      });
+    }
     return (
       <div>
         <div className="container">
