@@ -39,7 +39,7 @@ class BrowseRecipe extends Component {
       );
     } else if (recipes) {
       const recipeFeed = recipes.map(recipe => (
-        <div className="col-md-10 mb-2">
+        <div className="col-md-3 pb-3">
           <RecipeBar recipe={recipe} auth={this.props.auth} />
         </div>
       ));
@@ -48,7 +48,10 @@ class BrowseRecipe extends Component {
         <div>
           {recipeListContent}
           <hr className="shadow" />
-          <div className="row justify-content-center">{recipeFeed}</div>
+
+          <div className="container">
+            <div className="row">{recipeFeed}</div>
+          </div>
         </div>
       );
     } else {

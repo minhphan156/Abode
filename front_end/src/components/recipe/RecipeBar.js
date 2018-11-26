@@ -24,7 +24,7 @@ export default class RecipeBar extends Component {
     let sameUser;
     if (isAuthenticated && user.id === userID) {
       sameUser = (
-        <div className="d-inline">
+        <div className="d-inline" style={{ marginRight: "60px" }}>
           <Link to={`/recipe/edit/${title}`} className="mr-auto">
             <button
               type="button"
@@ -39,17 +39,24 @@ export default class RecipeBar extends Component {
 
     return (
       <div>
-        <div className="recipe-bar d-flex border m-0 p-0">
-          <img
-            className="recipe-bar-img img-fluid border-right"
-            src={image}
-            alt="test-img"
-          />
-          <div className="recipe-bar-desc border-left">
-            <div className="d-flex m-0">
-              <Link to={`/recipe/view/${_id}`} className="mr-auto">
-                <h4 className="font-weight-bold ml-2 m-0">{title}</h4>
-              </Link>
+        <div className="card m-0 p-0">
+          <Link to={`/recipe/view/${_id}`}>
+            <img
+              src={image}
+              className="product-card-img img-fluid m-0"
+              alt="Responsive image"
+            />
+          </Link>
+          <div class="card-body">
+            <Link to={`/recipe/view/${_id}`} className="mr-auto">
+              <div style={{ minHeight: "90px" }}>
+                <h4 className="card-title">{title}</h4>
+              </div>
+            </Link>
+            <span className="card-text">by {author}</span>
+
+            <div className="text-right">
+              {sameUser}
               <button
                 type="button"
                 className="btn btn-danger btn-sm rounded-0 m-0 p-1"
@@ -58,11 +65,6 @@ export default class RecipeBar extends Component {
                 <span className="badge badge-light">{likes.length}</span>
               </button>
             </div>
-            <span className="font-style-italic ml-2 m-0">by {author}</span>
-            {sameUser}
-            <p className="text-truncate d-none d-md-block mt-3 ml-2 m-0">
-              {description}
-            </p>
           </div>
         </div>
       </div>

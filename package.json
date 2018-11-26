@@ -24,6 +24,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "react-bootstrap": "^1.0.0-beta.2",
+    "react-stripe-elements": "^2.0.1",
     "validator": "^10.9.0",
     "winston": "^3.1.0"
   },
