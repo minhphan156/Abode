@@ -242,7 +242,6 @@ class CheckoutCart extends Component {
     );
   }
 }
-
 CheckoutCart.PropTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired

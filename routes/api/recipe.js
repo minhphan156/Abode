@@ -6,6 +6,8 @@ const passport = require("passport");
 // Load Recipe model
 const Recipe = require("../../models/Recipe");
 
+// const validateRecipeInput = require("../../validation/recipe");
+
 // Load Profile model
 const Profile = require("../../models/Profile");
 
@@ -16,9 +18,16 @@ router.post(
   "/create",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    // const { errors, isValid } = validateRecipeInput(req.body);
+
+    // if (!isValid) {
+    //   // Return any errors with 400 status
+    //   return res.status(400).json(errors);
+    // }
+
     Recipe.findOne({ title: req.body.title }).then(recipe => {
       // If there is already a recipe of the same title..
-      if (recipe) {
+      if (recipe && req.body.index == -1) {
         return res.status(400).json({ title: "That title is already taken." });
       } else {
         const newRecipe = new Recipe({
@@ -52,28 +61,72 @@ router.post(
         Profile.findOne({ user: req.user.id })
           .then(profile => {
             // If the user had set up their profile, their recipe will be saved to their recipe array
-
-            profile.recipe.unshift(profileRecipe);
-
-            console.log(profile);
+            if (req.body.index != undefined) {
+              profile.recipe[req.body.index] = profileRecipe;
+            } else {
+              profile.recipe.unshift(profileRecipe);
+            }
             Profile.findOneAndUpdate(
               { user: req.user.id },
               { $set: profile },
               { new: true }
             )
-              .then(() => console.log("recipe added to profile"))
+              .then(profileRecipe => res.json(profileRecipe))
               .catch(err => console.log(err));
           })
           .catch(err => res.status(200).json(profileRecipe));
-
-        newRecipe
-          .save()
-          .then(recipe => res.json(recipe))
-          .catch(err => {
-            res.status(500).json({ error: "Recipe failed to save" });
-          });
+        if (!req.body.oldTitle) {
+          newRecipe
+            .save()
+            .then(profileRecipe => res.json(profileRecipe))
+            .catch(err => {
+              res.status(500).json({ error: "Recipe failed to save" });
+            });
+        }
+        Recipe.findOne({ title: req.body.oldTitle }).then(recipe => {
+          if (recipe) {
+            Recipe.findOneAndUpdate(
+              { title: req.body.oldTitle },
+              { $set: profileRecipe },
+              { new: true }
+            )
+              .then(profileRecipe => res.json(profileRecipe))
+              .catch(err => console.log(err));
+          } else {
+            newRecipe
+              .save()
+              .then(recipe => res.json(recipe))
+              .catch(err => {
+                res.status(500).json({ error: "Recipe failed to save" });
+              });
+          }
+        });
       }
     });
+  }
+);
+
+router.delete(
+  "/delete",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Recipe.deleteOne({ title: req.query.title })
+      .then(recipe => res.json(req.query.title))
+      .catch(err => console.log(err));
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        profile.recipe.splice(req.query.index, 1);
+
+        Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profile },
+          { new: true }
+        )
+          .then(profile => res.json(profile))
+          .catch(err => console.log(err));
+      })
+      .catch(err => res.status(200).json(profile));
   }
 );
 

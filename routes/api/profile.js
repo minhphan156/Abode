@@ -12,17 +12,6 @@ const Profile = require("../../models/Profile");
 // Load User model
 const User = require("../../models/User");
 
-// @route GET api/profile/test
-// @desc Tests profile route
-// @access Public
-// this will append to home route 'localHost:5000/api/profile/test'
-// res.json will return json object
-router.get("/test", (req, res) =>
-  res.json({
-    msg: "Profile Works"
-  })
-);
-
 // @route GET api/profile
 // @desc Get current user's profile
 // @access Private

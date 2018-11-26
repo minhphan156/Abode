@@ -96,3 +96,13 @@ export const addRecipe = (recipeData, history) => dispatch => {
     .then(res => history.push("/MyRecipe"))
     .catch(err => console.log("error at recipe action " + err));
 };
+
+export const deleteRecipe = (recipeData, history) => dispatch => {
+  console.log("inside delete recipe action");
+  axios
+    .delete("/api/recipes/delete", {
+      params: { title: recipeData.title, index: recipeData.index }
+    })
+    .then(res => history.push("/dashboard"))
+    .catch(err => console.log(`Recipe Error: ${err}`));
+};
