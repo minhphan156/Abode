@@ -53,6 +53,15 @@ export default class RecipeBar extends Component {
             </Link>
             <span className="card-text">by {author}</span>
             {sameUser}
+            <div className="text-right">
+              <button
+                type="button"
+                className="btn btn-danger btn-sm rounded-0 m-0 p-1"
+              >
+                <i className="fas fa-heart" />{" "}
+                <span className="badge badge-light">{likes.length}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
