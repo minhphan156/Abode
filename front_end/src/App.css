@@ -334,11 +334,6 @@ a:active {
   color: black;
 }
 
-.recipe-bar:hover {
-  width: 100%;
-  height: 100px;
-  color: #0055a2;
-}
 
 .recipe-bar-img {
   width: 15%;
