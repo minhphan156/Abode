@@ -114,7 +114,7 @@ class CheckoutCart extends Component {
 
     var submitButton =
       Object.keys(profile).length > 0
-        ? { redirect: "/receipt", description: "Go to Payment" }
+        ? { redirect: "/payment", description: "Go to Payment" }
         : { redirect: "/delivery", description: "Add Delivery Information" };
 
     if (cart.length) {

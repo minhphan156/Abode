@@ -8,12 +8,17 @@ class Receipt extends Component {
   render() {
     return (
       <div class="container">
-        <h2>Your Order has been successfully placed.</h2>
+        <h2 className="display-4 text-center">
+          Your Order has been successfully placed
+        </h2>
+        <br />
+        <h4 className="text-center">
+          <img className="shop-logo" src={shopLogo} alt="" />
+        </h4>
         <br />
 
-        <h4>
-          Thank you for shopping with{" "}
-          <img className="shop-logo" src={shopLogo} alt="" />
+        <h4 className="text-center">
+          Thank you for shopping with SpartanStop!{" "}
         </h4>
       </div>
     );

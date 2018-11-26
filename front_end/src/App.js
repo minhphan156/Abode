@@ -38,6 +38,7 @@ import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import Delivery from "./components/cart/Delivery";
 import Receipt from "./components/cart/Receipt";
+import Payment from "./components/cart/Payment";
 
 import "./App.css";
 
@@ -88,6 +89,14 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/receipt" component={Receipt} />
+
+              {/* Checkout Page with Stripe */}
+              <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                <Elements>
+                  <Route exact path="/payment" component={Payment} />
+                </Elements>
+              </StripeProvider>
+
               {/* Checkout Page with Stripe */}
               <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
                 <Elements>

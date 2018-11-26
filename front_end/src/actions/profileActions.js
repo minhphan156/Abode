@@ -30,7 +30,7 @@ export const getCurrentProfile = () => dispatch => {
 export const createProfile = (profileData, history) => dispatch => {
   axios
     .post("/api/profile", profileData)
-    .then(res => history.push("/dashboard"))
+    // .then(res => history.push("/dashboard"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -42,7 +42,7 @@ export const createProfile = (profileData, history) => dispatch => {
 export const createDelivery = (profileData, history) => dispatch => {
   axios
     .post("/api/profile", profileData)
-    .then(res => history.push("/dashboard"))
+    .then(res => history.push("/receipt"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

@@ -62,10 +62,14 @@ class Delivery extends Component {
       ccExp: "",
       ccCvv: "",
       delivery: true,
-      paymentField: this.state.paymentField,
+      paymentField: this.state.paymentField
     };
-    console.log(this.props.auth.isAuthenticated)
-    this.props.setDelivery(profileData, this.props.history, this.props.auth.isAuthenticated);
+    console.log(this.props.auth.isAuthenticated);
+    this.props.setDelivery(
+      profileData,
+      this.props.history,
+      this.props.auth.isAuthenticated
+    );
   }
 
   render() {
@@ -86,13 +90,15 @@ class Delivery extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Add Delivery Details</h1>
-              <small className="d-block pb-3 text-right text-muted">
-                * = required fields
-              </small>
+              <h2 className="display-4 text-center">
+                Add Delivery Address and Credit Card Info
+              </h2>
               <form onSubmit={this.onSubmit}>
                 <h4 className="d-block pb-3" />
-                <p className="lead">Your address for Deliveries</p>
+                <h4 className="d-block pb-3" />
+
+                <h4 className="d-block pb-3">Your Address for Deliveries</h4>
+                <small className="d-block pb-3">* required fields</small>
 
                 <TextFieldGroup
                   placeholder="* Street and number"
@@ -141,7 +147,7 @@ class Delivery extends Component {
                 />
 
                 <p class="lead">Please enter payment info</p>
-                <CardElement 
+                <CardElement
                   name="paymentField"
                   onChange={this.stripeValidate}
                 />
