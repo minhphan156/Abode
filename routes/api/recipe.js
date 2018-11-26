@@ -75,14 +75,15 @@ router.post(
               .catch(err => console.log(err));
           })
           .catch(err => res.status(200).json(profileRecipe));
-        if (!req.body.oldTitle) {
-          newRecipe
-            .save()
-            .then(profileRecipe => res.json(profileRecipe))
-            .catch(err => {
-              res.status(500).json({ error: "Recipe failed to save" });
-            });
-        }
+        // if (!req.body.oldTitle) {
+        //   newRecipe
+        //     .save()
+        //     .then(profileRecipe => res.json(profileRecipe))
+        //     .catch(err => {
+        //       console.log("inside !req.body.oldTitle ");
+        //       res.status(500).json({ error: "Recipe failed to save" });
+        //     });
+        // }
         Recipe.findOne({ title: req.body.oldTitle }).then(recipe => {
           if (recipe) {
             Recipe.findOneAndUpdate(
@@ -97,6 +98,7 @@ router.post(
               .save()
               .then(recipe => res.json(recipe))
               .catch(err => {
+                console.log("inside recipe.findOne/newrecipe");
                 res.status(500).json({ error: "Recipe failed to save" });
               });
           }
