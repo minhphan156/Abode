@@ -1,6 +1,7 @@
 import {
   ADD_ITEM,
   REMOVE_ITEM,
+  GET_ERRORS,
   INCREMENT_ITEM_COUNT,
   DISCOUNT,
   GET_DELIVERY,
@@ -46,14 +47,26 @@ export const submitDiscount = newDiscount => dispatch => {
   });
 };
 //delivery
-export const setDelivery = (deliveryDetails, history) => dispatch => {
-  dispatch({
-    type: GET_DELIVERY,
-    payload: deliveryDetails
-  });
-  history.push("/receipt");
-};
-
+export const setDelivery = (deliveryDetails, history, isUser) => dispatch => {
+  var delUrl = "/api/profile/"
+  if(!isUser){
+    delUrl += "guest/"
+  }
+  console.log(delUrl)
+  axios
+  .post(delUrl, deliveryDetails)
+    .then(()=>{dispatch({
+      type: GET_DELIVERY,
+      payload: deliveryDetails
+      })
+    history.push("/receipt")})
+  .catch(err =>
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  )}
+  
 export const addItemFromHistory = (productName, count) => dispatch => {
   axios
     .get("/api/product/search", { params: productName })

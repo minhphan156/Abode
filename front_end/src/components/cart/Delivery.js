@@ -6,7 +6,12 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
-import { setDelivery} from "../../actions/cartActions";
+import { setDelivery } from "../../actions/cartActions";
+import {
+  CardElement,
+  injectStripe,
+  PaymentRequestButtonElement
+} from "react-stripe-elements";
 
 // Delivery is a form that asks user to provide address, credit card info
 class Delivery extends Component {
@@ -18,15 +23,22 @@ class Delivery extends Component {
       city: "",
       zip: "",
       homeState: "",
-      errors: {}
+      errors: {},
+      paymentField: false
     };
 
     this.onChange = this.onChange.bind(this);
+    this.stripeValidate = this.stripeValidate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  stripeValidate(e) {
+    console.log([e.complete]);
+    this.setState({ paymentField: e.complete });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,9 +60,16 @@ class Delivery extends Component {
       homeState: this.state.homeState,
       ccNumber: "",
       ccExp: "",
-      ccCvv: ""
+      ccCvv: "",
+      delivery: true,
+      paymentField: this.state.paymentField
     };
-    this.props.setDelivery(profileData, this.props.history);
+    console.log(this.props.auth.isAuthenticated);
+    this.props.setDelivery(
+      profileData,
+      this.props.history,
+      this.props.auth.isAuthenticated
+    );
   }
 
   render() {
@@ -71,11 +90,15 @@ class Delivery extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Add Delivery Details</h1>
-              <small className="d-block pb-3">* = required fields</small>
+              <h2 className="display-4 text-center">
+                Add Delivery Address and Credit Card Info
+              </h2>
               <form onSubmit={this.onSubmit}>
                 <h4 className="d-block pb-3" />
-                <h4 className="d-block pb-3">Your address for Deliveries</h4>
+                <h4 className="d-block pb-3" />
+
+                <h4 className="d-block pb-3">Your Address for Deliveries</h4>
+                <small className="d-block pb-3">* required fields</small>
 
                 <TextFieldGroup
                   placeholder="* Street and number"
@@ -123,6 +146,11 @@ class Delivery extends Component {
                   info=""
                 />
 
+                <p class="lead">Please enter payment info</p>
+                <CardElement
+                  name="paymentField"
+                  onChange={this.stripeValidate}
+                />
                 <input
                   type="submit"
                   value="Submit"
@@ -141,15 +169,19 @@ Delivery.PropTypes = {
   setDelivery: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  errors: state.errors
+  errors: state.errors,
+  auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { getCurrentProfile, setDelivery}
-)(Delivery);
+export default injectStripe(
+  connect(
+    mapStateToProps,
+    { getCurrentProfile, setDelivery }
+  )(Delivery)
+);

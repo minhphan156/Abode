@@ -40,16 +40,18 @@ router.get(
 // @access Private
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }
+  ),
   (req, res) => {
     const { errors, isValid } = validateProfileInput(req.body);
 
+    console.log(errors)
     //  Check validation
     if (!isValid) {
       // Return any errors with 400 status
+      console.log(errors)
       return res.status(400).json(errors);
     }
-
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
@@ -78,6 +80,40 @@ router.post(
         new Profile(profileFields).save().then(profile => res.json(profile));
       }
     });
+  }
+);
+router.post(
+  "/guest/",
+  (req, res) => {
+    const { errors, isValid } = validateProfileInput(req.body);
+
+    console.log(errors)
+    //  Check validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+    // Get fields
+    const profileFields = {};
+
+    profileFields.address = {};
+    if (req.body.street) profileFields.address.street = req.body.street;
+    if (req.body.apartment)
+      profileFields.address.apartment = req.body.apartment;
+    if (req.body.city) profileFields.address.city = req.body.city;
+    if (req.body.zip) profileFields.address.zip = req.body.zip;
+    if (req.body.homeState)
+      profileFields.address.homeState = req.body.homeState;
+
+    profileFields.creditCard = {};
+    if (req.body.ccNumber)
+      profileFields.creditCard.ccNumber = req.body.ccNumber;
+    if (req.body.ccExp) profileFields.creditCard.ccExp = req.body.ccExp;
+    if (req.body.ccCvv) profileFields.creditCard.ccCvv = req.body.ccCvv;
+
+    if (req.body.history) profileFields.history = req.body.history;
+    // Create profile
+    new Profile(profileFields).save().then(profile => res.json(profile));
   }
 );
 
@@ -118,6 +154,5 @@ router.delete(
     });
   }
 );
-
 // export so server.js can use this
 module.exports = router;
