@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 // Stripe Wrapper around any page that has Stripe React elements
-import {Elements, StripeProvider} from 'react-stripe-elements';
+import { Elements, StripeProvider } from "react-stripe-elements";
 
 import PrivateRoute from "./components/common/PrivateRoute";
 
@@ -37,6 +37,7 @@ import EditRecipe from "./components/recipe/EditRecipe";
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import Delivery from "./components/cart/Delivery";
+import Receipt from "./components/cart/Receipt";
 
 import "./App.css";
 
@@ -86,7 +87,7 @@ class App extends Component {
               <Route exact path="/checkout" component={CheckoutCart} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              
+              <Route exact path="/receipt" component={Receipt} />
               {/* Checkout Page with Stripe */}
               <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
                 <Elements>

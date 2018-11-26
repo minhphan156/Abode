@@ -51,10 +51,6 @@ class Dashboard extends Component {
         // User is logged in, but profile it not set up yet
         dashboardContent = (
           <div>
-            <p className="lead test-muted">Welcome {user.name} </p>
-            {/* <p>You have not yet set up your profile. Please add your info</p>
-            <Link to="/create-profile" className="btn btn-info">
-              Set up Profile */}
             <h4 className="d-block pb-3" />
 
             <p>You have not yet added a Delivery Address.</p>
