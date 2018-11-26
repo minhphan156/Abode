@@ -39,7 +39,7 @@ export default class RecipeBar extends Component {
 
     return (
       <div>
-        <div className="recipe-card border m-0 p-0">
+        <div className="card m-0 p-0">
           <Link to={`/recipe/view/${_id}`}>
             <img
               src={image}
@@ -49,7 +49,9 @@ export default class RecipeBar extends Component {
           </Link>
           <div class="card-body">
             <Link to={`/recipe/view/${_id}`} className="mr-auto">
-              <h4 className="card-title">{title}</h4>
+              <div style={{ minHeight: "90px" }}>
+                <h4 className="card-title">{title}</h4>
+              </div>
             </Link>
             <span className="card-text">by {author}</span>
             {sameUser}
