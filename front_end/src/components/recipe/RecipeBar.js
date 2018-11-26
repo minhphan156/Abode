@@ -24,7 +24,7 @@ export default class RecipeBar extends Component {
     let sameUser;
     if (isAuthenticated && user.id === userID) {
       sameUser = (
-        <div className="d-inline">
+        <div className="d-inline" style={{ marginRight: "60px" }}>
           <Link to={`/recipe/edit/${title}`} className="mr-auto">
             <button
               type="button"
@@ -54,8 +54,9 @@ export default class RecipeBar extends Component {
               </div>
             </Link>
             <span className="card-text">by {author}</span>
-            {sameUser}
+
             <div className="text-right">
+              {sameUser}
               <button
                 type="button"
                 className="btn btn-danger btn-sm rounded-0 m-0 p-1"
