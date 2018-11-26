@@ -30,6 +30,7 @@ import BrowseRecipe from "./components/recipe/BrowseRecipe";
 
 import CreateRecipe from "./components/recipe/CreateRecipe";
 import MyRecipe from "./components/recipe/MyRecipe";
+import EditRecipe from "./components/recipe/EditRecipe";
 
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
@@ -128,7 +129,16 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute
-                  exact path="/recipe/create" component={CreateRecipe}
+                  exact
+                  path="/recipe/create"
+                  component={CreateRecipe}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/recipe/edit/:item"
+                  component={EditRecipe}
                 />
               </Switch>
             </div>

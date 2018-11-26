@@ -3,34 +3,103 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { addRecipe } from "../../actions/recipeActions";
 import { withRouter } from "react-router-dom";
+import { getCurrentProfile } from "../../actions/profileActions";
+import isEmpty from "../../validation/is-empty";
+import Spinner from "../common/Spinner";
 
 /**
  * Main component for the 'Create Recipe' page.
  * It uses 2 functional components (StepComponent & IngredientsBoxComponent) for each new step/ingredient
  */
-class CreateRecipe extends Component {
+class EditRecipe extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      index: -1,
+      profile: null,
+      recipeToUpdate: null,
+      userID: "",
+      author: "",
       title: "",
-      description: "",
       image: "",
       steps: [],
-      ingredients: []
+      date: "",
+      description: "",
+      ingredients: [],
+      likes: []
     };
+    window.oldTitle = "";
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onIngredientChange = this.onIngredientChange.bind(this);
     this.addStep = this.addStep.bind(this);
     this.addIngredient = this.addIngredient.bind(this);
     this.removeIngredient = this.removeIngredient.bind(this);
+    this.onStepChange = this.onStepChange.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.errors) {
-      this.setState({ errors: newProps.errors });
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+      const element = this.searchArray(profile);
+      const recipeToUpdate = profile.recipe[element];
+      recipeToUpdate.userID = recipeToUpdate.userID;
+      recipeToUpdate.author = recipeToUpdate.author;
+      if (this.state.index == -1) {
+        window.oldTitle = recipeToUpdate.title;
+      }
+      recipeToUpdate.title = !isEmpty(recipeToUpdate.title)
+        ? recipeToUpdate.title
+        : "";
+      recipeToUpdate.image = !isEmpty(recipeToUpdate.image)
+        ? recipeToUpdate.image
+        : "";
+      recipeToUpdate.steps = !isEmpty(recipeToUpdate.steps)
+        ? recipeToUpdate.steps
+        : [];
+      recipeToUpdate.date = !isEmpty(recipeToUpdate.date)
+        ? recipeToUpdate.date
+        : "";
+      recipeToUpdate.description = !isEmpty(recipeToUpdate.description)
+        ? recipeToUpdate.description
+        : "";
+      recipeToUpdate.ingredients = !isEmpty(recipeToUpdate.ingredients)
+        ? recipeToUpdate.ingredients
+        : [];
+      recipeToUpdate.likes = recipeToUpdate.likes;
+
+      this.setState({
+        index: element,
+        profile: profile,
+        recipeToUpdate: recipeToUpdate,
+        userID: recipeToUpdate.userID,
+        author: recipeToUpdate.author,
+        title: recipeToUpdate.title,
+        image: recipeToUpdate.image,
+        steps: recipeToUpdate.steps,
+        date: recipeToUpdate.date,
+        description: recipeToUpdate.description,
+        ingredients: recipeToUpdate.ingredients,
+        likes: recipeToUpdate.likes
+      });
     }
+  }
+
+  searchArray(profile) {
+    const URL = window.location.pathname;
+    const recipeStr = URL.substring(13);
+    for (var i = 0; i < 99; i++) {
+      let temp = profile.recipe[i].title;
+      if (encodeURI(temp) == recipeStr) {
+        return i;
+      }
+    }
+    return 0;
   }
 
   onSubmit(e) {
@@ -38,20 +107,38 @@ class CreateRecipe extends Component {
 
     const { user } = this.props.auth;
     const recipeData = {
+      oldTitle: window.oldTitle,
+      index: this.state.index,
+      userID: this.state.userID,
+      author: this.state.author,
       title: this.state.title,
-      description: this.state.description,
       image: this.state.image,
       steps: this.state.steps,
+      date: this.state.date,
+      description: this.state.description,
       ingredients: this.state.ingredients,
-      author: user.name
+      likes: this.state.likes
     };
+
+    let temprecipeToUpdate = this.state.recipeToUpdate;
+    temprecipeToUpdate = recipeData;
+
+    let tempprofile = this.state.profile;
+    tempprofile.recipe[this.state.index] = temprecipeToUpdate;
     this.props.addRecipe(recipeData, this.props.history);
     this.setState({
+      index: -1,
+      profile: null,
+      recipeToUpdate: null,
+      userID: "",
+      author: "",
       title: "",
-      description: "",
       image: "",
       steps: [],
-      ingredients: []
+      date: "",
+      description: "",
+      ingredients: [],
+      likes: []
     });
   }
 
@@ -118,38 +205,54 @@ class CreateRecipe extends Component {
     });
   }
 
+  onStepChange(key, value) {
+    let mutate = this.state.steps.slice();
+    mutate[key] = value;
+    this.setState({
+      steps: mutate
+    });
+  }
+
   render() {
-    this.newIngredient = "";
+    const { profile, loading } = this.props.profile;
+    let stepsList;
+    let ingredientsList;
 
-    let stepCounter = 0; // This variable is needed to keep track of the order of steps
-    const stepsList = this.state.steps.map(step => (
-      <StepComponent
-        name={"steps[" + this.state.steps + "].text"}
-        stepCount={stepCounter++}
-        onStepChange={(key, value) => {
-          let mutate = this.state.steps.slice();
-          mutate[key] = value;
-          this.setState({
-            steps: mutate
-          });
-        }}
-      />
-    ));
+    if (this.state.title === "" || loading) {
+      stepsList = <Spinner />; // show the spinner while loading
+    } else {
+      this.newIngredient = "";
 
-    const ingredientsList = this.state.ingredients.map(ingredient => (
-      <IngredientBoxComponent
-        ingred={ingredient}
-        removeIngredient={this.removeIngredient}
-      />
-    ));
+      let stepCounter = 0; // This variable is needed to keep track of the order of steps
+      stepsList = this.state.steps.map(step => {
+        return (
+          <div key={"step" + stepCounter}>
+            <StepComponent
+              name={"steps[" + this.state.steps + "].text"}
+              stepCount={stepCounter++}
+              step={step}
+              onStepChange={this.onStepChange}
+            />
+          </div>
+        );
+      });
 
+      ingredientsList = this.state.ingredients.map(ingredient => (
+        <div key={ingredient}>
+          <IngredientBoxComponent
+            ingred={ingredient}
+            removeIngredient={this.removeIngredient}
+          />
+        </div>
+      ));
+    }
     return (
       <div>
         <h2 className="category-title text-center font-weight-bold">
-          Post Your Recipe
+          Edit Your Recipe
         </h2>
         <hr className="shadow" />
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} href="/MyRecipe">
           <div className="form-group">
             <label htmlFor="title">Title:</label>
             <input
@@ -247,6 +350,7 @@ const StepComponent = props => {
       <textarea
         type="text"
         name={props.name}
+        value={props.step}
         className="form-control"
         id="step"
         rows="2"
@@ -285,7 +389,9 @@ const IngredientBoxComponent = props => {
   );
 };
 
-CreateRecipe.propTypes = {
+EditRecipe.propTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
   addRecipe: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -293,11 +399,12 @@ CreateRecipe.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  profile: state.profile,
   recipe: state.recipe,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { addRecipe }
-)(withRouter(CreateRecipe));
+  { addRecipe, getCurrentProfile }
+)(withRouter(EditRecipe));
