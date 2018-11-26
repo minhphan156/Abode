@@ -45,7 +45,10 @@ class MyRecipe extends Component {
               <td>{item.title}</td>
               <td>
                 {" "}
-                <Link to="/EditRecipe" className="btn btn-info">
+                <Link
+                  to={`/recipe/edit/${item.title}`}
+                  className="btn btn-info"
+                >
                   Edit Recipe
                 </Link>
               </td>
