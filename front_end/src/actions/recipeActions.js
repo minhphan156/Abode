@@ -98,7 +98,6 @@ export const addRecipe = (recipeData, history) => dispatch => {
 };
 
 export const deleteRecipe = (recipeData, history) => dispatch => {
-  console.log("inside delete recipe action");
   axios
     .delete("/api/recipes/delete", {
       params: { title: recipeData.title, index: recipeData.index }
