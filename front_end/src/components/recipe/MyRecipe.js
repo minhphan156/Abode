@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
+import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
+import { deleteRecipe } from "../../actions/recipeActions";
 
 class MyRecipe extends Component {
   constructor() {
@@ -29,7 +32,7 @@ class MyRecipe extends Component {
     if (profile === null || loading) {
       listItem = <Spinner />; // show the spinner while loading
     } else {
-      listItem = this.state.recipes.map(item => {
+      listItem = this.state.recipes.map((item, index) => {
         const date = item.date;
         const dateOnly = date.substring(0, 10);
         const time = date.substring(11, 16);
@@ -42,18 +45,27 @@ class MyRecipe extends Component {
               <td>{item.title}</td>
               <td>
                 {" "}
-                <Link
-                  to={`/recipe/edit/${item.title}`}
-                  className="btn btn-info"
-                >
+                <Link to="/EditRecipe" className="btn btn-info">
                   Edit Recipe
                 </Link>
               </td>
               <td>
                 {" "}
-                <Link to="/EditRecipe" className="btn btn-info">
+                <button
+                  value="Delete Recipe"
+                  className="btn btn-info"
+                  onClick={event => {
+                    event.preventDefault();
+                    const { user } = this.props.auth;
+                    const recipeData = {
+                      index: index,
+                      title: item.title
+                    };
+                    this.props.deleteRecipe(recipeData, this.props.history);
+                  }}
+                >
                   Delete Recipe
-                </Link>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -83,10 +95,16 @@ class MyRecipe extends Component {
     );
   }
 }
+MyRecipe.PropTypes = {
+  deleteRecipe: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  auth: state.auth
 });
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, deleteRecipe }
 )(MyRecipe);

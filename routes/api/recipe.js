@@ -106,6 +106,30 @@ router.post(
   }
 );
 
+router.delete(
+  "/delete",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Recipe.deleteOne({ title: req.query.title })
+      .then(recipe => res.json(req.query.title))
+      .catch(err => console.log(err));
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        profile.recipe.splice(req.query.index, 1);
+
+        Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profile },
+          { new: true }
+        )
+          .then(profile => res.json(profile))
+          .catch(err => console.log(err));
+      })
+      .catch(err => res.status(200).json(profile));
+  }
+);
+
 // @route   GET api/recipes/viewall
 // @desc    Get all recipes
 // @access  Public
