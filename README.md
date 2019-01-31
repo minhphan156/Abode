@@ -1,4 +1,4 @@
-## SJSU Shop - SE 133
+## LikeHome Hotel Booking - SE 133
 
 - Project Manager: Sandro Sallenbach
 - Vinny Senthil
