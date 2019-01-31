@@ -15,7 +15,6 @@
 
 #### Story-Board Rules
 
-[Story Board](https://github.com/Abcbadq/sjsu_shop/projects/1)
 
 ```
 #To Do
