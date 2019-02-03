@@ -13,10 +13,6 @@ const ProfileActions = () => {
         <i className="fas fa-history text-info mr-1" />
         View Shopping History
       </Link>
-      <Link to="/MyRecipe" className="btn btn-light">
-        <i className="fas fa-cocktail text-info mr-1" />
-        Your Recipes
-      </Link>
     </div>
   );
 };

@@ -13,9 +13,6 @@ img.shop-logo {
   height: 100vh;
   margin-top: -24px;
   margin-bottom: -50px;
-  /* The gif used */
-  background-image: url("https://media.giphy.com/media/1gdqAIlRGdZOyx21sb/giphy.gif");
-  background-repeat: no-repeat;
 }
 
 .landing-inner {
@@ -87,21 +84,6 @@ a:active {
 
 .category-title {
   font-family: Roboto;
-}
-
-/* Add to Cart Button on Product Page */
-.cart-btn {
-  display: inline-block;
-  background-color: #7dc855;
-  border-radius: 6px;
-  font-size: 16px;
-  color: #ffffff;
-  text-decoration: none;
-  padding: 12px 30px;
-  transition: all 0.5s;
-}
-.cart-btn:hover {
-  background-color: #64af3d;
 }
 
 /* Basic Styling */
@@ -232,11 +214,6 @@ a:active {
   color: #343a40;
 }
 
-/* Shopping Cart */
-.product-in-cart {
-  text-align: center;
-}
-
 /* Product Bar */
 .product-bar {
   height: 10vh;
@@ -282,22 +259,6 @@ a:active {
   width: 25%;
 }
 
-/* Shopping Cart Modal CSS */
-.cart-modal-title {
-  font-family: Roboto;
-  color: black;
-}
-
-.cart-modal-subTotalBox {
-  margin-right: 55px;
-}
-
-.cart-modal-subTotal {
-  font-family: Roboto;
-  color: black;
-  size: 15px;
-}
-
 .StripeElement {
   background-color: white;
   height: 40px;
@@ -333,7 +294,6 @@ a:active {
   height: 100px;
   color: black;
 }
-
 
 .recipe-bar-img {
   width: 15%;

@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getCurrentProfile } from "../../actions/profileActions";
 import { Link } from "react-router-dom";
-import { addItemFromHistory } from "../../actions/cartActions";
 
 class HistorySingleOrder extends Component {
   constructor() {
@@ -12,26 +11,6 @@ class HistorySingleOrder extends Component {
     this.state = {
       product_array: []
     };
-    this.onCartClick = this.onCartClick.bind(this);
-    this.onAddAllCartClick = this.onAddAllCartClick.bind(this);
-  }
-
-  onCartClick(e, count) {
-    const product = {
-      name: e
-    };
-    this.props.addItemFromHistory(product, count);
-  }
-
-  onAddAllCartClick() {
-    this.state.product_array.map(item => {
-      this.props.addItemFromHistory(
-        {
-          name: item.name
-        },
-        item.count
-      );
-    });
   }
 
   componentDidMount() {
@@ -121,14 +100,6 @@ class HistorySingleOrder extends Component {
                   ${((item.count * item.price) / 100).toFixed(2)}
                 </span>
               </div>
-
-              <button
-                onClick={() => this.onCartClick(item.name, item.count)}
-                type="button"
-                className="product-bar-price text-center border-right m-0 p-0 align-middle m-0 pt-1 product-card-btn btn rounded-0 m-0 p-2"
-              >
-                <i className="fas fa-cart-plus" />
-              </button>
             </div>
           </div>
         </div>
@@ -176,7 +147,6 @@ class HistorySingleOrder extends Component {
           </div>
         )}
         <button
-          onClick={() => this.onAddAllCartClick()}
           type="button"
           className="float-right m-0 pt-1 product-card-btn btn rounded-0 m-0 p-2"
         >
@@ -197,10 +167,9 @@ HistorySingleOrder.propTypes = {
   profile: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  profile: state.profile,
-  cart: state.cart
+  profile: state.profile
 });
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, addItemFromHistory }
+  { getCurrentProfile }
 )(HistorySingleOrder);

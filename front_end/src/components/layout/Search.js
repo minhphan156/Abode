@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ProductCard from "../product-tiles/ProductCard";
 
 class Search extends Component {
   render() {
@@ -8,16 +7,7 @@ class Search extends Component {
 
     if (query != null) {
       const itemsList = query.map(item => {
-        return (
-          <div className="col-md-3 pb-3" key={item._id}>
-            <ProductCard
-              productKey={item._id}
-              productImage={item.image}
-              productName={item.name}
-              productPrice={item.price}
-            />
-          </div>
-        );
+        return <div className="col-md-3 pb-3" key={item._id} />;
       });
 
       return (

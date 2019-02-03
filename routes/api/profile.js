@@ -40,16 +40,15 @@ router.get(
 // @access Private
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }
-  ),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { errors, isValid } = validateProfileInput(req.body);
 
-    console.log(errors)
+    console.log(errors);
     //  Check validation
     if (!isValid) {
       // Return any errors with 400 status
-      console.log(errors)
+      console.log(errors);
       return res.status(400).json(errors);
     }
     // Get fields
@@ -82,63 +81,34 @@ router.post(
     });
   }
 );
-router.post(
-  "/guest/",
-  (req, res) => {
-    const { errors, isValid } = validateProfileInput(req.body);
+router.post("/guest/", (req, res) => {
+  const { errors, isValid } = validateProfileInput(req.body);
 
-    console.log(errors)
-    //  Check validation
-    if (!isValid) {
-      // Return any errors with 400 status
-      return res.status(400).json(errors);
-    }
-    // Get fields
-    const profileFields = {};
-
-    profileFields.address = {};
-    if (req.body.street) profileFields.address.street = req.body.street;
-    if (req.body.apartment)
-      profileFields.address.apartment = req.body.apartment;
-    if (req.body.city) profileFields.address.city = req.body.city;
-    if (req.body.zip) profileFields.address.zip = req.body.zip;
-    if (req.body.homeState)
-      profileFields.address.homeState = req.body.homeState;
-
-    profileFields.creditCard = {};
-    if (req.body.ccNumber)
-      profileFields.creditCard.ccNumber = req.body.ccNumber;
-    if (req.body.ccExp) profileFields.creditCard.ccExp = req.body.ccExp;
-    if (req.body.ccCvv) profileFields.creditCard.ccCvv = req.body.ccCvv;
-
-    if (req.body.history) profileFields.history = req.body.history;
-    // Create profile
-    new Profile(profileFields).save().then(profile => res.json(profile));
+  console.log(errors);
+  //  Check validation
+  if (!isValid) {
+    // Return any errors with 400 status
+    return res.status(400).json(errors);
   }
-);
+  // Get fields
+  const profileFields = {};
 
-// @route POST api/profile/history
-// @desc Add order to history
-// @access Private
-// router.post(
-//   "/history",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     Profile.findOne({ user: req.user.id }).then(profile => {
-//       const newHist = {
-//         products: req.body.products,
-//         date: req.body.date,
-//         total: req.body.total,
-//         discount: req.body.discount
-//       };
+  profileFields.address = {};
+  if (req.body.street) profileFields.address.street = req.body.street;
+  if (req.body.apartment) profileFields.address.apartment = req.body.apartment;
+  if (req.body.city) profileFields.address.city = req.body.city;
+  if (req.body.zip) profileFields.address.zip = req.body.zip;
+  if (req.body.homeState) profileFields.address.homeState = req.body.homeState;
 
-//       // add to history array
-//       profile.history.push(newHist);
+  profileFields.creditCard = {};
+  if (req.body.ccNumber) profileFields.creditCard.ccNumber = req.body.ccNumber;
+  if (req.body.ccExp) profileFields.creditCard.ccExp = req.body.ccExp;
+  if (req.body.ccCvv) profileFields.creditCard.ccCvv = req.body.ccCvv;
 
-//       profile.save().then(profile => res.json(profile));
-//     });
-//   }
-// );
+  if (req.body.history) profileFields.history = req.body.history;
+  // Create profile
+  new Profile(profileFields).save().then(profile => res.json(profile));
+});
 
 // @route   DELETE api/profile
 // @desc    Delete user and profile
