@@ -1,19 +1,19 @@
-## SJSU Shop - SE 133
+## LikeHome Hotel Booking - SE 165
 
 - Project Manager: Sandro Sallenbach
-- Product Owner: Vinny Senthil
-- Tech Lead: Kento Murray
-- SW Developer: Minh Phan
-- SW Developer: Sterling Gamble
-- SW Testing: Dale Seen
-- SW Testing: Yu Ning Hee
-- Documentation: Justin Magadia
+- Vinny Senthil
+- Minh Phan
+- Dale Seen
+- Yu Ning Hee
+- Lance Ngo
+- Caffrey Zheng
+- Alex Jiang
+- Tien Nguyen
+- Yuta Sugiura
 
 ### Project Management
 
 #### Story-Board Rules
-
-[Story Board](https://github.com/Abcbadq/sjsu_shop/projects/1)
 
 ```
 #To Do
@@ -70,12 +70,12 @@ Use issue/story number + short description of work, f.e. "SJSU-1097, Updated Log
 
 ## Install dependencies
 
-$npm client-install
+\$npm client-install
 install Redux Devtool
 
 ## To run the project
 
-$npm run dev
+\$npm run dev
 
 ## How to use Heroku:
 
