@@ -1,6 +1,8 @@
 ## LikeHome Hotel Booking - SE 165
 This project is done in San Jose State University course cmpe 165 spring 2019.
+
 (Project name) a web application (or mobile application) whichshares catalog of ideas.  (Project name) is a mini clone of the very successful product hotel.com.
+
 The live version will be on: namedothostdotcom.
 
 ##Team
