@@ -5,7 +5,7 @@ This project is done in San Jose State University course cmpe 165 spring 2019.
 
 The live version will be on: namedothostdotcom.
 
-##Team
+## Team
 - Project Manager: [Sandro Sallenbach](https://github.com/SandroSal)
 - [Vinny Senthil](https://github.com/vinnysenthil)
 - [Minh Phan](https://github.com/minhphan156)
