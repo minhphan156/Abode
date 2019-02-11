@@ -1,6 +1,6 @@
 ## LikeHome Hotel Booking - SE 165
 
-- Project Manager: Sandro Sallenbach
+- Sandro Sallenbach (PM)
 - Vinny Senthil
 - Minh Phan
 - Dale Seen
@@ -15,47 +15,39 @@
 
 #### Story-Board Rules
 
+Story-Board link: https://github.com/minhphan156/LikeHome/projects
+
 ```
 #To Do
 The 'To Do' list is populated with issues (aka stories) that are not yet assigned to any developer.
 Those stories are generally created by the PM. If need be, developer can create stories but need to inform PM.
-When stories are picked up (assigned to a dev), they have to be manually moved to 'In Progress'.
+Developers can assign stories to themselves and start working on them on a local branch.
 
 #In Progress
 As soon as the dev has code ready, a remote branch can be created and a new pull request created.
-The newly created pull request has to be added to 'Needs review', by clicking "Add cards".
-Please leave the issue open and in 'In Progress' until entire story is done.
-Please make sure the name of pull request and issue match.
+The newly created pull request is automatically added to the 'In Progress' column.
+Please make sure to follow naming convention when creating new pull request.
 
-#Needs review
 A new developer must be assigned to the pull request to review the code changes.
-Please check the logic of the code. Also, make sure it follows good style.
+Please check the logic of the code, and make sure it follows good style.
+Test the code changes by running the code locally.
 If updates are needed, write a review and wait for author to make changes.
 When satisfied, merge code into dev-branch.
 
-#Ready for verification
-The code is now merged into the dev-branch.
-New assignee has to test the develop branch according to specified rules in pull request.
-If verified successfully, please move story to 'Done'.
-
 #Done
-Finished stories will be reviewed by Tech lead or PM and can be deleted from board.
-Issue should still be 'In Progress' and can also be closed.
+The code is now merged into the dev-branch.
+Finished stories will be accumulated in 'Done' column and periodically deleted from board by PM or Tech Lead.
+Issue should still be 'To Do' and can also be closed.
 ```
 
-#### Pull request Rules
+#### Pull Request Rules
 
 ```
 When raising a pull request,
-- make sure you have written unit tests for your code.
-- please use following naming convention: "SJSU-1234, what I did" (same naming as issue)
-- please update Story Board.
-- please discribe the changes you made
+- please use following naming convention: "SJSU-1234, Created new Feature" (same naming as issue)
+- please create a comment, describing the changes you made
 - please make sure to tag the minimum amount of required reviewers.
-- please let the reviewers know about their new task
-- please add a comment section for verification with instructions on how to verify*
-
-*during verification, a dev will manually test the features you worked on
+- please inform the reviewers that you tagged them
 ```
 
 #### Naming Rules
