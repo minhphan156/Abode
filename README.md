@@ -62,12 +62,12 @@ Use issue/story number + short description of work, f.e. "SJSU-1097, Updated Log
 
 ## Install dependencies
 
-$npm client-install
+\$npm client-install
 install Redux Devtool
 
 ## To run the project
 
-$npm run dev
+\$npm run dev
 
 ## How to use Heroku:
 

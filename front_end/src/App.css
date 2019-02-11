@@ -1,0 +1,359 @@
+img {
+  width: 100%;
+}
+
+img.shop-logo {
+  width: 10%;
+}
+
+.landing {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  margin-top: -24px;
+  margin-bottom: -50px;
+}
+
+.landing-inner {
+  padding-top: 80px;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: black;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none !important;
+}
+
+.card-form {
+  opacity: 0.9;
+}
+
+.latest-profiles-img {
+  width: 40px;
+  height: 40px;
+}
+
+.form-control::placeholder {
+  color: #bbb !important;
+}
+
+/* 'Browse By Category' page CSS */
+.category-card-img {
+  width: 100%;
+  height: 25vh;
+  object-fit: contain;
+  background-color: white;
+}
+
+.category-card-nameBox {
+  width: 100%;
+  height: auto;
+  background-color: #0055a2;
+}
+
+.category-card-nameBox:hover {
+  background-color: #e5a823;
+}
+
+.category-card-name {
+  color: white;
+  font-family: Roboto;
+  font-size: 30px;
+}
+
+.category-card-botBox {
+  width: 100%;
+  height: 25px;
+  background-color: white;
+}
+
+.category-title {
+  font-family: Roboto;
+}
+
+/* Basic Styling */
+.product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+  font-family: "Roboto", sans-serif;
+}
+/* Columns */
+/* Left Column */
+.left-column img {
+  padding-right: 25%;
+  padding-left: 25%;
+
+  left: 0;
+  top: 0;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+/* Right Column */
+/* Product Description */
+.product-description {
+  border-bottom: 1px solid #e1e8ee;
+  margin-bottom: 20px;
+}
+.product-description span {
+  font-size: 12px;
+  color: #358ed7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.product-description h1 {
+  font-weight: 300;
+  font-size: 52px;
+  color: #43484d;
+  letter-spacing: -2px;
+}
+.product-description p {
+  font-size: 16px;
+  font-weight: 300;
+  color: #86939e;
+  line-height: 24px;
+}
+/* Product Price */
+.product-price {
+  display: flex;
+  align-items: center;
+}
+.product-price span {
+  font-size: 26px;
+  font-weight: 300;
+  color: #43474d;
+  margin-right: 20px;
+}
+/* Responsive */
+@media (max-width: 940px) {
+  .container {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+  .left-column,
+  .right-column {
+    width: 100%;
+  }
+  .left-column img {
+    width: 300px;
+    right: 0;
+    top: -65px;
+    left: initial;
+  }
+}
+@media (max-width: 535px) {
+  .left-column img {
+    width: 220px;
+    top: -85px;
+  }
+}
+
+#Related-Card {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+/* Product Card component CSS */
+.product-card-img {
+  width: 100%;
+  height: 25vh;
+  object-fit: contain;
+}
+
+.product-card-name {
+  display: block;
+  width: 100%;
+  background-color: #f6f4f5;
+  font-family: Roboto;
+  font-size: 15px;
+}
+
+.product-card-btn {
+  width: 25%;
+  height: auto;
+  background-color: #0055a2;
+  color: white;
+  padding: auto;
+}
+
+.product-card-btn:hover {
+  background-color: #e5a823;
+}
+
+.product-card-btn:focus {
+  background-color: #e5a823;
+}
+
+.product-card-price {
+  width: 75%;
+  background-color: #f6f4f5;
+  font-family: Roboto;
+  font-size: 15px;
+  font-style: italic;
+}
+.lobster-font {
+  font-family: Lobster, Serif;
+  color: #343a40;
+}
+
+/* Product Bar */
+.product-bar {
+  height: 10vh;
+  height: 68px;
+}
+
+.product-bar-img {
+  width: 20%;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-bar-name {
+  width: 35%;
+  height: auto;
+}
+
+.product-bar-quantity {
+  width: 15%;
+  height: auto;
+}
+
+.product-bar-price {
+  width: 20%;
+}
+
+.product-bar-btnBox {
+  width: 10%;
+}
+
+.product-bar-btn {
+  font-size: 15px;
+  background-color: lightgrey;
+  color: grey;
+}
+
+.product-bar-btn:hover {
+  background-color: red;
+  color: white;
+}
+
+.product-bar-quantity-btn {
+  width: 25%;
+}
+
+.StripeElement {
+  background-color: white;
+  height: 40px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+#Related-Card {
+  width: 100%;
+  height: 100px;
+  color: black;
+}
+
+/* Recipe Bar */
+.recipe-bar {
+  width: 100%;
+  height: 100px;
+  color: black;
+}
+
+.recipe-bar-img {
+  width: 15%;
+  height: auto;
+  object-fit: contain;
+}
+
+.recipe-bar-desc {
+  width: 85%;
+  height: auto;
+}
+
+/* Create Recipe Page */
+.create-recipe-25 {
+  width: 25%;
+  min-width: 150px;
+}
+
+.create-recipe-btn {
+  font-size: 12px;
+  background-color: #0055a2;
+  color: white;
+}
+
+.create-recipe-btn:hover {
+  background-color: #e5a823;
+}
+
+.create-recipe-ingredient-box {
+  width: 100%;
+}
+
+/* Review Recipe Page */
+.Roboto {
+  font-family: Roboto;
+}
+
+.review-recipe-img {
+  width: 50%;
+  height: 35vh;
+  min-height: 250px;
+}
+
+/* Browse Recipe Page */
+
+.browse-recipe-overlay-container {
+  width: 100%;
+  height: 40vh;
+  position: relative;
+}
+
+.browse-recipe-overlay {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.browse-recipe-headerimg {
+  width: 100%;
+  height: 100%;
+}
