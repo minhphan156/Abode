@@ -1,4 +1,4 @@
-## LikeHome Hotel Booking - SE 165
+## Abode Hotel Booking - SE 165
 
 - Sandro Sallenbach (PM)
 - Vinny Senthil
