@@ -15,7 +15,7 @@
 
 #### Story-Board Rules
 
-Story-Board link: https://github.com/minhphan156/LikeHome/projects
+Story-Board link: https://github.com/minhphan156/Abode/projects
 
 ```
 #To Do
