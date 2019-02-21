@@ -45,6 +45,7 @@ Issue should still be 'To Do' and can also be closed.
 ```
 When raising a pull request,
 - please use following naming convention: "SJSU-1234, Created new Feature" (same naming as issue)
+- add project "Abode-Story Board"
 - please create a comment, describing the changes you made
 - please make sure to tag the minimum amount of required reviewers.
 - please inform the reviewers that you tagged them
