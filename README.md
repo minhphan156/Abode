@@ -24,11 +24,15 @@ Those stories are generally created by the PM. If need be, developer can create 
 Developers can assign stories to themselves and start working on them on a local branch.
 
 #In Progress
+When a story gets (self-)assigned, drag and drop the story into 'In Progress'
+
+#Needs Review
 As soon as the dev has code ready, a remote branch can be created and a new pull request created.
 The newly created pull request is automatically added to the 'In Progress' column.
 Please make sure to follow naming convention when creating new pull request.
-
 A new developer must be assigned to the pull request to review the code changes.
+
+For the reviewer:
 Please check the logic of the code, and make sure it follows good style.
 Test the code changes by running the code locally.
 If updates are needed, write a review and wait for author to make changes.
