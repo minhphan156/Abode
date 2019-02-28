@@ -1,7 +1,7 @@
 {
-  "name": "spartanstop",
+  "name": "Abode",
   "version": "1.0.0",
-  "description": "grocery store for SJSU students",
+  "description": "Welcome Abode",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix front_end",
@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix front_end && npm run build --prefix front_end"
   },
-  "author": "Sandro, Kento, Yu, Sterling, Dale, Vinny, Justin, Minh",
+  "author": "Sandro, Vinny, Minh, Dale, Yu, Lance, Caffrey, Alex, Tien, Yuta",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
