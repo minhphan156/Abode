@@ -15,9 +15,59 @@ import {
   withStyles
 } from "@material-ui/core";
 
-export default function Navbar() {
-  return <div />;
+let styles = {
+  leftMost: {
+    marginLeft: 150, // Margin size = 120
+    marginRight: 20
+  },
+  rightMost: {
+    marginRight: 150 // Margin size = 120
+  },
+  beforeSeperation: {
+    marginRight: "auto"
+  }
+};
+
+function Navbar(props) {
+  let { classes } = props;
+  return (
+    <div>
+      <AppBar>
+        <Toolbar>
+          <Typography
+            className={classes.leftMost}
+            variant="title"
+            color="inherit"
+          >
+            Abode
+          </Typography>
+          <Button variant="text" color="inherit">
+            Deals of the Week
+          </Button>
+          <Button
+            className={classes.beforeSeperation}
+            variant="text"
+            color="inherit"
+          >
+            Popular Cities
+          </Button>
+          <Button variant="text" color="inherit">
+            Sign up
+          </Button>
+          <Button className={classes.rightMost} variant="text" color="inherit">
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
+
+Navbar.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(Navbar);
 
 // import React, { Component } from "react";
 // import { Link } from "react-router-dom";
