@@ -22,7 +22,7 @@ The live version will be on: namedothostdotcom.
 
 #### Story-Board Rules
 
-Story-Board link: https://github.com/minhphan156/LikeHome/projects
+Story-Board link: https://github.com/minhphan156/Abode/projects
 
 ```
 #To Do
@@ -31,11 +31,15 @@ Those stories are generally created by the PM. If need be, developer can create 
 Developers can assign stories to themselves and start working on them on a local branch.
 
 #In Progress
+When a story gets (self-)assigned, drag and drop the story into 'In Progress'
+
+#Needs Review
 As soon as the dev has code ready, a remote branch can be created and a new pull request created.
 The newly created pull request is automatically added to the 'In Progress' column.
 Please make sure to follow naming convention when creating new pull request.
-
 A new developer must be assigned to the pull request to review the code changes.
+
+For the reviewer:
 Please check the logic of the code, and make sure it follows good style.
 Test the code changes by running the code locally.
 If updates are needed, write a review and wait for author to make changes.
@@ -52,6 +56,7 @@ Issue should still be 'To Do' and can also be closed.
 ```
 When raising a pull request,
 - please use following naming convention: "SJSU-1234, Created new Feature" (same naming as issue)
+- add project "Abode-Story Board"
 - please create a comment, describing the changes you made
 - please make sure to tag the minimum amount of required reviewers.
 - please inform the reviewers that you tagged them

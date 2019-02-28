@@ -44,6 +44,8 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+    //==Step 1==
+    console.log("==Step 1 at login component==" + JSON.stringify(userData));
 
     this.props.loginUser(userData);
   }

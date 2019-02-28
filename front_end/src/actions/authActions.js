@@ -9,6 +9,8 @@ import jwt_decode from "jwt-decode";
 
 export const registerUser = (userData, history) => dispatch => {
   // passed in history from register component to route to other page (4)
+  //==Step 2==
+  console.log("==Step 2 at register action==" + JSON.stringify(userData));
   axios
     .post("/api/users/register", userData) //in package.json we have "proxy": "http://localhost:5000"
     .then(res => history.push("./login")) // action to route to other page (5)
@@ -21,7 +23,9 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 // Login - get user token
+//==Step 2==
 export const loginUser = userData => dispatch => {
+  console.log("==Step 2 at loging action==" + JSON.stringify(userData));
   axios
     .post("/api/users/login", userData)
     .then(res => {
