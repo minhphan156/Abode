@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 // api routes
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
+const hotels = require("./routes/api/hotels")
 
 // get some functionalities from express library like get() function
 const app = express();
@@ -42,7 +43,8 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 // this will append to home route 'localHost:5000/api/profile/{what ever profile.js dictate}'
 app.use("/api/profile", profile);
-
+// this will append to home route 'localHost:5000/api/hotel/{what ever hotels.js dictate}'
+app.use("/api/hotels", hotels);
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
   // Set static folder

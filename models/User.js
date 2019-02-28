@@ -3,14 +3,11 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim:true,
   },
   password: {
     type: String,
@@ -19,6 +16,17 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  rewardPoints: {
+    type:Number
+  },
+  admin:{
+    type:Number,
+    default:0
+  },
+  customerID:{
+    type:Schema.Types.ObjectId,
+    ref:'customers'
   }
 });
 

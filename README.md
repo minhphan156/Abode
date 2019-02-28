@@ -1,15 +1,22 @@
 ## LikeHome Hotel Booking - SE 165
 
-- Sandro Sallenbach (PM)
-- Vinny Senthil
-- Minh Phan
-- Dale Seen
-- Yu Ning Hee
-- Lance Ngo
-- Caffrey Zheng
-- Alex Jiang
-- Tien Nguyen
-- Yuta Sugiura
+This project is done in San Jose State University course cmpe 165 spring 2019.
+
+Abode a web application (or mobile application) whichshares catalog of ideas.  Abode is a mini clone of the very successful product hotel.com.
+
+The live version will be on: namedothostdotcom.
+
+## Team
+- Project Manager: [Sandro Sallenbach](https://github.com/SandroSal)
+- [Vinny Senthil](https://github.com/vinnysenthil)
+- [Minh Phan](https://github.com/minhphan156)
+- [Dale Seen](https://github.com/DaleCS)
+- [Yu Ning Hee](https://github.com/ynoe)
+- [Quang "Lance" Ngo](https://github.com/lance-ngo)
+- [Hongbin "Caffrey" Zheng](https://github.com/HongbinZheng)
+- [Jinshan "Alex" Jiang](https://github.com/itjinshan)
+- [Tien Nguyen](https://github.com/tienquocnguyen)
+- [Yuta Sugiura](https://github.com/yuta05)
 
 ### Project Management
 
