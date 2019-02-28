@@ -55,24 +55,22 @@ class SearchWidget extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={8}>
-          <Grid item xs={4}>
+        <Grid container justify={"center"} spacing={8}>
+          <Grid item xs={12} sm={10} md={6} lg={4}>
             <Paper className={classes.paper}>
               <Destination />
             </Paper>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={10} md={6} lg={4}>
             <Paper className={classes.paper}>
               <CalendarPicker />
             </Paper>
           </Grid>
-
-          <Grid item xs={1}>
+          <Grid item xs={3} sm={3} md={4} lg={1}>
             <Paper className={classes.paper}>
               <RoomNumber />
             </Paper>
           </Grid>
-
           <Button
             variant="contained"
             color="primary"

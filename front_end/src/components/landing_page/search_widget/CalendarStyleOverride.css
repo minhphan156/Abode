@@ -23,3 +23,43 @@
 .CalendarDay__hovered_span {
   background: rgb(14, 13, 13);
 }
+
+/* This is the month "February 2019" when opening the calendar */
+.CalendarMonth_caption {
+  color: #565a5c;
+  font-size: 18px;
+  text-align: center;
+  padding-top: 22px;
+  padding-bottom: 37px;
+  caption-side: initial;
+}
+
+/* This is the input field where it says "Start Date" and "End Date" */
+.DateInput {
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 24px;
+  color: #757575;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  position: relative;
+  display: inline-block;
+  width: 117px;
+  vertical-align: middle;
+}
+
+/* This is the little calendar icon */
+.DateRangePickerInput_calendarIcon {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 0 0px 0 0px;
+}

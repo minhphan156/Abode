@@ -11,14 +11,13 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap"
+    // display: "flex",
+    // flexWrap: "wrap"
   },
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 20,
-    top: 0,
-    left: 12
+    top: 0
   },
   selectEmpty: {
     marginTop: theme.spacing.unit

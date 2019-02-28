@@ -9,8 +9,6 @@ import { DateRangePicker, DayPickerRangeController } from "react-dates";
 
 const styles = theme => ({
   root: {
-    // display: "flex",
-    // flexWrap: "wrap",
     padding: theme.spacing.unit
   },
   supportText: {
