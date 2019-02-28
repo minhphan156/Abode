@@ -1,10 +1,8 @@
-## LikeHome Hotel Booking - SE 165
+## Abode Hotel Booking - SE 165
 
-This project is done in San Jose State University course cmpe 165 spring 2019.
+Abode is a project by students at San Jose State University as part of their SE 165, Spring 2019 class. It emulates a hotel booking site (like hotels.com) with all its features and functions.
 
-Abode a web application (or mobile application) whichshares catalog of ideas.  Abode is a mini clone of the very successful product hotel.com.
-
-The live version will be on: namedothostdotcom.
+The live version will be available soon on: https://www.abode-hotel.com
 
 ## Team
 - Project Manager: [Sandro Sallenbach](https://github.com/SandroSal)
