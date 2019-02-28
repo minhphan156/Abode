@@ -8,7 +8,6 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
-// import HotelIcon from "@material-ui/icons/hotel";
 
 const suggestions = [
   { label: "San Jose" },
@@ -96,14 +95,10 @@ const styles = theme => ({
   container: {
     position: "relative",
     padding: theme.spacing.unit * 2
-
-    // top: 15,
-    // left: 10
   },
   suggestionsContainerOpen: {
     position: "absolute",
     zIndex: 1,
-    // marginTop: theme.spacing.unit,
     left: 0,
     right: 0
   },
@@ -158,7 +153,6 @@ class Destination extends React.Component {
 
     return (
       <div className={classes.root}>
-        {/* <i class="material-icons">hotel {HotelIcon}</i> */}
         <Autosuggest
           {...autosuggestProps}
           inputProps={{

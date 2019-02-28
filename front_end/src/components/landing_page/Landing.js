@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
-import { Form, Input, FormGroup, Container, Label } from "reactstrap";
 import SearchWidget from "./search_widget/SearchWidget";
 
 class Landing extends Component {
@@ -44,5 +42,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-// export default withStyles(styles)(Landing);
 export default connect(mapStateToProps)(Landing);

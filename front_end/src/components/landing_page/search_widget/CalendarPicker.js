@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { withStyles } from "@material-ui/core/styles";
 
-import { PropTypes } from "prop-types";
-import { connect } from "react-redux";
-import { Form, Input, FormGroup, Container, Label } from "reactstrap";
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
 import "./CalendarStyleOverride.css";
@@ -52,7 +48,6 @@ class CalendarPicker extends Component {
           } // PropTypes.func.isRequired,
           focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
           onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-          /* minimumNights={1} */
           noBorder={true}
           showDefaultInputIcon={true}
         />

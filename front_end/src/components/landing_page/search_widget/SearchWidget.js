@@ -4,12 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-import { Form, Input, FormGroup, Container, Label } from "reactstrap";
 
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 import Destination from "./Destination";
@@ -30,10 +25,8 @@ const styles = theme => ({
     height: 40
   },
   paper: {
-    // padding: theme.spacing.unit * 2,
     textAlign: "center",
     height: 70
-    // color: theme.palette.text.secondary
   }
 });
 
