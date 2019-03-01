@@ -1,0 +1,65 @@
+/* Will edit everything selected including everything between a range of dates */
+.CalendarDay__selected_span {
+  background: #82e0aa;
+  color: white; /*text*/
+  border: 1px solid rgb(56, 13, 248); /* default styles include a border */
+}
+
+/* Will edit selected date or the endpoints of a range of dates */
+.CalendarDay__selected {
+  background: #ff8f4c;
+  color: white;
+}
+
+/* Will edit when hovered over. _span style also has this property */
+.CalendarDay__selected:hover {
+  background: #326d79;
+  color: white;
+}
+
+/* Will edit when the second date (end date) in a range of dates */
+/* is not yet selected. Edits the dates between your mouse and said date */
+.CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+  background: rgb(14, 13, 13);
+}
+
+/* This is the month "February 2019" when opening the calendar */
+.CalendarMonth_caption {
+  color: #565a5c;
+  font-size: 18px;
+  text-align: center;
+  padding-top: 22px;
+  padding-bottom: 37px;
+  caption-side: initial;
+}
+
+/* This is the input field where it says "Start Date" and "End Date" */
+.DateInput {
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 24px;
+  color: #757575;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  position: relative;
+  display: inline-block;
+  width: 117px;
+  vertical-align: middle;
+}
+
+/* This is the little calendar icon */
+.DateRangePickerInput_calendarIcon {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 0 0px 0 0px;
+}
