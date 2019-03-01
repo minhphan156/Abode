@@ -19,6 +19,17 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  rewardPoints: {
+    type:Number
+  },
+  admin:{
+    type:Number,
+    default:0
+  },
+  customerID:{
+    type:Schema.Types.ObjectId,
+    ref:'customers'
   }
 });
 
