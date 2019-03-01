@@ -12,7 +12,7 @@ import { clearCurrentProfile } from "./actions/profileActions";
 
 import NavBar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import Landing from "./components/layout/Landing";
+import Landing from "./components/landing_page/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Search from "./components/layout/Search";
