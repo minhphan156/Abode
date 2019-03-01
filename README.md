@@ -32,8 +32,8 @@ Developers can assign stories to themselves and start working on them on a local
 When a story gets (self-)assigned, drag and drop the story into 'In Progress'
 
 #Needs Review
-As soon as the dev has code ready, a remote branch can be created and a new pull request created.
-The newly created pull request is automatically added to the 'In Progress' column.
+As soon as the developer has code ready, a remote branch and a corresponding pull request can be created.
+The newly created pull request is automatically added to the 'Needs Review' column.
 Please make sure to follow naming convention when creating new pull request.
 A new developer must be assigned to the pull request to review the code changes.
 
@@ -45,8 +45,8 @@ When satisfied, merge code into dev-branch.
 
 #Done
 The code is now merged into the dev-branch.
-Finished stories will be accumulated in 'Done' column and periodically deleted from board by PM or Tech Lead.
-Issue should still be 'To Do' and can also be closed.
+Finished stories will be accumulated in the 'Done' column. They will be periodically archived by PM or Tech Lead.
+Issue should still be 'In Progress' and can also be archived.
 ```
 
 #### Pull Request Rules
