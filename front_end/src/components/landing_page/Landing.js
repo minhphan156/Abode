@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import SearchWidget from "./search_widget/SearchWidget";
 
@@ -8,7 +7,7 @@ import SearchWidget from "./search_widget/SearchWidget";
 import "./Landing.css";
 
 // Material-UI Imports
-import { Typography } from "@material-ui/core";
+import { Grid, Typography, Paper } from "@material-ui/core";
 
 class Landing extends Component {
   constructor(props) {
@@ -24,9 +23,19 @@ class Landing extends Component {
   };
 
   render() {
+    let styles = {
+      root: {
+        flexGrow: 1
+      },
+      paper: {
+        minwidth: 50,
+        minheight: 100
+      }
+    };
+
     return (
       <div>
-        <div className="background-slideshow">
+        <div className="background-slideshow withPageMargin">
           <Grid container spacing={24} justify="center">
             <Grid item xs={12} lg={9}>
               <SearchWidget />
@@ -34,29 +43,34 @@ class Landing extends Component {
           </Grid>
         </div>
         <br />
-        <div className="flexBox fadeIn">
-          <Typography variant="h3" fontFamily="Roboto">
-            Deals of the Week
-          </Typography>
+        <div className="fadeIn">
+          <div className="withPageMargin">
+            <div className="flexbox-center noMarginOrPadding">
+              <Typography variant="h3" fontFamily="Roboto">
+                Deals of the Week
+              </Typography>
+            </div>
+            <hr className="noYMarginPadding" />
+          </div>
         </div>
-        <hr />
+        <Grid container className={styles.root} justify="center" spacing={16}>
+          <Grid item>
+            <Paper className={styles.paper} />
+          </Grid>
+          <Grid item>
+            <Paper className={styles.paper} />
+          </Grid>
+          <Grid item>
+            <Paper className={styles.paper} />
+          </Grid>
+        </Grid>
       </div>
     );
-    // return (
-    //   <div className="landing">
-    //     <Grid container spacing={24} justify="center">
-    //       <Grid item xs={12} lg={9}>
-    //         <SearchWidget />
-    //       </Grid>
-    //     </Grid>
-    //   </div>
-    // );
   }
 }
 
 Landing.propTypes = {
-  auth: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

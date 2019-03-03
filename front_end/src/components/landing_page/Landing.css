@@ -1,29 +1,32 @@
-.fadeIn {
-  animation: fadeIn;
-  animation-duration: 1.5s;
-}
-
-.fadeOut {
-  animation: fadeIn;
-  animation-duration: 1.5s;
-}
-
 @keyframes fadeIn {
   from {
-    opacity: 1;
+    opacity: 0;
+    top: 20px;
   }
   to {
-    opacity: 0.4;
+    opacity: 1;
+    top: 0px;
   }
 }
 
 @keyframes fadeOut {
   from {
-    opacity: 0.4;
-  }
-  to {
     opacity: 1;
   }
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeIn {
+  position: relative;
+  animation: fadeIn;
+  animation-duration: 1s;
+}
+
+.fadeOut {
+  animation: fadeOut;
+  animation-duration: 1.5s;
 }
 
 .background-slideshow {
@@ -31,9 +34,19 @@
   background-size: cover;
 }
 
-.flexBox {
+.flexbox-center {
   display: flex;
   justify-content: center;
-  padding: 1;
-  margin: 0;
+}
+
+.withPageMargin {
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.noYMarginPadding {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
