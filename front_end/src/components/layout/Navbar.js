@@ -16,15 +16,26 @@ import {
 } from "@material-ui/core";
 
 let styles = {
-  leftMost: {
-    marginLeft: 150, // Margin size = 120
-    marginRight: 20
+  normalLink: {
+    marginLeft: 15,
+    marginRight: 15
   },
-  rightMost: {
-    marginRight: 150 // Margin size = 120
+  leftMostLogo: {
+    marginLeft: 150, // Margin size
+    marginRight: 15,
+    width: 50,
+    height: 50
   },
   beforeSeperation: {
+    marginLeft: 15,
     marginRight: "auto"
+  },
+  afterSeperation: {
+    marginRight: 15
+  },
+  rightMost: {
+    marginLeft: 15,
+    marginRight: 150
   }
 };
 
@@ -34,13 +45,7 @@ function Navbar(props) {
     <div>
       <AppBar>
         <Toolbar>
-          <Typography
-            className={classes.leftMost}
-            variant="title"
-            color="inherit"
-          >
-            Abode
-          </Typography>
+          <img src="logo.png" className={classes.leftMostLogo} />
           <Button variant="text" color="inherit">
             Deals of the Week
           </Button>
@@ -51,7 +56,11 @@ function Navbar(props) {
           >
             Popular Cities
           </Button>
-          <Button variant="text" color="inherit">
+          <Button
+            className={classes.afterSeperation}
+            variant="text"
+            color="inherit"
+          >
             Sign up
           </Button>
           <Button className={classes.rightMost} variant="text" color="inherit">

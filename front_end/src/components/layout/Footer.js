@@ -23,7 +23,7 @@ function Footer(props) {
       <AppBar className={classes.footer}>
         <Toolbar>
           <Typography className={classes.margin} variant="text">
-            @Copyright Abode
+            @Copyright Abode 2019
           </Typography>
         </Toolbar>
       </AppBar>
