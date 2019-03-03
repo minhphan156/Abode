@@ -1,0 +1,39 @@
+.fadeIn {
+  animation: fadeIn;
+  animation-duration: 1.5s;
+}
+
+.fadeOut {
+  animation: fadeIn;
+  animation-duration: 1.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.4;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.background-slideshow {
+  background-image: url(./SF.jpg);
+  background-size: cover;
+}
+
+.flexBox {
+  display: flex;
+  justify-content: center;
+  padding: 1;
+  margin: 0;
+}
