@@ -17,7 +17,7 @@ const styles = theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    opacity: 0.7
+    opacity: 1
   },
   button: {
     margin: theme.spacing.unit,

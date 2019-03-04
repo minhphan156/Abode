@@ -1,7 +1,7 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    top: 20px;
+    top: 50px;
   }
   to {
     opacity: 1;
@@ -21,12 +21,44 @@
 .fadeIn {
   position: relative;
   animation: fadeIn;
-  animation-duration: 1s;
+  animation-duration: 1.5s;
 }
 
 .fadeOut {
   animation: fadeOut;
   animation-duration: 1.5s;
+}
+
+@keyframes moveUp {
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: 7px;
+  }
+}
+
+@keyframes moveDown {
+  from {
+    bottom: 7px;
+  }
+  to {
+    bottom: 0px;
+  }
+}
+
+.mouseHover:hover {
+  position: relative;
+  animation: moveUp;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
+
+.mouseHover {
+  position: relative;
+  animation: moveDown;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
 }
 
 .background-slideshow {
@@ -46,7 +78,7 @@
 
 .noYMarginPadding {
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   padding-top: 0;
   padding-bottom: 0;
 }
