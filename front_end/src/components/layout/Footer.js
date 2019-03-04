@@ -1,7 +1,7 @@
 import React from "react";
 
 // Material UI Imports below
-import { withStyles, AppBar, Toolbar, Typography } from "@material-ui/core";
+import { withStyles, AppBar, Toolbar, Button, Grid } from "@material-ui/core";
 
 let styles = {
   margin: {
@@ -10,8 +10,11 @@ let styles = {
   },
   footer: {
     top: "auto",
-    bottom: 0,
-    height: 140
+    minheight: 140
+  },
+  footerMargin: {
+    marginLeft: 150,
+    marginRight: 150
   }
 };
 
@@ -21,10 +24,19 @@ function Footer(props) {
   return (
     <div>
       <AppBar className={classes.footer}>
-        <Toolbar>
-          <Typography className={classes.margin} variant="text">
-            @Copyright Abode 2019
-          </Typography>
+        <Toolbar className={classes.footerMargin}>
+          <Grid container spacing={2} justify="center" alignItems="center">
+            <Grid item xs={1}>
+              <Button variant="text" color="inherit">
+                About Us
+              </Button>
+            </Grid>
+            <Grid item xs={1}>
+              <Button variant="text" color="inherit">
+                Disclaimer
+              </Button>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>
