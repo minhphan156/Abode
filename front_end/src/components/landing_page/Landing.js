@@ -3,17 +3,24 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SearchWidget from "./search_widget/SearchWidget";
 
-// Import custom css
+// Animation CSS imports
 import "./Landing.css";
 
+// Image imports
 import SF from "./SF.jpg";
 import LA from "./LA.jpg";
 import NY from "./NY.jpg";
 import CH from "./CH.jpg";
+import AU from "./AU.jpg";
+import DE from "./DE.jpg";
+import PO from "./PO.jpg";
+import SA from "./SA.jpg";
+import SD from "./SD.jpg";
+import Vegas from "./Vegas.jpg";
+import WA from "./WA.jpg";
 
 // Material-UI Imports
 import { Grid, Typography, Paper } from "@material-ui/core";
-import { relative } from "path";
 
 class Landing extends Component {
   constructor(props) {
@@ -56,35 +63,35 @@ class Landing extends Component {
       }
     };
 
-    let paperStyles = [
-      {
+    function dealStyle(img) {
+      return {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: `url(${LA})`,
+        backgroundImage: `url(${img})`,
         backgroundSize: "cover",
         width: 450,
         height: 300
-      },
-      {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundImage: `url(${NY})`,
+      };
+    }
+
+    function collageLStyle(img) {
+      return {
+        backgroundImage: `url(${img})`,
         backgroundSize: "cover",
-        width: 450,
-        height: 300
-      },
-      {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundImage: `url(${CH})`,
+        width: "66%",
+        height: "33%"
+      };
+    }
+
+    function collageRStyle(img) {
+      return {
+        backgroundImage: `url(${img})`,
         backgroundSize: "cover",
-        width: 450,
-        height: 300
-      }
-    ];
+        width: "33%",
+        height: "33%"
+      };
+    }
 
     return (
       <div>
@@ -95,8 +102,8 @@ class Landing extends Component {
         </div>
         <br />
         <div className="fadeIn">
-          <div className="withPageMargin">
-            <div className="flexbox-center noMarginOrPadding">
+          <div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <Typography variant="h3" fontFamily="Roboto">
                 Deals of the Week
               </Typography>
@@ -107,7 +114,7 @@ class Landing extends Component {
             <Grid item>
               <Paper
                 className="mouseHover"
-                style={paperStyles[0]}
+                style={dealStyle(LA)}
                 square="false"
               >
                 <Typography style={styles.paperText} variant="h4">
@@ -118,7 +125,7 @@ class Landing extends Component {
             <Grid item>
               <Paper
                 className="mouseHover"
-                style={paperStyles[1]}
+                style={dealStyle(NY)}
                 square="false"
               >
                 <Typography style={styles.paperText} variant="h4">
@@ -129,13 +136,29 @@ class Landing extends Component {
             <Grid item>
               <Paper
                 className="mouseHover"
-                style={paperStyles[2]}
+                style={dealStyle(CH)}
                 square="false"
               >
                 <Typography style={styles.paperText} variant="h4">
                   Upcoming Holiday Discount!
                 </Typography>
               </Paper>
+            </Grid>
+          </Grid>
+          <div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Typography variant="h3" fontFamily="Roboto">
+                Top Cities
+              </Typography>
+            </div>
+            <hr className="noYMarginPadding" />
+          </div>
+          <Grid container spacing={16}>
+            <Grid item>
+              <div style={collageLStyle(AU)} />
+            </Grid>
+            <Grid item>
+              <Grid container spacing={16} direction="column" />
             </Grid>
           </Grid>
         </div>
