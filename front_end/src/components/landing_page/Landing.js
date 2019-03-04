@@ -19,15 +19,7 @@ class Landing extends Component {
   render() {
     const { classes } = this.props;
 
-    return (
-      <div className="landing">
-        <Grid container spacing={24} justify="center">
-          <Grid item xs={12} lg={9}>
-            <SearchWidget />
-          </Grid>
-        </Grid>
-      </div>
-    );
+    return <div className="landing" />;
   }
 }
 
