@@ -43,7 +43,7 @@ function Navbar(props) {
   let { classes } = props;
   return (
     <div>
-      <AppBar fontFamily="Roboto" position="fixed">
+      <AppBar fontFamily="Roboto" position="static">
         <Toolbar>
           <img src="logo.png" className={classes.leftMostLogo} />
           <Typography

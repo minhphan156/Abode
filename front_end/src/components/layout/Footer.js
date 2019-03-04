@@ -23,7 +23,7 @@ function Footer(props) {
 
   return (
     <div>
-      <AppBar className={classes.footer}>
+      <AppBar className={classes.footer} position="static">
         <Toolbar className={classes.footerMargin}>
           <Grid container spacing={2} justify="center" alignItems="center">
             <Grid item xs={1}>
