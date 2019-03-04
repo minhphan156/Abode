@@ -35,21 +35,21 @@ class Landing extends Component {
       },
       imgSlideShow: {
         display: "flex",
-        alignItems: "flex-end",
         backgroundImage: `url(${SF})`,
         backgroundSize: "cover",
         maxWidth: "100%",
         maxHeight: "100%",
-        height: "60vh",
-        marginRight: 150,
-        marginLeft: 150
+        height: "60vh"
       },
       searchWidgetBox: {
-        display: "flex",
-        background: "linear-gradient(180deg, rgba(0,0,0,0.10), black)",
+        alignSelf: "center",
+        background: "rgba(0,0,0,0.5)",
         padding: 20,
-        width: "100%",
-        height: "auto"
+        width: "100%"
+      },
+      seperator: {
+        height: 150,
+        width: 300
       },
       paperText: {
         color: "#ffffff"
@@ -88,13 +88,9 @@ class Landing extends Component {
 
     return (
       <div>
-        <div style={styles.imgSlideShow}>
-          <div style={styles.searchWidgetBox}>
-            <Grid container className="fadeIn" spacing={24} justify="center">
-              <Grid item xs={12} lg={9}>
-                <SearchWidget />
-              </Grid>
-            </Grid>
+        <div className="shadow" style={styles.imgSlideShow}>
+          <div className="fadeIn" style={styles.searchWidgetBox}>
+            <SearchWidget />
           </div>
         </div>
         <br />
