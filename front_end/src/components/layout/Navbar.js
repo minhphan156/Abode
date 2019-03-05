@@ -10,30 +10,10 @@ class Navbar extends Component {
   constructor() {
     super();
     this.state = {
-      query: "",
       modalShow: false
     };
 
-    this.onChange = this.onChange.bind(this);
-    this.onSearchClick = this.onSearchClick.bind(this);
   }
-
-  onChange(e) {
-    this.setState({ query: e.target.value });
-  }
-
-  onSearchClick() {
-    //NOTE: we assume user will search for name
-    // submit query as object with to submitQuery at queryActions.js
-
-    const newQuery = {
-      name: this.state.query
-    };
-    this.props.submitQuery(newQuery);
-
-    this.setState({ query: "" });
-  }
-
   onLogoutClick(e) {
     e.preventDefault();
     this.props.clearCurrentProfile();
@@ -41,8 +21,6 @@ class Navbar extends Component {
   }
 
   render() {
-    let modalClose = () => this.setState({ modalShow: false });
-
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
@@ -86,32 +64,6 @@ class Navbar extends Component {
             <Link className="navbar-brand" to="/">
               Home
             </Link>
-
-            <form onSubmit={this.onSearchClick}>
-              <div className="input-group mr-auto">
-                <input
-                  style={{ height: 36 }}
-                  type="input"
-                  className="form-control"
-                  name="search"
-                  value={this.state.query}
-                  onChange={this.onChange}
-                />
-                <div className="input-group-append">
-                  <Link to="/Search">
-                    <button
-                      className="btn btn-outline-secondary"
-                      type="button"
-                      onClick={this.onSearchClick}
-                      type="submit"
-                    >
-                      Search
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </form>
-
             {isAuthenticated ? authLinks : guestLinks}
           </div>
         </nav>
@@ -127,9 +79,7 @@ Navbar.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  query: state.query
 });
-// if this.props.query is empty we will not show the Search page
 
 export default connect(
   mapStateToProps,
