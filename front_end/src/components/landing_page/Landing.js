@@ -18,6 +18,7 @@ import SA from "./SA.jpg";
 import SD from "./SD.jpg";
 import Vegas from "./Vegas.jpg";
 import WA from "./WA.jpg";
+import PA from "./PA.jpg";
 
 // Material-UI Imports
 import { Grid, Typography, Paper } from "@material-ui/core";
@@ -38,7 +39,10 @@ class Landing extends Component {
   render() {
     let styles = {
       root: {
-        flexGrow: 1
+        width: "auto",
+        flexGrow: 1,
+        marginLeft: 150,
+        marginRight: 150
       },
       imgSlideShow: {
         display: "flex",
@@ -46,7 +50,7 @@ class Landing extends Component {
         backgroundSize: "cover",
         maxWidth: "100%",
         maxHeight: "100%",
-        height: "60vh"
+        height: "70vh"
       },
       searchWidgetBox: {
         alignSelf: "center",
@@ -58,8 +62,13 @@ class Landing extends Component {
         height: 150,
         width: 300
       },
-      paperText: {
-        color: "#ffffff"
+      cityCollage: {
+        width: "auto",
+        marginLeft: 150,
+        marginRight: 150
+      },
+      collageImg: {
+        height: "100%"
       }
     };
 
@@ -75,26 +84,28 @@ class Landing extends Component {
       };
     }
 
-    function collageLStyle(img) {
+    function dealsOfWeekImg(img) {
       return {
+        display: "inline-block",
         backgroundImage: `url(${img})`,
         backgroundSize: "cover",
-        width: "66%",
-        height: "33%"
+        width: "100%",
+        height: "100%"
       };
     }
 
-    function collageRStyle(img) {
-      return {
-        backgroundImage: `url(${img})`,
-        backgroundSize: "cover",
-        width: "33%",
-        height: "33%"
-      };
-    }
+    // function collageRStyle(img) {
+    //   return {
+    //     display: "block",
+    //     backgroundImage: `url(${img})`,
+    //     backgroundSize: "cover",
+    //     width: "33%",
+    //     height: "33%"
+    //   };
+    // }
 
     return (
-      <div>
+      <div style={{ width: "100%", height: "100%" }}>
         <div className="shadow" style={styles.imgSlideShow}>
           <div className="fadeIn" style={styles.searchWidgetBox}>
             <SearchWidget />
@@ -111,17 +122,11 @@ class Landing extends Component {
             <hr className="noYMarginPadding" />
           </div>
           <Grid container style={styles.root} justify="center" spacing={16}>
-            <Grid item>
-              <Paper
-                className="mouseHover"
-                style={dealStyle(LA)}
-                square="false"
-              >
-                <Typography style={styles.paperText} variant="h4">
-                  10% Off Weekends!
-                </Typography>
-              </Paper>
-            </Grid>
+            <Paper className="mouseHover" style={dealStyle(LA)} square="false">
+              <Typography style={{ color: "#FFFFFF" }} variant="h4">
+                10% Off Weekends!
+              </Typography>
+            </Paper>
             <Grid item>
               <Paper
                 className="mouseHover"
@@ -147,18 +152,46 @@ class Landing extends Component {
           </Grid>
           <div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <Typography variant="h3" fontFamily="Roboto">
+              <Typography
+                variant="h3"
+                fontFamily="Roboto"
+                style={{ marginTop: 50 }}
+              >
                 Top Cities
               </Typography>
             </div>
             <hr className="noYMarginPadding" />
           </div>
-          <Grid container spacing={16}>
-            <Grid item>
-              <div style={collageLStyle(AU)} />
+          <Grid
+            container
+            spacing={8}
+            style={styles.cityCollage}
+            direction="row"
+            justify="center"
+          >
+            <Grid className="mouseHover" item xs={3}>
+              <img src={AU} style={styles.collageImg} />
             </Grid>
-            <Grid item>
-              <Grid container spacing={16} direction="column" />
+            <Grid className="mouseHover" item xs={3}>
+              <img src={DE} style={styles.collageImg} />
+            </Grid>
+            <Grid className="mouseHover" item xs={3}>
+              <img src={PO} style={styles.collageImg} />
+            </Grid>
+            <Grid className="mouseHover" item xs={3}>
+              <img src={SA} style={styles.collageImg} />
+            </Grid>
+            <Grid className="mouseHover" item xs={3}>
+              <img src={SD} style={styles.collageImg} />
+            </Grid>
+            <Grid className="mouseHover" item xs={3}>
+              <img src={Vegas} style={styles.collageImg} />
+            </Grid>
+            <Grid className="mouseHover" item xs={3}>
+              <img src={WA} style={styles.collageImg} />
+            </Grid>
+            <Grid className="mouseHover" item xs={3}>
+              <img src={PA} style={styles.collageImg} />
             </Grid>
           </Grid>
         </div>
