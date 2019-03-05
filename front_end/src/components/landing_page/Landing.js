@@ -50,7 +50,8 @@ class Landing extends Component {
         backgroundSize: "cover",
         maxWidth: "100%",
         maxHeight: "100%",
-        height: "70vh"
+        height: "70vh",
+        minHeight: 450
       },
       searchWidgetBox: {
         alignSelf: "center",
@@ -84,28 +85,15 @@ class Landing extends Component {
       };
     }
 
-    function dealsOfWeekImg(img) {
-      return {
-        display: "inline-block",
-        backgroundImage: `url(${img})`,
-        backgroundSize: "cover",
-        width: "100%",
-        height: "100%"
-      };
-    }
-
-    // function collageRStyle(img) {
-    //   return {
-    //     display: "block",
-    //     backgroundImage: `url(${img})`,
-    //     backgroundSize: "cover",
-    //     width: "33%",
-    //     height: "33%"
-    //   };
-    // }
-
     return (
-      <div style={{ width: "100%", height: "100%" }}>
+      <div
+        style={{
+          width: "auto",
+          height: "auto",
+          marginLeft: "5%",
+          marginRight: "5%"
+        }}
+      >
         <div className="shadow" style={styles.imgSlideShow}>
           <div className="fadeIn" style={styles.searchWidgetBox}>
             <SearchWidget />
@@ -122,18 +110,24 @@ class Landing extends Component {
             <hr className="noYMarginPadding" />
           </div>
           <Grid container style={styles.root} justify="center" spacing={16}>
-            <Paper className="mouseHover" style={dealStyle(LA)} square="false">
-              <Typography style={{ color: "#FFFFFF" }} variant="h4">
-                10% Off Weekends!
-              </Typography>
-            </Paper>
+            <Grid item>
+              <Paper
+                className="mouseHover"
+                style={dealStyle(LA)}
+                square="false"
+              >
+                <Typography style={{ color: "#FFFFFF" }} variant="h4">
+                  10% Off Weekends!
+                </Typography>
+              </Paper>
+            </Grid>
             <Grid item>
               <Paper
                 className="mouseHover"
                 style={dealStyle(NY)}
                 square="false"
               >
-                <Typography style={styles.paperText} variant="h4">
+                <Typography style={{ color: "#FFFFFF" }} variant="h4">
                   New York Trip Discount!
                 </Typography>
               </Paper>
@@ -144,7 +138,7 @@ class Landing extends Component {
                 style={dealStyle(CH)}
                 square="false"
               >
-                <Typography style={styles.paperText} variant="h4">
+                <Typography style={{ color: "#FFFFFF" }} variant="h4">
                   Upcoming Holiday Discount!
                 </Typography>
               </Paper>
