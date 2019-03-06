@@ -19,7 +19,7 @@ const CustomTableCell = withStyles(theme => ({
     fontSize: 14
   },
   footer: {
-    backgroundColor: "#84ffff",
+    backgroundColor: "#a0cdfd",
     fontSize: 14,
     variant: "body2",
     color: theme.palette.common.black

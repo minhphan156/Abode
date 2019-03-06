@@ -74,6 +74,8 @@ function BookingDetailsCard(props) {
         <Typography component="p">
           Room Type: Double room
           <br />
+          {"Number of Nights: 4"}
+          <br />
           {"Check In: 4/2/2019"}
           <br />
           {"Check Out: 4/6/2019"}
