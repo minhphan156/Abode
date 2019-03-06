@@ -75,7 +75,11 @@ const HotelSchema = new Schema({
     },
     airports:{
         type:Array
+    },
+    bookingStats:{
+        type:Number,
+        default:0
     }
-})
+},{ usePushEach: true });
 
 module.exports = Hotel = mongoose.model('hotels',HotelSchema)
