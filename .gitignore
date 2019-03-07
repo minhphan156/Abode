@@ -1,4 +1,4 @@
 /node_modules
-package-lock.json
+/package-lock.json
 /config/keys_dev.js
 error.log
