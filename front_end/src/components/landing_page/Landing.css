@@ -1,0 +1,84 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    top: 50px;
+  }
+  to {
+    opacity: 1;
+    top: 0px;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeIn {
+  position: relative;
+  animation: fadeIn;
+  animation-duration: 1.5s;
+}
+
+.fadeOut {
+  animation: fadeOut;
+  animation-duration: 1.5s;
+}
+
+@keyframes moveUp {
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: 7px;
+  }
+}
+
+@keyframes moveDown {
+  from {
+    bottom: 7px;
+  }
+  to {
+    bottom: 0px;
+  }
+}
+
+.mouseHover:hover {
+  position: relative;
+  animation: moveUp;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
+
+.mouseHover {
+  position: relative;
+  animation: moveDown;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
+
+.background-slideshow {
+  background-image: url(./SF.jpg);
+  background-size: cover;
+}
+
+.flexbox-center {
+  display: flex;
+  justify-content: center;
+}
+
+.withPageMargin {
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.noYMarginPadding {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
