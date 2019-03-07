@@ -16,11 +16,50 @@ import DE from "./DE.jpg";
 import PO from "./PO.jpg";
 import SA from "./SA.jpg";
 import SD from "./SD.jpg";
-import Vegas from "./Vegas.jpg";
+import VG from "./Vegas.jpg";
 import WA from "./WA.jpg";
+import PA from "./PA.jpg";
 
 // Material-UI Imports
-import { Grid, Typography, Paper } from "@material-ui/core";
+import { Grid, Typography, Paper, withStyles } from "@material-ui/core";
+
+// Component CSS
+let styles = {
+  root: {
+    width: "auto",
+    flexGrow: 1,
+    marginLeft: 150,
+    marginRight: 150
+  },
+  imgSlideShow: {
+    display: "flex",
+    backgroundImage: `url(${SF})`,
+    backgroundSize: "cover",
+    maxWidth: "100%",
+    maxHeight: "100%",
+    height: "70vh",
+    minHeight: 450
+  },
+  searchWidgetBox: {
+    alignSelf: "center",
+    background: "rgba(0,0,0,0.5)",
+    padding: 20,
+    width: "100%"
+  },
+  seperator: {
+    height: 150,
+    width: 300
+  },
+  collageImg: {
+    height: "100%"
+  },
+  noYMarginTop: {
+    marginTop: 0,
+    marginBottom: 10,
+    paddingTop: 0,
+    paddingBottom: 0
+  }
+};
 
 class Landing extends Component {
   constructor(props) {
@@ -36,32 +75,7 @@ class Landing extends Component {
   };
 
   render() {
-    let styles = {
-      root: {
-        flexGrow: 1
-      },
-      imgSlideShow: {
-        display: "flex",
-        backgroundImage: `url(${SF})`,
-        backgroundSize: "cover",
-        maxWidth: "100%",
-        maxHeight: "100%",
-        height: "60vh"
-      },
-      searchWidgetBox: {
-        alignSelf: "center",
-        background: "rgba(0,0,0,0.5)",
-        padding: 20,
-        width: "100%"
-      },
-      seperator: {
-        height: 150,
-        width: 300
-      },
-      paperText: {
-        color: "#ffffff"
-      }
-    };
+    let { classes } = this.props;
 
     function dealStyle(img) {
       return {
@@ -75,24 +89,6 @@ class Landing extends Component {
       };
     }
 
-    function collageLStyle(img) {
-      return {
-        backgroundImage: `url(${img})`,
-        backgroundSize: "cover",
-        width: "66%",
-        height: "33%"
-      };
-    }
-
-    function collageRStyle(img) {
-      return {
-        backgroundImage: `url(${img})`,
-        backgroundSize: "cover",
-        width: "33%",
-        height: "33%"
-      };
-    }
-
     return (
       <div>
         <div className="shadow" style={styles.imgSlideShow}>
@@ -101,66 +97,91 @@ class Landing extends Component {
           </div>
         </div>
         <br />
-        <div className="fadeIn">
-          <div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Typography variant="h3" fontFamily="Roboto">
-                Deals of the Week
-              </Typography>
+        <div
+          style={{
+            width: "auto",
+            height: "auto",
+            marginLeft: "5%",
+            marginRight: "5%"
+          }}
+        >
+          <div className="fadeIn">
+            <div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Typography variant="h4">Deals of the Week</Typography>
+              </div>
+              <hr className={classes.noYMarginTop} />
             </div>
-            <hr className="noYMarginPadding" />
-          </div>
-          <Grid container style={styles.root} justify="center" spacing={16}>
-            <Grid item>
-              <Paper
-                className="mouseHover"
-                style={dealStyle(LA)}
-                square="false"
-              >
-                <Typography style={styles.paperText} variant="h4">
-                  10% Off Weekends!
-                </Typography>
-              </Paper>
+            <Grid container style={styles.root} justify="center" spacing={16}>
+              <Grid item>
+                <Paper
+                  className="mouseHover"
+                  style={dealStyle(LA)}
+                  square="false"
+                >
+                  <Typography style={{ color: "#FFFFFF" }} variant="h4">
+                    10% Off Weekends!
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item>
+                <Paper
+                  className="mouseHover"
+                  style={dealStyle(NY)}
+                  square="false"
+                >
+                  <Typography style={{ color: "#FFFFFF" }} variant="h4">
+                    New York Trip Discount!
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item>
+                <Paper
+                  className="mouseHover"
+                  style={dealStyle(CH)}
+                  square="false"
+                >
+                  <Typography style={{ color: "#FFFFFF" }} variant="h4">
+                    Upcoming Holiday Discount!
+                  </Typography>
+                </Paper>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Paper
-                className="mouseHover"
-                style={dealStyle(NY)}
-                square="false"
-              >
-                <Typography style={styles.paperText} variant="h4">
-                  New York Trip Discount!
+            <div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Typography variant="h4" style={{ marginTop: 50 }}>
+                  Top Cities
                 </Typography>
-              </Paper>
-            </Grid>
-            <Grid item>
-              <Paper
-                className="mouseHover"
-                style={dealStyle(CH)}
-                square="false"
-              >
-                <Typography style={styles.paperText} variant="h4">
-                  Upcoming Holiday Discount!
-                </Typography>
-              </Paper>
-            </Grid>
-          </Grid>
-          <div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Typography variant="h3" fontFamily="Roboto">
-                Top Cities
-              </Typography>
+              </div>
+              <hr className={classes.noYMarginTop} />
             </div>
-            <hr className="noYMarginPadding" />
+            <Grid container spacing={8} direction="row" justify="center">
+              <Grid item className="mouseHover" xs={3}>
+                <img src={AU} style={styles.collageImg} />
+              </Grid>
+              <Grid item className="mouseHover" xs={3}>
+                <img src={DE} style={styles.collageImg} />
+              </Grid>
+              <Grid item className="mouseHover" xs={3}>
+                <img src={PO} style={styles.collageImg} />
+              </Grid>
+              <Grid item className="mouseHover" xs={3}>
+                <img src={SA} style={styles.collageImg} />
+              </Grid>
+              <Grid item className="mouseHover" xs={3}>
+                <img src={SD} style={styles.collageImg} />
+              </Grid>
+              <Grid item className="mouseHover" xs={3}>
+                <img src={VG} style={styles.collageImg} />
+              </Grid>
+              <Grid item className="mouseHover" xs={3}>
+                <img src={WA} style={styles.collageImg} />
+              </Grid>
+              <Grid item className="mouseHover" xs={3}>
+                <img src={PA} style={styles.collageImg} />
+              </Grid>
+            </Grid>
           </div>
-          <Grid container spacing={16}>
-            <Grid item>
-              <div style={collageLStyle(AU)} />
-            </Grid>
-            <Grid item>
-              <Grid container spacing={16} direction="column" />
-            </Grid>
-          </Grid>
         </div>
       </div>
     );
@@ -175,4 +196,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(Landing);
+export default connect(mapStateToProps)(withStyles(styles)(Landing));
