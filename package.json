@@ -1,5 +1,5 @@
 {
-  "name": "Abode",
+  "name": "abode",
   "version": "1.0.0",
   "description": "Welcome Abode",
   "main": "server.js",
@@ -41,5 +41,13 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhphan156/Abode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/minhphan156/Abode/issues"
+  },
+  "homepage": "https://github.com/minhphan156/Abode#readme"
 }
