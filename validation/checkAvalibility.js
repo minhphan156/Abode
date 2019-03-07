@@ -85,8 +85,8 @@ module.exports = function(type, datess,numReq,bookID)  {
   // loop through each room      
     for(var i = 0; i < type.length; i++){
         var r1 = {
-            start:datess.checkin,
-            end:datess.checkout
+            start:date1.checkin,
+            end:date1.checkout
         }
         r3 = []
   // check if this room have no time span in there (used room will have empty object in db)
