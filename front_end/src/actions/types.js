@@ -10,3 +10,5 @@ export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE"; // clear profile a
 export const GET_PROFILES = "GET_PROFILES";
 
 export const GET_DELIVERY = "GET_DELIVERY";
+
+export const SEARCH_RESULT_OVERVIEW = "SEARCH_RESULT_OVERVIEW";

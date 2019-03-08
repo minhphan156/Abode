@@ -10,9 +10,13 @@ import {
   TablePagination
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
+import { connect } from "react-redux";
+import { displayResultsOverview } from "../../actions/searchResultActions";
 
 class searchResultOverview extends Component {
   render() {
+    const result = this.props.result.result;
+
     const styles = {
       rating: { float: "left", width: "100%" },
       imageStyle: { margin: 20, width: 200, height: 200, float: "left" }
@@ -86,7 +90,7 @@ class searchResultOverview extends Component {
             </Card>
           </Grid>
           <Grid item xs={7}>
-            <Card style={{ marginBottom: 10 }}>
+            {/* <Card style={{ marginBottom: 10 }}>
               <CardMedia
                 style={styles.imageStyle}
                 image={require("./hotel-img.jpg")}
@@ -139,7 +143,36 @@ class searchResultOverview extends Component {
                   <Typography component="p">$1000</Typography>
                 </CardContent>
               </div>
-            </Card>
+            </Card> */}
+            {result.length > 0 ? (
+              <Card style={{ marginBottom: 10 }}>
+                <CardMedia
+                  style={styles.imageStyle}
+                  image={require(`${result[0].img}`)}
+                  title="Hotel Image"
+                />
+                <div style={{ float: "left" }}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {result[0].name}
+                    </Typography>
+                    <Typography component="p">
+                      under the bridge, San Jose - Show on map
+                    </Typography>
+                  </CardContent>
+                </div>
+                <div style={{ float: "right" }}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {result[0].star_rates}
+                    </Typography>
+
+                    <Typography component="p">1.284000 reviews</Typography>
+                    <Typography component="p">{result[0].price}</Typography>
+                  </CardContent>
+                </div>
+              </Card>
+            ) : null}
             <TablePagination
               style={{ float: "right" }}
               rowsPerPageOptions={[5, 10, 25]}
@@ -154,4 +187,8 @@ class searchResultOverview extends Component {
   }
 }
 
-export default searchResultOverview;
+const mapStateToProps = state => ({ result: state.searchResult });
+export default connect(
+  mapStateToProps,
+  { displayResultsOverview }
+)(searchResultOverview);
