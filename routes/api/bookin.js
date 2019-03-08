@@ -26,7 +26,7 @@ router.post("/confirm",(req,res)=>{
     var customerID;
     var bookingID = "tempBookingID"
 
-    //check this user visit our website before
+    //check this user visit our website before and get customerID
     Customer.find({email:email},function(err,doc){
         if(err) res.status(400).json(err);
 
@@ -46,20 +46,25 @@ router.post("/confirm",(req,res)=>{
             bookHotel()
         }
     })
+    
     function bookHotel(){
+        // find the hotel to book in db
         Hotel.find({_id:hotelID}).then((doc,err)=>{
             if(err) res.status(400).json(err)
             var newDoc = doc[0]
+            // check require room avaliablity 
             if(roomType === 'single') arr = doc[0].roomTypeAndNumber.single;
             else if(roomType === 'double') arr = doc[0].roomTypeAndNumber.double;
             else if(roomType === 'king') arr = doc[0].roomTypeAndNumber.king;
             else if(roomType === 'studio') arr = doc[0].roomTypeAndNumber.single;
 
+            // if the room is avaliable
             if(checkAvalibility(arr,date,numberRooms,bookingID).length !==0){
-
+                // check the customer made a resevation for the same checkin date
                 Booking.find({$and:[{customerID:customerID},{check_in_date:date.checkin}]})
                 .then((doc,err)=>{
                     if(err) res.status(400).json(err);
+                    // if they dont, store the booking information into booking db
                     if(doc.length === 0){
                         const newBooking = new Booking({
                             customerID:customerID,
@@ -83,11 +88,15 @@ router.post("/confirm",(req,res)=>{
                             newDoc.save().catch(err=>res.send(err))
                             res.status(200).send({bookingID:doc._id})
                         })
-                    }else{
+                    }
+                    // if the customer already have one reservation for the same checkin date, return error message  
+                    else{
                         res.status(409).send({error1:"You are not allow to make multilple reservation for same check in date"})
                     }
                 })
-            }else{
+            }
+            // if the type of room is not avaliable
+            else{
                 res.status(409).send({error2:"No rooms avaliable for this hotel in our website anymore"})
             }
         })
