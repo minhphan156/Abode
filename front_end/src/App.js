@@ -20,6 +20,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import NotFound from "./components/layout/NotFound";
+import searchResultOverview from "./components/searchResultOverview/searchResultOverview";
 import Confirmation from "./components/booking/Confirmation";
 
 import HistoryOverview from "./components/history/HistoryOverview";
@@ -58,6 +59,11 @@ class App extends Component {
             <NavBar />
             <Route exact path="/" component={Landing} />
             <Route exact path="/Search" component={Search} />
+            <Route
+              exact
+              path="/searchResultOverview"
+              component={searchResultOverview}
+            />
             <Route exact path="/confirmation" component={Confirmation} />
 
             <div className="container">
