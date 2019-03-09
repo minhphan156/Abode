@@ -134,10 +134,13 @@ class Landing extends Component {
 
       var genBackgroundImgStyle = () => {
         return {
-          display: "inline-block",
+          display: "flex",
           backgroundImage: `url(${featureDestination[0]})`,
           backgroundSize: "cover",
-          alignItems: "center"
+          maxWidth: "100%",
+          maxHeight: "100%",
+          height: "95vh",
+          minHeight: 450
         };
       };
       // ENDING OF CODE SEGMENT (*)

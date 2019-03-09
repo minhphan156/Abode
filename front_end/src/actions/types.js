@@ -12,5 +12,4 @@ export const GET_PROFILES = "GET_PROFILES";
 // LANDING TYPES
 export const GET_LANDING_DATA = "GET_LANDING_DATA";
 
-// ???
 export const GET_DELIVERY = "GET_DELIVERY";
