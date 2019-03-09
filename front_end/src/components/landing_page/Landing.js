@@ -21,15 +21,23 @@ import WA from "./WA.jpg";
 import PA from "./PA.jpg";
 
 // Material-UI Imports
-import { Grid, Typography, Paper, withStyles } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Paper,
+  withStyles,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia
+} from "@material-ui/core";
 
 // Component CSS
 let styles = {
   root: {
     width: "auto",
-    flexGrow: 1,
-    marginLeft: 150,
-    marginRight: 150
+    justify: "center",
+    flexGrow: 1
   },
   imgSlideShow: {
     display: "flex",
@@ -37,18 +45,17 @@ let styles = {
     backgroundSize: "cover",
     maxWidth: "100%",
     maxHeight: "100%",
-    height: "70vh",
+    height: "95vh",
     minHeight: 450
+  },
+  centerFlexbox: {
+    display: "flex"
   },
   searchWidgetBox: {
     alignSelf: "center",
     background: "rgba(0,0,0,0.5)",
     padding: 20,
     width: "100%"
-  },
-  seperator: {
-    height: 150,
-    width: 300
   },
   collageImg: {
     height: "100%"
@@ -58,6 +65,9 @@ let styles = {
     marginBottom: 10,
     paddingTop: 0,
     paddingBottom: 0
+  },
+  cardMedia: {
+    height: "25vh"
   }
 };
 
@@ -65,6 +75,8 @@ class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    this.genBackgroundImgStyle = this.genBackgroundImgStyle.bind(this);
   }
 
   // TODO: Replace deprecated 'componenDidMount' with proper lifecycle method
@@ -77,27 +89,93 @@ class Landing extends Component {
 
   render() {
     // TODO: Create slideshow that dynamically changes based on featured cities
-    // TODO: Dynamically generate markup for top deals
-    // TODO: Dynamically generate markup for featured cities
+
+    // TODO: Remove the following placeholder once backend is implemented and connected.
+    // The following object is here as a placeholder to avoid compiler errors.
 
     let { classes } = this.props;
 
-    function dealStyle(img) {
+    let landing = {
+      header: {
+        cityName: String,
+        head: String
+      },
+      deals1: {
+        name: String,
+        picurl: NY,
+        rates: Number,
+        price: Number
+      },
+      deals2: {
+        name: String,
+        picurl: LA,
+        rates: Number,
+        price: Number
+      },
+      deals3: {
+        name: String,
+        picurl: SD,
+        rates: Number,
+        price: Number
+      },
+      featureDestination: [
+        {
+          cityName: String,
+          picurl: String
+        }
+      ]
+    };
+
+    // TODO: Remove the following placeholder once backend is implemented and connected.
+    // The folowing declaration is a placeholder to avoid compiler errors.
+    let { header, deals1, deals2, deals3, featureDestination } = landing;
+
+    let dealsArr = [deals1, deals2, deals3];
+
+    let topDealsMarkup = dealsArr.map(city => {
+      if (city != null) {
+        return (
+          <Card>
+            <CardActionArea>
+              <CardMedia
+                className={classes.cardMedia}
+                image={city.picurl}
+                title="Weekend Deals"
+              />
+              <CardContent>
+                <Typography variant="h6">{city.picurl}</Typography>
+                <Typography variant="subtitle1">View Deals</Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        );
+      }
+    });
+
+    let featureDestinationMarkup = featureDestination.map(city => {
+      return (
+        <Grid item className="mouseHover" xs={3}>
+          <img src={city.picurl} style={styles.collageImg} />
+        </Grid>
+      );
+    });
+
+    var genBackgroundImgStyle = () => {
       return {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundImage: `url(${img})`,
+        display: "inline-block",
+        backgroundImage: `url(${featureDestination})`,
         backgroundSize: "cover",
-        width: 450,
-        height: 300
+        alignItems: "center"
       };
-    }
+    };
 
     return (
       <div>
-        <div className="shadow" style={styles.imgSlideShow}>
-          <div className="fadeIn" style={styles.searchWidgetBox}>
+        {/*<div className={genBackgroundImgStyle()} boxShadow={3}>*/}
+        {/* PROTOTYPE LINE BEGINNING */}
+        <div className={classes.imgSlideShow} boxShadow={3}>
+          {/* PROTOTYPE LINE BEGINNING */}
+          <div className={`${classes.searchWidgetBox} fadeIn`}>
             <SearchWidget />
           </div>
         </div>
@@ -112,79 +190,99 @@ class Landing extends Component {
         >
           <div className="fadeIn">
             <div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <Typography variant="h4">Deals of the Week</Typography>
-              </div>
-              <hr className={classes.noYMarginTop} />
-            </div>
-            <Grid container style={styles.root} justify="center" spacing={16}>
-              <Grid item>
-                <Paper
-                  className="mouseHover"
-                  style={dealStyle(LA)}
-                  square="false"
-                >
-                  <Typography style={{ color: "#FFFFFF" }} variant="h4">
-                    10% Off Weekends!
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item>
-                <Paper
-                  className="mouseHover"
-                  style={dealStyle(NY)}
-                  square="false"
-                >
-                  <Typography style={{ color: "#FFFFFF" }} variant="h4">
-                    New York Trip Discount!
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item>
-                <Paper
-                  className="mouseHover"
-                  style={dealStyle(CH)}
-                  square="false"
-                >
-                  <Typography style={{ color: "#FFFFFF" }} variant="h4">
-                    Upcoming Holiday Discount!
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-            <div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <Typography variant="h4" style={{ marginTop: 50 }}>
-                  Top Cities
+              <div className={classes.centerFlexbox}>
+                <Typography variant="h5" style={{ marginTop: 50 }}>
+                  Deals of the Week
                 </Typography>
               </div>
               <hr className={classes.noYMarginTop} />
             </div>
             <Grid container spacing={8} direction="row" justify="center">
-              <Grid item className="mouseHover" xs={3}>
-                <img src={AU} style={styles.collageImg} />
+              {/* topDealsMarkup */}
+              {/* Prototype Markup BEGINNING */}
+              <Grid item xs={4} className="mouseHover">
+                <Card>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={SD}
+                      title="Weekend Deals"
+                    />
+                    <CardContent>
+                      <Typography variant="h6">Weekend Deals!</Typography>
+                      <Typography variant="subtitle1">View Deals</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
               </Grid>
-              <Grid item className="mouseHover" xs={3}>
-                <img src={DE} style={styles.collageImg} />
+              <Grid item xs={4} className="mouseHover">
+                <Card>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={VG}
+                      title="Weekend Deals"
+                    />
+                    <CardContent>
+                      <Typography variant="h6">Featured City Deals!</Typography>
+                      <Typography variant="subtitle1">View Deals</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
               </Grid>
-              <Grid item className="mouseHover" xs={3}>
-                <img src={PO} style={styles.collageImg} />
+              <Grid item xs={4} className="mouseHover">
+                <Card>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={WA}
+                      title="Weekend Deals"
+                    />
+                    <CardContent>
+                      <Typography variant="h6">Holiday Deals!</Typography>
+                      <Typography variant="subtitle1">View Deals</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
               </Grid>
-              <Grid item className="mouseHover" xs={3}>
-                <img src={SA} style={styles.collageImg} />
+              {/* Prototype Markup ENDING */}
+            </Grid>
+            <div>
+              <div className={classes.centerFlexbox}>
+                <Typography variant="h5" style={{ marginTop: 50 }}>
+                  Featured Cities
+                </Typography>
+              </div>
+              <hr className={classes.noYMarginTop} />
+            </div>
+            <Grid container spacing={8} direction="row" justify="center">
+              {/* featureDestinationMarkup */}
+              {/* Prototype Markup BEGINNING */}
+              <Grid item xs={3} className="mouseHover">
+                <img src={AU} backgroundSize="contain" />
               </Grid>
-              <Grid item className="mouseHover" xs={3}>
-                <img src={SD} style={styles.collageImg} />
+              <Grid item xs={3} className="mouseHover">
+                <img src={CH} backgroundSize="contain" />
               </Grid>
-              <Grid item className="mouseHover" xs={3}>
-                <img src={VG} style={styles.collageImg} />
+              <Grid item xs={3} className="mouseHover">
+                <img src={DE} backgroundSize="contain" />
               </Grid>
-              <Grid item className="mouseHover" xs={3}>
-                <img src={WA} style={styles.collageImg} />
+              <Grid item xs={3} className="mouseHover">
+                <img src={LA} backgroundSize="contain" />
               </Grid>
-              <Grid item className="mouseHover" xs={3}>
-                <img src={PA} style={styles.collageImg} />
+              <Grid item xs={3} className="mouseHover">
+                <img src={NY} backgroundSize="contain" />
               </Grid>
+              <Grid item xs={3} className="mouseHover">
+                <img src={PA} backgroundSize="contain" />
+              </Grid>
+              <Grid item xs={3} className="mouseHover">
+                <img src={PO} backgroundSize="contain" />
+              </Grid>
+              <Grid item xs={3} className="mouseHover">
+                <img src={SA} backgroundSize="contain" />
+              </Grid>
+              {/* Prototype Markup ENDING */}
             </Grid>
           </div>
         </div>
