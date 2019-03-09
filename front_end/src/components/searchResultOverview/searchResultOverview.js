@@ -12,22 +12,25 @@ import {
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
 import { displayResultsOverview } from "../../actions/searchResultActions";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  rating: { float: "left", width: "100%" },
+  imageStyle: { margin: 20, width: 200, height: 200, float: "left" }
+};
 
 class searchResultOverview extends Component {
   render() {
+    let { classes } = this.props;
     const result = this.props.result.result;
     let hotels;
 
-    const styles = {
-      rating: { float: "left", width: "100%" },
-      imageStyle: { margin: 20, width: 200, height: 200, float: "left" }
-    };
     if (result.length) {
       hotels = result.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
             <CardMedia
-              style={styles.imageStyle}
+              className={classes.imageStyle}
               image={require(`${hotel.img}`)}
               title="Hotel Image"
             />
@@ -66,27 +69,27 @@ class searchResultOverview extends Component {
                 <FormControlLabel
                   control={<Checkbox value="star1" />}
                   label="1 star"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star2" />}
                   label="2 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star3" />}
                   label="3 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star4" />}
                   label="4 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star5" />}
                   label="5 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
               </div>
             </Card>
@@ -96,27 +99,27 @@ class searchResultOverview extends Component {
                 <FormControlLabel
                   control={<Checkbox value="Awesome" />}
                   label="Awesome: 9+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="Verygood" />}
                   label="Very good: 8+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="Good" />}
                   label="Good: 7+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="Pleasant" />}
                   label="Pleasant: 6+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="NoRating" />}
                   label="No rating"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
               </div>
             </Card>
@@ -141,4 +144,4 @@ const mapStateToProps = state => ({ result: state.searchResult });
 export default connect(
   mapStateToProps,
   { displayResultsOverview }
-)(searchResultOverview);
+)(withStyles(styles)(searchResultOverview));
