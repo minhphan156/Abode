@@ -16,11 +16,43 @@ import { displayResultsOverview } from "../../actions/searchResultActions";
 class searchResultOverview extends Component {
   render() {
     const result = this.props.result.result;
+    let hotels;
 
     const styles = {
       rating: { float: "left", width: "100%" },
       imageStyle: { margin: 20, width: 200, height: 200, float: "left" }
     };
+    if (result.length) {
+      hotels = result.map(hotel => {
+        return (
+          <Card style={{ marginBottom: 10 }}>
+            <CardMedia
+              style={styles.imageStyle}
+              image={require(`${hotel.img}`)}
+              title="Hotel Image"
+            />
+            <div style={{ float: "left" }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {hotel.name}
+                </Typography>
+                <Typography component="p">{hotel.city}</Typography>
+              </CardContent>
+            </div>
+            <div style={{ float: "right" }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {hotel.star_rates}
+                </Typography>
+
+                <Typography component="p">{hotel.guest_rate}</Typography>
+                <Typography component="p">{hotel.price}</Typography>
+              </CardContent>
+            </div>
+          </Card>
+        );
+      });
+    }
     return (
       <div>
         <Grid container spacing={24}>
@@ -90,89 +122,7 @@ class searchResultOverview extends Component {
             </Card>
           </Grid>
           <Grid item xs={7}>
-            {/* <Card style={{ marginBottom: 10 }}>
-              <CardMedia
-                style={styles.imageStyle}
-                image={require("./hotel-img.jpg")}
-                title="Hotel Image"
-              />
-              <div style={{ float: "left" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Hotel Central park
-                  </Typography>
-                  <Typography component="p">
-                    Manhattan, New York - Show on map
-                  </Typography>
-                </CardContent>
-              </div>
-              <div style={{ float: "right" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Excellent 8.9
-                  </Typography>
-
-                  <Typography component="p">1.284 reviews</Typography>
-                  <Typography component="p">$140</Typography>
-                </CardContent>
-              </div>
-            </Card>
-            <Card style={{ marginBottom: 10 }}>
-              <CardMedia
-                style={styles.imageStyle}
-                image={require("./hotel-img-2.jpg")}
-                title="Hotel Image"
-              />
-              <div style={{ float: "left" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Minh's giant cave
-                  </Typography>
-                  <Typography component="p">
-                    under the bridge, San Jose - Show on map
-                  </Typography>
-                </CardContent>
-              </div>
-              <div style={{ float: "right" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Excellent 1000
-                  </Typography>
-
-                  <Typography component="p">1.284000 reviews</Typography>
-                  <Typography component="p">$1000</Typography>
-                </CardContent>
-              </div>
-            </Card> */}
-            {result.length > 0 ? (
-              <Card style={{ marginBottom: 10 }}>
-                <CardMedia
-                  style={styles.imageStyle}
-                  image={require(`${result[0].img}`)}
-                  title="Hotel Image"
-                />
-                <div style={{ float: "left" }}>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {result[0].name}
-                    </Typography>
-                    <Typography component="p">
-                      under the bridge, San Jose - Show on map
-                    </Typography>
-                  </CardContent>
-                </div>
-                <div style={{ float: "right" }}>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {result[0].star_rates}
-                    </Typography>
-
-                    <Typography component="p">1.284000 reviews</Typography>
-                    <Typography component="p">{result[0].price}</Typography>
-                  </CardContent>
-                </div>
-              </Card>
-            ) : null}
+            {hotels}
             <TablePagination
               style={{ float: "right" }}
               rowsPerPageOptions={[5, 10, 25]}
