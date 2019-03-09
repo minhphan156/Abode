@@ -60,25 +60,3 @@
   animation-duration: 0.25s;
   animation-fill-mode: forwards;
 }
-
-.background-slideshow {
-  background-image: url(./SF.jpg);
-  background-size: cover;
-}
-
-.flexbox-center {
-  display: flex;
-  justify-content: center;
-}
-
-.withPageMargin {
-  margin-left: 150px;
-  margin-right: 150px;
-}
-
-.noYMarginPadding {
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
