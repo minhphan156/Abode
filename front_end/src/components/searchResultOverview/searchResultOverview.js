@@ -10,13 +10,52 @@ import {
   TablePagination
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
+import { connect } from "react-redux";
+import { displayResultsOverview } from "../../actions/searchResultActions";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  rating: { float: "left", width: "100%" },
+  imageStyle: { margin: 20, width: 200, height: 200, float: "left" }
+};
 
 class searchResultOverview extends Component {
   render() {
-    const styles = {
-      rating: { float: "left", width: "100%" },
-      imageStyle: { margin: 20, width: 200, height: 200, float: "left" }
-    };
+    let { classes } = this.props;
+    const result = this.props.result.result;
+    let hotels;
+
+    if (result.length) {
+      hotels = result.map(hotel => {
+        return (
+          <Card style={{ marginBottom: 10 }}>
+            <CardMedia
+              className={classes.imageStyle}
+              image={require(`${hotel.img}`)}
+              title="Hotel Image"
+            />
+            <div style={{ float: "left" }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {hotel.name}
+                </Typography>
+                <Typography component="p">{hotel.city}</Typography>
+              </CardContent>
+            </div>
+            <div style={{ float: "right" }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {hotel.star_rates}
+                </Typography>
+
+                <Typography component="p">{hotel.guest_rate}</Typography>
+                <Typography component="p">{hotel.price}</Typography>
+              </CardContent>
+            </div>
+          </Card>
+        );
+      });
+    }
     return (
       <div>
         <Grid container spacing={24}>
@@ -30,27 +69,27 @@ class searchResultOverview extends Component {
                 <FormControlLabel
                   control={<Checkbox value="star1" />}
                   label="1 star"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star2" />}
                   label="2 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star3" />}
                   label="3 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star4" />}
                   label="4 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="star5" />}
                   label="5 stars"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
               </div>
             </Card>
@@ -60,86 +99,33 @@ class searchResultOverview extends Component {
                 <FormControlLabel
                   control={<Checkbox value="Awesome" />}
                   label="Awesome: 9+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="Verygood" />}
                   label="Very good: 8+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="Good" />}
                   label="Good: 7+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="Pleasant" />}
                   label="Pleasant: 6+"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
                 <FormControlLabel
                   control={<Checkbox value="NoRating" />}
                   label="No rating"
-                  style={styles.rating}
+                  className={classes.rating}
                 />
               </div>
             </Card>
           </Grid>
           <Grid item xs={7}>
-            <Card style={{ marginBottom: 10 }}>
-              <CardMedia
-                style={styles.imageStyle}
-                image={require("./hotel-img.jpg")}
-                title="Hotel Image"
-              />
-              <div style={{ float: "left" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Hotel Central park
-                  </Typography>
-                  <Typography component="p">
-                    Manhattan, New York - Show on map
-                  </Typography>
-                </CardContent>
-              </div>
-              <div style={{ float: "right" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Excellent 8.9
-                  </Typography>
-
-                  <Typography component="p">1.284 reviews</Typography>
-                  <Typography component="p">$140</Typography>
-                </CardContent>
-              </div>
-            </Card>
-            <Card style={{ marginBottom: 10 }}>
-              <CardMedia
-                style={styles.imageStyle}
-                image={require("./hotel-img-2.jpg")}
-                title="Hotel Image"
-              />
-              <div style={{ float: "left" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Minh's giant cave
-                  </Typography>
-                  <Typography component="p">
-                    under the bridge, San Jose - Show on map
-                  </Typography>
-                </CardContent>
-              </div>
-              <div style={{ float: "right" }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Excellent 1000
-                  </Typography>
-
-                  <Typography component="p">1.284000 reviews</Typography>
-                  <Typography component="p">$1000</Typography>
-                </CardContent>
-              </div>
-            </Card>
+            {hotels}
             <TablePagination
               style={{ float: "right" }}
               rowsPerPageOptions={[5, 10, 25]}
@@ -154,4 +140,8 @@ class searchResultOverview extends Component {
   }
 }
 
-export default searchResultOverview;
+const mapStateToProps = state => ({ result: state.searchResult });
+export default connect(
+  mapStateToProps,
+  { displayResultsOverview }
+)(withStyles(styles)(searchResultOverview));
