@@ -92,7 +92,7 @@ class Landing extends Component {
     if (this.props.landing != null) {
       let { classes } = this.props;
 
-      // TODO: The following code segment(*) needs to be editted once backend is connected:
+      // TODO: The following code segment(*) needs to be edited once backend is connected:
       // BEGINNING OF CODE SEGMENT (*)
       let {
         header,
