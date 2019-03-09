@@ -67,6 +67,7 @@ class Landing extends Component {
     this.state = {};
   }
 
+  // TODO: Replace deprecated 'componenDidMount' with proper lifecycle method
   componentDidMount = () => {
     // during logged in , if we change url to landing/home it will redirect to homepage
     if (this.props.auth.isAuthenticated) {
@@ -75,6 +76,10 @@ class Landing extends Component {
   };
 
   render() {
+    // TODO: Create slideshow that dynamically changes based on featured cities
+    // TODO: Dynamically generate markup for top deals
+    // TODO: Dynamically generate markup for featured cities
+
     let { classes } = this.props;
 
     function dealStyle(img) {
@@ -190,10 +195,14 @@ class Landing extends Component {
 
 Landing.propTypes = {
   auth: PropTypes.object.isRequired
+  // landing: PropTypes.object.IsRequired
+  // TODO: Once backend is implement, uncomment above line.
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
+  // landing: state.landing
+  // TODO: Once backend is implement, uncomment above line.
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Landing));
