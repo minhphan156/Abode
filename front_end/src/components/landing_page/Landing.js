@@ -6,7 +6,7 @@ import SearchWidget from "./search_widget/SearchWidget";
 // Animation CSS imports
 import "./Landing.css";
 
-// Image imports
+// Image imports (For Prototype Only)
 import SF from "./SF.jpg";
 import LA from "./LA.jpg";
 import NY from "./NY.jpg";
@@ -33,7 +33,7 @@ let styles = {
   },
   imgSlideShow: {
     display: "flex",
-    backgroundImage: `url(${SF})`,
+    backgroundImage: `url(${SF})`, // (For Prototype Only)
     backgroundSize: "cover",
     maxWidth: "100%",
     maxHeight: "100%",
