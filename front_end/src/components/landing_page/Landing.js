@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { readyLanding } from "../../actions/landingActions";
+
 import SearchWidget from "./search_widget/SearchWidget";
 
 // Animation CSS imports
@@ -24,7 +26,6 @@ import PA from "./PA.jpg";
 import {
   Grid,
   Typography,
-  Paper,
   withStyles,
   Card,
   CardActionArea,
@@ -39,9 +40,10 @@ let styles = {
     justify: "center",
     flexGrow: 1
   },
+  // TODO: Remove following Prototype CSS Class
   imgSlideShow: {
     display: "flex",
-    backgroundImage: `url(${SF})`, // (For Prototype Only)
+    backgroundImage: `url(${SF})`,
     backgroundSize: "cover",
     maxWidth: "100%",
     maxHeight: "100%",
@@ -75,232 +77,212 @@ class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-
-    this.genBackgroundImgStyle = this.genBackgroundImgStyle.bind(this);
   }
 
-  // TODO: Replace deprecated 'componenDidMount' with proper lifecycle method
   componentDidMount = () => {
     // during logged in , if we change url to landing/home it will redirect to homepage
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
+    this.props.readyLanding();
   };
 
   render() {
     // TODO: Create slideshow that dynamically changes based on featured cities
+    if (this.props.landing != null) {
+      let { classes } = this.props;
 
-    // TODO: Remove the following placeholder once backend is implemented and connected.
-    // The following object is here as a placeholder to avoid compiler errors.
+      // TODO: The following code segment(*) needs to be editted once backend is connected:
+      // BEGINNING OF CODE SEGMENT (*)
+      let {
+        header,
+        deals1,
+        deals2,
+        deals3,
+        featureDestination
+      } = this.props.landing;
 
-    let { classes } = this.props;
+      let dealsArr = [deals1, deals2, deals3];
 
-    let landing = {
-      header: {
-        cityName: String,
-        head: String
-      },
-      deals1: {
-        name: String,
-        picurl: NY,
-        rates: Number,
-        price: Number
-      },
-      deals2: {
-        name: String,
-        picurl: LA,
-        rates: Number,
-        price: Number
-      },
-      deals3: {
-        name: String,
-        picurl: SD,
-        rates: Number,
-        price: Number
-      },
-      featureDestination: [
-        {
-          cityName: String,
-          picurl: String
+      let topDealsMarkup = dealsArr.map(city => {
+        if (city != null) {
+          return (
+            <Card>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={city.picurl}
+                  title="Weekend Deals"
+                />
+                <CardContent>
+                  <Typography variant="h6">{city.picurl}</Typography>
+                  <Typography variant="subtitle1">View Deals</Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          );
         }
-      ]
-    };
+      });
 
-    // TODO: Remove the following placeholder once backend is implemented and connected.
-    // The folowing declaration is a placeholder to avoid compiler errors.
-    let { header, deals1, deals2, deals3, featureDestination } = landing;
-
-    let dealsArr = [deals1, deals2, deals3];
-
-    let topDealsMarkup = dealsArr.map(city => {
-      if (city != null) {
+      let featureDestinationMarkup = featureDestination.map(city => {
         return (
-          <Card>
-            <CardActionArea>
-              <CardMedia
-                className={classes.cardMedia}
-                image={city.picurl}
-                title="Weekend Deals"
-              />
-              <CardContent>
-                <Typography variant="h6">{city.picurl}</Typography>
-                <Typography variant="subtitle1">View Deals</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+          <Grid item className="mouseHover" xs={3}>
+            <img className={classes.collageImg} src={city.picurl} />
+          </Grid>
         );
-      }
-    });
+      });
 
-    let featureDestinationMarkup = featureDestination.map(city => {
-      return (
-        <Grid item className="mouseHover" xs={3}>
-          <img src={city.picurl} style={styles.collageImg} />
-        </Grid>
-      );
-    });
-
-    var genBackgroundImgStyle = () => {
-      return {
-        display: "inline-block",
-        backgroundImage: `url(${featureDestination})`,
-        backgroundSize: "cover",
-        alignItems: "center"
+      var genBackgroundImgStyle = () => {
+        return {
+          display: "inline-block",
+          backgroundImage: `url(${featureDestination[0]})`,
+          backgroundSize: "cover",
+          alignItems: "center"
+        };
       };
-    };
+      // ENDING OF CODE SEGMENT (*)
 
-    return (
-      <div>
-        {/*<div className={genBackgroundImgStyle()} boxShadow={3}>*/}
-        {/* PROTOTYPE LINE BEGINNING */}
-        <div className={classes.imgSlideShow} boxShadow={3}>
+      return (
+        <div>
+          {/* TODO: Uncomment the line below and remove prototype line */}
+          {/*<div className={genBackgroundImgStyle()} boxShadow={3}>*/}
           {/* PROTOTYPE LINE BEGINNING */}
-          <div className={`${classes.searchWidgetBox} fadeIn`}>
-            <SearchWidget />
+          <div className={classes.imgSlideShow} boxShadow={3}>
+            {/* PROTOTYPE LINE BEGINNING */}
+            <div className={`${classes.searchWidgetBox} fadeIn`}>
+              <SearchWidget />
+            </div>
+          </div>
+          <br />
+          <div
+            style={{
+              width: "auto",
+              height: "auto",
+              marginLeft: "5%",
+              marginRight: "5%"
+            }}
+          >
+            <div className="fadeIn">
+              <div>
+                <div className={classes.centerFlexbox}>
+                  <Typography variant="h5" style={{ marginTop: 50 }}>
+                    Deals of the Week
+                  </Typography>
+                </div>
+                <hr className={classes.noYMarginTop} />
+              </div>
+              <Grid container spacing={8} direction="row" justify="center">
+                {/* TODO: Uncomment the line below and remove prototype line */}
+                {/* topDealsMarkup */}
+                {/* Prototype Markup BEGINNING */}
+                <Grid item xs={4} className="mouseHover">
+                  <Card>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={SD}
+                        title="Weekend Deals"
+                      />
+                      <CardContent>
+                        <Typography variant="h6">Weekend Deals!</Typography>
+                        <Typography variant="subtitle1">View Deals</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+                <Grid item xs={4} className="mouseHover">
+                  <Card>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={VG}
+                        title="Weekend Deals"
+                      />
+                      <CardContent>
+                        <Typography variant="h6">
+                          Featured City Deals!
+                        </Typography>
+                        <Typography variant="subtitle1">View Deals</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+                <Grid item xs={4} className="mouseHover">
+                  <Card>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={WA}
+                        title="Weekend Deals"
+                      />
+                      <CardContent>
+                        <Typography variant="h6">Holiday Deals!</Typography>
+                        <Typography variant="subtitle1">View Deals</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+                {/* Prototype Markup ENDING */}
+              </Grid>
+              <div>
+                <div className={classes.centerFlexbox}>
+                  <Typography variant="h5" style={{ marginTop: 50 }}>
+                    Featured Cities
+                  </Typography>
+                </div>
+                <hr className={classes.noYMarginTop} />
+              </div>
+              <Grid container spacing={8} direction="row" justify="center">
+                {/* TODO: Uncomment the line below and remove prototype line */}
+                {/* featureDestinationMarkup */}
+                {/* Prototype Markup BEGINNING */}
+                <Grid item xs={3} className="mouseHover">
+                  <img src={AU} backgroundSize="contain" />
+                </Grid>
+                <Grid item xs={3} className="mouseHover">
+                  <img src={CH} backgroundSize="contain" />
+                </Grid>
+                <Grid item xs={3} className="mouseHover">
+                  <img src={DE} backgroundSize="contain" />
+                </Grid>
+                <Grid item xs={3} className="mouseHover">
+                  <img src={LA} backgroundSize="contain" />
+                </Grid>
+                <Grid item xs={3} className="mouseHover">
+                  <img src={NY} backgroundSize="contain" />
+                </Grid>
+                <Grid item xs={3} className="mouseHover">
+                  <img src={PA} backgroundSize="contain" />
+                </Grid>
+                <Grid item xs={3} className="mouseHover">
+                  <img src={PO} backgroundSize="contain" />
+                </Grid>
+                <Grid item xs={3} className="mouseHover">
+                  <img src={SA} backgroundSize="contain" />
+                </Grid>
+                {/* Prototype Markup ENDING */}
+              </Grid>
+            </div>
           </div>
         </div>
-        <br />
-        <div
-          style={{
-            width: "auto",
-            height: "auto",
-            marginLeft: "5%",
-            marginRight: "5%"
-          }}
-        >
-          <div className="fadeIn">
-            <div>
-              <div className={classes.centerFlexbox}>
-                <Typography variant="h5" style={{ marginTop: 50 }}>
-                  Deals of the Week
-                </Typography>
-              </div>
-              <hr className={classes.noYMarginTop} />
-            </div>
-            <Grid container spacing={8} direction="row" justify="center">
-              {/* topDealsMarkup */}
-              {/* Prototype Markup BEGINNING */}
-              <Grid item xs={4} className="mouseHover">
-                <Card>
-                  <CardActionArea>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={SD}
-                      title="Weekend Deals"
-                    />
-                    <CardContent>
-                      <Typography variant="h6">Weekend Deals!</Typography>
-                      <Typography variant="subtitle1">View Deals</Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-              <Grid item xs={4} className="mouseHover">
-                <Card>
-                  <CardActionArea>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={VG}
-                      title="Weekend Deals"
-                    />
-                    <CardContent>
-                      <Typography variant="h6">Featured City Deals!</Typography>
-                      <Typography variant="subtitle1">View Deals</Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-              <Grid item xs={4} className="mouseHover">
-                <Card>
-                  <CardActionArea>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={WA}
-                      title="Weekend Deals"
-                    />
-                    <CardContent>
-                      <Typography variant="h6">Holiday Deals!</Typography>
-                      <Typography variant="subtitle1">View Deals</Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-              {/* Prototype Markup ENDING */}
-            </Grid>
-            <div>
-              <div className={classes.centerFlexbox}>
-                <Typography variant="h5" style={{ marginTop: 50 }}>
-                  Featured Cities
-                </Typography>
-              </div>
-              <hr className={classes.noYMarginTop} />
-            </div>
-            <Grid container spacing={8} direction="row" justify="center">
-              {/* featureDestinationMarkup */}
-              {/* Prototype Markup BEGINNING */}
-              <Grid item xs={3} className="mouseHover">
-                <img src={AU} backgroundSize="contain" />
-              </Grid>
-              <Grid item xs={3} className="mouseHover">
-                <img src={CH} backgroundSize="contain" />
-              </Grid>
-              <Grid item xs={3} className="mouseHover">
-                <img src={DE} backgroundSize="contain" />
-              </Grid>
-              <Grid item xs={3} className="mouseHover">
-                <img src={LA} backgroundSize="contain" />
-              </Grid>
-              <Grid item xs={3} className="mouseHover">
-                <img src={NY} backgroundSize="contain" />
-              </Grid>
-              <Grid item xs={3} className="mouseHover">
-                <img src={PA} backgroundSize="contain" />
-              </Grid>
-              <Grid item xs={3} className="mouseHover">
-                <img src={PO} backgroundSize="contain" />
-              </Grid>
-              <Grid item xs={3} className="mouseHover">
-                <img src={SA} backgroundSize="contain" />
-              </Grid>
-              {/* Prototype Markup ENDING */}
-            </Grid>
-          </div>
-        </div>
-      </div>
-    );
+      );
+    } else {
+      return <div />;
+    }
   }
 }
 
 Landing.propTypes = {
-  auth: PropTypes.object.isRequired
-  // landing: PropTypes.object.IsRequired
-  // TODO: Once backend is implement, uncomment above line.
+  auth: PropTypes.object.isRequired,
+  landing: PropTypes.object.IsRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
-  // landing: state.landing
-  // TODO: Once backend is implement, uncomment above line.
+  auth: state.auth,
+  landing: state.landing
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Landing));
+export default connect(
+  mapStateToProps,
+  { readyLanding }
+)(withStyles(styles)(Landing));

@@ -10,6 +10,7 @@ export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE"; // clear profile a
 export const GET_PROFILES = "GET_PROFILES";
 
 // LANDING TYPES
-// TODO: Create type for landing page fetch.
+export const GET_LANDING_DATA = "GET_LANDING_DATA";
 
+// ???
 export const GET_DELIVERY = "GET_DELIVERY";

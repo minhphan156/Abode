@@ -1,2 +1,7 @@
-// TODO: Create action for landing page:
-// Fetches needed information about cities which will be featured in the landing page
+import { GET_LANDING_DATA } from "./types";
+
+export const readyLanding = () => {
+  return {
+    type: GET_LANDING_DATA
+  };
+};
