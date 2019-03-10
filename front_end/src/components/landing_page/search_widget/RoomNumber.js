@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { withStyles } from "@material-ui/core/styles";
 
-import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -10,10 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
-  root: {
-    // display: "flex",
-    // flexWrap: "wrap"
-  },
+  root: {},
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 20,
@@ -31,14 +26,10 @@ class RoomNumber extends React.Component {
     labelWidth: 0
   };
 
-  componentDidMount() {
-    this.setState({
-      // labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
-    });
-  }
-
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+
+    this.props.testRoomFunction(event.target.value);
   };
 
   render() {
@@ -48,7 +39,7 @@ class RoomNumber extends React.Component {
       <form className={classes.root} autoComplete="off">
         <FormControl className={classes.formControl}>
           <Select
-            value={this.state.rooms}
+            value={this.props.numberRooms}
             onChange={this.handleChange}
             displayEmpty
             name="rooms"
@@ -67,12 +58,12 @@ class RoomNumber extends React.Component {
 }
 
 RoomNumber.propTypes = {
-  auth: PropTypes.object.isRequired
+  // auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  // auth: state.auth
 });
-export default withStyles(styles)(RoomNumber);
+export default connect(mapStateToProps)(withStyles(styles)(RoomNumber));
 
 // export default connect(mapStateToProps)(RoomNumber);
