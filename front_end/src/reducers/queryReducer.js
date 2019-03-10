@@ -1,7 +1,7 @@
 import { SET_QUERY, SAVE_QUERY } from "../actions/types";
 
 const initialState = {
-  hotelQuery: null, // all the hotels that match
+  hotelQuery: "stuff", // all the hotels that match
   searchQuery: null // the search arguments
 };
 
