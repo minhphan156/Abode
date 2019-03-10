@@ -25,14 +25,33 @@ class CalendarPicker extends Component {
       name: "hai",
       labelWidth: 10
     };
+    this.handlethisthing = this.handlethisthing.bind(this);
   }
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  // handleChange = event => {
+  //   this.setState({ [event.target.name]: event.target.value });
+
+  //   console.log("changeasdf");
+  // };
+
+  // handlethisthing() {
+  //   console.log("change");
+  //   console.log("startDate", this.state.startDate);
+  //   console.log("endDate", this.state.endDate);
+  // }
+
+  handlethisthing = ({ a, b }) => {
+    console.log("date a", a);
+    console.log("date b", b);
+
+    // this.props.onHandleCity('test');
   };
 
   render() {
     const { classes } = this.props;
+
+    // console.log('startDate', this.state.startDate);
+    // console.log('endDate', this.state.endDate);
 
     return (
       <div className={classes.root}>
@@ -41,9 +60,10 @@ class CalendarPicker extends Component {
           startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
           endDate={this.state.endDate} // momentPropTypes.momentObj or null,
           endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-          onDatesChange={({ startDate, endDate }) =>
-            this.setState({ startDate, endDate })
-          } // PropTypes.func.isRequired,
+          onDatesChange={({ startDate, endDate }) => (
+            this.setState({ startDate, endDate }),
+            this.props.onHandleDate(startDate, endDate)
+          )} // PropTypes.func.isRequired,
           focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
           onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
           noBorder={true}

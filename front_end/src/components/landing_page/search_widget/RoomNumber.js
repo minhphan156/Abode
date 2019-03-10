@@ -11,8 +11,6 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
   root: {
-    // display: "flex",
-    // flexWrap: "wrap"
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -39,10 +37,16 @@ class RoomNumber extends React.Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+
+    this.props.testRoomFunction(event.target.value);
+
   };
 
   render() {
     const { classes } = this.props;
+
+    // console.log('searchwidget Room inFunc ',this.state.rooms);
+
 
     return (
       <form className={classes.root} autoComplete="off">
@@ -67,12 +71,13 @@ class RoomNumber extends React.Component {
 }
 
 RoomNumber.propTypes = {
-  auth: PropTypes.object.isRequired
+  // auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  // auth: state.auth
 });
-export default withStyles(styles)(RoomNumber);
+export default connect(mapStateToProps)(withStyles(styles)(RoomNumber));
+
 
 // export default connect(mapStateToProps)(RoomNumber);

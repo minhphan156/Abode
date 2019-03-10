@@ -1,19 +1,26 @@
 /* Will edit everything selected including everything between a range of dates */
 .CalendarDay__selected_span {
-  background: #82e0aa;
+  background: #a0cdfd;
   color: white; /*text*/
-  border: 1px solid rgb(56, 13, 248); /* default styles include a border */
+  border: 1px solid #568cba; /* default styles include a border */
+}
+
+.CalendarDay__selected_span:hover {
+  background: #568cba;
+  color: white; /*text*/
+  border: 1px solid #568cba; /* default styles include a border */
 }
 
 /* Will edit selected date or the endpoints of a range of dates */
 .CalendarDay__selected {
-  background: #ff8f4c;
+  background: #568cba;
   color: white;
+  border: 1px solid #0c4b78; /* default styles include a border */
 }
 
 /* Will edit when hovered over. _span style also has this property */
 .CalendarDay__selected:hover {
-  background: #326d79;
+  background: #0c4b78;
   color: white;
 }
 
@@ -45,7 +52,7 @@
   background: #fff;
   position: relative;
   display: inline-block;
-  width: 117px;
+  width: 130px;
   vertical-align: middle;
 }
 

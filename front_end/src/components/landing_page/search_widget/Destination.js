@@ -116,10 +116,13 @@ const styles = theme => ({
 });
 
 class Destination extends React.Component {
-  state = {
-    single: "",
-    suggestions: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      suggestions: []
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
 
   handleSuggestionsFetchRequested = ({ value }) => {
     this.setState({
@@ -133,10 +136,8 @@ class Destination extends React.Component {
     });
   };
 
-  handleChange = name => (event, { newValue }) => {
-    this.setState({
-      [name]: newValue
-    });
+  handleChange = (event, { newValue }) => {
+    this.props.onHandleDestinationName(newValue);
   };
 
   render() {
@@ -158,8 +159,9 @@ class Destination extends React.Component {
           inputProps={{
             classes,
             placeholder: "Enter City, Hotel Name, or Airport",
-            value: this.state.single,
-            onChange: this.handleChange("single")
+            value: this.props.destinationName,
+
+            onChange: this.handleChange
           }}
           theme={{
             container: classes.container,

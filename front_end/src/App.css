@@ -368,3 +368,10 @@ a:active {
   background-image: url("http://hhomedesign.com/wp-content/uploads/2015/05/tulip-fields-hd-wallpaper.jpg");
   color: white;
 }
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
