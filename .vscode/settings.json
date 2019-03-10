@@ -1,6 +1,0 @@
-{
-    "eslint.enable": false,
-    "jshint.enable": false,
-    "tslint.enable": false,
-    "editor.formatOnSave": true
-}
