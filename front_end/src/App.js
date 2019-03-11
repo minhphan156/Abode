@@ -21,6 +21,9 @@ import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import NotFound from "./components/layout/NotFound";
 
+// trying individual page
+import IndivHotel from "./components/indiv-hotel/IndivHotel";
+
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 
@@ -62,6 +65,12 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
 
+
+
+              <Route exact path="/indiv-hotel" component={IndivHotel} />
+
+
+
               <Route exact path="/not-found/:attempt" component={NotFound} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
@@ -94,6 +103,7 @@ class App extends Component {
                   component={EditProfile}
                 />
               </Switch>
+
             </div>
             <Footer />
           </div>
