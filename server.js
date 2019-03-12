@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 // api routes
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
+const hotel = require("./routes/api/hotel");
 const book = require("./routes/api/bookin")
 
 // get some functionalities from express library like get() function
@@ -43,6 +44,8 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 // this will append to home route 'localHost:5000/api/profile/{what ever profile.js dictate}'
 app.use("/api/profile", profile);
+// individual search result route
+app.use("/api/hotel", hotel);
 
 // this will append to home route 'localHost:5000/api/booking/{what ever book.js dictate}'
 app.use("/api/booking", book);
