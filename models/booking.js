@@ -18,6 +18,10 @@ const BookingSchema = new Schema({
         type:Date,
         required:true
     },
+    typeOfRoom: {
+        type:String,
+        required:true
+    },
     numOfRoom: {
         type:Number,
         required:true
@@ -27,6 +31,14 @@ const BookingSchema = new Schema({
         default: Date.now
     },
     status:{     // 0 stand for just booked, 1 for check-in, 2 for check-out, 3 for cancel
+        type:Number,
+        default:0
+    },
+    subtotal:{
+        type:Number,
+        required:true
+    },
+    discount:{
         type:Number,
         default:0
     }
