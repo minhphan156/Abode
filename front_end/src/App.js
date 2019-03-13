@@ -22,7 +22,8 @@ import EditProfile from "./components/edit-profile/EditProfile";
 import NotFound from "./components/layout/NotFound";
 import searchResultOverview from "./components/searchResultOverview/searchResultOverview";
 import Confirmation from "./components/booking/Confirmation";
-
+// trying individual page
+import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 
@@ -65,11 +66,11 @@ class App extends Component {
               component={searchResultOverview}
             />
             <Route exact path="/confirmation" component={Confirmation} />
-
+            
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-
+              <Route exact path="/indiv-hotel" component={IndivHotel} />
               <Route exact path="/not-found/:attempt" component={NotFound} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
