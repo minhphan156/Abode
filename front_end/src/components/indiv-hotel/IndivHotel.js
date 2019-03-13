@@ -55,13 +55,6 @@ class IndivHotel extends Component {
         }
     }
 
-    
-    
-
-
-
-    
-
     render(){
         return(
             <div>
@@ -115,8 +108,6 @@ class IndivHotel extends Component {
                     </a>
                     </div>
                     </div>
-
-
                     <div id="amenities" className="expandable-content overview-sections" style={{marginTop:'10px', height: 'auto'}}>
                     <h5 style={{fontWeight:'bold'}}><i class="fas fa-concierge-bell"></i>  Main Amentities</h5>
                     <div className="row">
@@ -137,7 +128,6 @@ class IndivHotel extends Component {
                         </div>
                     </div>
                     </div>
-
                 </div>
 
                 <div className="col" style={{marginTop:'0'}}>
@@ -178,13 +168,8 @@ class IndivHotel extends Component {
                         </div>
                         </InfoWindow>
                     </Map>
-                
-
-                
                 </div>
-
             </div>
-
 
             <section id="table1">
             <table class="table table-bordered" style={{marginTop:'3%'}}>
@@ -284,11 +269,8 @@ class IndivHotel extends Component {
 
             </tbody>
             </table>
-
             </section>
-
-
-
+            
             </div>
             </div>
 
