@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const checkAvalibity = require("../../validation/checkAvalibility.js");
+const checkAvalibity = require("../../validation/checkAvailableHotels");
 const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 
@@ -24,22 +24,24 @@ router.get('/search',(req,res)=>{
         checkout:req.body.checkOut
     };
     var numberRooms = req.body.numberRooms;
-    var pageNumber = req.body.page
+    var startIndex = req.body.lastIndex;
+    const NUM_RESULTS = req.body.numResults;
     const regex = new RegExp(searchKey,"ig");
     //.split("").join('*')
     console.log(regex)
     Hotel.find({$or:[{name:regex}, {city:regex},{airports:regex}]}).then((doc,err)=>{
         if(err) res.status(400).json(err);
-        var startIndex = 5 * pageNumber - 5;
+        // var startIndex = 5 * pageNumber - 5;
         var result = [];
         let bookingID = "bookid"
-        while(result.length < 5 && doc[startIndex] !== undefined){
+        while(result.length < NUM_RESULTS && doc[startIndex] !== undefined){
             var arr = doc[startIndex]
             let singleAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.single, date, numberRooms, bookingID);
             let doubleAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
             let kingAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
             let studioAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
-            if(singleAvaliable.length !== 0 || doubleAvaliable.length !== 0 || kingAvaliable.length !== 0 || studioAvaliable.length !== 0){
+           
+            if (singleAvaliable || doubleAvaliable || kingAvaliable || studioAvaliable){
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
@@ -51,10 +53,16 @@ router.get('/search',(req,res)=>{
                     img:arr.img[0]
                 }
                 result.push(item);
-                startIndex++;
             }
+            startIndex++;
         }
-        res.status(200).json(result);
+
+        resultPack = {
+            "lastIndex": startIndex + 1,
+            "results": result
+        }
+
+        res.status(200).json(resultPack);
 
     })
 
