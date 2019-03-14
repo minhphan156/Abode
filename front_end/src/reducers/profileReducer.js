@@ -10,7 +10,7 @@ const initialState = {
   loading: false
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case PROFILE_LOADING:
       return {
