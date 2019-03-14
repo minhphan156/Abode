@@ -5,14 +5,14 @@ import { INDIVIDUAL_HOTEL } from "../actions/types";
 // all image path are hardcoded as the moment
 // pending for further development
 //
-import images1 from "../../images/hotelImages/paris-1.jpg";
-import images2 from "../../images/hotelImages/paris-2.jpg";
-import images3 from "../../images/hotelImages/paris-3.jpg";
-import images4 from "../../images/hotelImages/paris-4.jpg";
-import images5 from "../../images/hotelImages/paris-5.jpg";
-import images6 from "../../images/hotelImages/paris-6.jpg";
-import images7 from "../../images/hotelImages/paris-7.jpg";
-import images8 from "../../images/hotelImages/paris-8.jpg";
+import images1 from "../images/hotelImages/paris-1.jpg";
+import images2 from "../images/hotelImages/paris-2.jpg";
+import images3 from "../images/hotelImages/paris-3.jpg";
+import images4 from "../images/hotelImages/paris-4.jpg";
+import images5 from "../images/hotelImages/paris-5.jpg";
+import images6 from "../images/hotelImages/paris-6.jpg";
+import images7 from "../images/hotelImages/paris-7.jpg";
+import images8 from "../images/hotelImages/paris-8.jpg";
 
 
 const roomOptions = ['single', 'double', 'Queen', 'King']

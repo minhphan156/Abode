@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import ReactStars from 'react-stars';
-import AnchorLink from 'react-anchor-link-smooth-scroll'
+import AnchorLink from 'react-anchor-link-smooth-scroll';
+import { connect } from "react-redux";
 
 
-class IndivHotel extends Component {
+
 //  sliding image testing purpose
 // All images are local, since I have server connection issues
 // all image path are hardcoded as the moment
@@ -58,13 +59,16 @@ class IndivHotel extends Component {
         }
     }
 */
+
+class IndivHotel extends Component {
     render(){
+        const { individualHotelData } = this.props.individualHotelData;
         return(
             <div>
             <div id="whole page" className="container" style={{marginTop:'2%'}}>
                 <div className="row">
-                    <h1 className="display-4 text-left col-10" style={{fontSize: 40, fontWeight: "bold"}}>{this.state.name}</h1>
-                    <h1 className="display-4 text-center col-2" style={{fontSize: 24, color:"#FFD700"}}> {this.state.starRating} 
+                    <h1 className="display-4 text-left col-10" style={{fontSize: 40, fontWeight: "bold"}}>{individualHotelData.name}</h1>
+                    <h1 className="display-4 text-center col-2" style={{fontSize: 24, color:"#FFD700"}}> {individualHotelData.star_rates} 
                     <ReactStars
                         count={5}
                         value={4}
@@ -72,7 +76,7 @@ class IndivHotel extends Component {
                         edit={false}
                         color2={'#FFD700'} /></h1>
                 </div>
-                <h2 className="display-4 test-left" style={{fontSize: 24, color:"#808080"}}>{this.state.streetAddress}</h2>
+                <h2 className="display-4 test-left" style={{fontSize: 24, color:"#808080"}}>{individualHotelData.street}, {individualHotelData.city}, {individualHotelData.zip}, {individualHotelData.country}</h2>
                 
                 <div className="row">
                 <div id="pics and amentities" className="col-8 w-75 h-75" style={{marginLeft:'0', marginTop:'30px'}}>
@@ -80,22 +84,22 @@ class IndivHotel extends Component {
                     <div id="pics sliding show" className="container">
                     <div id="carouselExampleIndicators" className="carousel slide w-100 h-50" data-ride="carousel">
                     <ol className="carousel-indicators">
-                    {images.map((item, index) => {
+                    {individualHotelData.img.map((item, index) => {
                         if(index == 0) return( <li data-target="#carouselExampleIndicators" data-slide-to={index} className="active"></li>);
                         else return (<li data-target="#carouselExampleIndicators" data-slide-to={index}></li>);
                         
                     })}
                     </ol>
                     <div className="carousel-inner">
-                    {images.map((item, index) => {
+                    {individualHotelData.img.map((item, index) => {
                         if(index == 0) return( 
                             <div className="carousel-item active">
-                                <img className="d-block w-100" src={images[index]} alt="hotel img"></img>
+                                <img className="d-block w-100" src={individualHotelData.img[index]} alt="hotel img"></img>
                             </div>
                         );
                         else return (
                             <div className="carousel-item">
-                                <img className="d-block w-100" src={images[index]} alt="hotel img"></img>
+                                <img className="d-block w-100" src={individualHotelData.img[index]} alt="hotel img"></img>
                             </div>
                         );
                         
@@ -116,16 +120,16 @@ class IndivHotel extends Component {
                     <div className="row">
                     
                         <div id="amentities row" className="col"> 
-                            {this.state.tempAmen1.map((item,key) =>{
+                            {(individualHotelData.amen.slice(0,individualHotelData.amen.length/2)).map((item,key) =>{
                                 return (
-                                    <div id="amentities col" className="col" style={{color:'#808080'}}><i class="fas fa-check" style={{color:'#3e6e00'}}></i>  {item}</div>
+                                    <div id="amentities col" className="col" style={{color:'#808080'}}><i class="fas fa-check" style={{color:'#3e6e00'}}></i>   {item}</div>
                                 )
                             })}
                         </div>
                         <div id="amentities row" className="col">
-                            {this.state.tempAmen2.map((item,key) =>{
+                            {(individualHotelData.amen.slice(individualHotelData.amen.length/2, individualHotelData.amen.length)).map((item,key) =>{
                                 return (
-                                    <div id="amentities col" className="col" style={{color:'#808080'}}><i class="fas fa-check" style={{color:'#3e6e00'}}></i>  {item}</div>
+                                    <div id="amentities col" className="col" style={{color:'#808080'}}><i class="fas fa-check" style={{color:'#3e6e00'}}></i>   {item}</div>
                                 )
                             })}
                         </div>
@@ -134,7 +138,7 @@ class IndivHotel extends Component {
                 </div>
 
                 <div className="col" style={{marginTop:'0'}}>
-                <h2 className="text-center" style={{fontSize:40 ,color:"red"}}>${this.state.lowPrice}</h2>
+                <h2 className="text-center" style={{fontSize:40 ,color:"red"}}>${individualHotelData.price}</h2>
                 <AnchorLink href="#table1">
                     <button type="button" class="btn btn-success h-10" style={{width:'100%'}}>Book Now</button>
                 </AnchorLink>
@@ -144,7 +148,7 @@ class IndivHotel extends Component {
                     
                     <ReactStars 
                         count={5}
-                        value={this.state.tripAdvisorRate}
+                        value={individualHotelData.tripAdvisorRate}
                         size={22}
                         edit={false}
                         color2={'#00af87'} />
@@ -154,20 +158,20 @@ class IndivHotel extends Component {
                     <h3 className="text-left" style={{fontSize:20}}><img style={{width:'14%', height:'5%'}} src="https://a.cdn-hotels.com/da/assets/s/63.0/images/brands/hcom/logos/logo-social.jpg"></img>  Hotels.com</h3>
                     <ReactStars
                         count={5}
-                        value={this.state.hotelsRate}
+                        value={individualHotelData.hotelsRate}
                         size={22}
                         edit={false}
                         color2={'#d32f2f'} />
                 </div>
                 </div>
-                    <Map google={this.props.google} zoom={15} initialCenter={{lat:this.state.lat, lng:this.state.alt}} style={{height:'50%', width:'97%', marginTop:'1%', align:'left'}}>
+                    <Map google={this.props.google} zoom={15} initialCenter={{lat:individualHotelData.lat, lng:individualHotelData.alt}} style={{height:'50%', width:'97%', marginTop:'1%', align:'left'}}>
                             
                         <Marker onClick={this.onMarkerClick}
                             name={'Current location'} />
 
                         <InfoWindow onClose={this.onInfoWindowClose}>
                         <div>
-                            <h1>{this.state.name}</h1>
+                            <h1>{individualHotelData.name}</h1>
                         </div>
                         </InfoWindow>
                     </Map>
@@ -186,12 +190,12 @@ class IndivHotel extends Component {
             <tbody>
                 <tr>
                     <th scope="row">Queen Room</th>
-                    <td>${this.state.lowPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
@@ -211,62 +215,37 @@ class IndivHotel extends Component {
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
                 <tr>
                     <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${this.state.highPrice}</td>
+                    <td>${individualHotelData.price}</td>
                     <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
                 </tr>
 
@@ -282,6 +261,14 @@ class IndivHotel extends Component {
 
 }
 
-export default GoogleApiWrapper({
+const mapStateToProps = state => ({
+    individualHotelData: state.individualHotelData
+});
+
+export default connect(
+    mapStateToProps,
+    {}
+  )(GoogleApiWrapper({
     apiKey: ("AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8")
-  })(IndivHotel)
+  })(IndivHotel));
+  
