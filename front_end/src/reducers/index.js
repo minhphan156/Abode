@@ -5,6 +5,7 @@ import queryReducer from "./queryReducer";
 import profileReducer from "./profileReducer";
 import searchResultReducer from "./searchResultReducer";
 import landingReducer from "./landingReducer";
+import individualHotelReducer from "./individualHotelReducer";
 
 
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
   query: queryReducer,
   profile: profileReducer,
   searchResult: searchResultReducer,
-  landing: landingReducer
+  landing: landingReducer,
+  individualHotelData: individualHotelReducer
 });
