@@ -15,7 +15,7 @@ import images7 from "../images/hotelImages/paris-7.jpg";
 import images8 from "../images/hotelImages/paris-8.jpg";
 
 
-const roomOptions = ['single', 'double', 'Queen', 'King']
+//const roomOptions = ['single', 'double', 'Queen', 'King']
 const amenities= ["Casino", "13 restaurants and 3 bars/lounges", "Full-service spa", "Outdoor pool", "Nightclub", "Breakfast available", "Fitness center", "Valet parking", "Business center", "Limo/town car service", "24-hour front desk", "Air conditioning", "Free WiFi in lobby"]
 const images = [images1, images2, images3, images4, images5, images6, images7, images8]
 
@@ -35,7 +35,10 @@ const initialState = {
       hotelsRate:"4.9",
       img: images,
       amen: amenities,
-      roomOpt: roomOptions
+      singleAva: true,
+      doubleAva: false,
+      kingAva: false,
+      studioAva: true,
     }
 };
 

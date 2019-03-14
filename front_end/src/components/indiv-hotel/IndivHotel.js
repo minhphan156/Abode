@@ -5,64 +5,10 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { connect } from "react-redux";
 
 
-
-//  sliding image testing purpose
-// All images are local, since I have server connection issues
-// all image path are hardcoded as the moment
-// pending for further development
-//
-/*
-import images1 from "../../images/hotelImages/paris-1.jpg";
-import images2 from "../../images/hotelImages/paris-2.jpg";
-import images3 from "../../images/hotelImages/paris-3.jpg";
-import images4 from "../../images/hotelImages/paris-4.jpg";
-import images5 from "../../images/hotelImages/paris-5.jpg";
-import images6 from "../../images/hotelImages/paris-6.jpg";
-import images7 from "../../images/hotelImages/paris-7.jpg";
-import images8 from "../../images/hotelImages/paris-8.jpg";
-
-
-const roomOptions = ['single', 'double', 'Queen', 'King']
-const amenities= ["Casino", "13 restaurants and 3 bars/lounges", "Full-service spa", "Outdoor pool", "Nightclub", "Breakfast available", "Fitness center", "Valet parking", "Business center", "Limo/town car service", "24-hour front desk", "Air conditioning", "Free WiFi in lobby"]
-const images = [images1, images2, images3, images4, images5, images6, images7, images8]
-
-
-class IndivHotel extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-
-          name: "Paris Las Vegas Resort & Casino, Las Vegas",
-          streetAddress: "3655 Las Vegas Blvd S, Las Vegas, NV, 89109, United States of America",
-
-          tempAmen1:amenities.slice(0,amenities.length/2),
-          tempAmen2:amenities.slice(amenities.length/2, amenities.length),
-          starRating:"4-star Hotel",
-          city: "Las Vegas",
-          zip: "89109",
-          state: "NV",
-          
-          lat:"36.112497",
-          alt:"-115.171571",
-
-          tripAdvisorRate: "4.2",
-          hotelsRate:"4.9",
-
-          lowPrice:'89',
-          highPrice:'120',
-
-          counterAm:0,
-          moreAmentities:amenities.length,
-
-          errors: {}
-        }
-    }
-*/
-
 class IndivHotel extends Component {
     render(){
         const { individualHotelData } = this.props.individualHotelData;
+
         return(
             <div>
             <div id="whole page" className="container" style={{marginTop:'2%'}}>
@@ -76,7 +22,7 @@ class IndivHotel extends Component {
                         edit={false}
                         color2={'#FFD700'} /></h1>
                 </div>
-                <h2 className="display-4 test-left" style={{fontSize: 24, color:"#808080"}}>{individualHotelData.street}, {individualHotelData.city}, {individualHotelData.zip}, {individualHotelData.country}</h2>
+                <h2 className="display-4 test-left" style={{fontSize: 24, color:"#808080"}}>{individualHotelData.street}, {individualHotelData.city}, 94128</h2>
                 
                 <div className="row">
                 <div id="pics and amentities" className="col-8 w-75 h-75" style={{marginLeft:'0', marginTop:'30px'}}>
@@ -188,67 +134,35 @@ class IndivHotel extends Component {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Queen Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">Standard Suite</th>
-                    <td>$300</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">Business Suite</th>
-                    <td>$450</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">Presidential Suite</th>
-                    <td>$800</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">King Room</th>
-                    <td>${individualHotelData.price}</td>
-                    <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
-                </tr>
+                {individualHotelData.singleAva ? (
+                    <tr>
+                        <th scope="row">Single Room</th>
+                        <td>${individualHotelData.price}</td>
+                        <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
+                    </tr>
+                ): null}
+                {individualHotelData.doubleAva ? (
+                    <tr>
+                        <th scope="row">Double Room</th>
+                        <td>${individualHotelData.price}</td>
+                        <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
+                    </tr>
+                ): null}
 
+                {individualHotelData.kingAva ? (
+                    <tr>
+                        <th scope="row">King Room</th>
+                        <td>${individualHotelData.price}</td>
+                        <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
+                    </tr>
+                ): null}
+                {individualHotelData.studioAva ? (
+                    <tr>
+                        <th scope="row">Studio Suite</th>
+                        <td>${individualHotelData.price}</td>
+                        <td><button type="button" class="btn btn-success h-100">Book Now</button></td>
+                    </tr>
+                ): null}     
             </tbody>
             </table>
             </section>
