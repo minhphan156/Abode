@@ -22,7 +22,7 @@ const images = [images1, images2, images3, images4, images5, images6, images7, i
 const initialState = {
     individualHotelData: {
       name: "Paris Las Vegas Resort & Casino, Las Vegas",
-      hotelID: String,
+      hotelID: "12345678",
       street: "3655 Las Vegas Blvd S",
       city: "Las Vegas, NV",
       zip: "89109",
