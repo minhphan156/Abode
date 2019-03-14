@@ -5,7 +5,7 @@ const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 const Customer = require("../../models/customer");
 
-const checkAvalibility = require("../../validation/checkAvalibility");
+var checkAvailability = require('../../validation/checkAvailibility.js')
 
 // @route POST /api/booking/confirm
 // @desc Comfirmation page
@@ -59,7 +59,7 @@ router.post("/confirm",(req,res)=>{
             else if(roomType === 'studio') arr = doc[0].roomTypeAndNumber.single;
 
             // if the room is avaliable
-            if(checkAvalibility(arr,date,numberRooms,bookingID).length !==0){
+            if(checkAvailability(arr,date,numberRooms,bookingID).length !==0){
                 // check the customer made a resevation for the same checkin date
                 Booking.find({$and:[{customerID:customerID},{check_in_date:date.checkin}]})
                 .then((doc,err)=>{

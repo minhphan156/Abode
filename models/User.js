@@ -17,11 +17,12 @@ const UserSchema = new Schema({
     default: Date.now
   },
   rewardPoints: {
-    type:Number
-  },
-  admin:{
     type:Number,
     default:0
+  },
+  admin:{
+    type:Boolean,
+    default:false
   },
   customerID:{
     type:Schema.Types.ObjectId,
