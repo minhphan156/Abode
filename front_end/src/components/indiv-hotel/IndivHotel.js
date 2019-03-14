@@ -3,11 +3,14 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import ReactStars from 'react-stars';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
 
+
+class IndivHotel extends Component {
 //  sliding image testing purpose
 // All images are local, since I have server connection issues
 // all image path are hardcoded as the moment
 // pending for further development
 //
+/*
 import images1 from "../../images/hotelImages/paris-1.jpg";
 import images2 from "../../images/hotelImages/paris-2.jpg";
 import images3 from "../../images/hotelImages/paris-3.jpg";
@@ -54,7 +57,7 @@ class IndivHotel extends Component {
           errors: {}
         }
     }
-
+*/
     render(){
         return(
             <div>
