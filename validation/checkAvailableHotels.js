@@ -123,9 +123,11 @@ module.exports = function(type, datess,numReq,bookID)  {
     // loop though all the rooms in the array, none of it avaliable,
     // return empty array
         if(!roomavaliable && i === NUMBER_OF_ROOM - 1 ){
-            return result = [];
+            // return result = [];
+            return roomavaliable
         }
     }
   }}
-  return result;
+//   return result;
+return roomavaliable
 }
