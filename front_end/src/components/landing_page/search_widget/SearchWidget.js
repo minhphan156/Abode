@@ -10,8 +10,8 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
 import { Link } from "react-router-dom";
-import { saveQuery } from "../../../actions/searchActions";
-// import { submitQuery, saveQuery } from "../../actions/searchActions";
+// import { saveQuery } from "../../../actions/searchActions";
+import { submitQuery, saveQuery } from "../../../actions/searchActions";
 
 const styles = theme => ({
   root: {
@@ -67,9 +67,11 @@ class SearchWidget extends Component {
       destinationName: this.state.destinationName,
       checkIn: this.state.checkIn,
       checkOut: this.state.checkOut,
-      numberRooms: this.state.numberRooms
+      numberRooms: this.state.numberRooms,
+      lastIndex: 0,
+      numResults: 5
     };
-    this.props.saveQuery(newQuery);
+    this.props.submitQuery(newQuery);
     console.log("searchwidget state testRoom ", newQuery);
   }
 
@@ -144,10 +146,10 @@ const mapStateToProps = state => ({
 });
 // if this.props.query is empty we will not show the Search page
 
-export default connect(
-  mapStateToProps,
-  { saveQuery }
-)(withStyles(styles)(SearchWidget));
-// export default connect(mapStateToProps,{ submitQuery, saveQuery })(withStyles(styles)(SearchWidget));
+// export default connect(
+//   mapStateToProps,
+//   { saveQuery }
+// )(withStyles(styles)(SearchWidget));
+export default connect(mapStateToProps,{ submitQuery, saveQuery })(withStyles(styles)(SearchWidget));
 
 // connect() --> this connects react component with redux store & action (f.e. saveQuery)

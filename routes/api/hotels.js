@@ -20,14 +20,17 @@ const Booking = require("../../models/booking");
 // @route GET api/hotel/search
 // @desc Search Overview
 router.get('/search',(req,res)=>{
-    var searchKey = req.body.destinationName;
+
+    var searchKey = req.query.destinationName;
     var date = {
-        checkin:req.body.checkIn,
-        checkout:req.body.checkOut
+        checkin:(req.query.checkIn),
+        checkout:(req.query.checkOut),
     };
-    var numberRooms = req.body.numberRooms;
-    var startIndex = req.body.lastIndex;
-    const NUM_RESULTS = req.body.numResults;
+    var numberRooms = req.query.numberRooms;
+    var startIndex = req.query.lastIndex;
+
+    const NUM_RESULTS = req.query.numResults;
+
     const regex = new RegExp(searchKey,"ig");
     //.split("").join('*')
     console.log(regex)
