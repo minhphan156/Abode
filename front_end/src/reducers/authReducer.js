@@ -8,7 +8,7 @@ const initialState = {
 
 // ...state = current state
 // if payload is empty 'isAuthenticated' is false
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {
