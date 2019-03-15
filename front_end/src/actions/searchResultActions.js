@@ -1,8 +1,14 @@
-import { SEARCH_RESULT_OVERVIEW } from "./types";
+import { GET_INDIVIDUAL_HOTEL } from "./types";
+import axios from "axios";
 
-// get search results from reducer and display
-export const displayResultsOverview = () => dispatch => {
-  dispatch({
-    type: SEARCH_RESULT_OVERVIEW
-  });
+export const getIndividualHotelResult = hotel => dispatch => {
+  axios
+    .get("/api/hotel/individual", { params: hotel })
+    .then(res => {
+      dispatch({
+        type: GET_INDIVIDUAL_HOTEL,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
 };

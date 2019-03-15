@@ -11,7 +11,9 @@ import {
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
-import { displayResultsOverview } from "../../actions/searchResultActions";
+import {
+  getIndividualHotelResult
+} from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
@@ -21,14 +23,6 @@ const styles = {
 };
 
 class searchResultOverview extends Component {
-  constructor() {
-    super();
-    this.getIndividualHotelDetails = this.getIndividualHotelDetails.bind(this);
-  }
-  getIndividualHotelDetails(hotel) {
-    console.log("hotel name", hotel);
-  }
-
   render() {
     let { classes } = this.props;
     let hotels;
@@ -47,7 +41,11 @@ class searchResultOverview extends Component {
               <CardContent>
                 <Link
                   to="/indiv-hotel"
-                  onClick={() => this.getIndividualHotelDetails(hotel.name)}
+                  onClick={() =>
+                    this.props.getIndividualHotelResult({
+                      id: hotel.hotelID
+                    })
+                  }
                 >
                   <Typography gutterBottom variant="h5" component="h2">
                     {hotel.name}
@@ -158,5 +156,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { displayResultsOverview }
+  { getIndividualHotelResult }
 )(withStyles(styles)(searchResultOverview));
