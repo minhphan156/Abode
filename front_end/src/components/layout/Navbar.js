@@ -52,6 +52,37 @@ class Navbar extends Component {
   }
 
   render() {
+    let guestMarkUp = (
+      <div>
+        <Button
+              className={classes.afterSeperation}
+              variant="text"
+              color="inherit"
+        >
+          Sign up
+        </Button>
+        <Button className={classes.rightMost} variant="text" color="inherit">
+          Login
+        </Button>
+      </div>
+    );
+  
+    let loggedInMarkup = (
+      <div>
+        <Button
+              className={classes.afterSeperation}
+              variant="text"
+              color="inherit"
+              onClick={this.onLogoutClick}
+        >
+          Logout
+        </Button>
+        <Button className={classes.rightMost} variant="text" color="inherit">
+          {this.props.auth.user.name}
+        </Button>
+      </div>
+    );
+
     let { classes } = this.props;
 
     return (
@@ -85,20 +116,7 @@ class Navbar extends Component {
                 Featured Cities
               </Link>
             </Button>
-            <Button
-              className={classes.afterSeperation}
-              variant="text"
-              color="inherit"
-            >
-              <Link to="/register" style={{color: "white"}}>
-              Sign up
-              </Link>
-            </Button>
-            <Button className={classes.rightMost} variant="text" color="inherit">
-            <Link to="/login" style={{color: "white"}}>
-              Login
-              </Link>
-            </Button>
+            {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
           </Toolbar>
         </AppBar>
       </div>
