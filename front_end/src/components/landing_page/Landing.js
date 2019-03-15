@@ -74,9 +74,12 @@ let styles = {
 };
 
 class Landing extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {};
+
+    this.topDealsRef = React.createRef();
+    this.featuredCitiesRef = React.createRef();
   }
 
   componentDidMount = () => {
@@ -85,6 +88,20 @@ class Landing extends Component {
       this.props.history.push("/");
     }
     this.props.readyLanding();
+    console.log(this.props.location.state);
+    if (this.props.location.state != null) {
+      switch(this.props.location.state.scroll) {
+        case "topDeals":
+          window.scrollTo(0, this.topDealsRef.current.offSetTop)
+          break;
+        case "featuredCities":
+          window.scrollTo(0, this.featuredCitiesRef.current.offSetTop)
+          break;
+        default:
+          // Do nothing
+          break;
+      }
+    }
   };
 
   render() {
@@ -167,7 +184,7 @@ class Landing extends Component {
           >
             <div className="fadeIn">
               <div>
-                <div className={classes.centerFlexbox}>
+                <div className={classes.centerFlexbox} ref={this.topDealsRef}>
                   <Typography variant="h5" style={{ marginTop: 50 }}>
                     Deals of the Week
                   </Typography>
@@ -228,7 +245,7 @@ class Landing extends Component {
                 {/* Prototype Markup ENDING */}
               </Grid>
               <div>
-                <div className={classes.centerFlexbox}>
+                <div className={classes.centerFlexbox} ref={this.featuredCitiesRef}>
                   <Typography variant="h5" style={{ marginTop: 50 }}>
                     Featured Cities
                   </Typography>

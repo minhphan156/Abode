@@ -39,51 +39,85 @@ let styles = {
   }
 };
 
-function Navbar(props) {
-  let { classes } = props;
-  return (
-    <div>
-      <AppBar fontFamily="Roboto" position="static">
-        <Toolbar>
-          <img src="logo.png" className={classes.leftMostLogo} />
-          <Typography
-            variant="title"
-            color="inherit"
-            className={classes.normalLink}
-          >
-            Abode
-          </Typography>
-          <Button variant="text" color="inherit">
-            Deals of the Week
-          </Button>
-          <Button
-            className={classes.beforeSeperation}
-            variant="text"
-            color="inherit"
-          >
-            Popular Cities
-          </Button>
-          <Button
-            className={classes.afterSeperation}
-            variant="text"
-            color="inherit"
-          >
-            Sign up
-          </Button>
-          <Button className={classes.rightMost} variant="text" color="inherit">
-            Login
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+class Navbar extends Component {
+  constructor() {
+    super();
+    this.onLogoutClick.bind = this.onLogoutClick.bind(this);
+  };
+
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.clearCurrentProfile();
+    this.props.logoutUser();
+  }
+
+  render() {
+    let { classes } = this.props;
+
+    return (
+      <div>
+        <AppBar fontFamily="Roboto" position="static">
+          <Toolbar>
+            <Link to="/">
+              <img src="logo.png" className={classes.leftMostLogo} />
+            </Link>
+            {/* <Link to={{ pathname: '/route', state: { foo: 'bar'} }}>My route</Link> */}
+            <Link to="/" style={{color: "white"}}>
+              <Typography
+              variant="title"
+              color="inherit"
+              className={classes.normalLink}
+              >
+                Abode
+              </Typography>
+            </Link>
+            <Button variant="text" color="inherit">
+              <Link to={{pathname: "/", state: { scroll: "topDeals"}}} style={{color: "white"}}>
+                Top Deals
+              </Link>
+            </Button>
+            <Button
+              className={classes.beforeSeperation}
+              variant="text"
+              color="inherit"
+            >
+              <Link to={{pathname: "/", state: { scroll: "featuredCities"}}} style={{color: "white"}}>
+                Featured Cities
+              </Link>
+            </Button>
+            <Button
+              className={classes.afterSeperation}
+              variant="text"
+              color="inherit"
+            >
+              <Link to="/register" style={{color: "white"}}>
+              Sign up
+              </Link>
+            </Button>
+            <Button className={classes.rightMost} variant="text" color="inherit">
+            <Link to="/login" style={{color: "white"}}>
+              Login
+              </Link>
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 }
 
 Navbar.propTypes = {
-  classes: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Navbar);
+let mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(
+    mapStateToProps,
+    { logoutUser, submitQuery, clearCurrentProfile }
+  )(withStyles(styles)(Navbar));
 
 // import React, { Component } from "react";
 // import { Link } from "react-router-dom";
