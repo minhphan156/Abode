@@ -10,9 +10,15 @@ const mongoose = require("mongoose");
 // api routes
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
+<<<<<<< HEAD
 const hotel = require("./routes/api/hotel");
 const book = require("./routes/api/bookin");
 const landing = require("./routes/api/landing");
+=======
+const hotel = require("./routes/api/hotels");
+const book = require("./routes/api/bookin")
+
+>>>>>>> dev-backend
 // get some functionalities from express library like get() function
 const app = express();
 

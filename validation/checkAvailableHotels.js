@@ -52,7 +52,7 @@ function overlap(dateRanges){
 
 // NUMBER_OF_ROOM can be modify by different type of room(later), 
 // maximun number of the room
-const NUMBER_OF_ROOM = 2
+const NUMBER_OF_ROOM = 8
 // @param type array of room of one type (single or double or king or studio) (formate:doc[startIndex].roomTypeAndNumber.single)
 // @param datess the request time span (in formate of date:{ checkin: req.body.checkin, checkout: req.body.checkout })
 // @param numReq number of room client request
@@ -123,9 +123,11 @@ module.exports = function(type, datess,numReq,bookID)  {
     // loop though all the rooms in the array, none of it avaliable,
     // return empty array
         if(!roomavaliable && i === NUMBER_OF_ROOM - 1 ){
-            return result = [];
+            // return result = [];
+            return roomavaliable
         }
     }
   }}
-  return result;
+//   return result;
+return roomavaliable
 }
