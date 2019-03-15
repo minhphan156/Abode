@@ -31,16 +31,16 @@ class searchResultOverview extends Component {
 
   render() {
     let { classes } = this.props;
-    const result = this.props.result.result;
     let hotels;
+    const queryResult = this.props.query.hotelQuery;
 
-    if (result.length) {
-      hotels = result.map(hotel => {
+    if (queryResult.length) {
+      hotels = queryResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
             <CardMedia
               className={classes.imageStyle}
-              image={require(`${hotel.img}`)}
+              image={`${hotel.img}`}
               title="Hotel Image"
             />
             <div style={{ float: "left" }}>
@@ -63,7 +63,6 @@ class searchResultOverview extends Component {
                 </Typography>
 
                 <Typography component="p">{hotel.guest_rate}</Typography>
-                <Typography component="p">{hotel.price}</Typography>
               </CardContent>
             </div>
           </Card>
@@ -154,7 +153,9 @@ class searchResultOverview extends Component {
   }
 }
 
-const mapStateToProps = state => ({ result: state.searchResult });
+const mapStateToProps = state => ({
+  query: state.query
+});
 export default connect(
   mapStateToProps,
   { displayResultsOverview }
