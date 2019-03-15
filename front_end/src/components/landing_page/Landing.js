@@ -92,10 +92,12 @@ class Landing extends Component {
     if (this.props.location.state != null) {
       switch(this.props.location.state.scroll) {
         case "topDeals":
-          window.scrollTo(0, this.topDealsRef.current.offSetTop)
+          // window.scrollTo(0, this.topDealsRef.current.offSetTop)
+          this.topDealsRef.current.focus().scrollIntoView();
           break;
         case "featuredCities":
-          window.scrollTo(0, this.featuredCitiesRef.current.offSetTop)
+          // window.scrollTo(0, this.featuredCitiesRef.current.offSetTop)
+          this.featuredCitiesRef.current.focus().scrollIntoView();
           break;
         default:
           // Do nothing
