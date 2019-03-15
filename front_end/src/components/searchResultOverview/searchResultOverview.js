@@ -11,8 +11,11 @@ import {
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
-import { displayResultsOverview } from "../../actions/searchResultActions";
+import {
+  getIndividualHotelResult
+} from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const styles = {
   rating: { float: "left", width: "100%" },
@@ -22,23 +25,32 @@ const styles = {
 class searchResultOverview extends Component {
   render() {
     let { classes } = this.props;
-    const result = this.props.result.result;
     let hotels;
+    const queryResult = this.props.query.hotelQuery;
 
-    if (result.length) {
-      hotels = result.map(hotel => {
+    if (queryResult.length) {
+      hotels = queryResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
             <CardMedia
               className={classes.imageStyle}
-              image={require(`${hotel.img}`)}
+              image={`${hotel.img}`}
               title="Hotel Image"
             />
             <div style={{ float: "left" }}>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {hotel.name}
-                </Typography>
+                <Link
+                  to="/indiv-hotel"
+                  onClick={() =>
+                    this.props.getIndividualHotelResult({
+                      id: hotel.hotelID
+                    })
+                  }
+                >
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {hotel.name}
+                  </Typography>
+                </Link>
                 <Typography component="p">{hotel.city}</Typography>
               </CardContent>
             </div>
@@ -49,7 +61,6 @@ class searchResultOverview extends Component {
                 </Typography>
 
                 <Typography component="p">{hotel.guest_rate}</Typography>
-                <Typography component="p">{hotel.price}</Typography>
               </CardContent>
             </div>
           </Card>
@@ -140,8 +151,10 @@ class searchResultOverview extends Component {
   }
 }
 
-const mapStateToProps = state => ({ result: state.searchResult });
+const mapStateToProps = state => ({
+  query: state.query
+});
 export default connect(
   mapStateToProps,
-  { displayResultsOverview }
+  { getIndividualHotelResult }
 )(withStyles(styles)(searchResultOverview));

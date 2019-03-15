@@ -1,4 +1,4 @@
-import { SEARCH_RESULT_OVERVIEW } from "../actions/types";
+/*import { SEARCH_RESULT_OVERVIEW } from "../actions/types";
 
 const initialState = {
   result: [
@@ -11,7 +11,8 @@ const initialState = {
       star_rates: "4 star",
       guest_rate: "Excellent 8.0",
       img: "./hotel-img.jpg"
-    },
+    }
+    ,
     {
       name: "Hayes Mansion",
       hotelID: String,
@@ -94,11 +95,13 @@ const initialState = {
     }
   ]
 };
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case SEARCH_RESULT_OVERVIEW:
-      for (let i = 0; i < state.length; i++) {}
+
     default:
       return state;
   }
 }
+*/
