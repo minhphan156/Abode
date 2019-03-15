@@ -51,13 +51,12 @@ if (localStorage.jwtToken) {
 
 // We have to wrap PrivateRoutes in a Switch to prevent redirection issues
 class App extends Component {
-  
   render() {
     return (
       <Provider store={store}>
         <Router>
           <div className="App">
-            <NavBar/>
+            <NavBar />
             <Route exact path="/" component={Landing} />
             <Route exact path="/Search" component={Search} />
             <Route
