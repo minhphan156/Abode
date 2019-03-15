@@ -77,9 +77,6 @@ class Landing extends Component {
   constructor() {
     super();
     this.state = {};
-
-    this.topDealsRef = React.createRef();
-    this.featuredCitiesRef = React.createRef();
   }
 
   componentDidMount = () => {
@@ -170,7 +167,7 @@ class Landing extends Component {
           >
             <div className="fadeIn">
               <div>
-                <div className={classes.centerFlexbox} ref={this.topDealsRef}>
+                <div className={classes.centerFlexbox}>
                   <Typography variant="h5" style={{ marginTop: 50 }}>
                     Deals of the Week
                   </Typography>
@@ -231,7 +228,7 @@ class Landing extends Component {
                 {/* Prototype Markup ENDING */}
               </Grid>
               <div>
-                <div className={classes.centerFlexbox} ref={this.featuredCitiesRef}>
+                <div className={classes.centerFlexbox}>
                   <Typography variant="h5" style={{ marginTop: 50 }}>
                     Featured Cities
                   </Typography>
