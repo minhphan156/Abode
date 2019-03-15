@@ -42,7 +42,7 @@ let styles = {
 class Navbar extends Component {
   constructor() {
     super();
-    this.onLogoutClick.bind = this.onLogoutClick.bind(this);
+    this.onLogoutClick = this.onLogoutClick.bind(this);
   };
 
   onLogoutClick(e) {
@@ -52,17 +52,23 @@ class Navbar extends Component {
   }
 
   render() {
+    let { classes } = this.props;
+
     let guestMarkUp = (
       <div>
         <Button
-              className={classes.afterSeperation}
-              variant="text"
-              color="inherit"
+          className={classes.afterSeperation}
+          variant="text"
+          color="inherit"
         >
+          <Link to="/register" style={{color: "white"}}>
           Sign up
+          </Link>
         </Button>
         <Button className={classes.rightMost} variant="text" color="inherit">
+          <Link to="/login" style={{color: "white"}}>
           Login
+          </Link>
         </Button>
       </div>
     );
@@ -82,8 +88,6 @@ class Navbar extends Component {
         </Button>
       </div>
     );
-
-    let { classes } = this.props;
 
     return (
       <div>
