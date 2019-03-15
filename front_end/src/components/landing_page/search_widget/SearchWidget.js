@@ -72,6 +72,7 @@ class SearchWidget extends Component {
       numResults: 5
     };
     this.props.submitQuery(newQuery);
+    this.props.saveQuery(newQuery);
     console.log("searchwidget state testRoom ", newQuery);
   }
 
