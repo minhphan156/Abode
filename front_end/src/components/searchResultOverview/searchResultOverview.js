@@ -13,6 +13,7 @@ import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
 import { displayResultsOverview } from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const styles = {
   rating: { float: "left", width: "100%" },
@@ -20,6 +21,14 @@ const styles = {
 };
 
 class searchResultOverview extends Component {
+  constructor() {
+    super();
+    this.getIndividualHotelDetails = this.getIndividualHotelDetails.bind(this);
+  }
+  getIndividualHotelDetails(hotel) {
+    console.log("hotel name", hotel);
+  }
+
   render() {
     let { classes } = this.props;
     const result = this.props.result.result;
@@ -36,9 +45,14 @@ class searchResultOverview extends Component {
             />
             <div style={{ float: "left" }}>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {hotel.name}
-                </Typography>
+                <Link
+                  to="/indiv-hotel"
+                  onClick={() => this.getIndividualHotelDetails(hotel.name)}
+                >
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {hotel.name}
+                  </Typography>
+                </Link>
                 <Typography component="p">{hotel.city}</Typography>
               </CardContent>
             </div>
