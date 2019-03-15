@@ -88,22 +88,6 @@ class Landing extends Component {
       this.props.history.push("/");
     }
     this.props.readyLanding();
-    console.log(this.props.location.state);
-    if (this.props.location.state != null) {
-      switch(this.props.location.state.scroll) {
-        case "topDeals":
-          // window.scrollTo(0, this.topDealsRef.current.offSetTop)
-          this.topDealsRef.current.focus().scrollIntoView();
-          break;
-        case "featuredCities":
-          // window.scrollTo(0, this.featuredCitiesRef.current.offSetTop)
-          this.featuredCitiesRef.current.focus().scrollIntoView();
-          break;
-        default:
-          // Do nothing
-          break;
-      }
-    }
   };
 
   render() {
