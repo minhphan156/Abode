@@ -15,21 +15,7 @@ import images7 from "../images/hotelImages/paris-7.jpg";
 import images8 from "../images/hotelImages/paris-8.jpg";
 
 //const roomOptions = ['single', 'double', 'Queen', 'King']
-const amenities = [
-  "Casino",
-  "13 restaurants and 3 bars/lounges",
-  "Full-service spa",
-  "Outdoor pool",
-  "Nightclub",
-  "Breakfast available",
-  "Fitness center",
-  "Valet parking",
-  "Business center",
-  "Limo/town car service",
-  "24-hour front desk",
-  "Air conditioning",
-  "Free WiFi in lobby"
-];
+const amenities = ["Test"];
 const images = [
   images1,
   images2,
@@ -51,12 +37,12 @@ const initialState = {
     country: "United States of America",
     price: "89",
     star_rates: "4-star Hotel",
-    lat: "36.112497",
-    alt: "-115.171571",
+    lat: "37.78",
+    alt: "-122.4",
     tripAdvisorRate: "4.2",
     hotelsRate: "4.9",
     img: images,
-    amen: amenities,
+    amenities: amenities,
     singleAva: true,
     doubleAva: false,
     kingAva: false,
@@ -66,13 +52,14 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case INDIVIDUAL_HOTEL:
+    case GET_INDIVIDUAL_HOTEL:
+      console.log(action.payload);
       return {
         ...state,
         individualHotelData: action.payload
       };
-    case GET_INDIVIDUAL_HOTEL:
-      console.log(action.payload);
+    // case GET_INDIVIDUAL_HOTEL:
+    //   console.log(action.payload);
     //Alex can uncomment it below after he makes changes to his component
     //if not it will crash
     // return{
