@@ -84,7 +84,7 @@ class Navbar extends Component {
           Logout
         </Button>
         <Button className={classes.rightMost} variant="text" color="inherit">
-          {this.props.auth.user.name}
+          {this.props.auth.user.email}
         </Button>
       </div>
     );

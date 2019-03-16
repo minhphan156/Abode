@@ -26,15 +26,23 @@ export const loginUser = userData => dispatch => {
     .post("/api/users/login", userData)
     .then(res => {
       // save to localStorage
-      const { token } = res.data;
+      const { token, email } = res.data;
       // set token to local storage
       localStorage.setItem("jwtToken", token);
       // set token to auth header
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
+
+      let withEmailDecoded = {
+        id: decoded.id,
+        iat: decoded.iat,
+        exp: decoded.exp,
+        email: email
+      };
+
       // Set current user
-      dispatch(setCurrentUser(decoded));
+      dispatch(setCurrentUser(withEmailDecoded));
     })
     .catch(err =>
       dispatch({

@@ -69,7 +69,7 @@ class searchResultOverview extends Component {
     }
     return (
       <div>
-        <Grid container spacing={24}>
+        <Grid container spacing={24} justify="center">
           <Grid item xs={10} style={{ marginLeft: 30 }}>
             <SearchWidget />
           </Grid>
