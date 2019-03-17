@@ -227,10 +227,9 @@ class IndivHotel extends Component {
               <Map
                 google={this.props.google}
                 zoom={15}
-                initialCenter={{
-                  lat: individualHotelData.lat,
-                  lng: individualHotelData.alt
-                }}
+                center={{lat: individualHotelData.lat, 
+                        lng: individualHotelData.alt
+                        }}
                 style={{
                   height: "50%",
                   width: "97%",
@@ -241,6 +240,7 @@ class IndivHotel extends Component {
                 <Marker
                   onClick={this.onMarkerClick}
                   name={"Current location"}
+                  position={{lat: individualHotelData.lat, lng: individualHotelData.alt}}
                 />
 
                 <InfoWindow onClose={this.onInfoWindowClose}>
