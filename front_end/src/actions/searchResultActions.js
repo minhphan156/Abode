@@ -14,7 +14,6 @@ export const getIndividualHotelResult = hotel => dispatch => {
           const { lat, lng } = response.results[0].geometry.location;
           hotelInfo.lat = lat;
           hotelInfo.alt = lng
-          console.log(hotelInfo)
           dispatch({
             type: GET_INDIVIDUAL_HOTEL,
             payload: hotelInfo
