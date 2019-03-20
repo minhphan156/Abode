@@ -23,10 +23,11 @@ router.get('/search',(req,res)=>{
 
     var searchKey = req.query.destinationName;
     var date = {
-        checkin:(req.query.checkIn),
-        checkout:(req.query.checkOut),
+        checkin:req.query.checkIn,
+        checkout:req.query.checkOut,
     };
-    var numberRooms = req.query.numberRooms;
+    console.log(date)
+    var numberRooms = parseInt(req.query.numberRooms);
     var startIndex = req.query.lastIndex;
 
     const NUM_RESULTS = req.query.numResults;
@@ -75,11 +76,13 @@ router.get('/search',(req,res)=>{
 })
 
 router.get('/individual', (req,res) =>{
+    console.log(req.query)
     var date = {
         checkin: req.query.checkIn,
         checkout: req.query.checkOut
     };
-    var numberOfRooms = req.query.numberRooms;
+    console.log(date)
+    var numberOfRooms = parseInt(req.query.numberRooms);
     let singleRoomAvailability = true;
     let doubleRoomAvailability = true;
     let kingRoomAvailablity = true;
@@ -88,7 +91,8 @@ router.get('/individual', (req,res) =>{
     .then(hotel => {
         if ((typeof date.checkin !== 'undefined') && (typeof date.checkout !== 'undefined')){
             if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0)
-                singleRoomAvailability = false;
+               {    console.log("first")
+                    singleRoomAvailability = false;}
             if(checkAvailability(hotel.roomTypeAndNumber.double, date, numberOfRooms, "PlaceHolder").length == 0)
                 doubleRoomAvailability = false;
             if(checkAvailability(hotel.roomTypeAndNumber.king, date, numberOfRooms, "PlaceHolder").length == 0)

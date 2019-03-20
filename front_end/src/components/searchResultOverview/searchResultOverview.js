@@ -26,6 +26,7 @@ class searchResultOverview extends Component {
     let hotels;
     const queryResult = this.props.query.hotelQuery;
     const searchQuery = this.props.query.searchQuery;
+    console.log(searchQuery)
     if (queryResult.length) {
       hotels = queryResult.map(hotel => {
         return (
@@ -42,8 +43,8 @@ class searchResultOverview extends Component {
                   onClick={() =>
                     this.props.getIndividualHotelResult({
                       id: hotel.hotelID,
-                      checkin: searchQuery.checkIn,
-                      checkout: searchQuery.checkOut,
+                      checkIn: searchQuery.checkIn,
+                      checkOut: searchQuery.checkOut,
                       numberRooms: searchQuery.numberRooms
                     })
                   }
