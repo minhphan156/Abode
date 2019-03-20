@@ -227,9 +227,10 @@ class IndivHotel extends Component {
               <Map
                 google={this.props.google}
                 zoom={15}
-                center={{lat: individualHotelData.lat, 
-                        lng: individualHotelData.alt
-                        }}
+                center={{
+                  lat: individualHotelData.lat,
+                  lng: individualHotelData.alt
+                }}
                 style={{
                   height: "50%",
                   width: "97%",
@@ -240,7 +241,10 @@ class IndivHotel extends Component {
                 <Marker
                   onClick={this.onMarkerClick}
                   name={"Current location"}
-                  position={{lat: individualHotelData.lat, lng: individualHotelData.alt}}
+                  position={{
+                    lat: individualHotelData.lat,
+                    lng: individualHotelData.alt
+                  }}
                 />
 
                 <InfoWindow onClose={this.onInfoWindowClose}>
@@ -262,7 +266,7 @@ class IndivHotel extends Component {
                 </tr>
               </thead>
               <tbody>
-                {individualHotelData.singleAva ? (
+                {individualHotelData.singleAvailability ? (
                   <tr>
                     <th scope="row">Single Room</th>
                     <td>${individualHotelData.price.singlePrice}</td>
@@ -273,7 +277,7 @@ class IndivHotel extends Component {
                     </td>
                   </tr>
                 ) : null}
-                {individualHotelData.doubleAva ? (
+                {individualHotelData.doubleAvailability ? (
                   <tr>
                     <th scope="row">Double Room</th>
                     <td>${individualHotelData.price.doublePrice}</td>
@@ -285,7 +289,7 @@ class IndivHotel extends Component {
                   </tr>
                 ) : null}
 
-                {individualHotelData.kingAva ? (
+                {individualHotelData.kingAvailability ? (
                   <tr>
                     <th scope="row">King Room</th>
                     <td>${individualHotelData.price.kingPrice}</td>
@@ -296,7 +300,7 @@ class IndivHotel extends Component {
                     </td>
                   </tr>
                 ) : null}
-                {individualHotelData.studioAva ? (
+                {individualHotelData.studioAvailability ? (
                   <tr>
                     <th scope="row">Studio Suite</th>
                     <td>${individualHotelData.price.studioPrice}</td>
