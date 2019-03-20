@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { submitQuery } from "../../actions/queryActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 // Material-UI Imports Below
 import {
@@ -28,7 +29,8 @@ let styles = {
   },
   beforeSeperation: {
     marginLeft: 15,
-    marginRight: "auto"
+    marginRight: "auto",
+    color: "white"
   },
   afterSeperation: {
     marginRight: 15
@@ -52,7 +54,7 @@ class Navbar extends Component {
   }
 
   render() {
-    let { classes } = this.props;
+    let { classes, location } = this.props;
 
     let guestMarkUp = (
       <div>
@@ -106,20 +108,16 @@ class Navbar extends Component {
                 Abode
               </Typography>
             </Link>
-            <Button variant="text" color="inherit">
-              <Link to={{pathname: "/", state: { scroll: "topDeals"}}} style={{color: "white"}}>
+            <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
+              <Button variant="text" color="inherit">
                 Top Deals
-              </Link>
-            </Button>
-            <Button
-              className={classes.beforeSeperation}
-              variant="text"
-              color="inherit"
-            >
-              <Link to={{pathname: "/", state: { scroll: "featuredCities"}}} style={{color: "white"}}>
+              </Button>
+            </AnchorLink>
+            <AnchorLink href="#featuredCitiesAnchor" offset="-500" className={classes.beforeSeperation}>
+              <Button variant="text" color="inherit">
                 Featured Cities
-              </Link>
-            </Button>
+              </Button>
+            </AnchorLink>
             {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
           </Toolbar>
         </AppBar>
