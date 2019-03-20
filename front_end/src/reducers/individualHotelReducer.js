@@ -20,10 +20,10 @@ const initialState = {
     hotelsRate: "",
     img: images,
     amenities: amenities,
-    singleAva: false,
-    doubleAva: false,
-    kingAva: false,
-    studioAva: false
+    singleAvailability: false,
+    doubleAvailability: false,
+    kingAvailability: false,
+    studioAvailability: false
   }
 };
 

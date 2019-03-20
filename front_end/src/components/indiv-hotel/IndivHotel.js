@@ -3,12 +3,34 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import ReactStars from "react-stars";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { connect } from "react-redux";
+import SearchWidget from "../landing_page/search_widget/SearchWidget";
+import { Redirect } from "react-router-dom";
 
 class IndivHotel extends Component {
+
+  constructor(){
+    super();
+    this.state = {
+      book: false,
+    };
+  this.bookNow = this.bookNow.bind(this)
+  }
+
+  bookNow(){
+    this.setState({book:true})
+  }
+
   render() {
+    const hotelID = this.props.individualHotelData.hotelID;
+
+    if(this.state.book) {return( <Redirect to="/confirmation"></Redirect> )}
+
     const { individualHotelData } = this.props.individualHotelData;
     return (
       <div>
+        <div style={{width: 1120}}>
+          <SearchWidget />
+        </div>
         <div id="whole page" className="container" style={{ marginTop: "2%" }}>
           <div className="row">
             <h1
@@ -257,7 +279,7 @@ class IndivHotel extends Component {
           </div>
 
           <section id="table1">
-            <table class="table table-bordered" style={{ marginTop: "3%" }}>
+            <table class="table table-bordered" style={{ marginTop: "3%", position:'relative', z_index:100 }}>
               <thead>
                 <tr>
                   <th>Room Type</th>
@@ -271,7 +293,11 @@ class IndivHotel extends Component {
                     <th scope="row">Single Room</th>
                     <td>${individualHotelData.price.singlePrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
+                      <button 
+                      type="button" 
+                      class="btn btn-success h-100"
+                      onClick={this.bookNow}
+                      >
                         Book Now
                       </button>
                     </td>
@@ -282,7 +308,11 @@ class IndivHotel extends Component {
                     <th scope="row">Double Room</th>
                     <td>${individualHotelData.price.doublePrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
+                      <button 
+                      type="button" 
+                      class="btn btn-success h-100"
+                      onClick={this.bookNow}
+                      >
                         Book Now
                       </button>
                     </td>
@@ -294,7 +324,11 @@ class IndivHotel extends Component {
                     <th scope="row">King Room</th>
                     <td>${individualHotelData.price.kingPrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
+                      <button 
+                      type="button" 
+                      class="btn btn-success h-100"
+                      onClick={this.bookNow}
+                      >
                         Book Now
                       </button>
                     </td>
@@ -305,7 +339,11 @@ class IndivHotel extends Component {
                     <th scope="row">Studio Suite</th>
                     <td>${individualHotelData.price.studioPrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
+                      <button 
+                      type="button" 
+                      class="btn btn-success h-100"
+                      onClick={this.bookNow}
+                      >
                         Book Now
                       </button>
                     </td>
