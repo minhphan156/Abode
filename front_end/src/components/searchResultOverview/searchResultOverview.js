@@ -11,9 +11,7 @@ import {
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
-import {
-  getIndividualHotelResult
-} from "../../actions/searchResultActions";
+import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
@@ -27,7 +25,7 @@ class searchResultOverview extends Component {
     let { classes } = this.props;
     let hotels;
     const queryResult = this.props.query.hotelQuery;
-
+    const searchQuery = this.props.query.searchQuery;
     if (queryResult.length) {
       hotels = queryResult.map(hotel => {
         return (
@@ -43,7 +41,10 @@ class searchResultOverview extends Component {
                   to="/indiv-hotel"
                   onClick={() =>
                     this.props.getIndividualHotelResult({
-                      id: hotel.hotelID
+                      id: hotel.hotelID,
+                      checkin: searchQuery.checkIn,
+                      checkout: searchQuery.checkOut,
+                      numberRooms: searchQuery.numberRooms
                     })
                   }
                 >
