@@ -13,31 +13,15 @@ import {
   Toolbar,
   Typography,
   Button,
-  withStyles
+  withStyles,
+  Grid,
+  IconButton
 } from "@material-ui/core";
 
 let styles = {
-  normalLink: {
-    marginLeft: 15,
-    marginRight: 15
-  },
-  leftMostLogo: {
-    marginLeft: 150, // Margin size
-    marginRight: 15,
+  logo: {
     width: 50,
     height: 50
-  },
-  beforeSeperation: {
-    marginLeft: 15,
-    marginRight: "auto",
-    color: "white"
-  },
-  afterSeperation: {
-    marginRight: 15
-  },
-  rightMost: {
-    marginLeft: 15,
-    marginRight: 150
   }
 };
 
@@ -54,51 +38,94 @@ class Navbar extends Component {
   }
 
   render() {
-    let { classes, location } = this.props;
+    let { classes } = this.props;
 
     let guestMarkUp = (
-      <div>
-        <Button
-          className={classes.afterSeperation}
-          variant="text"
-          color="inherit"
-        >
-          <Link to="/register" style={{color: "white"}}>
-          Sign up
-          </Link>
-        </Button>
-        <Button className={classes.rightMost} variant="text" color="inherit">
-          <Link to="/login" style={{color: "white"}}>
-          Login
-          </Link>
-        </Button>
-      </div>
+      <Grid item justify="flex-end" spacing={30} sm={4} alignItems="center" container>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <Link to="/register" style={{color: "white"}}>
+              Sign up
+            </Link>
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <Link to="/login" style={{color: "white"}}>
+              Login
+            </Link>
+          </Button>
+        </Grid>
+      </Grid>
     );
   
     let loggedInMarkup = (
-      <div>
-        <Button
-              className={classes.afterSeperation}
-              variant="text"
-              color="inherit"
-              onClick={this.onLogoutClick}
-        >
-          Logout
-        </Button>
-        <Button className={classes.rightMost} variant="text" color="inherit">
-          {this.props.auth.user.email}
-        </Button>
-      </div>
+      <Grid item justify="flex-end" spacing={40} sm={4} alignItems="center" container>
+        <Grid item>
+          <Button variant="text" color="inherit" onClick={this.onLogoutClick}>
+            Logout
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            {this.props.auth.user.email}
+          </Button>
+        </Grid>
+      </Grid>
     );
 
     return (
       <div>
         <AppBar fontFamily="Roboto" position="static">
           <Toolbar>
-            <Link to="/">
+            <Grid container justify="center" spacing={12} style={{width: "100%"}}>
+              <Grid item spacing={40} sm={4} alignItems="center" container>
+                <Grid item>
+                  <IconButton>
+                    <Link to="/">
+                      <img src="logo.png" className={classes.logo}/>
+                    </Link>
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Typography variant="title" color="inherit">
+                    <Link to="/" style={{color: "white"}}>
+                      Abode
+                    </Link>
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
+                <Grid item>
+                  <Button variant="text" color="inherit">
+                    <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
+                      Top Deals
+                    </AnchorLink>
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant="text" color="inherit">
+                    <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
+                      Featured Cities
+                    </AnchorLink>
+                  </Button>
+                </Grid>
+              </Grid>
+              {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
+            </Grid>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
+}
+
+/*
+<Link to="/">
               <img src="logo.png" className={classes.leftMostLogo} />
             </Link>
-            {/* <Link to={{ pathname: '/route', state: { foo: 'bar'} }}>My route</Link> */}
+            {/* <Link to={{ pathname: '/route', state: { foo: 'bar'} }}>My route</Link> */
+            /*
             <Link to="/" style={{color: "white"}}>
               <Typography
               variant="title"
@@ -118,13 +145,7 @@ class Navbar extends Component {
                 Featured Cities
               </Button>
             </AnchorLink>
-            {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
-}
+*/
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired
