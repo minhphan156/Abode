@@ -42,8 +42,8 @@ class searchResultOverview extends Component {
                   onClick={() =>
                     this.props.getIndividualHotelResult({
                       id: hotel.hotelID,
-                      checkin: searchQuery.checkIn,
-                      checkout: searchQuery.checkOut,
+                      checkIn: searchQuery.checkIn,
+                      checkOut: searchQuery.checkOut,
                       numberRooms: searchQuery.numberRooms
                     })
                   }
