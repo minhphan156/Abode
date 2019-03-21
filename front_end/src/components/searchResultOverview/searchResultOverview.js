@@ -26,7 +26,6 @@ class searchResultOverview extends Component {
     let hotels;
     const queryResult = this.props.query.hotelQuery;
     const searchQuery = this.props.query.searchQuery;
-    console.log(searchQuery)
     if (queryResult.length) {
       hotels = queryResult.map(hotel => {
         return (
