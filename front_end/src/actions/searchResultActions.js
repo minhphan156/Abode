@@ -1,4 +1,4 @@
-import { GET_INDIVIDUAL_HOTEL } from "./types";
+import { GET_INDIVIDUAL_HOTEL, SELECT_ROOM } from "./types";
 import axios from "axios";
 import Geocode from "react-geocode";
 
@@ -8,12 +8,12 @@ export const getIndividualHotelResult = hotel => dispatch => {
   axios
     .get("/api/hotel/individual", { params: hotel })
     .then(res => {
-      var hotelInfo = res.data
+      var hotelInfo = res.data;
       Geocode.fromAddress(hotelInfo.street + hotelInfo.city).then(
         response => {
           const { lat, lng } = response.results[0].geometry.location;
           hotelInfo.lat = lat;
-          hotelInfo.alt = lng
+          hotelInfo.alt = lng;
           dispatch({
             type: GET_INDIVIDUAL_HOTEL,
             payload: hotelInfo
@@ -25,4 +25,8 @@ export const getIndividualHotelResult = hotel => dispatch => {
       );
     })
     .catch(err => console.log(err));
+};
+
+export const getRoomType = room => {
+  return { type: SELECT_ROOM, payload: room };
 };

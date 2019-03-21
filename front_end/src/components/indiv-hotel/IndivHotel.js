@@ -3,8 +3,17 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import ReactStars from "react-stars";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
+import { getRoomType } from "../../actions/searchResultActions";
 class IndivHotel extends Component {
+  constructor() {
+    super();
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(room) {
+    this.props.getRoomType(room);
+  }
   render() {
     const { individualHotelData } = this.props.individualHotelData;
     return (
@@ -271,9 +280,14 @@ class IndivHotel extends Component {
                     <th scope="row">Single Room</th>
                     <td>${individualHotelData.price.singlePrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
-                        Book Now
-                      </button>
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("Single Room")}
+                      >
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -326,7 +340,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { getRoomType }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"

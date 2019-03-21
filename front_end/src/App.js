@@ -27,6 +27,7 @@ import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import AboutUs from "./components/about_page/AboutUs";
+import PaymenPage from "./components/payment/PaymentPage";
 
 import "./App.css";
 
@@ -66,6 +67,7 @@ class App extends Component {
               path="/searchResultOverview"
               component={searchResultOverview}
             />
+            <Route exact path="/payment" component={PaymenPage} />
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
 
