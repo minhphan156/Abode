@@ -40,8 +40,9 @@ class Navbar extends Component {
   render() {
     let { classes } = this.props;
 
+    // Markup shown on the right hand side of Navbar when user is GUEST.
     let guestMarkUp = (
-      <Grid item justify="flex-end" spacing={30} sm={4} alignItems="center" container>
+      <Grid item justify="flex-end" spacing={40} sm={4} alignItems="center" container>
         <Grid item>
           <Button variant="text" color="inherit">
             <Link to="/register" style={{color: "white"}}>
@@ -59,6 +60,7 @@ class Navbar extends Component {
       </Grid>
     );
   
+    // Markup shown on the right hand side of Navbar when user is LOGGED IN.
     let loggedInMarkup = (
       <Grid item justify="flex-end" spacing={40} sm={4} alignItems="center" container>
         <Grid item>
@@ -75,77 +77,48 @@ class Navbar extends Component {
     );
 
     return (
-      <div>
-        <AppBar fontFamily="Roboto" position="static">
-          <Toolbar>
-            <Grid container justify="center" spacing={12} style={{width: "100%"}}>
-              <Grid item spacing={40} sm={4} alignItems="center" container>
-                <Grid item>
-                  <IconButton>
-                    <Link to="/">
-                      <img src="logo.png" className={classes.logo}/>
-                    </Link>
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <Typography variant="title" color="inherit">
-                    <Link to="/" style={{color: "white"}}>
-                      Abode
-                    </Link>
-                  </Typography>
-                </Grid>
+      <AppBar fontFamily="Roboto" position="static">
+        <Toolbar>
+          <Grid container justify="center" spacing={12} style={{width: "100%"}}>
+            <Grid item spacing={40} sm={4} alignItems="center" container>
+              <Grid item>
+                <IconButton>
+                  <Link to="/">
+                    <img src="logo.png" className={classes.logo}/>
+                  </Link>
+                </IconButton>
               </Grid>
-              <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
-                <Grid item>
-                  <Button variant="text" color="inherit">
-                    <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
-                      Top Deals
-                    </AnchorLink>
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="text" color="inherit">
-                    <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
-                      Featured Cities
-                    </AnchorLink>
-                  </Button>
-                </Grid>
+              <Grid item>
+                <Typography variant="title" color="inherit">
+                  <Link to="/" style={{color: "white"}}>
+                    Abode
+                  </Link>
+                </Typography>
               </Grid>
-              {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
             </Grid>
-          </Toolbar>
-        </AppBar>
-      </div>
+            <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
+              <Grid item>
+                <Button variant="text" color="inherit">
+                  <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
+                    Top Deals
+                  </AnchorLink>
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant="text" color="inherit">
+                  <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
+                    Featured Cities
+                  </AnchorLink>
+                </Button>
+              </Grid>
+            </Grid>
+            {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
+          </Grid>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
-
-/*
-<Link to="/">
-              <img src="logo.png" className={classes.leftMostLogo} />
-            </Link>
-            {/* <Link to={{ pathname: '/route', state: { foo: 'bar'} }}>My route</Link> */
-            /*
-            <Link to="/" style={{color: "white"}}>
-              <Typography
-              variant="title"
-              color="inherit"
-              className={classes.normalLink}
-              >
-                Abode
-              </Typography>
-            </Link>
-            <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
-              <Button variant="text" color="inherit">
-                Top Deals
-              </Button>
-            </AnchorLink>
-            <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}} className={classes.beforeSeperation}>
-              <Button variant="text" color="inherit">
-                Featured Cities
-              </Button>
-            </AnchorLink>
-*/
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired
