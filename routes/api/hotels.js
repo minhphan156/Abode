@@ -35,14 +35,14 @@ router.get('/search',(req,res)=>{
             let doubleAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
             let kingAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
             let studioAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
-           
+            console.log(arr.price)
             if (singleAvaliable || doubleAvaliable || kingAvaliable || studioAvaliable){
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
                     street:arr.street,
                     city:arr.city,
-                    price:arr.price.single,
+                    price:arr.price.singlePrice,
                     star_rates:arr.star_rating,
                     guest_rate:arr.guest_rating,
                     img:arr.img[0]
