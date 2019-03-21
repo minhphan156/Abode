@@ -1,0 +1,37 @@
+#TeamContainer {
+  height: 1450px;
+  /* background-color: #fbfbfd; */
+}
+
+#AboutContainerTitle {
+  color: #3d4e96;
+  font-size: 34px;
+  font-weight: 900;
+  position: relative;
+  top: 45px;
+  text-align: center;
+}
+
+img.aboutPage-images {
+  position: relative;
+  width: 200px;
+  filter: grayscale(100%);
+}
+
+img.aboutPage-images:hover {
+  filter: none;
+}
+
+#AboutPageNames {
+  font-size: 22px;
+  font-weight: 300;
+  color: black;
+  text-align: center;
+}
+
+#AboutPageRoles {
+  font-size: 18px;
+  font-weight: 300;
+  color: black;
+  text-align: center;
+}
