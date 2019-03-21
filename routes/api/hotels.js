@@ -23,8 +23,8 @@ router.get('/search',(req,res)=>{
 
     var searchKey = req.query.destinationName;
     var date = {
-        checkin:req.query.checkIn,
-        checkout:req.query.checkOut,
+        checkin:req.query.checkIn.replace('"','').replace('"',''),
+        checkout:req.query.checkOut.replace('"','').replace('"',''),
     };
     console.log(date)
     var numberRooms = parseInt(req.query.numberRooms);
@@ -78,8 +78,8 @@ router.get('/search',(req,res)=>{
 router.get('/individual', (req,res) =>{
     console.log(req.query)
     var date = {
-        checkin: req.query.checkIn,
-        checkout: req.query.checkOut
+        checkin: req.query.checkIn.replace('"','').replace('"',''),
+        checkout: req.query.checkOut.replace('"','').replace('"','')
     };
     console.log(date)
     var numberOfRooms = parseInt(req.query.numberRooms);
