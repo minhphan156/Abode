@@ -64,13 +64,13 @@ class Navbar extends Component {
     let loggedInMarkup = (
       <Grid item justify="flex-end" spacing={40} sm={4} alignItems="center" container>
         <Grid item>
-          <Button variant="text" color="inherit" onClick={this.onLogoutClick}>
-            Logout
+          <Button variant="text" color="inherit">
+            {this.props.auth.user.email}
           </Button>
         </Grid>
         <Grid item>
-          <Button variant="text" color="inherit">
-            {this.props.auth.user.email}
+          <Button variant="text" color="inherit" onClick={this.onLogoutClick}>
+            Logout
           </Button>
         </Grid>
       </Grid>
