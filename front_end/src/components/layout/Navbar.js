@@ -80,15 +80,15 @@ class Navbar extends Component {
       <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
         <Grid item>
           <Button variant="text" color="inherit">
-            <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
-              Top Deals
+            <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
+              Featured Cities
             </AnchorLink>
           </Button>
         </Grid>
         <Grid item>
           <Button variant="text" color="inherit">
-            <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
-              Featured Cities
+            <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
+              Top Deals
             </AnchorLink>
           </Button>
         </Grid>
