@@ -96,13 +96,13 @@ class Navbar extends Component {
     );
 
     let notInLandingMarkup = (
-      <div/>
+      <Grid item sm={4} />
     );
 
     return (
       <AppBar fontFamily="Roboto" position="static">
         <Toolbar>
-          <Grid container justify="center" spacing={12} style={{width: "100%"}}>
+          <Grid container justify="space-between" spacing={12} style={{width: "100%", marginLeft: "5%", marginRight: "5%"}}>
             <Grid item spacing={40} sm={4} alignItems="center" container>
               <Grid item>
                 <IconButton>
