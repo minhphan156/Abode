@@ -7,16 +7,6 @@ var checkAvailability = require('../../validation/checkAvailibility.js')
 const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 
-// just example for how to start
-// everything in this 
-// write coments for you api call like /api/hotel/*
-// like below is /api/hotel/searchdo
-// router.get('/searchdo',(req,res)=>{
-//     console.log("hotle.js")
-// })
-// router.post('/something',(res,req)=>{
-// })
-
 // @route GET api/hotel/search
 // @desc Search Overview
 router.get('/search',(req,res)=>{
@@ -26,7 +16,6 @@ router.get('/search',(req,res)=>{
         checkin:req.query.checkIn.replace('"','').replace('"',''),
         checkout:req.query.checkOut.replace('"','').replace('"',''),
     };
-    console.log(date)
     var numberRooms = parseInt(req.query.numberRooms);
     var startIndex = req.query.lastIndex;
 
@@ -34,7 +23,7 @@ router.get('/search',(req,res)=>{
 
     const regex = new RegExp(searchKey,"ig");
     //.split("").join('*')
-    console.log(regex)
+    //console.log(regex)
     Hotel.find({$or:[{name:regex}, {city:regex},{airports:regex}]}).then((doc,err)=>{
         if(err) res.status(400).json(err);
         // var startIndex = 5 * pageNumber - 5;
@@ -75,13 +64,14 @@ router.get('/search',(req,res)=>{
 
 })
 
+
+// @route GET api/hotel/individual
+// @desc individual page
 router.get('/individual', (req,res) =>{
-    console.log(req.query)
     var date = {
         checkin: req.query.checkIn.replace('"','').replace('"',''),
         checkout: req.query.checkOut.replace('"','').replace('"','')
     };
-    console.log(date)
     var numberOfRooms = parseInt(req.query.numberRooms);
     let singleRoomAvailability = true;
     let doubleRoomAvailability = true;
