@@ -96,22 +96,7 @@ class Navbar extends Component {
     );
 
     let notInLandingMarkup = (
-      <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
-        <Grid item>
-          <Button variant="text" color="inherit">
-            <Link to="/" style={{color: "white"}}>
-              Top Deals
-            </Link>
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="text" color="inherit">
-            <Link to="/" style={{color: "white"}}>
-              Featured Cities
-            </Link>
-          </Button>
-        </Grid>
-      </Grid>
+      <div/>
     );
 
     return (
