@@ -113,7 +113,7 @@ class Navbar extends Component {
                 Top Deals
               </Button>
             </AnchorLink>
-            <AnchorLink href="#featuredCitiesAnchor" offset="-500" className={classes.beforeSeperation}>
+            <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}} className={classes.beforeSeperation}>
               <Button variant="text" color="inherit">
                 Featured Cities
               </Button>
