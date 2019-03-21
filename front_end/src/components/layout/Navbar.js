@@ -76,6 +76,44 @@ class Navbar extends Component {
       </Grid>
     );
 
+    let inLandingMarkup = (
+      <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
+              Top Deals
+            </AnchorLink>
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
+              Featured Cities
+            </AnchorLink>
+          </Button>
+        </Grid>
+      </Grid>
+    );
+
+    let notInLandingMarkup = (
+      <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <Link to="/" style={{color: "white"}}>
+              Top Deals
+            </Link>
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <Link to="/" style={{color: "white"}}>
+              Featured Cities
+            </Link>
+          </Button>
+        </Grid>
+      </Grid>
+    );
+
     return (
       <AppBar fontFamily="Roboto" position="static">
         <Toolbar>
@@ -96,22 +134,7 @@ class Navbar extends Component {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
-              <Grid item>
-                <Button variant="text" color="inherit">
-                  <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
-                    Top Deals
-                  </AnchorLink>
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="text" color="inherit">
-                  <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
-                    Featured Cities
-                  </AnchorLink>
-                </Button>
-              </Grid>
-            </Grid>
+            {this.props.landing.isInLanding == true ? inLandingMarkup : notInLandingMarkup}
             {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
           </Grid>
         </Toolbar>
@@ -121,11 +144,13 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  landing: PropTypes.object.isRequired
 };
 
 let mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  landing: state.landing
 })
 
 export default connect(
