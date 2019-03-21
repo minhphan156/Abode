@@ -81,7 +81,7 @@ router.get('/individual', (req,res) =>{
     .then(hotel => {
         if ((typeof date.checkin !== 'undefined') && (typeof date.checkout !== 'undefined')){
             if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0)
-                    singleRoomAvailability = false;
+                singleRoomAvailability = false;
             if(checkAvailability(hotel.roomTypeAndNumber.double, date, numberOfRooms, "PlaceHolder").length == 0)
                 doubleRoomAvailability = false;
             if(checkAvailability(hotel.roomTypeAndNumber.king, date, numberOfRooms, "PlaceHolder").length == 0)
