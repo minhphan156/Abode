@@ -16,6 +16,7 @@ import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
+import { submitQuery, saveQuery } from "../../actions/searchActions";
 
 const styles = {
   rating: { float: "left", width: "100%" },
@@ -23,13 +24,55 @@ const styles = {
 };
 
 class searchResultOverview extends Component {
+  constructor(){
+    super();
+    this.state= {
+      page:1
+    }
+    this.goToNextPage = this.goToNextPage.bind(this)
+    this.goToPreviousPage = this.goToPreviousPage.bind(this)
+  }
+
+
+  goToPreviousPage(queryResult,searchQuery){
+    this.state.page--;
+    let lastIndex = queryResult.lastIndex - 2*searchQuery.numResults
+    if(lastIndex < 0 || this.state.page === 1)
+      {lastIndex = 0}
+      const newQuery = {
+        destinationName:searchQuery.destinationName,
+        checkIn:searchQuery.checkIn,
+        checkOut:searchQuery.checkOut,
+        numberRooms:searchQuery.numberRooms,
+        lastIndex:lastIndex,
+        numResults:searchQuery.numResults
+      }
+      this.props.submitQuery(newQuery);
+      this.props.saveQuery(newQuery);
+  }
+
+  goToNextPage(queryResult,searchQuery){
+      this.state.page++;
+      const newQuery = {
+        destinationName:searchQuery.destinationName,
+        checkIn:searchQuery.checkIn,
+        checkOut:searchQuery.checkOut,
+        numberRooms:searchQuery.numberRooms,
+        lastIndex:queryResult.lastIndex,
+        numResults:searchQuery.numResults
+      }
+      this.props.submitQuery(newQuery);
+      this.props.saveQuery(newQuery);
+  }
+
   render() {
     let { classes } = this.props;
     let hotels;
     const queryResult = this.props.query.hotelQuery;
+    const hotelResult = this.props.query.hotelQuery.results;
     const searchQuery = this.props.query.searchQuery;
-    if (queryResult.length) {
-      hotels = queryResult.map(hotel => {
+    if (hotelResult.length) {
+      hotels = hotelResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
             
@@ -180,13 +223,33 @@ class searchResultOverview extends Component {
           </Grid>
           <Grid item xs={7}>
             {hotels}
-            <TablePagination
-              style={{ float: "right" }}
-              rowsPerPageOptions={[5, 10, 25]}
-              count={100}
-              page={9}
-              rowsPerPage={10}
-            />
+
+          {/* Pagination, please fix the style */}
+            <Grid item sm={6}>
+            <div className="row" style={{marginBottom:40}}>
+{/* previous page button */}
+            <div classNmae="col-4" style={{align:'left'}}>
+            {this.state.page === 1? 
+            <button className="btn btn-outline-danger" disabled>Previous</button>
+            :<button className="btn btn-outline-danger" onClick={() => this.goToPreviousPage(queryResult,searchQuery)}>Previous</button>}
+            </div>
+{/* show current page */}
+            <div classNmae="col-4" style={{align:'center',marginLeft:50,marginRight:50}}>
+            <h6 style={{fontWeight: 'bold'}}>{this.state.page}</h6>
+            </div>
+{/* Next page button */}
+            <div classNmae="col-4" style={{align:'right'}}>
+            {queryResult.nextExists ?
+            <button className="btn btn-outline-danger"
+            onClick={() => this.goToNextPage(queryResult,searchQuery)}
+            >Next</button> 
+            :<button className="btn btn-outline-danger" disabled>Next</button>}
+            </div>
+
+            </div>
+          </Grid>
+
+
           </Grid>
         </Grid>
       </div>
@@ -199,5 +262,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getIndividualHotelResult }
+  { getIndividualHotelResult,submitQuery, saveQuery }
 )(withStyles(styles)(searchResultOverview));
