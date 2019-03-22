@@ -208,7 +208,7 @@ class IndivHotel extends Component {
                   class="btn btn-success h-10"
                   style={{ width: "100%" }}
                 >
-                  Book Now
+                  See Rooms
                 </button>
               </AnchorLink>
               <div className="row" style={{ marginTop: "2%" }}>
@@ -283,7 +283,7 @@ class IndivHotel extends Component {
               <thead>
                 <tr>
                   <th>Room Type</th>
-                  <th>Today's Price</th>
+                  <th>Today's Price (Per Night)</th>
                   <th>Book Now</th>
                 </tr>
               </thead>
