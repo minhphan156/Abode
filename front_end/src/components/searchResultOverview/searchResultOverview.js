@@ -7,13 +7,15 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
-  TablePagination
+  TablePagination,
+  CardHeader
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
 import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import ReactStars from "react-stars";
 
 const styles = {
   rating: { float: "left", width: "100%" },
@@ -30,13 +32,9 @@ class searchResultOverview extends Component {
       hotels = queryResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
-            <CardMedia
-              className={classes.imageStyle}
-              image={`${hotel.img}`}
-              title="Hotel Image"
-            />
-            <div style={{ float: "left" }}>
+            
               <CardContent>
+                <div>
                 <Link
                   to="/indiv-hotel"
                   onClick={() =>
@@ -48,20 +46,45 @@ class searchResultOverview extends Component {
                     })
                   }
                 >
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {hotel.name}
-                  </Typography>
+                <div className="row">
+                <div className="col-10" style={{align:'left'}}>
+                      <Typography gutterBottom variant="h5" component="h2" style={{display:'inline'}}>
+                        {hotel.name}
+                      </Typography>
+                </div>
+                <div className="col-2" style={{align:'right'}}>
+                        <Typography gutterBottom variant="h5" component="h5" style={{color:"green", display:'inline'}} align="right">
+                          ${hotel.price}
+                        </Typography>
+                </div>
+                </div>
                 </Link>
-                <Typography component="p">{hotel.city}</Typography>
+                
+                <Typography style={{color: "#808080", marginLeft:'1%', marginTop:'1%'}} component="h3">{hotel.city}</Typography>
+                </div>
               </CardContent>
+              <div style={{float: "left"}}>
+            <CardMedia
+              className={classes.imageStyle}
+              image={`${hotel.img}`}
+              title="Hotel Image"
+            />
             </div>
             <div style={{ float: "right" }}>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {hotel.star_rates}
+                <Typography gutterBottom variant="h5" component="h2" style={{marginRight:'0'}}>
+                <h5 >{hotel.star_rates}-Star Hotel</h5>
+                <ReactStars
+                    count={5}
+                    value={hotel.star_rates}
+                    size={22}
+                    edit={false}
+                    color2={"#FFD700"}
+                    style={{align:'right'}}
+                  />
                 </Typography>
 
-                <Typography component="p">{hotel.guest_rate}</Typography>
+                <Typography variant="h5" component="h5">Guest Rating: {hotel.guest_rate}</Typography>
               </CardContent>
             </div>
           </Card>
