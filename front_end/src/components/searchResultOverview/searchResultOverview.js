@@ -85,6 +85,25 @@ class searchResultOverview extends Component {
                 </Typography>
 
                 <Typography variant="h5" component="h5">Guest Rating: {hotel.guest_rate}</Typography>
+                
+                      <Link
+                      to="/indiv-hotel"
+                      onClick={() =>
+                        this.props.getIndividualHotelResult({
+                          id: hotel.hotelID,
+                          checkIn: searchQuery.checkIn,
+                          checkOut: searchQuery.checkOut,
+                          numberRooms: searchQuery.numberRooms
+                        })
+                      }
+                    >
+                       <button 
+                      type="button" 
+                      class="btn btn-success h-100"
+                      >
+                        Book Now
+                      </button>
+                        </Link>
               </CardContent>
             </div>
           </Card>
