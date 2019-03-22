@@ -69,7 +69,7 @@ class App extends Component {
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
 
-            <div className="container">
+            
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/indiv-hotel" component={IndivHotel} />
@@ -105,7 +105,6 @@ class App extends Component {
                   component={EditProfile}
                 />
               </Switch>
-            </div>
             <Footer />
           </div>
         </Router>

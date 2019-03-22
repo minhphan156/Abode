@@ -81,7 +81,7 @@ class Navbar extends Component {
         <Grid item>
           <Button variant="text" color="inherit">
             <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
-              Top Deals
+              Deals of the Week
             </AnchorLink>
           </Button>
         </Grid>

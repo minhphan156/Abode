@@ -240,7 +240,7 @@ class Landing extends Component {
                   </Typography>
                 <hr className={classes.noYMarginTop} />
               </div>
-              <Grid container spacing={8} direction="row" justify="center">
+              <Grid container spacing={8} direction="row" justify="center" style={{marginBottom: 20}}>
                 {/* TODO: Uncomment the line below and remove prototype line */}
                 {/* featureDestinationMarkup */}
                 {/* Prototype Markup BEGINNING */}
