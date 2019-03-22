@@ -28,10 +28,8 @@ class IndivHotel extends Component {
     const { individualHotelData } = this.props.individualHotelData;
     return (
       <div>
-        <div className="d-flex justify-content-center">
-          <div className="col-10">
-            <SearchWidget/>
-          </div>
+        <div style={{width: 1120}}>
+          <SearchWidget />
         </div>
         <div id="whole page" className="container" style={{ marginTop: "2%" }}>
           <div className="row">
