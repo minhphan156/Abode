@@ -17,7 +17,8 @@ const suggestions = [
   { label: "Los Angeles" },
   { label: "Miami" },
   { label: "Las Vegas" },
-  { label: "Seattle" }
+  { label: "Seattle" },
+  { label: "San Francisco" }
 ];
 
 function renderInputComponent(inputProps) {
