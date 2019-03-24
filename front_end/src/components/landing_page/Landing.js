@@ -10,17 +10,9 @@ import "./Landing.css";
 
 // Image imports (For Prototype Only)
 import SF from "./SF.jpg";
-import LA from "./LA.jpg";
-import NY from "./NY.jpg";
-import CH from "./CH.jpg";
-import AU from "./AU.jpg";
-import DE from "./DE.jpg";
-import PO from "./PO.jpg";
-import SA from "./SA.jpg";
 import SD from "./SD.jpg";
 import VG from "./Vegas.jpg";
 import WA from "./WA.jpg";
-import PA from "./PA.jpg";
 
 // Material-UI Imports
 import {
@@ -30,8 +22,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
-  ClickAwayListener
+  CardMedia
 } from "@material-ui/core";
 
 // Component CSS
