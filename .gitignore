@@ -1,4 +1,5 @@
 /node_modules
-package-lock.json
+/.vscode/settings.json
+/package-lock.json
 /config/keys_dev.js
 error.log
