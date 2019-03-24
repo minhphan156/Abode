@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
@@ -10,19 +10,14 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
 import { Link } from "react-router-dom";
-import { saveQuery } from "../../../actions/searchActions";
-// import { submitQuery, saveQuery } from "../../actions/searchActions";
+// import { saveQuery } from "../../../actions/searchActions";
+import { submitQuery, saveQuery } from "../../../actions/searchActions";
 
 const styles = theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
     opacity: 1
-  },
-  button: {
-    margin: theme.spacing.unit,
-    top: 18,
-    height: 40
   },
   paper: {
     textAlign: "center",
@@ -67,10 +62,12 @@ class SearchWidget extends Component {
       destinationName: this.state.destinationName,
       checkIn: this.state.checkIn,
       checkOut: this.state.checkOut,
-      numberRooms: this.state.numberRooms
+      numberRooms: this.state.numberRooms,
+      lastIndex: 0,
+      numResults: 5
     };
+    this.props.submitQuery(newQuery);
     this.props.saveQuery(newQuery);
-    console.log("searchwidget state testRoom ", newQuery);
   }
 
   onHandleDate(startingDate, endingDate) {
@@ -118,16 +115,13 @@ class SearchWidget extends Component {
               />
             </Paper>
           </Grid>
-          <Link to="/searchResultOverview">
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={this.onSearchClick}
-            >
-              Search
-            </Button>
-          </Link>
+          <Grid item className="buttonSearchContainer">
+            <Link to="/searchResultOverview">
+              <Button class="buttonSearch" primary onClick={this.onSearchClick}>
+                SEARCH
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
       </div>
     );
@@ -144,10 +138,13 @@ const mapStateToProps = state => ({
 });
 // if this.props.query is empty we will not show the Search page
 
+// export default connect(
+//   mapStateToProps,
+//   { saveQuery }
+// )(withStyles(styles)(SearchWidget));
 export default connect(
   mapStateToProps,
-  { saveQuery }
+  { submitQuery, saveQuery }
 )(withStyles(styles)(SearchWidget));
-// export default connect(mapStateToProps,{ submitQuery, saveQuery })(withStyles(styles)(SearchWidget));
 
 // connect() --> this connects react component with redux store & action (f.e. saveQuery)

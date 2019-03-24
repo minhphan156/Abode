@@ -26,6 +26,7 @@ import Confirmation from "./components/booking/Confirmation";
 import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
+import AboutUs from "./components/about_page/AboutUs";
 
 import "./App.css";
 
@@ -66,8 +67,9 @@ class App extends Component {
               component={searchResultOverview}
             />
             <Route exact path="/confirmation" component={Confirmation} />
+            <Route exact path="/aboutus" component={AboutUs} />
+
             
-            <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/indiv-hotel" component={IndivHotel} />
@@ -103,7 +105,6 @@ class App extends Component {
                   component={EditProfile}
                 />
               </Switch>
-            </div>
             <Footer />
           </div>
         </Router>

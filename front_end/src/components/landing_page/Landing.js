@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { readyLanding } from "../../actions/landingActions";
+import { readyLanding, setLandingStatus } from "../../actions/landingActions";
 
 import SearchWidget from "./search_widget/SearchWidget";
 
@@ -74,8 +74,8 @@ let styles = {
 };
 
 class Landing extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {};
   }
 
@@ -84,8 +84,13 @@ class Landing extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
+    this.props.setLandingStatus(true);
     this.props.readyLanding();
   };
+
+  componentWillUnmount = () => {
+    this.props.setLandingStatus(false);
+  }
 
   render() {
     // TODO: Create slideshow that dynamically changes based on featured cities
@@ -168,6 +173,7 @@ class Landing extends Component {
             <div className="fadeIn">
               <div>
                 <div className={classes.centerFlexbox}>
+                  <div id="topDealsAnchor" className={classes.centerFlexbox}/>
                   <Typography variant="h5" style={{ marginTop: 50 }}>
                     Deals of the Week
                   </Typography>
@@ -228,14 +234,13 @@ class Landing extends Component {
                 {/* Prototype Markup ENDING */}
               </Grid>
               <div>
-                <div className={classes.centerFlexbox}>
+                  <div id="featuredCitiesAnchor" style={{padding:0, margin:0}}/>
                   <Typography variant="h5" style={{ marginTop: 50 }}>
                     Featured Cities
                   </Typography>
-                </div>
                 <hr className={classes.noYMarginTop} />
               </div>
-              <Grid container spacing={8} direction="row" justify="center">
+              <Grid container spacing={8} direction="row" justify="center" style={{marginBottom: 20}}>
                 {/* TODO: Uncomment the line below and remove prototype line */}
                 {/* featureDestinationMarkup */}
                 {/* Prototype Markup BEGINNING */}
@@ -287,5 +292,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { readyLanding }
+  { readyLanding, setLandingStatus }
 )(withStyles(styles)(Landing));

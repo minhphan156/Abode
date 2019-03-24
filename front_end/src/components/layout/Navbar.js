@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { submitQuery } from "../../actions/queryActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 // Material-UI Imports Below
 import {
@@ -12,78 +13,135 @@ import {
   Toolbar,
   Typography,
   Button,
-  withStyles
+  withStyles,
+  Grid,
+  IconButton
 } from "@material-ui/core";
 
 let styles = {
-  normalLink: {
-    marginLeft: 15,
-    marginRight: 15
-  },
-  leftMostLogo: {
-    marginLeft: 150, // Margin size
-    marginRight: 15,
+  logo: {
     width: 50,
     height: 50
-  },
-  beforeSeperation: {
-    marginLeft: 15,
-    marginRight: "auto"
-  },
-  afterSeperation: {
-    marginRight: 15
-  },
-  rightMost: {
-    marginLeft: 15,
-    marginRight: 150
   }
 };
 
-function Navbar(props) {
-  let { classes } = props;
-  return (
-    <div>
+class Navbar extends Component {
+  constructor() {
+    super();
+    this.onLogoutClick = this.onLogoutClick.bind(this);
+  };
+
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.clearCurrentProfile();
+    this.props.logoutUser();
+  }
+
+  render() {
+    let { classes } = this.props;
+
+    // Markup shown on the right hand side of Navbar when user is GUEST.
+    let guestMarkUp = (
+      <Grid item justify="flex-end" spacing={40} sm={4} alignItems="center" container>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <Link to="/register" style={{color: "white"}}>
+              Sign up
+            </Link>
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <Link to="/login" style={{color: "white"}}>
+              Login
+            </Link>
+          </Button>
+        </Grid>
+      </Grid>
+    );
+  
+    // Markup shown on the right hand side of Navbar when user is LOGGED IN.
+    let loggedInMarkup = (
+      <Grid item justify="flex-end" spacing={40} sm={4} alignItems="center" container>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            {this.props.auth.user.email}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="text" color="inherit" onClick={this.onLogoutClick}>
+            Logout
+          </Button>
+        </Grid>
+      </Grid>
+    );
+
+    let inLandingMarkup = (
+      <Grid item justify="center" spacing={40} sm={4} alignItems="center" container>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <AnchorLink href="#topDealsAnchor" offset="-450" style={{color: "white"}}>
+              Deals of the Week
+            </AnchorLink>
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="text" color="inherit">
+            <AnchorLink href="#featuredCitiesAnchor" offset="-500" style={{color: "white"}}>
+              Featured Cities
+            </AnchorLink>
+          </Button>
+        </Grid>
+      </Grid>
+    );
+
+    let notInLandingMarkup = (
+      <Grid item sm={4} />
+    );
+
+    return (
       <AppBar fontFamily="Roboto" position="static">
         <Toolbar>
-          <img src="logo.png" className={classes.leftMostLogo} />
-          <Typography
-            variant="title"
-            color="inherit"
-            className={classes.normalLink}
-          >
-            Abode
-          </Typography>
-          <Button variant="text" color="inherit">
-            Deals of the Week
-          </Button>
-          <Button
-            className={classes.beforeSeperation}
-            variant="text"
-            color="inherit"
-          >
-            Popular Cities
-          </Button>
-          <Button
-            className={classes.afterSeperation}
-            variant="text"
-            color="inherit"
-          >
-            Sign up
-          </Button>
-          <Button className={classes.rightMost} variant="text" color="inherit">
-            Login
-          </Button>
+          <Grid container justify="space-between" spacing={12} style={{width: "100%", marginLeft: "5%", marginRight: "5%"}}>
+            <Grid item spacing={40} sm={4} alignItems="center" container>
+              <Grid item>
+                <IconButton>
+                  <Link to="/">
+                    <img src="logo.png" className={classes.logo}/>
+                  </Link>
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <Typography variant="title" color="inherit">
+                  <Link to="/" style={{color: "white"}}>
+                    Abode
+                  </Link>
+                </Typography>
+              </Grid>
+            </Grid>
+            {this.props.landing.isInLanding == true ? inLandingMarkup : notInLandingMarkup}
+            {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
+          </Grid>
         </Toolbar>
       </AppBar>
-    </div>
-  );
+    );
+  }
 }
 
 Navbar.propTypes = {
-  classes: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  landing: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Navbar);
+let mapStateToProps = state => ({
+  auth: state.auth,
+  landing: state.landing
+})
+
+export default connect(
+    mapStateToProps,
+    { logoutUser, submitQuery, clearCurrentProfile }
+  )(withStyles(styles)(Navbar));
 
 // import React, { Component } from "react";
 // import { Link } from "react-router-dom";

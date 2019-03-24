@@ -7,12 +7,15 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
-  TablePagination
+  TablePagination,
+  CardHeader
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
-import { displayResultsOverview } from "../../actions/searchResultActions";
+import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import ReactStars from "react-stars";
 
 const styles = {
   rating: { float: "left", width: "100%" },
@@ -22,34 +25,85 @@ const styles = {
 class searchResultOverview extends Component {
   render() {
     let { classes } = this.props;
-    const result = this.props.result.result;
     let hotels;
-
-    if (result.length) {
-      hotels = result.map(hotel => {
+    const queryResult = this.props.query.hotelQuery;
+    const searchQuery = this.props.query.searchQuery;
+    if (queryResult.length) {
+      hotels = queryResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
+            
+              <CardContent>
+                <div>
+                <Link
+                  to="/indiv-hotel"
+                  onClick={() =>
+                    this.props.getIndividualHotelResult({
+                      id: hotel.hotelID,
+                      checkIn: searchQuery.checkIn,
+                      checkOut: searchQuery.checkOut,
+                      numberRooms: searchQuery.numberRooms
+                    })
+                  }
+                >
+                <div className="row">
+                <div className="col-10" style={{align:'left'}}>
+                      <Typography gutterBottom variant="h5" component="h2" style={{display:'inline'}}>
+                        {hotel.name}
+                      </Typography>
+                </div>
+                <div className="col-2" style={{align:'right'}}>
+                        <Typography gutterBottom variant="h5" component="h5" style={{color:"green", display:'inline'}} align="right">
+                          ${hotel.price}
+                        </Typography>
+                </div>
+                </div>
+                </Link>
+                
+                <Typography style={{color: "#808080", marginLeft:'1%', marginTop:'1%'}} component="h3">{hotel.city}</Typography>
+                </div>
+              </CardContent>
+              <div style={{float: "left"}}>
             <CardMedia
               className={classes.imageStyle}
-              image={require(`${hotel.img}`)}
+              image={`${hotel.img}`}
               title="Hotel Image"
             />
-            <div style={{ float: "left" }}>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {hotel.name}
-                </Typography>
-                <Typography component="p">{hotel.city}</Typography>
-              </CardContent>
             </div>
             <div style={{ float: "right" }}>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {hotel.star_rates}
+                <Typography gutterBottom variant="h5" component="h2" style={{marginRight:'0'}}>
+                <h5 >{hotel.star_rates}-Star Hotel</h5>
+                <ReactStars
+                    count={5}
+                    value={hotel.star_rates}
+                    size={22}
+                    edit={false}
+                    color2={"#FFD700"}
+                    style={{align:'right'}}
+                  />
                 </Typography>
 
-                <Typography component="p">{hotel.guest_rate}</Typography>
-                <Typography component="p">{hotel.price}</Typography>
+                <Typography variant="h5" component="h5">Guest Rating: {hotel.guest_rate}</Typography>
+                
+                      <Link
+                      to="/indiv-hotel"
+                      onClick={() =>
+                        this.props.getIndividualHotelResult({
+                          id: hotel.hotelID,
+                          checkIn: searchQuery.checkIn,
+                          checkOut: searchQuery.checkOut,
+                          numberRooms: searchQuery.numberRooms
+                        })
+                      }
+                    >
+                       <button 
+                      type="button" 
+                      class="btn btn-success h-100"
+                      >
+                        Book Now
+                      </button>
+                        </Link>
               </CardContent>
             </div>
           </Card>
@@ -58,7 +112,7 @@ class searchResultOverview extends Component {
     }
     return (
       <div>
-        <Grid container spacing={24}>
+        <Grid container spacing={24} justify="center">
           <Grid item xs={10} style={{ marginLeft: 30 }}>
             <SearchWidget />
           </Grid>
@@ -140,8 +194,10 @@ class searchResultOverview extends Component {
   }
 }
 
-const mapStateToProps = state => ({ result: state.searchResult });
+const mapStateToProps = state => ({
+  query: state.query
+});
 export default connect(
   mapStateToProps,
-  { displayResultsOverview }
+  { getIndividualHotelResult }
 )(withStyles(styles)(searchResultOverview));

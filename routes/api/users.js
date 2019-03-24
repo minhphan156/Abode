@@ -12,6 +12,7 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User");
+const Customer = require("../../models/customer");
 
 // @route POST api/users/register
 // @desc Register user
@@ -24,7 +25,25 @@ router.post("/register", (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
+  var customerID
+  Customer.findOne({email:req.body.email}).then(customer=>{
+    if(!customer){
+      const newCustomer = new Customer({
+        Firstname:req.body.firstname,
+        Lastname:req.body.lastname,
+        email:req.body.email
+      })
+      newCustomer.save().then(doc=>{
+        customerID = doc._id
+        registUser();
+      }).catch(err=>res.status(400).json(err))
+    }else{
+      customerID = customer._id;
+      registUser()
+    }
+  }).catch(err=>res.status(400).json(err))
 
+function registUser(){
   User.findOne({
     // find out if the email already exists
     email: req.body.email
@@ -37,9 +56,9 @@ router.post("/register", (req, res) => {
     } else {
       const newUser = new User({
         // create new user if cannot find the email
-        name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        customerID:customerID
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -54,6 +73,7 @@ router.post("/register", (req, res) => {
       });
     }
   });
+}
 });
 
 // @route POST api/users/login
@@ -86,8 +106,7 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         //User Matched
         const payload = {
-          id: user.id,
-          name: user.name
+          id: user.id
         }; // create JWT Payload
 
         //Sign Token as a sign of success validation
@@ -100,6 +119,7 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               // sent to some cloud or local storage
+              email: email,
               success: true,
               token: "Bearer " + token
             });

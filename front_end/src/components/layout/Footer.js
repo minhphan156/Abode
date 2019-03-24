@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Material UI Imports below
 import { withStyles, AppBar, Toolbar, Button, Grid } from "@material-ui/core";
@@ -28,12 +29,16 @@ function Footer(props) {
           <Grid container spacing={2} justify="center" alignItems="center">
             <Grid item xs={1}>
               <Button variant="text" color="inherit">
-                About Us
+                <Link to="/aboutus" style={{color: "white"}}>
+                  About Us
+                </Link>
               </Button>
             </Grid>
             <Grid item xs={1}>
               <Button variant="text" color="inherit">
-                Disclaimer
+                <Link to="/disclaimer" style={{color: "white"}}>
+                  Disclaimer
+                </Link>
               </Button>
             </Grid>
           </Grid>
