@@ -5,12 +5,13 @@ const City = require("../../models/city");
 
 router.get("/", function (req, res) {
   City.find({}, function (err, doc) {
-    if (err) res.status(400).json(err);
+    if (err) { 
+      res.status(400).json(err); 
+    }
     var destinations = [];
     var i;
     //change loop limit if want more featured cities
     var index = Math.floor(Math.random() * doc.length)
-    console.log(doc[index])
     var headImg = doc[index].imgMain
     var headCityName = doc[index].name
     for (i = 0; i < 5; i++) {
@@ -26,7 +27,6 @@ router.get("/", function (req, res) {
       },
       featureDestination: destinations
     }
-    //console.log(result)
     res.send(result);
      
       /* **If repeating cities is concern, use shuffle **
