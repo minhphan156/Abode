@@ -9,7 +9,8 @@ class Register extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
       password2: "", //for inputing password again
@@ -42,7 +43,8 @@ class Register extends Component {
     e.preventDefault();
 
     const newUser = {
-      name: this.state.name,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2
@@ -62,11 +64,19 @@ class Register extends Component {
               <h1 className="display-4 text-center">Sign Up</h1>
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
-                  placeholder="Name"
-                  name="name"
-                  value={this.state.name}
+                  placeholder="First Name"
+                  name="firstname"
+                  value={this.state.firstname}
                   onChange={this.onChange}
-                  error={errors.name}
+                  error={errors.firstname}
+                />
+
+                <TextFieldGroup
+                  placeholder="Last Name"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.onChange}
+                  error={errors.lastname}
                 />
 
                 <TextFieldGroup
