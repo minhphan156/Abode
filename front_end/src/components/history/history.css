@@ -1,0 +1,65 @@
+.HistoryBoxes {
+  height: 150px;
+}
+
+#HistoryContainerTitle {
+  color: #3d4e96;
+  font-size: 34px;
+  font-weight: 900;
+  position: relative;
+  top: 45px;
+  text-align: center;
+}
+
+.HistoryPageHotelName {
+  font-size: 22px;
+  font-weight: 300;
+  color: black;
+}
+
+.HistoryPageDestinationName {
+  font-size: 20px;
+  font-weight: 300;
+  color: grey;
+}
+
+.HistoryPageTotal {
+  top: 27px;
+  position: relative;
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
+}
+
+.HistoryPageDates {
+  top: 17px;
+  position: relative;
+  font-size: 18px;
+  font-weight: 300;
+  color: black;
+}
+
+.HistoryPageText2 {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.historyHotelImage {
+  width: 250px;
+}
+
+/* .HistoryExpandedContainer {
+  background-image: linear-gradient(to bottom, #cfe6fe, #b7d9fd, #a0cdfd);
+}
+
+.HistoryMainContainer {
+  background-image: linear-gradient(to bottom, white, #e7f2fe, #cfe6fe);
+} */
+
+.HistoryExpandedContainer {
+  background-image: linear-gradient(to right, white, #e7f2fe, #cfe6fe);
+}
+
+.HistoryMainContainer {
+  background-image: linear-gradient(to right, white, #e7f2fe, #cfe6fe);
+}
