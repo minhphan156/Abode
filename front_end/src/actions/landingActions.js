@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_LANDING_DATA, SET_LANDING_STATUS, GET_ERRORS } from "./types";
+import { GET_LANDING_DATA, SET_LANDING_STATUS } from "./types";
 
 export const readyLanding = () => dispatch => {
   axios

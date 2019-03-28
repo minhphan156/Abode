@@ -9,7 +9,6 @@ import SearchWidget from "./search_widget/SearchWidget";
 import "./Landing.css";
 
 // Image imports (For Prototype Only)
-import SF from "./SF.jpg";
 import SD from "./SD.jpg";
 import VG from "./Vegas.jpg";
 import WA from "./WA.jpg";
@@ -31,16 +30,6 @@ let styles = {
     width: "auto",
     justify: "center",
     flexGrow: 1
-  },
-  // TODO: Remove following Prototype CSS Class
-  imgSlideShow: {
-    display: "flex",
-    backgroundImage: `url(${SF})`,
-    backgroundSize: "cover",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    height: "95vh",
-    minHeight: 450
   },
   centerFlexbox: {
     display: "flex"
@@ -180,8 +169,6 @@ class Landing extends Component {
                 <hr className={classes.noYMarginTop} />
               </div>
               <Grid container spacing={8} direction="row" justify="center">
-                {/* TODO: Uncomment the line below and remove prototype line */}
-                {/* topDealsMarkup */}
                 {/* Prototype Markup BEGINNING */}
                 <Grid item xs={4} className="mouseHover">
                   <Card>
