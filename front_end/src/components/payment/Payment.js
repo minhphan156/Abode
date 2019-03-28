@@ -60,7 +60,7 @@ class Payment extends React.Component {
       address2: this.state.address2,
       email: this.state.email,
       city: this.state.city,
-      ciaStatety: this.setState.aState,
+      aState: this.setState.aState,
       zip: this.state.zip,
       country: this.state.country,
       nameOnCard: this.state.nameOnCard,
