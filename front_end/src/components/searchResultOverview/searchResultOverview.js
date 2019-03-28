@@ -8,7 +8,8 @@ import {
   Checkbox,
   FormControlLabel,
   TablePagination,
-  CardHeader
+  CardHeader,
+  Button
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
@@ -27,6 +28,7 @@ class searchResultOverview extends Component {
 
 
   goToPreviousPage(queryResult,searchQuery){
+    window.scrollTo(0,0);
     queryResult.pageNumber--;
     let lastIndex = queryResult.lastIndex - 2*searchQuery.numResults
     if(lastIndex < 0 || queryResult.pageNumber === 1)
@@ -42,9 +44,11 @@ class searchResultOverview extends Component {
       }
       this.props.submitQuery(newQuery);
       this.props.saveQuery(newQuery);
+      window.scrollTo(0,0);
   }
 
   goToNextPage(queryResult,searchQuery){
+    window.scrollTo(0,0);
     queryResult.pageNumber++;
       const newQuery = {
         destinationName:searchQuery.destinationName,
@@ -57,6 +61,7 @@ class searchResultOverview extends Component {
       }
       this.props.submitQuery(newQuery);
       this.props.saveQuery(newQuery);
+      window.scrollTo(0,0);
   }
 
   render() {
@@ -219,8 +224,8 @@ class searchResultOverview extends Component {
             {hotels}
 
           {/* Pagination, please fix the style */}
-            <Grid item sm={6}>
-            <div className="row" style={{marginBottom:40}}>
+            <Grid item sm={12}>
+            <div className="row" style={{marginBottom:40,justifyContent:"flex-end",marginRight:-1}}>
 {/* previous page button */}
             <div classNmae="col-4" style={{align:'left'}}>
             {queryResult.pageNumber === "1"? 
