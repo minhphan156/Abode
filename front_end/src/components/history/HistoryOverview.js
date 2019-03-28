@@ -58,6 +58,12 @@ const styles = theme => ({
   },
   dateChangedTo: {
     color: "#FFA500"
+  },
+  testtest: {
+    // backgroundColor: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%),
+    background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
+
+    // /#e7f2fe, #cfe6fe
   }
 });
 
@@ -324,11 +330,12 @@ class HistoryOverview extends Component {
 
       // these are the expansionpanels for all the different bookings
       return (
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            className="HistoryMainContainer"
-            expandIcon={<ExpandMoreIcon />}
-          >
+        <ExpansionPanel
+          classes={{
+            expanded: classes.testtest
+          }}
+        >
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Grid
               container
               spacing={0}
@@ -365,12 +372,12 @@ class HistoryOverview extends Component {
               </Grid>
               <Grid lg={1}>
                 <Grid item className="HistoryPageTotal">
-                  Total: $ {booking.subtotal - booking.discount}
+                  Total: $ {(booking.subtotal - booking.discount).toFixed(2)}
                 </Grid>
               </Grid>
             </Grid>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails className="HistoryExpandedContainer">
+          <ExpansionPanelDetails>
             <Grid
               container
               spacing={0}
@@ -383,7 +390,7 @@ class HistoryOverview extends Component {
                   <Table className={classes.table}>
                     <TableRow>
                       <TableCell className={classes.tableNoBorder}>
-                        Roomtype:
+                        Room type:
                       </TableCell>
                       <TableCell
                         align="right"
@@ -418,12 +425,14 @@ class HistoryOverview extends Component {
                         align="right"
                         className={classes.tableNoBorder}
                       >
-                        $ {booking.subtotal}
+                        $ {booking.subtotal.toFixed(2)}
                       </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Discount:</TableCell>
-                      <TableCell align="right">$ {booking.discount}</TableCell>
+                      <TableCell align="right">
+                        $ {booking.discount.toFixed(2)}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className={classes.tableNoBorder}>
@@ -433,14 +442,13 @@ class HistoryOverview extends Component {
                         align="right"
                         className={classes.tableNoBorder}
                       >
-                        $ {booking.subtotal - booking.discount}
+                        $ {(booking.subtotal - booking.discount).toFixed(2)}
                       </TableCell>
                     </TableRow>
                   </Table>
                 </Grid>
               </Grid>
             </Grid>
-
             {cancelAndChangeButtons}
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -461,8 +469,8 @@ class HistoryOverview extends Component {
             Your Travel History
           </Grid>
         </Grid>
-
         {bookings}
+        <br /> <br />
       </div>
     );
   }

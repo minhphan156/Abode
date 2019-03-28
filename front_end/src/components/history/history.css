@@ -47,19 +47,3 @@
 .historyHotelImage {
   width: 250px;
 }
-
-/* .HistoryExpandedContainer {
-  background-image: linear-gradient(to bottom, #cfe6fe, #b7d9fd, #a0cdfd);
-}
-
-.HistoryMainContainer {
-  background-image: linear-gradient(to bottom, white, #e7f2fe, #cfe6fe);
-} */
-
-.HistoryExpandedContainer {
-  background-image: linear-gradient(to right, white, #e7f2fe, #cfe6fe);
-}
-
-.HistoryMainContainer {
-  background-image: linear-gradient(to right, white, #e7f2fe, #cfe6fe);
-}
