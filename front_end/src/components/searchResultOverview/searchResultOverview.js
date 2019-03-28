@@ -8,7 +8,7 @@ import {
   Checkbox,
   FormControlLabel,
   TablePagination,
-  CardHeader
+  Button
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
@@ -16,6 +16,7 @@ import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
+import PropTypes from "prop-types";
 
 const styles = {
   rating: { float: "left", width: "100%" },
@@ -23,16 +24,69 @@ const styles = {
 };
 
 class searchResultOverview extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      // State used to determine the criteria of which the search results are sorted by.
+      sortCriteria: "name"
+    }
+  }
+
+  // Used to sort search results
+  compare = (obj1, obj2) => {
+    let value1, value2;
+
+    switch(this.state.sortCriteria) {
+      case "price":
+        value1 = obj1.price;
+        value2 = obj2.price;
+        return (value1 - value2);
+      break;
+      case "starRating":
+        value1 = obj1.star_rates;
+        value2 = obj2.star_rates;
+        return (value1 - value2);
+      break;
+      case "guestRating":
+        value1 = obj1.guest_rate;
+        value2 = obj2.guest_rate;
+        return (value1 - value2);
+      break;
+      case "name":
+      default:
+        value1 = obj1.name;
+        value2 = obj2.name;
+        if (value1 < value2) {
+          return -1;
+        } else if (value1 > value2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      break;
+    }
+  }
+
+  // Used to change the sort criteria
+  changeSortCriteria = (criteria) => {
+    this.setState({
+      sortCriteria: criteria
+    });
+  }
+
   render() {
     let { classes } = this.props;
+    let { queryResult, searchQuery } = this.props.query;
+    
     let hotels;
-    const queryResult = this.props.query.hotelQuery;
-    const searchQuery = this.props.query.searchQuery;
+
     if (queryResult.length) {
-      hotels = queryResult.map(hotel => {
+      let sortedQueryResult = queryResult;
+      sortedQueryResult.sort(() => this.compare());
+      hotels = sortedQueryResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
-            
               <CardContent>
                 <div>
                 <Link
@@ -112,6 +166,10 @@ class searchResultOverview extends Component {
     }
     return (
       <div>
+        {/* Button used for testing sort below: */}
+        <Button onClick={() => this.changeSortCriteria("price")}>Sort</Button>
+        {/* TODO: Remove test button */}
+        {/* TODO: Add sort markup */}
         <Grid container spacing={24} justify="center">
           <Grid item xs={10} style={{ marginLeft: 30 }}>
             <SearchWidget />
@@ -194,9 +252,14 @@ class searchResultOverview extends Component {
   }
 }
 
+searchResultOverview.propTypes = {
+  query: PropTypes.object.isRequired
+}
+
 const mapStateToProps = state => ({
   query: state.query
 });
+
 export default connect(
   mapStateToProps,
   { getIndividualHotelResult }
