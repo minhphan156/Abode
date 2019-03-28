@@ -28,7 +28,7 @@ import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import AboutUs from "./components/about_page/AboutUs";
 import PaymenPage from "./components/payment/PaymentPage";
-
+import { Elements, StripeProvider } from "react-stripe-elements";
 import "./App.css";
 
 // check for token
@@ -67,7 +67,11 @@ class App extends Component {
               path="/searchResultOverview"
               component={searchResultOverview}
             />
-            <Route exact path="/payment" component={PaymenPage} />
+            <StripeProvider apiKey='pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx'>
+              <Elements>
+                <Route exact path="/payment" component={PaymenPage} />
+              </Elements>
+            </StripeProvider>
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
 

@@ -7,6 +7,7 @@ import searchResultReducer from "./searchResultReducer";
 import landingReducer from "./landingReducer";
 import individualHotelReducer from "./individualHotelReducer";
 import roomSelectionReducer from "./roomSelectionReducer";
+import paymentReducers from "./paymentReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   searchResult: searchResultReducer,
   landing: landingReducer,
   individualHotelData: individualHotelReducer,
-  roomSelection: roomSelectionReducer
+  roomSelection: roomSelectionReducer,
+  paymentReducers: paymentReducers
 });

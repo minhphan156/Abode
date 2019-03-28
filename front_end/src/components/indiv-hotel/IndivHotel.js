@@ -296,9 +296,14 @@ class IndivHotel extends Component {
                     <th scope="row">Double Room</th>
                     <td>${individualHotelData.price.doublePrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
-                        Book Now
-                      </button>
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("Double Room")}
+                      >
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -308,9 +313,14 @@ class IndivHotel extends Component {
                     <th scope="row">King Room</th>
                     <td>${individualHotelData.price.kingPrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
-                        Book Now
-                      </button>
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("King Room")}
+                      >
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -319,9 +329,14 @@ class IndivHotel extends Component {
                     <th scope="row">Studio Suite</th>
                     <td>${individualHotelData.price.studioPrice}</td>
                     <td>
-                      <button type="button" class="btn btn-success h-100">
-                        Book Now
-                      </button>
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("Studio Suite")}
+                      >
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}

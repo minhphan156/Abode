@@ -1,16 +1,8 @@
-import GET_INDIVIDUAL_HOTEL from "./types";
-import BOOK_ROOM from "./types";
+import { SET_PAYMENT_INFO } from "./types";
 
-function getHotelInfo(index) {
-  return {
-    type: GET_INDIVIDUAL_HOTEL,
-    index
-  };
-}
-
-function bookRoom(index) {
-  return {
-    type: BOOK_ROOM,
-    index
-  };
-}
+export const setPaymentInfo = index => dispatch => {
+  dispatch({
+    type: SET_PAYMENT_INFO,
+    payload: index
+  });
+};
