@@ -104,6 +104,10 @@ router.post("/confirm",(req,res)=>{
     }
 })
 
+
+// @route POST /api/booking/changeReservation
+// @desc change Reservation
+// @access public
 router.post('/changeReservation',(req,res)=>{
     bookingID = req.query.bookingID;
     date = {
