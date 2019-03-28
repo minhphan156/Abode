@@ -34,6 +34,16 @@ const BookingSchema = new Schema({
         type:Number,
         default:0
     },
+    changed:{
+        type:Boolean,
+        default:false
+    },
+    new_check_in_date: {
+        type:Date,
+    },
+    new_check_out_date: {
+        type:Date,
+    },
     subtotal:{
         type:Number,
         required:true

@@ -5,7 +5,8 @@ const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 const Customer = require("../../models/customer");
 
-var checkAvailability = require('../../validation/checkAvailibility.js')
+const checkAvailability = require('../../validation/checkAvailibility.js');
+const checkAvalibity = require("../../validation/checkAvailableHotels");
 
 // @route POST /api/booking/confirm
 // @desc Comfirmation page
@@ -103,6 +104,69 @@ router.post("/confirm",(req,res)=>{
     }
 })
 
-
+router.post('/changeReservation',(req,res)=>{
+    bookingID = req.query.bookingID;
+    date = {
+        checkin:new Date(req.query.newCheckIn.replace('"','').replace('"','')),
+        checkout:new Date(req.query.newCheckOut.replace('"','').replace('"',''))
+    };
+    Booking.findById(bookingID).then((reservations,err)=>{
+        if(err) res.status(400).json(err);
+        if(reservations){
+            if(reservations.check_in_date.getTime() === date.checkin.getTime() && reservations.check_out_date.getTime() === date.checkout.getTime()){
+                res.status(409).json({message:"cannot change to same dates"})
+                return;
+            }
+            if(reservations.changed){
+            if(reservations.new_check_in_date.getTime() === date.checkin.getTime() && reservations.new_check_out_date.getTime() === date.checkout.getTime()){
+                res.status(409).json({message:"cannot change to same dates"})
+                return;
+            }}
+            Hotel.findById(reservations.hotelID).then(hotel=>{
+                if(reservations.typeOfRoom === 'single'){
+                    arr = hotel.roomTypeAndNumber.single;
+                }
+                if(reservations.typeOfRoom === 'double'){
+                    arr = hotel.roomTypeAndNumber.double;
+                }
+                if(reservations.typeOfRoom === 'king'){
+                    arr = hotel.roomTypeAndNumber.king;
+                }
+                if(reservations.typeOfRoom === 'studio'){
+                    arr = hotel.roomTypeAndNumber.studio;
+                }
+                for(let i = 0;i<arr.length;i++){
+                    for(let j = 0;j<arr[i].dates.length;j++){
+                        if(arr[i].dates[j].bookingID === bookingID){
+                            arr[i].dates.splice(j,1)
+                        }
+                    }
+                }
+                if(checkAvalibity(arr,date,reservations.numOfRoom,bookingID)){
+                    reservations.changed = true;
+                    reservations.new_check_in_date = date.checkin;
+                    reservations.new_check_out_date = date.checkout;
+                    hotel.save().catch(err=>res.status(400).json(err));
+                    reservations.save().catch(err=>res.status(400).json({
+                        message:"Fail to change",
+                        code: 400
+                      }))
+                      res.status(200).json(
+                        {
+                          message:"Successfully change",
+                          code:"200"
+                        })
+                }else{
+                    res.status(409).json({
+                        message:"no room available at that date",
+                        code: 409
+                      })
+                }
+            }).catch(err=>{res.status(400).json(err)})
+        }else{
+            res.status(400).json({message:`cannot find ${bookingID}`,code:404})
+        }
+    })
+})
 
 module.exports = router;
