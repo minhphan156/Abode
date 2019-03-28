@@ -1,6 +1,8 @@
 /* X-Small Screen */
 @media screen and (max-width: 600px) {
   .AuthPaperLogin {
+    margin-top: 50px;
+    margin-bottom: 50px;
     height: 500px;
     width: 90%;
     padding: 20px;
@@ -8,6 +10,8 @@
   .AuthPaperSignUp {
     height: 650px;
     width: 90%;
+    margin-top: 50px;
+    margin-bottom: 50px;
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 30px;
@@ -16,6 +20,7 @@
 
 @media screen and (min-width: 600px) {
   .AuthPaperLogin {
+    margin: 50px;
     height: 500px;
     width: 400px;
     padding: 50px;
@@ -29,14 +34,6 @@
     padding-top: 30px;
   }
 }
-
-/* .AuthContainerLogin {
-  height: 550px;
-}
-
-.AuthContainerSignUp {
-  height: 750px;
-} */
 
 .AuthTitle {
   color: #0c4b78;
