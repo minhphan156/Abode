@@ -1,0 +1,58 @@
+/* X-Small Screen */
+@media screen and (max-width: 600px) {
+  .AuthPaperLogin {
+    height: 500px;
+    width: 90%;
+    padding: 20px;
+  }
+  .AuthPaperSignUp {
+    height: 650px;
+    width: 90%;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .AuthPaperLogin {
+    height: 500px;
+    width: 400px;
+    padding: 50px;
+  }
+  .AuthPaperSignUp {
+    height: 650px;
+    width: 400px;
+    margin: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+  }
+}
+
+/* .AuthContainerLogin {
+  height: 550px;
+}
+
+.AuthContainerSignUp {
+  height: 750px;
+} */
+
+.AuthTitle {
+  color: #0c4b78;
+  font-size: 34px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.AuthTextFields {
+  width: 100%;
+}
+
+.AuthSubmitButton {
+  width: 50px;
+}
+
+.loginLogo {
+  width: 75px;
+}

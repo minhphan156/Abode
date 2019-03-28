@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
+
 import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import Paper from "@material-ui/core/Paper";
+import AbodeLogo from "../../images/logo.png";
+import "./auth.css";
 
 class Login extends Component {
   constructor() {
@@ -52,11 +57,31 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
+      <Grid
+        container
+        className="AuthContainerLogin"
+        spacing={0}
+        direction="column"
+        justify="center"
+        alignItems="center"
+      >
+        <Paper className="AuthPaperLogin">
+          <Grid item className="AuthTitle">
+            Log In
+          </Grid>
+          <br />
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <img className="loginLogo" src={AbodeLogo} alt="" />
+
+            <br />
+            <br />
+            <Grid className="AuthTextFields">
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="Email Address"
@@ -77,10 +102,10 @@ class Login extends Component {
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
     );
   }
 }

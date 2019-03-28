@@ -4,6 +4,9 @@ import { withRouter } from "react-router-dom"; // to route to other pages
 import { connect } from "react-redux"; // use this to connect react component to redux
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import AbodeLogo from "../../images/logo.png";
 
 class Register extends Component {
   constructor() {
@@ -57,11 +60,30 @@ class Register extends Component {
     // this achieved by mapStateToProps()
 
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Sign Up</h1>
+      <Grid
+        container
+        className="AuthContainerSignUp"
+        spacing={0}
+        direction="column"
+        justify="center"
+        alignItems="center"
+      >
+        <Paper className="AuthPaperSignUp">
+          <Grid item className="AuthTitle">
+            Sign Up
+          </Grid>
+          <br />
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <img className="loginLogo" src={AbodeLogo} alt="" />
+
+            <br />
+            <Grid className="AuthTextFields">
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="First Name"
@@ -108,10 +130,10 @@ class Register extends Component {
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
     );
   }
 }
