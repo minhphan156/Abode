@@ -29,62 +29,25 @@ class searchResultOverview extends Component {
 
     this.state = {
       // State used to determine the criteria of which the search results are sorted by.
-      sortCriteria: "name"
-    }
-  }
-
-  // Used to sort search results
-  compare = (obj1, obj2) => {
-    let value1, value2;
-
-    switch(this.state.sortCriteria) {
-      case "price":
-        value1 = obj1.price;
-        value2 = obj2.price;
-        return (value1 - value2);
-      break;
-      case "starRating":
-        value1 = obj1.star_rates;
-        value2 = obj2.star_rates;
-        return (value1 - value2);
-      break;
-      case "guestRating":
-        value1 = obj1.guest_rate;
-        value2 = obj2.guest_rate;
-        return (value1 - value2);
-      break;
-      case "name":
-      default:
-        value1 = obj1.name;
-        value2 = obj2.name;
-        if (value1 < value2) {
-          return -1;
-        } else if (value1 > value2) {
-          return 1;
-        } else {
-          return 0;
-        }
-      break;
+      sortCategory: ""
     }
   }
 
   // Used to change the sort criteria
-  changeSortCriteria = (criteria) => {
+  changeSortCriteria = (category) => {
     this.setState({
-      sortCriteria: criteria
+      sortCategory: category
     });
   }
 
   render() {
     let { classes } = this.props;
-    let { queryResult, searchQuery } = this.props.query;
+    let { hotelQuery, searchQuery } = this.props.query;
     
     let hotels;
 
-    if (queryResult.length) {
-      let sortedQueryResult = queryResult;
-      sortedQueryResult.sort(() => this.compare());
-      hotels = sortedQueryResult.map(hotel => {
+    if (hotelQuery.length) {
+      hotels = hotelQuery.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
               <CardContent>
@@ -166,13 +129,94 @@ class searchResultOverview extends Component {
     }
     return (
       <div>
-        {/* Button used for testing sort below: */}
-        <Button onClick={() => this.changeSortCriteria("price")}>Sort</Button>
-        {/* TODO: Remove test button */}
+        <Grid container direction={"column"} justify="center">
+          <Grid item md = {10}>
+            <SearchWidget />
+          </Grid>
+          <Grid item md = {8}>
+            <Card style={{padding: 10, marginBottom: 10}}>
+              <Typography>Sort By:</Typography>
+            </Card>
+          </Grid>
+          <Grid item direction={"row"}>
+            <Grid item direction={"column"}>
+              <Grid item md={2}>
+                <Card style={{ marginBottom: 10 }}>
+                  <div style={{ margin: 20 }}>
+                    <Typography>Star Rating</Typography>
+                    <FormControlLabel
+                      control={<Checkbox value="star1" />}
+                      label="1 star"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="star2" />}
+                      label="2 stars"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="star3" />}
+                      label="3 stars"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="star4" />}
+                      label="4 stars"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="star5" />}
+                      label="5 stars"
+                      className={classes.rating}
+                    />
+                  </div>
+                </Card>
+              </Grid>
+              <Grid item md={2}>
+                <Card style={{ marginBottom: 10 }}>
+                  <div style={{ margin: 20 }}>
+                    <Typography>Review Score</Typography>
+                    <FormControlLabel
+                      control={<Checkbox value="Awesome" />}
+                      label="Awesome: 9+"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="Verygood" />}
+                      label="Very good: 8+"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="Good" />}
+                      label="Good: 7+"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="Pleasant" />}
+                      label="Pleasant: 6+"
+                      className={classes.rating}
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="NoRating" />}
+                      label="No rating"
+                      className={classes.rating}
+                    />
+                  </div>
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+
         {/* TODO: Add sort markup */}
         <Grid container spacing={24} justify="center">
           <Grid item xs={10} style={{ marginLeft: 30 }}>
             <SearchWidget />
+          </Grid>
+          <Grid item xs={10}>
+            <Card style={{padding: 10, marginBottom: 10}}>
+              <Typography>Sort By:</Typography>
+            </Card>
           </Grid>
           <Grid item xs={2} style={{ marginLeft: 30 }}>
             <Card style={{ marginBottom: 10 }}>
