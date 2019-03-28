@@ -15,8 +15,8 @@ router.post("/confirm",(req,res)=>{
     var hotelID = req.body.hotelID;
     var roomType = req.body.roomType;
     var date = {
-        checkin:req.body.checkIn,
-        checkout:req.body.checkOut
+        checkin:req.body.checkIn.replace('"','').replace('"',''),
+        checkout:req.body.checkOut.replace('"','').replace('"','')
         }
     var numberRooms = req.body.numberRooms;
     var firstname = req.body.Firstname;
