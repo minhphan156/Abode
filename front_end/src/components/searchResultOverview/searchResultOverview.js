@@ -223,7 +223,7 @@ class searchResultOverview extends Component {
             <div className="row" style={{marginBottom:40}}>
 {/* previous page button */}
             <div classNmae="col-4" style={{align:'left'}}>
-            {queryResult.pageNumber === 1? 
+            {queryResult.pageNumber === "1"? 
             <button className="btn btn-outline-danger" disabled>Previous</button>
             :<button className="btn btn-outline-danger" onClick={() => this.goToPreviousPage(queryResult,searchQuery)}>Previous</button>}
             </div>
