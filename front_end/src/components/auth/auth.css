@@ -7,8 +7,27 @@
     width: 90%;
     padding: 20px;
   }
+
+  .AuthPaperLoginError {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    height: 550px;
+    width: 90%;
+    padding: 20px;
+  }
+
   .AuthPaperSignUp {
     height: 650px;
+    width: 90%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+  }
+
+  .AuthPaperSignUpError {
+    height: 700px;
     width: 90%;
     margin-top: 50px;
     margin-bottom: 50px;
@@ -25,8 +44,24 @@
     width: 400px;
     padding: 50px;
   }
+
+  .AuthPaperLoginError {
+    margin: 50px;
+    height: 550px;
+    width: 400px;
+    padding: 50px;
+  }
+
   .AuthPaperSignUp {
     height: 650px;
+    width: 400px;
+    margin: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+  }
+  .AuthPaperSignUpError {
+    height: 700px;
     width: 400px;
     margin: 50px;
     padding-left: 50px;
@@ -52,4 +87,9 @@
 
 .loginLogo {
   width: 75px;
+}
+
+.linkToOhter {
+  color: #0c4b78;
+  font-size: 16px;
 }

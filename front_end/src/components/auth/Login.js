@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 
 import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
@@ -26,6 +27,7 @@ class Login extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
+    window.scrollTo(0, 0);
   };
 
   componentWillReceiveProps = nextProps => {
@@ -55,6 +57,13 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+    let paperSize;
+
+    if (Object.keys(errors).length == 0) {
+      paperSize = "AuthPaperLogin";
+    } else {
+      paperSize = "AuthPaperLoginError";
+    }
 
     return (
       <Grid
@@ -65,7 +74,7 @@ class Login extends Component {
         justify="center"
         alignItems="center"
       >
-        <Paper className="AuthPaperLogin">
+        <Paper className={paperSize}>
           <Grid item className="AuthTitle">
             Log In
           </Grid>
@@ -103,6 +112,10 @@ class Login extends Component {
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </Grid>
+            <br />
+            <Link to="/register" className="linkToOhter">
+              don't have an account?
+            </Link>
           </Grid>
         </Paper>
       </Grid>

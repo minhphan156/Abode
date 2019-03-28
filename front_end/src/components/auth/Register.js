@@ -7,6 +7,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import AbodeLogo from "../../images/logo.png";
+import { Link } from "react-router-dom";
 
 class Register extends Component {
   constructor() {
@@ -29,6 +30,7 @@ class Register extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
+    window.scrollTo(0, 0);
   };
 
   componentWillReceiveProps = nextProps => {
@@ -57,8 +59,13 @@ class Register extends Component {
   //NOTE: component dispatch -> action give new data to -> reducer update new state and pass as props to -> component
   render() {
     const { errors } = this.state;
-    // this achieved by mapStateToProps()
+    let paperSize;
 
+    if (Object.keys(errors).length == 0) {
+      paperSize = "AuthPaperSignUp";
+    } else {
+      paperSize = "AuthPaperSignUpError";
+    }
     return (
       <Grid
         container
@@ -68,7 +75,7 @@ class Register extends Component {
         justify="center"
         alignItems="center"
       >
-        <Paper className="AuthPaperSignUp">
+        <Paper className={paperSize}>
           <Grid item className="AuthTitle">
             Sign Up
           </Grid>
@@ -131,6 +138,10 @@ class Register extends Component {
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </Grid>
+            <br />
+            <Link to="/login" className="linkToOhter">
+              already have an account?
+            </Link>
           </Grid>
         </Paper>
       </Grid>
