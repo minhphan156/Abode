@@ -114,6 +114,7 @@ router.post('/changeReservation',(req,res)=>{
         checkin:new Date(req.query.newCheckIn.replace('"','').replace('"','')),
         checkout:new Date(req.query.newCheckOut.replace('"','').replace('"',''))
     };
+    newPrice = req.query.newPrice ? req.query.newPrice : null;
     Booking.findById(bookingID).then((reservations,err)=>{
         if(err) res.status(400).json(err);
         if(reservations){
@@ -150,6 +151,9 @@ router.post('/changeReservation',(req,res)=>{
                     reservations.changed = true;
                     reservations.new_check_in_date = date.checkin;
                     reservations.new_check_out_date = date.checkout;
+                    if(newPrice){
+                        reservations.new_price = newPrice
+                    }
                     hotel.save().catch(err=>res.status(400).json(err));
                     reservations.save().catch(err=>res.status(400).json({
                         message:"Fail to change",

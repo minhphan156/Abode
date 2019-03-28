@@ -44,6 +44,9 @@ const BookingSchema = new Schema({
     new_check_out_date: {
         type:Date,
     },
+    new_price:{
+        type:Number,
+    },
     subtotal:{
         type:Number,
         required:true
