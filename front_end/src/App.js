@@ -22,7 +22,7 @@ import EditProfile from "./components/edit-profile/EditProfile";
 import NotFound from "./components/layout/NotFound";
 import searchResultOverview from "./components/searchResultOverview/searchResultOverview";
 import Confirmation from "./components/booking/Confirmation";
-// trying individual page
+
 import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
 import AboutUs from "./components/about_page/AboutUs";
@@ -72,22 +72,12 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/indiv-hotel" component={IndivHotel} />
             <Route exact path="/not-found/:attempt" component={NotFound} />
+
+            {/* <Route exact path="/history" component={HistoryOverview} /> */}
+
             <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            </Switch>
-
-            <Route exact path="/history" component={HistoryOverview} />
-
-            {/* <Switch>
               <PrivateRoute exact path="/history" component={HistoryOverview} />
-            </Switch> */}
-            {/* <Switch>
-              <PrivateRoute
-                exact
-                path="/history/:order"
-                component={HistorySingleOrder}
-              />
-            </Switch> */}
+            </Switch>
             <Switch>
               <PrivateRoute
                 exact
