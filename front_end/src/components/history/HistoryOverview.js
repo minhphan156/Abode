@@ -58,7 +58,7 @@ const styles = theme => ({
   dateChangedTo: {
     color: "#FFA500"
   },
-  testtest: {
+  backgroundStyle: {
     background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
   }
 });
@@ -171,7 +171,7 @@ class HistoryOverview extends Component {
       if (booking.changed === false) {
         displayChangeChip = null;
         dateOverview = (
-          <Table className={classes.table}>
+          <Table className="HistoryContainerDates">
             <TableRow>
               <TableCell
                 classes={{
@@ -216,7 +216,7 @@ class HistoryOverview extends Component {
           />
         );
         dateOverview = (
-          <Table className={classes.table}>
+          <Table className="HistoryContainerDates">
             <TableRow>
               <TableCell className={classes.tableNoBorder}>Check In:</TableCell>
               <TableCell
@@ -328,12 +328,12 @@ class HistoryOverview extends Component {
       return (
         <ExpansionPanel
           classes={{
-            expanded: classes.testtest
+            expanded: classes.backgroundStyle
           }}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Grid container spacing={0} direction="row" justify="space-evenly">
-              <Grid item lg={2}>
+              <Grid item>
                 <img
                   className="historyHotelImage"
                   src={booking.img}
@@ -341,7 +341,7 @@ class HistoryOverview extends Component {
                 />
               </Grid>
 
-              <Grid lg={3}>
+              <Grid className="HistoryContainerHotelName">
                 <Grid item className="HistoryPageHotelName">
                   {booking.hotelName}
                 </Grid>
@@ -355,12 +355,12 @@ class HistoryOverview extends Component {
                 </Grid>
               </Grid>
 
-              <Grid direction="row">
-                <Grid item className="HistoryPageDates">
+              <Grid className="HistoryContainerDates">
+                <Grid item className="HistoryPageDates HistoryContainerDates">
                   {dateOverview}
                 </Grid>
               </Grid>
-              <Grid lg={1}>
+              <Grid>
                 <Grid item className="HistoryPageTotal">
                   Total: $ {(booking.subtotal - booking.discount).toFixed(2)}
                 </Grid>

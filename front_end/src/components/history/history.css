@@ -1,3 +1,195 @@
+/* X-Small Screen */
+@media screen and (max-width: 600px) {
+  .HistoryPageHotelName {
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageDestinationName {
+    font-size: 16px;
+    font-weight: 300;
+    color: grey;
+  }
+
+  .HistoryPageTotal {
+    top: 27px;
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+  }
+
+  .HistoryPageDates {
+    top: 17px;
+    position: relative;
+    font-size: 14px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageText2 {
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  .historyHotelImage {
+    width: 75%;
+  }
+
+  .HistoryContainerHotelName {
+    width: 100%;
+  }
+
+  .HistoryContainerDates {
+    width: 100%;
+  }
+}
+
+/* Small Screen */
+@media screen and (min-width: 600px) and (max-width: 960px) {
+  .HistoryPageHotelName {
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageDestinationName {
+    font-size: 16px;
+    font-weight: 300;
+    color: grey;
+  }
+
+  .HistoryPageTotal {
+    top: 27px;
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+  }
+
+  .HistoryPageDates {
+    top: 17px;
+    position: relative;
+    font-size: 14px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageText2 {
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  .historyHotelImage {
+    width: 160px;
+  }
+
+  .HistoryContainerHotelName {
+    width: 260px;
+  }
+
+  .HistoryContainerDates {
+    width: 250px;
+  }
+}
+
+/* Medium Screen (Landscape Phones, Tablets) */
+@media screen and (min-width: 960px) and (max-width: 1200px) {
+  .HistoryPageHotelName {
+    font-size: 20px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageDestinationName {
+    font-size: 18px;
+    font-weight: 300;
+    color: grey;
+  }
+
+  .HistoryPageTotal {
+    top: 27px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+  }
+
+  .HistoryPageDates {
+    top: 17px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageText2 {
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .historyHotelImage {
+    width: 180px;
+  }
+
+  .HistoryContainerHotelName {
+    width: 290px;
+  }
+
+  .HistoryContainerDates {
+    width: 280px;
+  }
+}
+
+/* Large Screen (Laptops, Desktop monitors) */
+@media screen and (min-width: 1200px) {
+  .HistoryPageHotelName {
+    font-size: 22px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageDestinationName {
+    font-size: 20px;
+    font-weight: 300;
+    color: grey;
+  }
+
+  .HistoryPageTotal {
+    top: 27px;
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+  }
+
+  .HistoryPageDates {
+    top: 17px;
+    position: relative;
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .HistoryPageText2 {
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  .historyHotelImage {
+    width: 250px;
+  }
+
+  .HistoryContainerHotelName {
+    width: 330px;
+  }
+
+  .HistoryContainerDates {
+    width: 340px;
+  }
+}
+
 .HistoryBoxes {
   height: 150px;
 }
@@ -9,41 +201,4 @@
   position: relative;
   top: 45px;
   text-align: center;
-}
-
-.HistoryPageHotelName {
-  font-size: 22px;
-  font-weight: 300;
-  color: black;
-}
-
-.HistoryPageDestinationName {
-  font-size: 20px;
-  font-weight: 300;
-  color: grey;
-}
-
-.HistoryPageTotal {
-  top: 27px;
-  position: relative;
-  font-size: 18px;
-  font-weight: 600;
-  color: black;
-}
-
-.HistoryPageDates {
-  top: 17px;
-  position: relative;
-  font-size: 18px;
-  font-weight: 300;
-  color: black;
-}
-
-.HistoryPageText2 {
-  font-size: 16px;
-  font-weight: 300;
-}
-
-.historyHotelImage {
-  width: 250px;
 }
