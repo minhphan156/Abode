@@ -73,8 +73,6 @@ class App extends Component {
             <Route exact path="/indiv-hotel" component={IndivHotel} />
             <Route exact path="/not-found/:attempt" component={NotFound} />
 
-            {/* <Route exact path="/history" component={HistoryOverview} /> */}
-
             <Switch>
               <PrivateRoute exact path="/history" component={HistoryOverview} />
             </Switch>
