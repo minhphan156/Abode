@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getCurrentProfile } from "../../actions/profileActions";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
@@ -348,9 +347,27 @@ class HistoryOverview extends Component {
                 <Grid item className="HistoryPageDestinationName">
                   {booking.destination}
                 </Grid>
-                <Grid item>
+                <Grid item className="chipsAndTotal">
                   <br />
                   {displayRegularChip}
+                  {displayChangeChip}
+                </Grid>
+                {/* We display a different layout for small screens */}
+                <Grid item className="chipsAndTotalSmall">
+                  <br />
+                  <Grid
+                    container
+                    spacing={0}
+                    direction="row"
+                    justify="space-between"
+                  >
+                    <Grid item>{displayRegularChip}</Grid>
+                    <Grid item className="HistoryPageTotalSmall">
+                      Total: ${" "}
+                      {(booking.subtotal - booking.discount).toFixed(2)}
+                    </Grid>
+                  </Grid>
+
                   {displayChangeChip}
                 </Grid>
               </Grid>
@@ -375,8 +392,8 @@ class HistoryOverview extends Component {
               justify="space-evenly"
               alignItems="center"
             >
-              <Grid>
-                <Grid item className="HistoryPageText2">
+              <Grid className="HistoryContainerExpand">
+                <Grid item className="HistoryPageText2 HistoryContainerExpand">
                   <Table className={classes.table}>
                     <TableRow>
                       <TableCell className={classes.tableNoBorder}>
