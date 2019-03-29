@@ -7,7 +7,7 @@ import Card from "@material-ui/core/Card";
 import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router-dom";
-import { CreditCard, Room } from "@material-ui/icons/";
+import { CreditCard, Room } from "@material-ui/icons";
 
 import { CardElement, injectStripe } from "react-stripe-elements";
 class Payment extends React.Component {

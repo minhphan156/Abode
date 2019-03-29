@@ -301,15 +301,6 @@ class IndivHotel extends Component {
                     <th scope="row">Single Room</th>
                     <td>${individualHotelData.price.singlePrice}</td>
                     <td>
-<<<<<<< HEAD
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
-                      >
-                        Book Now
-                      </button>
-=======
                       <Link
                         to="/payment"
                         onClick={() => this.onClick("Single Room")}
@@ -318,7 +309,6 @@ class IndivHotel extends Component {
                           Book Now
                         </button>
                       </Link>
->>>>>>> 84bf8036028fc68c894b5219cb23c185c3cbb05c
                     </td>
                   </tr>
                 ) : null}
@@ -327,15 +317,6 @@ class IndivHotel extends Component {
                     <th scope="row">Double Room</th>
                     <td>${individualHotelData.price.doublePrice}</td>
                     <td>
-<<<<<<< HEAD
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
-                      >
-                        Book Now
-                      </button>
-=======
                       <Link
                         to="/payment"
                         onClick={() => this.onClick("Double Room")}
@@ -344,7 +325,6 @@ class IndivHotel extends Component {
                           Book Now
                         </button>
                       </Link>
->>>>>>> 84bf8036028fc68c894b5219cb23c185c3cbb05c
                     </td>
                   </tr>
                 ) : null}
@@ -354,15 +334,6 @@ class IndivHotel extends Component {
                     <th scope="row">King Room</th>
                     <td>${individualHotelData.price.kingPrice}</td>
                     <td>
-<<<<<<< HEAD
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
-                      >
-                        Book Now
-                      </button>
-=======
                       <Link
                         to="/payment"
                         onClick={() => this.onClick("King Room")}
@@ -371,7 +342,6 @@ class IndivHotel extends Component {
                           Book Now
                         </button>
                       </Link>
->>>>>>> 84bf8036028fc68c894b5219cb23c185c3cbb05c
                     </td>
                   </tr>
                 ) : null}
@@ -380,15 +350,6 @@ class IndivHotel extends Component {
                     <th scope="row">Studio Suite</th>
                     <td>${individualHotelData.price.studioPrice}</td>
                     <td>
-<<<<<<< HEAD
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
-                      >
-                        Book Now
-                      </button>
-=======
                       <Link
                         to="/payment"
                         onClick={() => this.onClick("Studio Suite")}
@@ -397,7 +358,6 @@ class IndivHotel extends Component {
                           Book Now
                         </button>
                       </Link>
->>>>>>> 84bf8036028fc68c894b5219cb23c185c3cbb05c
                     </td>
                   </tr>
                 ) : null}
