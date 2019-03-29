@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-
-// import "typeface-roboto";
-import { Grid } from "@material-ui/core";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import moment from "moment";
 import Card from "@material-ui/core/Card";
@@ -34,25 +28,25 @@ export class BookingInfo extends Component {
             <img src={individualHotelData.img[0]} alt="image" />
           </div>
           <h4
-            className="display-4 text-left col-10"
-            style={{ marginTop: "5%", fontSize: 15, fontWeight: "bold" }}
+            className="display-4 test-left"
+            style={{ marginTop: "5%", fontSize: 14, fontWeight: "bold" }}
           >
             {individualHotelData.name}
           </h4>
           <h5
-            className="display-4 test-center"
-            style={{ fontSize: 15, color: "#808080" }}
+            className="display-4 test-left"
+            style={{ fontSize: 14, color: "#808080" }}
           >
-            {individualHotelData.street}, {individualHotelData.city}, 94128
+            {individualHotelData.street}, {individualHotelData.city}
           </h5>
 
           <Card style={{ marginTop: "2%" }}>
             <CardContent>
-              <div className="row">
+              <div className=".payment-row">
                 <p style={{ fontWeight: "bold" }}>Check-in: </p>
                 <p> {query.searchQuery.checkIn.format("dddd, MMMM Do YYYY")}</p>
               </div>
-              <div className="row">
+              <div className=".payment-row">
                 <p style={{ fontWeight: "bold" }}>Check-out: </p>
                 <p>
                   {" "}
@@ -80,7 +74,7 @@ export class BookingInfo extends Component {
             </CardContent>
           </Card>
 
-          <h3 className="text-center">Total to pay now: $138.81</h3>
+          <h3 className="text-center">Total to pay now: $138.82</h3>
           <Card>
             <CardContent>
               <p style={{ margin: "1%", fontWeight: "bold" }}>

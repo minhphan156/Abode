@@ -1,0 +1,76 @@
+/* Payment Page */
+.payment-row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+  color: aqua;
+}
+
+.payment-col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.payment-col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.payment-col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.payment-col-25,
+.payment-col-50,
+.payment-col-75 {
+  padding: 0 16px;
+}
+
+
+#sample-input[type="text"] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+payment-label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+
+.payment-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.payment-btn:hover {
+  background-color: #45a049;
+}
+
+payment-span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .payment-row {
+    flex-direction: column-reverse;
+  }
+  .payment-col-25 {
+    margin-bottom: 20px;
+  }
+}

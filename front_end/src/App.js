@@ -27,7 +27,7 @@ import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import AboutUs from "./components/about_page/AboutUs";
-import PaymenPage from "./components/payment/PaymentPage";
+import PaymentPage from "./components/payment/PaymentPage";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import "./App.css";
 
@@ -69,7 +69,7 @@ class App extends Component {
             />
             <StripeProvider apiKey='pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx'>
               <Elements>
-                <Route exact path="/payment" component={PaymenPage} />
+                <Route exact path="/payment" component={PaymentPage} />
               </Elements>
             </StripeProvider>
             <Route exact path="/confirmation" component={Confirmation} />

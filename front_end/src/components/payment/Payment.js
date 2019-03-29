@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
 import { setPaymentInfo } from "../../actions/paymentAction";
-import Card from "@material-ui/core/Card";
 import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import { Link } from "react-router-dom";
 import { CreditCard, Room } from "@material-ui/icons/";
-
 import { CardElement, injectStripe } from "react-stripe-elements";
 class Payment extends React.Component {
   constructor(props) {
@@ -60,7 +57,7 @@ class Payment extends React.Component {
       address2: this.state.address2,
       email: this.state.email,
       city: this.state.city,
-      ciaStatety: this.setState.aState,
+      aState: this.setState.aState,
       zip: this.state.zip,
       country: this.state.country,
       nameOnCard: this.state.nameOnCard,
@@ -83,13 +80,13 @@ class Payment extends React.Component {
         <Grid>
           <div style={{ marginLeft: "5%" }}>
             <h3
-              className="display-4 text-left col-10"
+              className="display-4 text-left payment-col-10"
               style={{ fontSize: 20, color: "#808080", marginTop: "5%" }}
             >
               Secure booking (it only takes 2 minutes)
             </h3>
             <h4
-              className="display-4 text-left col-10"
+              className="display-4 text-left payment-col-10"
               style={{ fontSize: 25, fontWeight: "bold" }}
             >
               {individualHotelData.name}
@@ -222,46 +219,13 @@ class Payment extends React.Component {
                   onChange={this.stripeValidate}
                   id="sample-input"
                 />
-                {/* <input
-                  type="text"
-                  id="sample-input"
-                  name="cardNumber"
-                  placeholder="1111-2222-3333-4444"
-                  onChange={this.onChange}
-                />
-                <label for="expMonth">Exp Month</label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="expMonth"
-                  placeholder="September"
-                  onChange={this.onChange}
-                />
-
-                <label for="expyear">Exp Year</label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="expYear"
-                  placeholder="2018"
-                  onChange={this.onChange}
-                />
-
-                <label for="cvv">CVV</label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="cvv"
-                  placeholder="352"
-                  onChange={this.onChange}
-                /> */}
               </CardContent>
             </Paper>
             <input
               id="sample-input"
               type="submit"
               value="Checkout"
-              class="btn"
+              class="payment-btn"
             />
           </form>
         </Grid>

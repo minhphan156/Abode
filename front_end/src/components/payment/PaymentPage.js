@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Payment from "./Payment";
 import BookingInfo from "./BookingInfo";
 import { Grid } from "@material-ui/core";
+import "./PaymentPage.css";
 
 class PaymentPage extends Component {
   constructor() {
