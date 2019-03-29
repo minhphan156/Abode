@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { readyLanding } from "../../actions/landingActions";
+import { readyLanding, setLandingStatus } from "../../actions/landingActions";
 
 import SearchWidget from "./search_widget/SearchWidget";
 
@@ -84,8 +84,13 @@ class Landing extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
+    this.props.setLandingStatus(true);
     this.props.readyLanding();
   };
+
+  componentWillUnmount = () => {
+    this.props.setLandingStatus(false);
+  }
 
   render() {
     // TODO: Create slideshow that dynamically changes based on featured cities
@@ -235,7 +240,7 @@ class Landing extends Component {
                   </Typography>
                 <hr className={classes.noYMarginTop} />
               </div>
-              <Grid container spacing={8} direction="row" justify="center">
+              <Grid container spacing={8} direction="row" justify="center" style={{marginBottom: 20}}>
                 {/* TODO: Uncomment the line below and remove prototype line */}
                 {/* featureDestinationMarkup */}
                 {/* Prototype Markup BEGINNING */}
@@ -287,5 +292,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { readyLanding }
+  { readyLanding, setLandingStatus }
 )(withStyles(styles)(Landing));

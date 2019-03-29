@@ -3,21 +3,42 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import ReactStars from "react-stars";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { connect } from "react-redux";
+import SearchWidget from "../landing_page/search_widget/SearchWidget";
+import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getRoomType } from "../../actions/searchResultActions";
+
 class IndivHotel extends Component {
-  constructor() {
+
+  constructor(){
     super();
-    this.onClick = this.onClick.bind(this);
+    this.state = {
+      book: false,
+    };
+  this.bookNow = this.bookNow.bind(this);
+  this.onClick = this.onClick.bind(this);
+  }
+
+  bookNow(){
+    this.setState({book:true})
   }
 
   onClick(room) {
     this.props.getRoomType(room);
   }
   render() {
+    const hotelID = this.props.individualHotelData.hotelID;
+
+    if(this.state.book) {return( <Redirect to="/confirmation"></Redirect> )}
+
     const { individualHotelData } = this.props.individualHotelData;
     return (
       <div>
+        <div className="d-flex justify-content-center mt-3">
+          <div className="col-12">
+            <SearchWidget />
+          </div>
+        </div>
         <div id="whole page" className="container" style={{ marginTop: "2%" }}>
           <div className="row">
             <h1
@@ -195,7 +216,7 @@ class IndivHotel extends Component {
                   class="btn btn-success h-10"
                   style={{ width: "100%" }}
                 >
-                  Book Now
+                  See Rooms
                 </button>
               </AnchorLink>
               <div className="row" style={{ marginTop: "2%" }}>
@@ -266,11 +287,11 @@ class IndivHotel extends Component {
           </div>
 
           <section id="table1">
-            <table class="table table-bordered" style={{ marginTop: "3%" }}>
+            <table class="table table-bordered" style={{ marginTop: "3%", position:'relative', z_index:100 }}>
               <thead>
                 <tr>
                   <th>Room Type</th>
-                  <th>Today's Price</th>
+                  <th>Today's Price (Per Night)</th>
                   <th>Book Now</th>
                 </tr>
               </thead>

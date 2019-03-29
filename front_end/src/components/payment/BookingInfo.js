@@ -8,13 +8,9 @@ import CardContent from "@material-ui/core/CardContent";
 export class BookingInfo extends Component {
   render() {
     const time = moment().format("dddd, MMMM Do YYYY");
-    // const individualHotelData = this.props.individualHotelData.individualHotelData;;
+    
     const { individualHotelData } = this.props.individualHotelData;
-    // console.log(
-    //   "booking info query ",
-    //   JSON.stringify(this.props.query.searchQuery)
-    // );
-    // console.log("booking info query ", this.props.query.searchQuery);
+   
     const query = this.props.query;
 
     const roomSelection = this.props.roomSelection;
@@ -28,8 +24,10 @@ export class BookingInfo extends Component {
             <img src={individualHotelData.img[0]} alt="image" />
           </div>
           <h4
+
             className="display-4 test-left"
-            style={{ marginTop: "5%", fontSize: 14, fontWeight: "bold" }}
+
+           style={{ marginTop: "5%", fontSize: 14, fontWeight: "bold" }}
           >
             {individualHotelData.name}
           </h4>

@@ -11,8 +11,7 @@ let styles = {
   },
   footer: {
     top: "auto",
-    minheight: 140,
-    marginTop: 50
+    minheight: 140
   },
   footerMargin: {
     marginLeft: 150,

@@ -18,6 +18,7 @@ router.get('/search',(req,res)=>{
     };
     var numberRooms = parseInt(req.query.numberRooms);
     var startIndex = req.query.lastIndex;
+    var pageNumber = req.query.pageNumber;
 
     const NUM_RESULTS = req.query.numResults;
 
@@ -35,14 +36,13 @@ router.get('/search',(req,res)=>{
             let doubleAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
             let kingAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
             let studioAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
-           
             if (singleAvaliable || doubleAvaliable || kingAvaliable || studioAvaliable){
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
                     street:arr.street,
                     city:arr.city,
-                    price:arr.price.single,
+                    price:arr.price.singlePrice,
                     star_rates:arr.star_rating,
                     guest_rate:arr.guest_rating,
                     img:arr.img[0]
@@ -53,6 +53,7 @@ router.get('/search',(req,res)=>{
         }
 
         resultPack = {
+            pageNumber:pageNumber,
             "lastIndex": startIndex,
             "nextExists": (doc[startIndex] !== undefined) ? true : false,
             "results": result

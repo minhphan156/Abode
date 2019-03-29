@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
@@ -18,11 +18,6 @@ const styles = theme => ({
     display: "flex",
     flexWrap: "wrap",
     opacity: 1
-  },
-  button: {
-    margin: theme.spacing.unit,
-    top: 18,
-    height: 40
   },
   paper: {
     textAlign: "center",
@@ -69,11 +64,11 @@ class SearchWidget extends Component {
       checkOut: this.state.checkOut,
       numberRooms: this.state.numberRooms,
       lastIndex: 0,
-      numResults: 5
+      numResults: 5,
+      pageNumber:1
     };
     this.props.submitQuery(newQuery);
     this.props.saveQuery(newQuery);
-    console.log("searchwidget state testRoom ", newQuery);
   }
 
   onHandleDate(startingDate, endingDate) {
@@ -121,16 +116,13 @@ class SearchWidget extends Component {
               />
             </Paper>
           </Grid>
-          <Link to="/searchResultOverview">
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={this.onSearchClick}
-            >
-              Search
-            </Button>
-          </Link>
+          <Grid item className="buttonSearchContainer">
+            <Link to="/searchResultOverview">
+              <Button class="buttonSearch" primary onClick={this.onSearchClick}>
+                SEARCH
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
       </div>
     );
@@ -151,6 +143,9 @@ const mapStateToProps = state => ({
 //   mapStateToProps,
 //   { saveQuery }
 // )(withStyles(styles)(SearchWidget));
-export default connect(mapStateToProps,{ submitQuery, saveQuery })(withStyles(styles)(SearchWidget));
+export default connect(
+  mapStateToProps,
+  { submitQuery, saveQuery }
+)(withStyles(styles)(SearchWidget));
 
 // connect() --> this connects react component with redux store & action (f.e. saveQuery)
