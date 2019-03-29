@@ -5,6 +5,8 @@ import AnchorLink from "react-anchor-link-smooth-scroll";
 import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { getRoomType } from "../../actions/searchResultActions";
 
 class IndivHotel extends Component {
 
@@ -13,13 +15,17 @@ class IndivHotel extends Component {
     this.state = {
       book: false,
     };
-  this.bookNow = this.bookNow.bind(this)
+  this.bookNow = this.bookNow.bind(this);
+  this.onClick = this.onClick.bind(this);
   }
 
   bookNow(){
     this.setState({book:true})
   }
 
+  onClick(room) {
+    this.props.getRoomType(room);
+  }
   render() {
     const hotelID = this.props.individualHotelData.hotelID;
 
@@ -295,13 +301,14 @@ class IndivHotel extends Component {
                     <th scope="row">Single Room</th>
                     <td>${individualHotelData.price.singlePrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("Single Room")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -310,13 +317,14 @@ class IndivHotel extends Component {
                     <th scope="row">Double Room</th>
                     <td>${individualHotelData.price.doublePrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("Double Room")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -326,13 +334,14 @@ class IndivHotel extends Component {
                     <th scope="row">King Room</th>
                     <td>${individualHotelData.price.kingPrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("King Room")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -341,13 +350,14 @@ class IndivHotel extends Component {
                     <th scope="row">Studio Suite</th>
                     <td>${individualHotelData.price.studioPrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={() => this.onClick("Studio Suite")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book Now
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -366,7 +376,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { getRoomType }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"

@@ -18,6 +18,7 @@ router.get('/search',(req,res)=>{
     };
     var numberRooms = parseInt(req.query.numberRooms);
     var startIndex = req.query.lastIndex;
+    var pageNumber = req.query.pageNumber;
 
     const NUM_RESULTS = req.query.numResults;
 
@@ -52,6 +53,7 @@ router.get('/search',(req,res)=>{
         }
 
         resultPack = {
+            pageNumber:pageNumber,
             "lastIndex": startIndex,
             "nextExists": (doc[startIndex] !== undefined) ? true : false,
             "results": result
