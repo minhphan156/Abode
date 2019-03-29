@@ -1,10 +1,12 @@
 import axios from "axios";
+
 import {
   GET_PROFILE,
   GET_ERRORS,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  GET_HISTORY
 } from "./types";
 
 // Get current profile
@@ -39,6 +41,29 @@ export const createProfile = (profileData, history) => dispatch => {
     );
 };
 
+
+// Get User's Travel/Booking History
+export const getHistory = () => dispatch => {
+  // dispatch(setProfileLoading());
+  // axios
+  //   .get("/api/profile/history")
+  //   .then(res =>
+  //     dispatch({
+  //       type: GET_HISTORY,
+  //       payload: res.data
+  //     })
+  //   )
+  //   .catch(err =>
+  //     dispatch({
+  //       type: GET_HISTORY,
+  //       payload: {}
+  //     })
+  //   );
+};
+
+
+
+///// IS THIS NEEDED? I THINK WE CAN DELETE IT. IT MIGHT BE RELATED TO YUTA'S STORY FOR THE BOOKING REDUX
 export const createDelivery = (profileData, history) => dispatch => {
   axios
     .post("/api/profile", profileData)

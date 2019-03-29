@@ -3,7 +3,7 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
-import { getCurrentProfile } from "../../actions/profileActions";
+import { getCurrentProfile, getHistory } from "../../actions/profileActions";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
@@ -65,82 +65,15 @@ const styles = theme => ({
 class HistoryOverview extends Component {
   constructor() {
     super();
-    this.state = {
-      history_array: [
-        {
-          img:
-            "https://thumbnails.trvl-media.com/G6DYD561zx1K_xvmgckqNQtLGV0=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/1000000/480000/476800/476728/bc0ee6ed_z.jpg",
-          hotelName: "Paris Las Vegas Hotel and Casino",
-          destination: "Las Vegas, NV",
-          check_in_date: "3/3/2019",
-          check_out_date: "3/5/2019",
-          typeOfRoom: "King",
-          numOfRoom: 1,
-          status: 2,
-          changed: false,
-          new_check_in_date: null,
-          new_check_out_date: null,
-          subtotal: 500.0,
-          discount: 10
-        },
-        {
-          img:
-            "https://thumbnails.trvl-media.com/J1AGkTraZW_d-t9lvAXQlaK_1i8=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/1000000/10000/5400/5338/4bfa1037_z.jpg",
-
-          hotelName: "The M San Diego",
-          destination: "San Diego, CA",
-          check_in_date: "4/6/2019",
-          check_out_date: "12/22/2019",
-          typeOfRoom: "Double",
-          numOfRoom: 2,
-          status: 1,
-          changed: true,
-          new_check_in_date: "4/7/2019",
-          new_check_out_date: "4/12/2019",
-          subtotal: 200,
-          discount: 5
-        },
-        {
-          img:
-            "https://thumbnails.trvl-media.com/1rr9dDu6O4nXG3_MmKPxFgNugVQ=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/9000000/8650000/8647200/8647196/d4ba619c_z.jpg",
-
-          hotelName: "Hilton Garden Inn",
-          destination: "Miami, FL",
-
-          check_in_date: "1/3/2019",
-          check_out_date: "1/7/2019",
-          typeOfRoom: "Suite",
-          numOfRoom: 1,
-          status: 3,
-          changed: false,
-          new_check_in_date: null,
-          new_check_out_date: null,
-          subtotal: 150,
-          discount: 0
-        },
-        {
-          img:
-            "https://thumbnails.trvl-media.com/F-5J99S3Q10DXTi-KcLqt2ASOvI=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/1000000/30000/20600/20547/9ebcf481_z.jpg",
-
-          hotelName: "Four Seasons Downtown SF",
-          destination: "San Francisco, CA",
-
-          check_in_date: "6/3/2019",
-          check_out_date: "6/10/2019",
-          typeOfRoom: "King",
-          numOfRoom: 1,
-          status: 4,
-          changed: false,
-          new_check_in_date: null,
-          new_check_out_date: null,
-          subtotal: 100,
-          discount: 0
-        }
-      ]
-    };
+    this.state = {};
   }
   componentDidMount() {
     this.props.getCurrentProfile();
+    this.props.getHistory();
+  }
+  componentWillMount(){
+    this.props.getHistory();
+
   }
   componentWillReceiveProps(nextProps) {
     // if (nextProps.profile.profile) {
@@ -153,14 +86,16 @@ class HistoryOverview extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, profile } = this.props;
     let bookings;
     let displayChangeChip;
     let displayRegularChip;
     let dateOverview;
     let cancelAndChangeButtons;
 
-    bookings = this.state.history_array.map(booking => {
+    // bookings = this.state.history_array.map(booking => {
+
+      bookings = this.props.profile.history.map(booking => {
       displayChangeChip = null;
       displayRegularChip = null;
       dateOverview = null;
@@ -485,13 +420,15 @@ class HistoryOverview extends Component {
 HistoryOverview.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  history: state.history
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, getHistory }
 )(withStyles(styles)(HistoryOverview));
