@@ -29,7 +29,6 @@ const styles = theme => ({
     maxWidth: 330,
     minWidth: 300,
     maxHeight: 50
-    // margin: -10
   },
   paddingDense: {
     paddingTop: 0,
@@ -60,10 +59,7 @@ const styles = theme => ({
     color: "#FFA500"
   },
   testtest: {
-    // backgroundColor: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%),
     background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
-
-    // /#e7f2fe, #cfe6fe
   }
 });
 
@@ -268,7 +264,7 @@ class HistoryOverview extends Component {
                 }}
                 className={classes.tableNoBorder}
               >
-                {booking.new_check_in_date}
+                {booking.new_check_out_date}
               </TableCell>
             </TableRow>
           </Table>
@@ -336,13 +332,7 @@ class HistoryOverview extends Component {
           }}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Grid
-              container
-              spacing={0}
-              direction="row"
-              justify="space-evenly"
-              // alignItems="baseline"
-            >
+            <Grid container spacing={0} direction="row" justify="space-evenly">
               <Grid item lg={2}>
                 <img
                   className="historyHotelImage"
