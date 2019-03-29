@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 
 // import "typeface-roboto";
-import { Grid } from "@material-ui/core";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import moment from "moment";
 import Card from "@material-ui/core/Card";
@@ -14,13 +10,9 @@ import CardContent from "@material-ui/core/CardContent";
 export class BookingInfo extends Component {
   render() {
     const time = moment().format("dddd, MMMM Do YYYY");
-    // const individualHotelData = this.props.individualHotelData.individualHotelData;;
+    
     const { individualHotelData } = this.props.individualHotelData;
-    // console.log(
-    //   "booking info query ",
-    //   JSON.stringify(this.props.query.searchQuery)
-    // );
-    // console.log("booking info query ", this.props.query.searchQuery);
+   
     const query = this.props.query;
 
     const roomSelection = this.props.roomSelection;
