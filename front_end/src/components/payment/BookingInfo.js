@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import "./PaymentPage.css";
 
 export class BookingInfo extends Component {
   render() {

@@ -72,3 +72,19 @@ payment-span.price {
     margin-bottom: 20px;
   }
 }
+
+.PaymentTitle {
+  color: #0c4b78;
+  font-size: 34px;
+  font-weight: 900;
+  /* text-align: center; */
+}
+
+.PaymentSmallTitle {
+  font-size: 26px;
+  font-weight: 600;
+  /* position: relative; */
+  /* top: 10px; */
+  /* margin-top: "5%"; */
+  color: #808080;
+}

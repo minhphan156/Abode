@@ -9,6 +9,11 @@ class PaymentPage extends Component {
     super();
     this.changeToConfirmation = this.changeToConfirmation.bind(this);
   }
+
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  };
+
   changeToConfirmation = () => {
     this.props.history.push("/confirmation");
   };
