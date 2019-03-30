@@ -8,8 +8,7 @@ import {
   Checkbox,
   FormControlLabel,
   TablePagination,
-  CardHeader,
-  Button
+  CardHeader
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
@@ -17,7 +16,6 @@ import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
-import { submitQuery, saveQuery } from "../../actions/searchActions";
 
 const styles = {
   rating: { float: "left", width: "100%" },
@@ -33,10 +31,9 @@ class searchResultOverview extends Component {
     let { classes } = this.props;
     let hotels;
     const queryResult = this.props.query.hotelQuery;
-    const hotelResult = this.props.query.hotelQuery.results;
     const searchQuery = this.props.query.searchQuery;
-    if (hotelResult.length) {
-      hotels = hotelResult.map(hotel => {
+    if (queryResult.length) {
+      hotels = queryResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
             <CardContent>
@@ -210,62 +207,13 @@ class searchResultOverview extends Component {
           </Grid>
           <Grid item xs={7}>
             {hotels}
-
-            {/* Pagination, please fix the style */}
-            <Grid item sm={12}>
-              <div
-                className="row"
-                style={{
-                  marginBottom: 40,
-                  justifyContent: "flex-end",
-                  marginRight: -1
-                }}
-              >
-                {/* previous page button */}
-                <div classNmae="col-4" style={{ align: "left" }}>
-                  {queryResult.pageNumber === "1" ? (
-                    <button className="btn btn-outline-danger" disabled>
-                      Previous
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() =>
-                        this.goToPreviousPage(queryResult, searchQuery)
-                      }
-                    >
-                      Previous
-                    </button>
-                  )}
-                </div>
-                {/* show current page */}
-                <div
-                  classNmae="col-4"
-                  style={{ align: "center", marginLeft: 50, marginRight: 50 }}
-                >
-                  <h6 style={{ fontWeight: "bold" }}>
-                    {queryResult.pageNumber}
-                  </h6>
-                </div>
-                {/* Next page button */}
-                <div classNmae="col-4" style={{ align: "right" }}>
-                  {queryResult.nextExists ? (
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() =>
-                        this.goToNextPage(queryResult, searchQuery)
-                      }
-                    >
-                      Next
-                    </button>
-                  ) : (
-                    <button className="btn btn-outline-danger" disabled>
-                      Next
-                    </button>
-                  )}
-                </div>
-              </div>
-            </Grid>
+            <TablePagination
+              style={{ float: "right" }}
+              rowsPerPageOptions={[5, 10, 25]}
+              count={100}
+              page={9}
+              rowsPerPage={10}
+            />
           </Grid>
         </Grid>
       </div>
@@ -278,5 +226,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getIndividualHotelResult, submitQuery, saveQuery }
+  { getIndividualHotelResult }
 )(withStyles(styles)(searchResultOverview));
