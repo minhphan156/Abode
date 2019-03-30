@@ -128,7 +128,6 @@ router.get('/search',(req,res)=>{
             }
             startIndex++;
         }
-        console.log(result);
         resultPack = {
             "lastIndex": startIndex,
             "nextExists": (doc[startIndex] !== undefined) ? true : false,
