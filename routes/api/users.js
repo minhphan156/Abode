@@ -149,24 +149,5 @@ router.get(
     });
   }
 );
-
-// @route GET api/users/update
-// @desc Storing new customer into customer db and updating user 
-router.get("/update", (req, res)=>
-{
-  var email = "empty for now?";
-  const newCustomer = new Customer({
-    Firstname: req.bodyfirstname,
-    Lastname: req.body.lastname,
-    email: email
-  })
-  newCustomer.save().then(customer=>{
-    customerID = customer._id
-    registUser()
-  })
-
-
-})
-
 // export so server.js can use this
 module.exports = router;
