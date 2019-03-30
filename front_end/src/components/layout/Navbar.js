@@ -11,9 +11,7 @@ import NavbarMenu from "./NavbarMenu";
 import "./navbar.css";
 
 // Material-UI Imports Below
-import { Button, withStyles, Grid } from "@material-ui/core";
-
-let styles = {};
+import { Button, Grid } from "@material-ui/core";
 
 class Navbar extends Component {
   constructor() {
@@ -28,8 +26,6 @@ class Navbar extends Component {
   }
 
   render() {
-    let { classes } = this.props;
-
     // Markup shown on the right hand side of Navbar when user is GUEST.
     let guestMarkUp = (
       <Grid
@@ -165,4 +161,4 @@ let mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser, submitQuery, clearCurrentProfile }
-)(withStyles(styles)(Navbar));
+)(Navbar);

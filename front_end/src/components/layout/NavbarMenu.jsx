@@ -50,8 +50,7 @@ export default (class NavbarMenu extends React.Component {
         >
           <MenuItem>{this.props.userEmail}</MenuItem>
 
-          {/* <Link to="/history" className="navbarMenuButtons"> */}
-          <Link to="/NOThistory" className="navbarMenuButtons">
+          <Link to="/history" className="navbarMenuButtons">
             <MenuItem onClick={this.handleClose}>Booking History</MenuItem>
           </Link>
           <Link to="/rewards" className="navbarMenuButtons">
