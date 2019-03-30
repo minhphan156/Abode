@@ -64,7 +64,6 @@ class SearchWidget extends Component {
       checkOut: this.state.checkOut,
       numberRooms: this.state.numberRooms,
       lastIndex: 0,
-      free_wifi: true,
       numResults: 5
     };
     this.props.submitQuery(newQuery);
