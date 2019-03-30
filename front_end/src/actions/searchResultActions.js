@@ -8,12 +8,12 @@ export const getIndividualHotelResult = hotel => dispatch => {
   axios
     .get("/api/hotel/individual", { params: hotel })
     .then(res => {
-      var hotelInfo = res.data
+      var hotelInfo = res.data;
       Geocode.fromAddress(hotelInfo.street + hotelInfo.city).then(
         response => {
           const { lat, lng } = response.results[0].geometry.location;
           hotelInfo.lat = lat;
-          hotelInfo.alt = lng
+          hotelInfo.alt = lng;
           dispatch({
             type: GET_INDIVIDUAL_HOTEL,
             payload: hotelInfo

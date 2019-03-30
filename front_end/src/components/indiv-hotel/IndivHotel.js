@@ -5,25 +5,21 @@ import AnchorLink from "react-anchor-link-smooth-scroll";
 import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class IndivHotel extends Component {
-
-  constructor(){
+  constructor() {
     super();
-    this.state = {
-      book: false,
-    };
-  this.bookNow = this.bookNow.bind(this)
+    this.state = {};
+    this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
 
-  bookNow(){
-    this.setState({book:true})
+  saveBookingInfo(roomType) {
+    // IN HERE WE SAVE ALL THE INFO WE NEED FOR THE BOOKING INTO REDUX
   }
 
   render() {
     const hotelID = this.props.individualHotelData.hotelID;
-
-    if(this.state.book) {return( <Redirect to="/confirmation"></Redirect> )}
 
     const { individualHotelData } = this.props.individualHotelData;
     return (
@@ -281,7 +277,10 @@ class IndivHotel extends Component {
           </div>
 
           <section id="table1">
-            <table class="table table-bordered" style={{ marginTop: "3%", position:'relative', z_index:100 }}>
+            <table
+              class="table table-bordered"
+              style={{ marginTop: "3%", position: "relative", z_index: 100 }}
+            >
               <thead>
                 <tr>
                   <th>Room Type</th>
@@ -295,13 +294,14 @@ class IndivHotel extends Component {
                     <th scope="row">Single Room</th>
                     <td>${individualHotelData.price.singlePrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={this.saveBookingInfo("Single")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book Single Room
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -310,13 +310,14 @@ class IndivHotel extends Component {
                     <th scope="row">Double Room</th>
                     <td>${individualHotelData.price.doublePrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={this.saveBookingInfo("Double")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book Double Room
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -326,13 +327,14 @@ class IndivHotel extends Component {
                     <th scope="row">King Room</th>
                     <td>${individualHotelData.price.kingPrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={this.saveBookingInfo("King")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book King Room
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
@@ -341,13 +343,14 @@ class IndivHotel extends Component {
                     <th scope="row">Studio Suite</th>
                     <td>${individualHotelData.price.studioPrice}</td>
                     <td>
-                      <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      onClick={this.bookNow}
+                      <Link
+                        to="/payment"
+                        onClick={this.saveBookingInfo("Studio")}
                       >
-                        Book Now
-                      </button>
+                        <button type="button" class="btn btn-success h-100">
+                          Book Studio Suite
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ) : null}
