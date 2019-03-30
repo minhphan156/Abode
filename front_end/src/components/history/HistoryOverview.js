@@ -63,26 +63,12 @@ const styles = theme => ({
 });
 
 class HistoryOverview extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
   componentDidMount() {
     this.props.getCurrentProfile();
     this.props.getHistory();
   }
-  componentWillMount(){
+  componentWillMount() {
     this.props.getHistory();
-
-  }
-  componentWillReceiveProps(nextProps) {
-    // if (nextProps.profile.profile) {
-    //   const profile = nextProps.profile.profile;
-    //   // Set history_array
-    //   this.setState({
-    //     history_array: profile.history
-    //   });
-    // }
   }
 
   render() {
@@ -93,9 +79,7 @@ class HistoryOverview extends Component {
     let dateOverview;
     let cancelAndChangeButtons;
 
-    // bookings = this.state.history_array.map(booking => {
-
-      bookings = this.props.profile.history.map(booking => {
+    bookings = this.props.profile.history.map(booking => {
       displayChangeChip = null;
       displayRegularChip = null;
       dateOverview = null;

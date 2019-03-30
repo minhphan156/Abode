@@ -41,7 +41,6 @@ export const createProfile = (profileData, history) => dispatch => {
     );
 };
 
-
 // Get User's Travel/Booking History
 export const getHistory = () => dispatch => {
   // dispatch(setProfileLoading());
@@ -59,21 +58,6 @@ export const getHistory = () => dispatch => {
   //       payload: {}
   //     })
   //   );
-};
-
-
-
-///// IS THIS NEEDED? I THINK WE CAN DELETE IT. IT MIGHT BE RELATED TO YUTA'S STORY FOR THE BOOKING REDUX
-export const createDelivery = (profileData, history) => dispatch => {
-  axios
-    .post("/api/profile", profileData)
-    .then(res => history.push("/receipt"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
 };
 
 // Delete Account and Profile
