@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { submitQuery } from "../../actions/queryActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
