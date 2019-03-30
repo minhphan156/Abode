@@ -127,168 +127,99 @@ class searchResultOverview extends Component {
         );
       });
     }
+
+    let pagination = (
+      <Grid item>
+        <TablePagination
+          style={{ float: "right" }}
+          rowsPerPageOptions={[5, 10, 25]}
+          count={100}
+          page={9}
+          rowsPerPage={10}
+        />
+      </Grid>
+    );
+
     return (
-      <div>
-        <Grid container direction={"column"} justify="center">
-          <Grid item md = {10}>
-            <SearchWidget />
-          </Grid>
-          <Grid item md = {8}>
-            <Card style={{padding: 10, marginBottom: 10}}>
-              <Typography>Sort By:</Typography>
-            </Card>
-          </Grid>
-          <Grid item direction={"row"}>
-            <Grid item direction={"column"}>
-              <Grid item md={2}>
-                <Card style={{ marginBottom: 10 }}>
-                  <div style={{ margin: 20 }}>
-                    <Typography>Star Rating</Typography>
-                    <FormControlLabel
-                      control={<Checkbox value="star1" />}
-                      label="1 star"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="star2" />}
-                      label="2 stars"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="star3" />}
-                      label="3 stars"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="star4" />}
-                      label="4 stars"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="star5" />}
-                      label="5 stars"
-                      className={classes.rating}
-                    />
-                  </div>
-                </Card>
-              </Grid>
-              <Grid item md={2}>
-                <Card style={{ marginBottom: 10 }}>
-                  <div style={{ margin: 20 }}>
-                    <Typography>Review Score</Typography>
-                    <FormControlLabel
-                      control={<Checkbox value="Awesome" />}
-                      label="Awesome: 9+"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="Verygood" />}
-                      label="Very good: 8+"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="Good" />}
-                      label="Good: 7+"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="Pleasant" />}
-                      label="Pleasant: 6+"
-                      className={classes.rating}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="NoRating" />}
-                      label="No rating"
-                      className={classes.rating}
-                    />
-                  </div>
-                </Card>
-              </Grid>
+      <div style={{marginLeft: "10%", marginRight: "10%"}}>
+        <SearchWidget />
+        <Grid container direction="flow" spacing={8}>
+          <Grid item md={2} direction="column">
+            <Grid item>
+              <Card style={{ marginBottom: 10 }}>
+                <div style={{ margin: 20 }}>
+                  <Typography>Star Rating</Typography>
+                  <FormControlLabel
+                    control={<Checkbox value="star1" />}
+                    label="1 star"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="star2" />}
+                    label="2 stars"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="star3" />}
+                    label="3 stars"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="star4" />}
+                    label="4 stars"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="star5" />}
+                    label="5 stars"
+                    className={classes.rating}
+                  />
+                </div>
+              </Card>
+            </Grid>
+            <Grid item>
+              <Card style={{ marginBottom: 10 }}>
+                <div style={{ margin: 20 }}>
+                  <Typography>Review Score</Typography>
+                  <FormControlLabel
+                    control={<Checkbox value="Awesome" />}
+                    label="Awesome: 9+"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="Verygood" />}
+                    label="Very good: 8+"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="Good" />}
+                    label="Good: 7+"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="Pleasant" />}
+                    label="Pleasant: 6+"
+                    className={classes.rating}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="NoRating" />}
+                    label="No rating"
+                    className={classes.rating}
+                  />
+                </div>
+              </Card>
             </Grid>
           </Grid>
-        </Grid>
-
-        {/* TODO: Add sort markup */}
-        <Grid container spacing={24} justify="center">
-          <Grid item xs={10} style={{ marginLeft: 30 }}>
-            <SearchWidget />
-          </Grid>
-          <Grid item xs={10}>
-            <Card style={{padding: 10, marginBottom: 10}}>
-              <Typography>Sort By:</Typography>
-            </Card>
-          </Grid>
-          <Grid item xs={2} style={{ marginLeft: 30 }}>
-            <Card style={{ marginBottom: 10 }}>
-              <div style={{ margin: 20 }}>
-                <Typography>Star Rating</Typography>
-                <FormControlLabel
-                  control={<Checkbox value="star1" />}
-                  label="1 star"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="star2" />}
-                  label="2 stars"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="star3" />}
-                  label="3 stars"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="star4" />}
-                  label="4 stars"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="star5" />}
-                  label="5 stars"
-                  className={classes.rating}
-                />
-              </div>
-            </Card>
-            <Card style={{ marginBottom: 10 }}>
-              <div style={{ margin: 20 }}>
-                <Typography>Review Score</Typography>
-                <FormControlLabel
-                  control={<Checkbox value="Awesome" />}
-                  label="Awesome: 9+"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="Verygood" />}
-                  label="Very good: 8+"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="Good" />}
-                  label="Good: 7+"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="Pleasant" />}
-                  label="Pleasant: 6+"
-                  className={classes.rating}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="NoRating" />}
-                  label="No rating"
-                  className={classes.rating}
-                />
-              </div>
-            </Card>
-          </Grid>
-          <Grid item xs={7}>
-            {hotels}
-            <TablePagination
-              style={{ float: "right" }}
-              rowsPerPageOptions={[5, 10, 25]}
-              count={100}
-              page={9}
-              rowsPerPage={10}
-            />
+          <Grid item md={10} direction="column">
+            <Grid item>
+              <Card style={{padding: 10, marginBottom: 10}}>
+                <Typography>Sort By:</Typography>
+              </Card>
+            </Grid>
+            <Grid item direction="flow">
+              {hotels}
+            </Grid>
+            {hotelQuery.length ? pagination : (<div/>)}
           </Grid>
         </Grid>
       </div>
@@ -308,3 +239,86 @@ export default connect(
   mapStateToProps,
   { getIndividualHotelResult }
 )(withStyles(styles)(searchResultOverview));
+
+{/* // <Grid container spacing={24} justify="center">
+        //   <Grid item xs={10} style={{ marginLeft: 30 }}>
+        //     <SearchWidget />
+        //   </Grid>
+        //   <Grid item xs={10}>
+        //     <Card style={{padding: 10, marginBottom: 10}}>
+        //       <Typography>Sort By:</Typography>
+        //     </Card>
+        //   </Grid>
+        //   <Grid item xs={2} style={{ marginLeft: 30 }}>
+        //     <Card style={{ marginBottom: 10 }}>
+        //       <div style={{ margin: 20 }}>
+        //         <Typography>Star Rating</Typography>
+        //         <FormControlLabel
+        //           control={<Checkbox value="star1" />}
+        //           label="1 star"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="star2" />}
+        //           label="2 stars"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="star3" />}
+        //           label="3 stars"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="star4" />}
+        //           label="4 stars"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="star5" />}
+        //           label="5 stars"
+        //           className={classes.rating}
+        //         />
+        //       </div>
+        //     </Card>
+        //     <Card style={{ marginBottom: 10 }}>
+        //       <div style={{ margin: 20 }}>
+        //         <Typography>Review Score</Typography>
+        //         <FormControlLabel
+        //           control={<Checkbox value="Awesome" />}
+        //           label="Awesome: 9+"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="Verygood" />}
+        //           label="Very good: 8+"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="Good" />}
+        //           label="Good: 7+"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="Pleasant" />}
+        //           label="Pleasant: 6+"
+        //           className={classes.rating}
+        //         />
+        //         <FormControlLabel
+        //           control={<Checkbox value="NoRating" />}
+        //           label="No rating"
+        //           className={classes.rating}
+        //         />
+        //       </div>
+        //     </Card>
+        //   </Grid>
+        //   <Grid item xs={7}>
+        //     {hotels}
+        //     <TablePagination
+        //       style={{ float: "right" }}
+        //       rowsPerPageOptions={[5, 10, 25]}
+        //       count={100}
+        //       page={9}
+        //       rowsPerPage={10}
+        //     />
+        //   </Grid>
+        // </Grid> */}
