@@ -159,5 +159,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, submitQuery, clearCurrentProfile }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);
