@@ -7,11 +7,14 @@ import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
+import moment from "moment";
 
 class IndivHotel extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      daysOfStay: null
+    };
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
 
@@ -26,7 +29,10 @@ class IndivHotel extends Component {
       checkIn: this.props.query.searchQuery.checkIn,
       checkOut: this.props.query.searchQuery.checkOut,
       numRooms: this.props.query.searchQuery.numberRooms,
-      subtotal: price,
+      subtotal:
+        price *
+        this.props.query.searchQuery.numberRooms *
+        this.state.daysOfStay,
       discounts: 999, // needs to be updated!!!
       hotelImage: this.props.individualHotelData.individualHotelData.img[0]
     };
@@ -34,9 +40,15 @@ class IndivHotel extends Component {
   }
 
   render() {
-    const hotelID = this.props.individualHotelData.hotelID;
-
     const { individualHotelData } = this.props.individualHotelData;
+    const { searchQuery } = this.props.query;
+
+    var duration = moment.duration(
+      searchQuery.checkOut.diff(searchQuery.checkIn)
+    );
+
+    this.state.daysOfStay = duration.asDays();
+
     return (
       <div>
         <div className="d-flex justify-content-center mt-3">
