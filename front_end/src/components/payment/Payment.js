@@ -68,12 +68,12 @@ class Payment extends Component {
       roomType: this.props.bookingData.tempBookingData.roomType,
       checkIn: this.props.bookingData.tempBookingData.checkIn,
       checkOut: this.props.bookingData.tempBookingData.checkOut,
-      numberRooms: this.props.bookingData.tempBookingData.numberRooms,
+      numberRooms: this.props.bookingData.tempBookingData.numRooms,
       Firstname: "minh",
       Lastname: "and sandro",
       email: "email",
       subtotal: this.props.bookingData.tempBookingData.subtotal,
-      discount: this.props.bookingData.tempBookingData.discount,
+      discount: this.props.bookingData.tempBookingData.discounts,
       rewardPointsUsed: this.state.rewardPointsUsed,
       rewardPointsEarned: this.state.rewardPointsEarned
 
