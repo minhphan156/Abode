@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const checkAvalibity = require("../../validation/checkAvailableHotels");
+const checkAvailable = require("../../validation/checkAvailableHotels");
 var checkAvailability = require('../../validation/checkAvailibility.js')
-
 const Hotel = require("../../models/Hotel");
-const Booking = require("../../models/booking");
 
 // @route GET api/hotel/search
 // @desc Search Overview with Sorting and Filtering
@@ -61,7 +59,7 @@ router.get('/search',(req,res)=>{
     if (typeof price_high == 'undefined' || price_high == '')
         price_high = Number.POSITIVE_INFINITY
     if (req.query.free_wifi == 1){
-        free_wifi = new RegExp('free wifi',"ig");}
+        free_wifi = new RegExp('free(.*)wifi',"ig");}
     else
         free_wifi = new RegExp(' ',"ig");
     if (req.query.pool == 1) 
@@ -69,15 +67,15 @@ router.get('/search',(req,res)=>{
     else
         pool = new RegExp(' ',"ig");
     if (req.query.free_parking == 1)
-        free_parking = new RegExp('free parking',"ig");
+        free_parking = new RegExp('free(.*)parking',"ig");
     else
         free_parking = new RegExp(' ', "ig");
     if (req.query.pet_friendly == 1)
-        pet_friendly = new RegExp('pet friendly',"ig");
+        pet_friendly = new RegExp('pet(.*)friendly',"ig");
     else
         pet_friendly = new RegExp(' ', "ig");
     if (req.query.free_breakfast == 1)
-        free_breakfast = new RegExp('free breakfast',"ig");
+        free_breakfast = new RegExp('free(.*)breakfast',"ig");
     else
         free_breakfast = new RegExp(' ', "ig");
     //End Filter
@@ -90,29 +88,22 @@ router.get('/search',(req,res)=>{
     var startIndex = req.query.lastIndex;
     const NUM_RESULTS = req.query.numResults;
     const regex = new RegExp(searchKey,"ig");
-    //.split("").join('*')
-    //console.log(regex)
     Hotel.find({
-        amenities: free_wifi,
-        amenities: pool,
-        amenities: free_parking,
-        amenities: pet_friendly,
-        amenities: free_breakfast,
+        amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
         $and:[{'price.singlePrice': {$gt: price_low}}, {'price.singlePrice': {$lt: price_high}}],
         star_rating: {$gt: star_rating},
         guest_rating: {$gt: review_score},
         $or:[{name:regex}, {city:regex},{airports:regex}]
     }).sort(sortByObject).then((doc,err)=>{
         if(err) res.status(400).json(err);
-        // var startIndex = 5 * pageNumber - 5;
         var result = [];
         let bookingID = "bookid"
         while(result.length < NUM_RESULTS && doc[startIndex] !== undefined){
             var arr = doc[startIndex]
-            let singleAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.single, date, numberRooms, bookingID);
-            let doubleAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
-            let kingAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
-            let studioAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
+            let singleAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.single, date, numberRooms, bookingID);
+            let doubleAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
+            let kingAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
+            let studioAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
             if (singleAvaliable || doubleAvaliable || kingAvaliable || studioAvaliable){
                 item = {
                     name:arr.name,
