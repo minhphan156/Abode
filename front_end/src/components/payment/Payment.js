@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
-import { setPaymentInfo } from "../../actions/paymentAction";
+import { submitBooking } from "../../actions/bookingActions";
+
 import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { CreditCard, Room } from "@material-ui/icons/";
@@ -58,33 +59,45 @@ class Payment extends Component {
       });
     }
   }
+
   onSubmit(e) {
     e.preventDefault();
 
-    const paymentData = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      address1: this.state.address1,
-      address2: this.state.address2,
-      email: this.state.email,
-      city: this.state.city,
-      aState: this.setState.aState,
-      zip: this.state.zip,
-      country: this.state.country,
-      nameOnCard: this.state.nameOnCard,
-      cardNumber: this.state.cardNumber,
-      expMonth: this.state.expMonth,
-      expYear: this.state.expYear,
-      cvv: this.state.cvv
+    const bookingData = {
+      hotelID: this.props.individualHotelData.individualHotelData.hotelID,
+      roomType: this.props.bookingData.tempBookingData.roomType,
+      checkIn: this.props.bookingData.tempBookingData.checkIn,
+      checkOut: this.props.bookingData.tempBookingData.checkOut,
+      numberRooms: this.props.bookingData.tempBookingData.numberRooms,
+      Firstname: "minh",
+      Lastname: "and sandro",
+      email: "email",
+      subtotal: this.props.bookingData.tempBookingData.subtotal,
+      discount: this.props.bookingData.tempBookingData.discount,
+      rewardPointsUsed: this.state.rewardPointsUsed,
+      rewardPointsEarned: this.state.rewardPointsEarned
+
+      // hotelID: this.props.individualHotelData.individualHotelData.hotelID,
+      // roomType: this.props.bookingData.tempBookingData.roomType,
+      // checkIn: this.props.bookingData.tempBookingData.checkIn,
+      // checkOut: this.props.bookingData.tempBookingData.checkOut,
+      // numberRooms: this.props.bookingData.tempBookingData.numberRooms,
+      // Firstname: this.state.firstname,
+      // Lastname: this.state.lastName,
+      // email: this.state.email,
+      // subtotal: this.props.bookingData.tempBookingData.subtotal,
+      // discount: this.props.bookingData.tempBookingData.discount,
+      // rewardPointsUsed: this.state.rewardPointsUsed,
+      // rewardPointsEarned: this.state.rewardPointsEarned
     };
-    this.props.setPaymentInfo(paymentData);
-    this.props.changeToConfirmation();
+    console.log("HIST IN PAYMENT: " + this.props.history);
+    this.props.submitBooking(bookingData, this.props.history);
+    // this.props.registerUser(newUser, this.props.history); // second para to route to other page
   }
 
   render() {
-    const { individualHotelData } = this.props.individualHotelData;
-    const query = this.props.query;
-    const roomSelection = this.props.roomSelection;
+    const { tempBookingData } = this.props.bookingData;
+
     const { classes } = this.props;
 
     return (
@@ -92,7 +105,7 @@ class Payment extends Component {
         <Grid>
           <div style={{ marginLeft: "8%", marginTop: "5%" }}>
             <h3 className="PaymentSmallTitle">Your Stay at</h3>
-            <h4 className="PaymentTitle">{individualHotelData.name}</h4>
+            <h4 className="PaymentTitle">{tempBookingData.name}</h4>
           </div>
 
           <form onSubmit={this.onSubmit}>
@@ -273,16 +286,13 @@ Payment.PropTypes = {
 };
 
 const mapStateToProps = state => ({
-  individualHotelData: state.individualHotelData,
-  query: state.query,
-  roomSelection: state.roomSelection
+  bookingData: state.bookingData,
+  individualHotelData: state.individualHotelData
 });
 
 export default injectStripe(
   connect(
     mapStateToProps,
-    { setPaymentInfo }
+    { submitBooking }
   )(withStyles(styles)(Payment))
 );
-
-// export default connect(    mapStateToProps,    { readyLanding, setLandingStatus }  )(withStyles(styles)(Landing));

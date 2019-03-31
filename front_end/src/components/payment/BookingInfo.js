@@ -8,13 +8,12 @@ import "./PaymentPage.css";
 
 export class BookingInfo extends Component {
   render() {
-    const time = moment().format("dddd, MMMM Do YYYY");
+    const { tempBookingData } = this.props.bookingData;
 
-    const { individualHotelData } = this.props.individualHotelData;
-
-    const query = this.props.query;
-
-    const roomSelection = this.props.roomSelection;
+    var duration = moment.duration(
+      tempBookingData.checkOut.diff(tempBookingData.checkIn)
+    );
+    var days = duration.asDays();
 
     return (
       <React.Fragment>
@@ -22,57 +21,59 @@ export class BookingInfo extends Component {
         <br />
         <Paper style={{ margin: "10%", backgroundColor: "#e3ecf7" }}>
           <div>
-            <img src={individualHotelData.img[0]} alt="image" />
+            <img src={tempBookingData.hotelImage} alt="image" />
           </div>
           <h4
             className="display-4 test-left"
             style={{ marginTop: "5%", fontSize: 14, fontWeight: "bold" }}
           >
-            {individualHotelData.name}
+            {tempBookingData.name}
           </h4>
           <h5
             className="display-4 test-left"
             style={{ fontSize: 14, color: "#808080" }}
           >
-            {individualHotelData.street}, {individualHotelData.city}
+            {tempBookingData.street}, {tempBookingData.city}
           </h5>
 
           <Card style={{ marginTop: "2%" }}>
             <CardContent>
               <div className=".payment-row">
                 <p style={{ fontWeight: "bold" }}>Check-in: </p>
-                {/* {this.props.query.searchQuery.destinationName} */}
-                {/* <p> {query.searchQuery.checkIn.format("dddd, MMMM Do YYYY")}</p> */}
+                <p> {tempBookingData.checkIn.format("dddd, MMMM Do YYYY")}</p>
               </div>
               <div className=".payment-row">
                 <p style={{ fontWeight: "bold" }}>Check-out: </p>
-                <p>
-                  {" "}
-                  {/* {query.searchQuery.checkOut.format("dddd, MMMM Do YYYY")} */}
-                </p>
+                <p>{tempBookingData.checkOut.format("dddd, MMMM Do YYYY")}</p>
               </div>
               <hr />
-              <p>1-night stay</p>
+              <p># of Nights: {days}</p>
             </CardContent>
           </Card>
           <h4 className="text-center">Summary</h4>
           <Card style={{ marginTop: "2%" }}>
             <CardContent>
               <h5 style={{ marginTop: "1%" }}>
-                {/* {query.searchQuery.numberRooms} Room: {roomSelection} */}
+                {tempBookingData.numberRooms} Room: {tempBookingData.roomType}
               </h5>
               <hr />
               <div>
+                <p>Subtotal: $ {tempBookingData.subtotal.toFixed(2)}</p>
                 <p>
-                  {/* {query.searchQuery.checkIn.format("dddd, MMMM Do YYYY")}{" "} */}
-                  $119.20
+                  Taxes and fees (10%) ${" "}
+                  {(tempBookingData.subtotal * 0.1).toFixed(2)}
                 </p>
-                <p>Taxes and fees $19.61</p>
               </div>
             </CardContent>
           </Card>
 
-          <h3 className="text-center">Total to pay now: $138.82</h3>
+          <h3 className="text-center">
+            Total to pay now: ${" "}
+            {(
+              tempBookingData.subtotal * 0.1 +
+              tempBookingData.subtotal
+            ).toFixed(2)}
+          </h3>
           <Card>
             <CardContent>
               <p style={{ margin: "1%", fontWeight: "bold" }}>
@@ -87,9 +88,7 @@ export class BookingInfo extends Component {
 }
 
 const mapStateToProps = state => ({
-  individualHotelData: state.individualHotelData,
-  query: state.query,
-  roomSelection: state.roomSelection
+  bookingData: state.bookingData
 });
 
 export default connect(

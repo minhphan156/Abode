@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { saveBooking } from "../../actions/bookingActions";
 
 class IndivHotel extends Component {
   constructor() {
@@ -14,8 +15,22 @@ class IndivHotel extends Component {
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
 
-  saveBookingInfo(roomType) {
-    // IN HERE WE SAVE ALL THE INFO WE NEED FOR THE BOOKING INTO REDUX
+  saveBookingInfo(roomTypeSelected, price) {
+    // IN HERE WE SAVE ALL THE INFO WE NEED FOR THE PAYMENT PAGE
+
+    let tempBookingInfo = {
+      name: this.props.individualHotelData.individualHotelData.name,
+      street: this.props.individualHotelData.individualHotelData.street,
+      city: this.props.individualHotelData.individualHotelData.city,
+      roomType: roomTypeSelected,
+      checkIn: this.props.query.searchQuery.checkIn,
+      checkOut: this.props.query.searchQuery.checkOut,
+      numRooms: this.props.query.searchQuery.numberRooms,
+      subtotal: price,
+      discounts: 999, // needs to be updated!!!
+      hotelImage: this.props.individualHotelData.individualHotelData.img[0]
+    };
+    this.props.saveBooking(tempBookingInfo);
   }
 
   render() {
@@ -55,7 +70,7 @@ class IndivHotel extends Component {
             className="display-4 test-left"
             style={{ fontSize: 24, color: "#808080" }}
           >
-            {individualHotelData.street}, {individualHotelData.city}, 94128
+            {individualHotelData.street}, {individualHotelData.city}
           </h2>
 
           <div className="row">
@@ -295,8 +310,13 @@ class IndivHotel extends Component {
                     <td>${individualHotelData.price.singlePrice}</td>
                     <td>
                       <Link
+                        onClick={() =>
+                          this.saveBookingInfo(
+                            "single",
+                            individualHotelData.price.singlePrice
+                          )
+                        }
                         to="/payment"
-                        onClick={this.saveBookingInfo("Single")}
                       >
                         <button type="button" class="btn btn-success h-100">
                           Book Single Room
@@ -312,7 +332,12 @@ class IndivHotel extends Component {
                     <td>
                       <Link
                         to="/payment"
-                        onClick={this.saveBookingInfo("Double")}
+                        onClick={() =>
+                          this.saveBookingInfo(
+                            "double",
+                            individualHotelData.price.doublePrice
+                          )
+                        }
                       >
                         <button type="button" class="btn btn-success h-100">
                           Book Double Room
@@ -329,7 +354,12 @@ class IndivHotel extends Component {
                     <td>
                       <Link
                         to="/payment"
-                        onClick={this.saveBookingInfo("King")}
+                        onClick={() =>
+                          this.saveBookingInfo(
+                            "king",
+                            individualHotelData.price.kingPrice
+                          )
+                        }
                       >
                         <button type="button" class="btn btn-success h-100">
                           Book King Room
@@ -345,7 +375,12 @@ class IndivHotel extends Component {
                     <td>
                       <Link
                         to="/payment"
-                        onClick={this.saveBookingInfo("Studio")}
+                        onClick={() =>
+                          this.saveBookingInfo(
+                            "studio",
+                            individualHotelData.price.studioPrice
+                          )
+                        }
                       >
                         <button type="button" class="btn btn-success h-100">
                           Book Studio Suite
@@ -364,12 +399,13 @@ class IndivHotel extends Component {
 }
 
 const mapStateToProps = state => ({
-  individualHotelData: state.individualHotelData
+  individualHotelData: state.individualHotelData,
+  query: state.query
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  { saveBooking }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"

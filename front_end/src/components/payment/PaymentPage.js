@@ -7,22 +7,18 @@ import "./PaymentPage.css";
 class PaymentPage extends Component {
   constructor() {
     super();
-    this.changeToConfirmation = this.changeToConfirmation.bind(this);
   }
 
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };
 
-  changeToConfirmation = () => {
-    this.props.history.push("/confirmation");
-  };
   render() {
     return (
       <div>
         <Grid container>
           <Grid item xs={8}>
-            <Payment changeToConfirmation={this.changeToConfirmation} />
+            <Payment />
           </Grid>
           <Grid item xs={4}>
             <BookingInfo />
