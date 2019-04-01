@@ -103,127 +103,116 @@ class SortBar extends Component {
     };
 
     return (
-      <Card style={{ padding: 10 }} square="false">
-        <Grid
-          container
-          direction="flow"
-          justify={isWidthDown("sm", width) ? "center" : "flex-start"}
-          alignItems="center"
-          spacing={8}
-        >
-          <Grid item xs={12} md="auto">
-            <Grid
-              container
-              justify={isWidthDown("sm", width) ? "center" : "flex-start"}
-            >
-              <Grid item>
-                <Typography variant="subtitle2" className={classes.subtitles}>
-                  Sort By:
-                </Typography>
-              </Grid>
+      <Grid item>
+        <Card style={{ padding: 10, width: "auto" }} square="false">
+          <Grid container spacing={8} xs={12} md="auto" direction="flow" justify={isWidthDown("sm", width) ? "center" : "flex-start"} alignItems="center">
+            <Grid item xs={12} md="auto" justify={isWidthDown("sm", width) ? "center" : "flex-start"}>
+              <Typography variant="subtitle2" className={classes.subtitles}>
+                Sort By:
+              </Typography>
+            </Grid>
+            <Grid item xs={6} md="auto">
+              <Button
+                variant="outlined"
+                onClick={event => {
+                  this.handleClick("category", event);
+                }}
+                className={classes.sortButton}
+              >
+                {parsedSortCategory()}{" "}
+                {Boolean(categoryMenuIsOpen) == true ? (
+                  <ExpandLess />
+                ) : (
+                  <ExpandMore />
+                )}
+              </Button>
+              <Menu
+                anchorEl={categoryMenuIsOpen}
+                open={Boolean(categoryMenuIsOpen)}
+                onClose={event => {
+                  this.handleClose("category", event);
+                }}
+              >
+                <MenuItem
+                  value={categoryMenuIsOpen}
+                  onClick={event => {
+                    this.handleClose("category", event);
+                    handleClickChangeSortCriteria("name", event);
+                  }}
+                  className={classes.sortButton}
+                >
+                  Name
+                </MenuItem>
+                <MenuItem
+                  onClick={event => {
+                    this.handleClose("category", event);
+                    handleClickChangeSortCriteria("price", event);
+                  }}
+                  className={classes.sortButton}
+                >
+                  Price
+                </MenuItem>
+                <MenuItem
+                  onClick={event => {
+                    this.handleClose("category", event);
+                    handleClickChangeSortCriteria("starRating", event);
+                  }}
+                  className={classes.sortButton}
+                >
+                  Star Rating
+                </MenuItem>
+                <MenuItem
+                  onClick={event => {
+                    this.handleClose("category", event);
+                    handleClickChangeSortCriteria("guestRating", event);
+                  }}
+                  className={classes.sortButton}
+                >
+                  Guest Rating
+                </MenuItem>
+              </Menu>
+            </Grid>
+            <Grid item xs={6} md="auto">
+              <Button
+                variant="outlined"
+                onClick={event => {
+                  this.handleClick("order", event);
+                }}
+                className={classes.sortButton}
+              >
+                {parsedSortOrder()}{" "}
+                {orderMenuIsOpen == true ? <ExpandLess /> : <ExpandMore />}
+              </Button>
+              <Menu
+                anchorEl={orderMenuIsOpen}
+                open={Boolean(orderMenuIsOpen)}
+                onClose={event => {
+                  this.handleClose("order", event);
+                }}
+              >
+                <MenuItem
+                  onClick={event => {
+                    this.handleClose("order", event);
+                    handleClickChangeOrder("descending", event);
+                  }}
+                  className={classes.sortButton}
+                >
+                  Descending
+                </MenuItem>
+                <MenuItem
+                  onClick={event => {
+                    this.handleClose("order", event);
+                    handleClickChangeOrder("ascending", event);
+                  }}
+                  className={classes.sortButton}
+                >
+                  Ascending
+                </MenuItem>
+              </Menu>
             </Grid>
           </Grid>
-          <Grid item sm={6} md="auto">
-            <Button
-              variant="outlined"
-              onClick={event => {
-                this.handleClick("category", event);
-              }}
-              className={classes.sortButton}
-            >
-              {parsedSortCategory()}{" "}
-              {Boolean(categoryMenuIsOpen) == true ? (
-                <ExpandLess />
-              ) : (
-                <ExpandMore />
-              )}
-            </Button>
-            <Menu
-              anchorEl={categoryMenuIsOpen}
-              open={Boolean(categoryMenuIsOpen)}
-              onClose={event => {
-                this.handleClose("category", event);
-              }}
-            >
-              <MenuItem
-                value={categoryMenuIsOpen}
-                onClick={event => {
-                  this.handleClose("category", event);
-                  handleClickChangeSortCriteria("name", event);
-                }}
-                className={classes.sortButton}
-              >
-                Name
-              </MenuItem>
-              <MenuItem
-                onClick={event => {
-                  this.handleClose("category", event);
-                  handleClickChangeSortCriteria("price", event);
-                }}
-                className={classes.sortButton}
-              >
-                Price
-              </MenuItem>
-              <MenuItem
-                onClick={event => {
-                  this.handleClose("category", event);
-                  handleClickChangeSortCriteria("starRating", event);
-                }}
-                className={classes.sortButton}
-              >
-                Star Rating
-              </MenuItem>
-              <MenuItem
-                onClick={event => {
-                  this.handleClose("category", event);
-                  handleClickChangeSortCriteria("guestRating", event);
-                }}
-                className={classes.sortButton}
-              >
-                Guest Rating
-              </MenuItem>
-            </Menu>
-          </Grid>
-          <Grid item sm={6} md="auto">
-            <Button
-              variant="outlined"
-              onClick={event => {
-                this.handleClick("order", event);
-              }}
-              className={classes.sortButton}
-            >
-              {parsedSortOrder()}{" "}
-              {orderMenuIsOpen == true ? <ExpandLess /> : <ExpandMore />}
-            </Button>
-            <Menu
-              anchorEl={orderMenuIsOpen}
-              open={Boolean(orderMenuIsOpen)}
-              onClose={event => {
-                this.handleClose("order", event);
-              }}
-            >
-              <MenuItem
-                onClick={event => {
-                  this.handleClose("order", event);
-                  handleClickChangeOrder("ascending", event);
-                }}
-                className={classes.sortButton}
-              >
-                Ascending
-              </MenuItem>
-              <MenuItem
-                onClick={event => {
-                  this.handleClose("order", event);
-                  handleClickChangeOrder("descending", event);
-                }}
-                className={classes.sortButton}
-              >
-                Descending
-              </MenuItem>
-            </Menu>
-          </Grid>
-        </Grid>
-      </Card>
+        </Card>
+      </Grid>
     );
   }
 }

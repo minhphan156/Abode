@@ -50,7 +50,7 @@ class searchResultOverview extends Component {
     this.state = {
       // State used to determine the criteria of which the search results are sorted by.
       sortCategory: "name",
-      sortOrder: "ascending"
+      sortOrder: "descending"
     };
 
     this.handleClickChangeSortCriteria = this.handleClickChangeSortCriteria.bind(
@@ -205,7 +205,7 @@ class searchResultOverview extends Component {
         <SearchWidget />
         <Grid container direction="flow" spacing={8}>
           <FiltersWindow /> {/* xs={12} md={2} */}
-          <Grid item container xs={12} md={10} direction="column" spacing={8}>
+          <Grid item xs={12} md="auto" direction="column" spacing={0}>
             <SortBar
               sortCategory={this.state.sortCategory}
               sortOrder={this.state.sortOrder}
