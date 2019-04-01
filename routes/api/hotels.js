@@ -7,30 +7,23 @@ var checkAvailability = require('../../validation/checkAvailibility.js')
 const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 
-// just example for how to start
-// everything in this 
-// write coments for you api call like /api/hotel/*
-// like below is /api/hotel/searchdo
-// router.get('/searchdo',(req,res)=>{
-//     console.log("hotle.js")
-// })
-// router.post('/something',(res,req)=>{
-// })
-
 // @route GET api/hotel/search
 // @desc Search Overview
 router.get('/search',(req,res)=>{
-    var searchKey = req.body.destinationName;
+
+    var searchKey = req.query.destinationName;
     var date = {
-        checkin:req.body.checkIn,
-        checkout:req.body.checkOut
+        checkin:req.query.checkIn.replace('"','').replace('"',''),
+        checkout:req.query.checkOut.replace('"','').replace('"',''),
     };
-    var numberRooms = req.body.numberRooms;
-    var startIndex = req.body.lastIndex;
-    const NUM_RESULTS = req.body.numResults;
+    var numberRooms = parseInt(req.query.numberRooms);
+    var startIndex = req.query.lastIndex;
+
+    const NUM_RESULTS = req.query.numResults;
+
     const regex = new RegExp(searchKey,"ig");
     //.split("").join('*')
-    console.log(regex)
+    //console.log(regex)
     Hotel.find({$or:[{name:regex}, {city:regex},{airports:regex}]}).then((doc,err)=>{
         if(err) res.status(400).json(err);
         // var startIndex = 5 * pageNumber - 5;
@@ -42,14 +35,13 @@ router.get('/search',(req,res)=>{
             let doubleAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
             let kingAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
             let studioAvaliable = checkAvalibity(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
-           
             if (singleAvaliable || doubleAvaliable || kingAvaliable || studioAvaliable){
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
                     street:arr.street,
                     city:arr.city,
-                    price:arr.price.single,
+                    price:arr.price.singlePrice,
                     star_rates:arr.star_rating,
                     guest_rate:arr.guest_rating,
                     img:arr.img[0]
@@ -71,12 +63,15 @@ router.get('/search',(req,res)=>{
 
 })
 
+
+// @route GET api/hotel/individual
+// @desc individual page
 router.get('/individual', (req,res) =>{
     var date = {
-        checkin: req.query.checkIn,
-        checkout: req.query.checkOut
+        checkin: req.query.checkIn.replace('"','').replace('"',''),
+        checkout: req.query.checkOut.replace('"','').replace('"','')
     };
-    var numberOfRooms = req.query.numberRooms;
+    var numberOfRooms = parseInt(req.query.numberRooms);
     let singleRoomAvailability = true;
     let doubleRoomAvailability = true;
     let kingRoomAvailablity = true;

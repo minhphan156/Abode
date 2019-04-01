@@ -12,22 +12,22 @@ module.exports = function validateRegisterInput(data) {
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
   if (Validator.isEmpty(data.firstname)) {
-    errors.name = "Firstame field is required";
+    errors.firstname = "Please enter your first name.";
   }
   if (Validator.isEmpty(data.lastname)) {
-    errors.name = "Lastame field is required";
+    errors.lastname = "Please enter your last name.";
   }
 
   if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
+    errors.email = "Email field is required.";
   }
 
   if (!Validator.isEmail(data.email)) {
-    errors.email = "Email field is invalid";
+    errors.email = "Email field is invalid.";
   }
 
   if (Validator.isEmpty(data.password)) {
-    errors.password = "Password field is required";
+    errors.password = "Password field is required.";
   }
 
   if (
@@ -36,15 +36,15 @@ module.exports = function validateRegisterInput(data) {
       max: 30
     })
   ) {
-    errors.password = "Password must be between 6 and 30 characters";
+    errors.password = "Password must be between 6 and 30 characters.";
   }
 
   if (Validator.isEmpty(data.password2)) {
-    errors.password2 = "Confirm Password field is required";
+    errors.password2 = "Confirm Password field is required.";
   }
 
   if (!Validator.equals(data.password, data.password2)) {
-    errors.password = "Passwords must match";
+    errors.password = "Passwords must match.";
   }
 
   // if errors isEmpty() is true -> no valid input

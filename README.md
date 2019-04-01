@@ -47,8 +47,6 @@ When satisfied, merge code into dev-branch.
 The code is now merged into the dev-branch.
 Finished stories will be accumulated in the 'Done' column. They will be periodically archived by PM or Tech Lead.
 Issue should still be 'In Progress' and can also be archived.
-
-
 ```
 
 #### Pull Request Rules
