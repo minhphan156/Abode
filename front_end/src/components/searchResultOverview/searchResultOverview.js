@@ -1,29 +1,47 @@
 import React, { Component } from "react";
+import SearchWidget from "../landing_page/search_widget/SearchWidget";
+import { connect } from "react-redux";
+import { getIndividualHotelResult } from "../../actions/searchResultActions";
+import { Link } from "react-router-dom";
+import ReactStars from "react-stars";
+import PropTypes from "prop-types";
+
+// Child Component Imports
+import FiltersWindow from "./FiltersWindow.js";
+import SortBar from "./SortBar.js";
+
+// Material UI Imports
 import {
+  withStyles,
+  withWidth,
   Grid,
   Card,
   CardContent,
   CardMedia,
   Typography,
-  Checkbox,
-  FormControlLabel,
-  TablePagination,
-  Button
+  TablePagination
 } from "@material-ui/core";
-import SearchWidget from "../landing_page/search_widget/SearchWidget";
-import { connect } from "react-redux";
-import { getIndividualHotelResult } from "../../actions/searchResultActions";
-import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import ReactStars from "react-stars";
-import PropTypes from "prop-types";
+import { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
-let styles = {
-  rating: { margin: 0 },
+let styles = theme => ({
+  pageMargins: {
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "5%",
+      marginRight: "5%",
+      marginTop: "2%",
+      marginBottom: "2%"
+    },
+    [theme.breakpoints.up("md")]: {
+      marginLeft: "10%",
+      marginRight: "10%",
+      marginTop: "1%",
+      marginBottom: "1%"
+    }
+  },
   subtitles: { fontWeight: "bold", color: "#808080" },
   imageStyle: { margin: 20, width: 200, height: 200, float: "left" },
   sortButton: { width: "100%", boxShadow: "none" }
-};
+});
 
 class searchResultOverview extends Component {
   constructor() {
@@ -31,19 +49,34 @@ class searchResultOverview extends Component {
 
     this.state = {
       // State used to determine the criteria of which the search results are sorted by.
-      sortCategory: "name"
+      sortCategory: "name",
+      sortOrder: "ascending"
     };
+
+    this.handleClickChangeSortCriteria = this.handleClickChangeSortCriteria.bind(
+      this
+    );
+    this.handleClickChangeOrder = this.handleClickChangeOrder.bind(this);
   }
 
   // Used to change the sort criteria
-  changeSortCriteria = category => {
+  handleClickChangeSortCriteria(category, event) {
+    event.preventDefault();
     this.setState({
       sortCategory: category
     });
-  };
+  }
+
+  // Used to change the order of results shown
+  handleClickChangeOrder(order, event) {
+    event.preventDefault();
+    this.setState({
+      sortOrder: order
+    });
+  }
 
   render() {
-    let { classes } = this.props;
+    let { classes, width } = this.props;
     let { hotelQuery, searchQuery } = this.props.query;
 
     let hotels;
@@ -56,14 +89,15 @@ class searchResultOverview extends Component {
               <div>
                 <Link
                   to="/indiv-hotel"
-                  onClick={() =>
+                  onClick={event => {
+                    event.preventDefault();
                     this.props.getIndividualHotelResult({
                       id: hotel.hotelID,
                       checkIn: searchQuery.checkIn,
                       checkOut: searchQuery.checkOut,
                       numberRooms: searchQuery.numberRooms
-                    })
-                  }
+                    });
+                  }}
                 >
                   <div className="row">
                     <div className="col-10" style={{ align: "left" }}>
@@ -167,217 +201,17 @@ class searchResultOverview extends Component {
     );
 
     return (
-      <div style={{ marginLeft: "10%", marginRight: "10%", marginBottom: 40 }}>
+      <div className={classes.pageMargins}>
         <SearchWidget />
         <Grid container direction="flow" spacing={8}>
-          <Grid item xs={12} md={2} direction="column" spacing={0}>
-            <Grid item>
-              <Card style={{ padding: 10 }} square="false">
-                <Grid container direction="column" spacing={0}>
-                  <Grid item>
-                    <Typography
-                      className={classes.subtitles}
-                      variant="subtitle2"
-                    >
-                      Star Rating:
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="star1" />}
-                      label="1-star"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="star2" />}
-                      label="2-star"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="star3" />}
-                      label="3-star"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="star4" />}
-                      label="4-star"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="star5" />}
-                      label="5-star"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                </Grid>
-              </Card>
-            </Grid>
-            <Grid item>
-              <Card style={{ padding: 10 }} square="false">
-                <Grid container direction="column" spacing={0}>
-                  <Grid item>
-                    <Typography
-                      className={classes.subtitles}
-                      variant="subtitle2"
-                    >
-                      Guest Rating:
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="Awesome" />}
-                      label="Awesome: (9+)"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="Very Good" />}
-                      label="Very Good: (8+)"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="Good" />}
-                      label="Good: (7+)"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="Adequate" />}
-                      label="Adequate: (6+)"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox value="No Rating" />}
-                      label="No Rating"
-                      className={classes.rating}
-                    />
-                  </Grid>
-                </Grid>
-              </Card>
-            </Grid>
-          </Grid>
-          <Grid item md={10} direction="column" spacing={8}>
-            <Grid item>
-              <Card style={{ padding: 10 }} square="false">
-                <Grid
-                  container
-                  direction="flow"
-                  spacing={8}
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <Typography
-                      variant="subtitle2"
-                      className={classes.subtitles}
-                    >
-                      Sort By:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      className={classes.sortButton}
-                      variant={
-                        this.state.sortCategory == "name"
-                          ? "contained"
-                          : "outlined"
-                      }
-                      color={
-                        this.state.sortCategory == "name"
-                          ? "secondary"
-                          : "default"
-                      }
-                      onClick={() => {
-                        this.setState({
-                          sortCategory: "name"
-                        });
-                      }}
-                    >
-                      Name
-                    </Button>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      className={classes.sortButton}
-                      variant={
-                        this.state.sortCategory == "price"
-                          ? "contained"
-                          : "outlined"
-                      }
-                      color={
-                        this.state.sortCategory == "price"
-                          ? "secondary"
-                          : "default"
-                      }
-                      onClick={() => {
-                        this.setState({
-                          sortCategory: "price"
-                        });
-                      }}
-                    >
-                      Price
-                    </Button>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      className={classes.sortButton}
-                      variant={
-                        this.state.sortCategory == "starRating"
-                          ? "contained"
-                          : "outlined"
-                      }
-                      color={
-                        this.state.sortCategory == "starRating"
-                          ? "secondary"
-                          : "default"
-                      }
-                      onClick={() => {
-                        this.setState({
-                          sortCategory: "starRating"
-                        });
-                      }}
-                    >
-                      Star Rating
-                    </Button>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      className={classes.sortButton}
-                      variant={
-                        this.state.sortCategory == "guestRating"
-                          ? "contained"
-                          : "outlined"
-                      }
-                      color={
-                        this.state.sortCategory == "guestRating"
-                          ? "secondary"
-                          : "default"
-                      }
-                      onClick={() => {
-                        this.setState({
-                          sortCategory: "guestRating"
-                        });
-                      }}
-                    >
-                      Guest Rating
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Card>
-            </Grid>
+          <FiltersWindow /> {/* xs={12} md={2} */}
+          <Grid item container xs={12} md={10} direction="column" spacing={8}>
+            <SortBar
+              sortCategory={this.state.sortCategory}
+              sortOrder={this.state.sortOrder}
+              handleClickChangeSortCriteria={this.handleClickChangeSortCriteria}
+              handleClickChangeOrder={this.handleClickChangeOrder}
+            />
             <Grid item direction="flow">
               {hotels}
             </Grid>
@@ -400,4 +234,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getIndividualHotelResult }
-)(withStyles(styles)(searchResultOverview));
+)(withStyles(styles)(withWidth()(searchResultOverview)));
