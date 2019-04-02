@@ -13,15 +13,16 @@ router.get("/", function(req, res) {
       featCities: []
     };
     var i;
-    doc.sort((a, b) => a.bookings - b.bookings);
-    let a = Math.floor(Math.random() * doc.length);
-    landingInfo.inspire = doc[a].inspire;
-    landingInfo.inspireCity = doc[a].name;
+    doc.sort((a, b) => b.bookings - a.bookings);
+    let n = Math.floor(Math.random() * doc.length);
+    landingInfo.inspire = doc[n].inspire;
+    landingInfo.inspireCity = doc[n].name;
 
     //change loop limit if want more featured cities
     for (i = 0; i < 4; i++) {
-      landingInfo.featCities.push(doc[a]);
+      landingInfo.featCities.push(doc[i]);
     }
+
     res.send(landingInfo);
 
     /* **If repeating cities is concern, use shuffle **
