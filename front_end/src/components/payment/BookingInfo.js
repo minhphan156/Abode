@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -14,6 +16,20 @@ export class BookingInfo extends Component {
       tempBookingData.checkOut.diff(tempBookingData.checkIn)
     );
     var days = duration.asDays();
+
+    let rewardsContainer = null;
+    if (this.props.auth.isAuthenticated) {
+      rewardsContainer = (
+        <Paper style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}>
+          <CardContent>
+            <h4 style={{ marginTop: "1%" }}>You got some rewards points.</h4>
+            <hr />
+            do you want to use them
+            {/* /TO DO HERE: ADD CHECKBOX OR SIMILAR/ */}
+          </CardContent>
+        </Paper>
+      );
+    }
 
     return (
       <React.Fragment>
@@ -66,7 +82,7 @@ export class BookingInfo extends Component {
               </div>
             </CardContent>
           </Card>
-
+          {rewardsContainer}
           <h3 className="text-center">
             Total to pay now: ${" "}
             {(
@@ -87,8 +103,13 @@ export class BookingInfo extends Component {
   }
 }
 
+BookingInfo.PropTypes = {
+  auth: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
-  bookingData: state.bookingData
+  bookingData: state.bookingData,
+  auth: state.auth
 });
 
 export default connect(

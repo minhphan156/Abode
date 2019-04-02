@@ -3,24 +3,28 @@ import axios from "axios";
 
 // submit booking to backend so it can be stored in DB and reused in history page
 // then receive (res) from backend a confirmation incl all data, or an error
-export const submitBooking = (newBooking, history) => dispatch => {
-  console.log(history);
-
+export const submitBooking = newBooking => dispatch => {
   axios
     .post("/api/booking/confirm", newBooking)
     .then(res => {
-      // for some reason, history.push is not working... yet :D
-      history.push("./confirmation");
+      // if (res.status === 409) {
+      //   //either tried to reseve on same date
+      //   // or hotel is booked out
+      //   window.location = "./";
+      // } else if (res.status === 200) {
+      //   // keep going, all OK}
+      // } else {
+      //   // something went horribly wront
+      //   window.location = "./";
+      // }
 
-      console.log("booking response backend ", res);
-
-      //////HANDLE BOOKING ERROR
-      // successs, go to confirmation page
-      // error, go to wherever...
       dispatch({
         type: SET_BOOKING,
         payload: res.data
       });
+      if (res.status === 200) {
+        window.location = "./confirmation";
+      }
     })
     .catch(err => console.log(err));
 };

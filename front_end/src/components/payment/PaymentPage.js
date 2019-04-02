@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Payment from "./Payment";
 import BookingInfo from "./BookingInfo";
 import { Grid } from "@material-ui/core";
@@ -14,19 +15,31 @@ class PaymentPage extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <Grid container>
-          <Grid item xs={8}>
-            <Payment />
+    if (this.props.bookingData.tempBookingData === null) {
+      this.props.history.push("/");
+      return null;
+    } else {
+      return (
+        <div>
+          <Grid container>
+            <Grid item xs={8}>
+              <Payment />
+            </Grid>
+            <Grid item xs={4}>
+              <BookingInfo />
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <BookingInfo />
-          </Grid>
-        </Grid>
-      </div>
-    );
+        </div>
+      );
+    }
   }
 }
 
-export default PaymentPage;
+const mapStateToProps = state => ({
+  bookingData: state.bookingData
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(PaymentPage);

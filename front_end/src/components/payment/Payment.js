@@ -11,6 +11,8 @@ import { CardElement, injectStripe } from "react-stripe-elements";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core";
 
+import TextFieldGroup from "../common/TextFieldGroup";
+
 const styles = theme => ({
   cssLabel: {
     "&$cssFocused": {
@@ -36,7 +38,8 @@ class Payment extends Component {
       cardNumber: "",
       expMonth: "",
       expYear: "",
-      cvv: ""
+      cvv: "",
+      errors: {}
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -80,52 +83,43 @@ class Payment extends Component {
       rewardPointsUsed: this.state.rewardPointsUsed,
       rewardPointsEarned: this.state.rewardPointsEarned
     };
-    console.log("HIST IN PAYMENT: " + this.props.history);
-    this.props.submitBooking(bookingData, this.props.history);
+    this.props.submitBooking(bookingData);
   }
 
   render() {
     const { tempBookingData } = this.props.bookingData;
     const { classes } = this.props;
+    const { errors } = this.state;
 
     var numberOfRooms = Array.from(
-      { length: tempBookingData.numRooms },
+      { length: tempBookingData.numRooms - 1 },
       (v, k) => k + 1
     );
 
+    console.log(numberOfRooms);
     let roomContainer;
-    let roomContainers;
-    roomContainers = numberOfRooms.map(room => {
+    let additionalRoomContainers;
+    additionalRoomContainers = numberOfRooms.map(room => {
       roomContainer = (
         <Paper style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}>
           <CardContent>
-            <h4 style={{ marginTop: "1%" }}>Room {room}:</h4>
+            <h4 style={{ marginTop: "1%" }}>Room {room + 1}:</h4>
             <hr />
-            <TextField
-              fullWidth
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused
-                }
-              }}
-              label="First Name"
-              variant="outlined"
-              id="custom-css-outlined-input"
+            <input
+              type="text"
+              id="sample-input"
+              name="fname"
+              placeholder="First Name"
+              onChange={this.onChange}
             />
             <br />
             <br />
-            <TextField
-              fullWidth
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused
-                }
-              }}
-              label="Last Name"
-              variant="outlined"
-              id="custom-css-outlined-input"
+            <input
+              type="text"
+              id="sample-input"
+              name="lname"
+              placeholder="Last Name"
+              onChange={this.onChange}
             />
           </CardContent>
         </Paper>
@@ -143,7 +137,31 @@ class Payment extends Component {
           </div>
 
           <form onSubmit={this.onSubmit}>
-            {roomContainers}
+            <Paper
+              style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}
+            >
+              <CardContent>
+                <h4 style={{ marginTop: "1%" }}>Room 1 here:</h4>
+                <hr />
+                <TextFieldGroup
+                  placeholder="First Name"
+                  name="firstname"
+                  value={this.state.firstname}
+                  onChange={this.onChange}
+                  error={errors.firstname}
+                />
+                <br />
+                <br />
+                <TextFieldGroup
+                  placeholder="Last Name"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.onChange}
+                  error={errors.lastname}
+                />
+              </CardContent>
+            </Paper>
+            {additionalRoomContainers}
             <Paper
               style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}
             >
@@ -192,6 +210,7 @@ class Payment extends Component {
                   id="sample-input"
                   name="city"
                   placeholder="San Jose"
+                  value={this.state.firstname}
                   onChange={this.onChange}
                 />
                 <label for="aState">State</label>
@@ -257,12 +276,16 @@ class Payment extends Component {
   }
 }
 Payment.PropTypes = {
-  payment: PropTypes.object.isRequired
+  payment: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   bookingData: state.bookingData,
-  individualHotelData: state.individualHotelData
+  individualHotelData: state.individualHotelData,
+  errors: state.errors,
+  auth: state.auth
 });
 
 export default injectStripe(
