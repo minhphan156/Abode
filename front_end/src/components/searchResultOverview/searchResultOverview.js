@@ -48,15 +48,23 @@ class searchResultOverview extends Component {
     super();
 
     this.state = {
-      // State used to determine the criteria of which the search results are sorted by.
+      // States used for sorting
       sortCategory: "name",
-      sortOrder: "descending"
+      sortOrder: "descending",
+
+      // States used for filter
+      free_wifi: false,
+      free_parking: false,
+      free_breakfast: false,
+      pool: false,
+      pet_friendly: false
     };
 
     this.handleClickChangeSortCriteria = this.handleClickChangeSortCriteria.bind(
       this
     );
     this.handleClickChangeOrder = this.handleClickChangeOrder.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
   }
 
   // Used to change the sort criteria
@@ -74,6 +82,13 @@ class searchResultOverview extends Component {
       sortOrder: order
     });
   }
+
+  // Used to store user input for the Filters Window
+  handleCheck = name => event => {
+    this.setState({
+      [name]: event.target.checked
+    });
+  };
 
   render() {
     let { classes, width } = this.props;
@@ -204,7 +219,8 @@ class searchResultOverview extends Component {
       <div className={classes.pageMargins}>
         <SearchWidget />
         <Grid container direction="flow" spacing={8}>
-          <FiltersWindow /> {/* xs={12} md={2} */}
+          <FiltersWindow handleCheck={this.handleCheck} />
+          {/* xs={12} md={2} */}
           <Grid item xs={12} md="auto" direction="column" spacing={0}>
             <SortBar
               sortCategory={this.state.sortCategory}

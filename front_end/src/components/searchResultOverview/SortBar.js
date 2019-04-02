@@ -10,6 +10,9 @@ import {
   Card,
   Button,
   Menu,
+  FormControl,
+  InputLabel,
+  Select,
   MenuItem
 } from "@material-ui/core";
 import { ExpandMore, ExpandLess } from "@material-ui/icons";
@@ -25,13 +28,22 @@ class SortBar extends Component {
   constructor() {
     super();
     this.state = {
-      categoryMenuIsOpen: null,
-      orderMenuIsOpen: null
+      // categoryMenuIsOpen: null,
+      orderMenuIsOpen: null,
+      categorySelection: "name",
+      orderSelection: "descending"
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
 
   handleClick(menu, event) {
     event.preventDefault();
@@ -75,7 +87,8 @@ class SortBar extends Component {
       width
     } = this.props;
 
-    let { categoryMenuIsOpen, orderMenuIsOpen } = this.state;
+    // let { categoryMenuIsOpen, orderMenuIsOpen } = this.state;
+    let { categorySelection, orderSelection, orderMenuIsOpen } = this.state;
 
     let parsedSortCategory = () => {
       switch (sortCategory) {
@@ -105,111 +118,52 @@ class SortBar extends Component {
     return (
       <Grid item>
         <Card style={{ padding: 10, width: "auto" }} square="false">
-          <Grid container spacing={8} xs={12} md="auto" direction="flow" justify={isWidthDown("sm", width) ? "center" : "flex-start"} alignItems="center">
-            <Grid item xs={12} md="auto" justify={isWidthDown("sm", width) ? "center" : "flex-start"}>
+          <Grid
+            container
+            spacing={8}
+            xs={12}
+            md="auto"
+            direction="flow"
+            justify={isWidthDown("sm", width) ? "center" : "flex-start"}
+            alignItems="center"
+          >
+            <Grid
+              item
+              xs={12}
+              md="auto"
+              justify={isWidthDown("sm", width) ? "center" : "flex-start"}
+            >
               <Typography variant="subtitle2" className={classes.subtitles}>
                 Sort By:
               </Typography>
             </Grid>
             <Grid item xs={6} md="auto">
-              <Button
-                variant="outlined"
-                onClick={event => {
-                  this.handleClick("category", event);
-                }}
-                className={classes.sortButton}
-              >
-                {parsedSortCategory()}{" "}
-                {Boolean(categoryMenuIsOpen) == true ? (
-                  <ExpandLess />
-                ) : (
-                  <ExpandMore />
-                )}
-              </Button>
-              <Menu
-                anchorEl={categoryMenuIsOpen}
-                open={Boolean(categoryMenuIsOpen)}
-                onClose={event => {
-                  this.handleClose("category", event);
-                }}
-              >
-                <MenuItem
-                  value={categoryMenuIsOpen}
-                  onClick={event => {
-                    this.handleClose("category", event);
-                    handleClickChangeSortCriteria("name", event);
-                  }}
-                  className={classes.sortButton}
+              <FormControl>
+                <Select
+                  value={categorySelection}
+                  onChange={this.handleChange}
+                  displayEmpty
+                  name="category"
                 >
-                  Name
-                </MenuItem>
-                <MenuItem
-                  onClick={event => {
-                    this.handleClose("category", event);
-                    handleClickChangeSortCriteria("price", event);
-                  }}
-                  className={classes.sortButton}
+                  <MenuItem value={"name"}>Name</MenuItem>
+                  <MenuItem value={"price"}>Price</MenuItem>
+                  <MenuItem value={"start_rating"}>Star Rating</MenuItem>
+                  <MenuItem value={"guest_rating"}>Guest Rating</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl>
+                <Select
+                  value={orderSelection}
+                  onChange={this.handleChange}
+                  displayEmpty
+                  name="order"
                 >
-                  Price
-                </MenuItem>
-                <MenuItem
-                  onClick={event => {
-                    this.handleClose("category", event);
-                    handleClickChangeSortCriteria("starRating", event);
-                  }}
-                  className={classes.sortButton}
-                >
-                  Star Rating
-                </MenuItem>
-                <MenuItem
-                  onClick={event => {
-                    this.handleClose("category", event);
-                    handleClickChangeSortCriteria("guestRating", event);
-                  }}
-                  className={classes.sortButton}
-                >
-                  Guest Rating
-                </MenuItem>
-              </Menu>
+                  <MenuItem value={"descending"}>Ascending</MenuItem>
+                  <MenuItem value={"ascending"}>Descending</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
-            <Grid item xs={6} md="auto">
-              <Button
-                variant="outlined"
-                onClick={event => {
-                  this.handleClick("order", event);
-                }}
-                className={classes.sortButton}
-              >
-                {parsedSortOrder()}{" "}
-                {orderMenuIsOpen == true ? <ExpandLess /> : <ExpandMore />}
-              </Button>
-              <Menu
-                anchorEl={orderMenuIsOpen}
-                open={Boolean(orderMenuIsOpen)}
-                onClose={event => {
-                  this.handleClose("order", event);
-                }}
-              >
-                <MenuItem
-                  onClick={event => {
-                    this.handleClose("order", event);
-                    handleClickChangeOrder("descending", event);
-                  }}
-                  className={classes.sortButton}
-                >
-                  Descending
-                </MenuItem>
-                <MenuItem
-                  onClick={event => {
-                    this.handleClose("order", event);
-                    handleClickChangeOrder("ascending", event);
-                  }}
-                  className={classes.sortButton}
-                >
-                  Ascending
-                </MenuItem>
-              </Menu>
-            </Grid>
+            <Grid item xs={6} md="auto" />
           </Grid>
         </Card>
       </Grid>
@@ -225,3 +179,65 @@ SortBar.propTypes = {
 };
 
 export default withStyles(styles)(withWidth()(SortBar));
+
+/*
+<Button
+  variant="outlined"
+  onClick={event => {
+    this.handleClick("category", event);
+  }}
+  className={classes.sortButton}
+>
+  {parsedSortCategory()}{" "}
+  {Boolean(categoryMenuIsOpen) == true ? (
+    <ExpandLess />
+  ) : (
+    <ExpandMore />
+  )}
+</Button>
+<Menu
+  anchorEl={categoryMenuIsOpen}
+  open={Boolean(categoryMenuIsOpen)}
+  onClose={event => {
+    this.handleClose("category", event);
+  }}
+>
+  <MenuItem
+    value={categoryMenuIsOpen}
+    onClick={event => {
+      this.handleClose("category", event);
+      handleClickChangeSortCriteria("name", event);
+    }}
+    className={classes.sortButton}
+  >
+    Name
+  </MenuItem>
+  <MenuItem
+    onClick={event => {
+      this.handleClose("category", event);
+      handleClickChangeSortCriteria("price", event);
+    }}
+    className={classes.sortButton}
+  >
+    Price
+  </MenuItem>
+  <MenuItem
+    onClick={event => {
+      this.handleClose("category", event);
+      handleClickChangeSortCriteria("starRating", event);
+    }}
+    className={classes.sortButton}
+  >
+    Star Rating
+  </MenuItem>
+  <MenuItem
+    onClick={event => {
+      this.handleClose("category", event);
+      handleClickChangeSortCriteria("guestRating", event);
+    }}
+    className={classes.sortButton}
+  >
+    Guest Rating
+  </MenuItem>
+</Menu>
+*/
