@@ -100,11 +100,11 @@ router.get('/search',(req,res)=>{
         let bookingID = "bookid"
         while(result.length < NUM_RESULTS && doc[startIndex] !== undefined){
             var arr = doc[startIndex]
-            let singleAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.single, date, numberRooms, bookingID);
-            let doubleAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
-            let kingAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
-            let studioAvaliable = checkAvailable(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
-            if (singleAvaliable || doubleAvaliable || kingAvaliable || studioAvaliable){
+            let singleAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.single, date, numberRooms, bookingID);
+            let doubleAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.double, date, numberRooms, bookingID);
+            let kingAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
+            let studioAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
+            if (singleAvailable || doubleAvailable || kingAvailable || studioAvailable){
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
