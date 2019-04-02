@@ -11,7 +11,7 @@ import {
   Card,
   Typography
 } from "@material-ui/core";
-import { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import { isWidthDown } from "@material-ui/core/withWidth";
 
 // Component styling
 let styles = theme => ({

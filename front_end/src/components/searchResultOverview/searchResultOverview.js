@@ -60,28 +60,16 @@ class searchResultOverview extends Component {
       pet_friendly: false
     };
 
-    this.handleClickChangeSortCriteria = this.handleClickChangeSortCriteria.bind(
-      this
-    );
-    this.handleClickChangeOrder = this.handleClickChangeOrder.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
   }
 
-  // Used to change the sort criteria
-  handleClickChangeSortCriteria(category, event) {
-    event.preventDefault();
+  // Used to store input on sort category and order
+  handleChange = event => {
     this.setState({
-      sortCategory: category
+      [event.target.name]: event.target.value
     });
-  }
-
-  // Used to change the order of results shown
-  handleClickChangeOrder(order, event) {
-    event.preventDefault();
-    this.setState({
-      sortOrder: order
-    });
-  }
+  };
 
   // Used to store user input for the Filters Window
   handleCheck = name => event => {
@@ -223,14 +211,13 @@ class searchResultOverview extends Component {
       <div className={classes.pageMargins}>
         <SearchWidget />
         <Grid container direction="flow" spacing={8}>
-          <FiltersWindow handleCheck={this.handleCheck} />
           {/* xs={12} md={2} */}
+          <FiltersWindow handleCheck={this.handleCheck} />
           <Grid item xs={12} md="auto" direction="column" spacing={0}>
             <SortBar
               sortCategory={this.state.sortCategory}
               sortOrder={this.state.sortOrder}
-              handleClickChangeSortCriteria={this.handleClickChangeSortCriteria}
-              handleClickChangeOrder={this.handleClickChangeOrder}
+              handleChange={this.handleChange}
             />
             <Grid item direction="flow">
               {hotels}
