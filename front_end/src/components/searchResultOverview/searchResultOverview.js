@@ -90,6 +90,10 @@ class searchResultOverview extends Component {
     });
   };
 
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  };
+
   render() {
     let { classes, width } = this.props;
     let { hotelQuery, searchQuery } = this.props.query;
