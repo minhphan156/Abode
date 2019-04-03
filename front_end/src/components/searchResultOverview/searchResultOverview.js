@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
 import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { Link } from "react-router-dom";
-import ReactStars from "react-stars";
 import PropTypes from "prop-types";
 
+// Additional libraries
+import ReactStars from "react-stars";
+
 // Child Component Imports
+import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import FiltersWindow from "./FiltersWindow.js";
 import SortBar from "./SortBar.js";
 
@@ -23,14 +25,17 @@ import {
 } from "@material-ui/core";
 import { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
+// Component CSS to Javascript styles
 let styles = theme => ({
   pageMargins: {
+    // Mobile margins
     [theme.breakpoints.down("sm")]: {
       marginLeft: "5%",
       marginRight: "5%",
       marginTop: "2%",
       marginBottom: "2%"
     },
+    // Tablet, laptop, desktop margins
     [theme.breakpoints.up("md")]: {
       marginLeft: "10%",
       marginRight: "10%",
@@ -43,6 +48,7 @@ let styles = theme => ({
   sortButton: { width: "100%", boxShadow: "none" }
 });
 
+// Main component of the Search Result Overview Page
 class searchResultOverview extends Component {
   constructor() {
     super();
@@ -70,8 +76,10 @@ class searchResultOverview extends Component {
     this.handleGuestRatings = this.handleGuestRatings.bind(this);
     this.handleAmenities = this.handleAmenities.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handlePriceRangeChange = this.handlePriceRangeChange.bind(this);
   }
 
+  // Used to force user browser to scroll to top of page upon mounting this component
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };
@@ -93,11 +101,19 @@ class searchResultOverview extends Component {
     });
   };
 
-  // Used to store user input for the Filters Window
+  // Used to store the amenities input in <FiltersWindow />
   handleAmenities = event => {
     event.preventDefault();
     this.setState({
       [event.target.name]: event.target.checked
+    });
+  };
+
+  // Used to store the inputs from price range fields in <FiltersWindow />
+  handlePriceRangeChange = event => {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: Number(event.target.value)
     });
   };
 
@@ -110,8 +126,8 @@ class searchResultOverview extends Component {
   };
 
   render() {
-    let { star_rate, guest_rate } = this.state;
-    let { classes, width } = this.props;
+    let { star_rate, guest_rate, price_low, price_high } = this.state;
+    let { classes } = this.props;
     let { hotelQuery, searchQuery } = this.props.query;
 
     let hotels;
@@ -243,9 +259,12 @@ class searchResultOverview extends Component {
           <FiltersWindow
             star_rate={star_rate}
             guest_rate={guest_rate}
+            price_low={price_low}
+            price_high={price_high}
             handleAmenities={this.handleAmenities}
             handleStarRatings={this.handleStarRatings}
             handleGuestRatings={this.handleGuestRatings}
+            handlePriceRangeChange={this.handlePriceRangeChange}
           />
           <Grid item xs={12} md={10} direction="column" spacing={0}>
             <SortBar
@@ -267,7 +286,7 @@ class searchResultOverview extends Component {
 searchResultOverview.propTypes = {
   query: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  width: PropTypes.string.isRequired
+  width: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
