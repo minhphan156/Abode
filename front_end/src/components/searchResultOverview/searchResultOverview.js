@@ -53,6 +53,10 @@ class searchResultOverview extends Component {
       sortOrder: "descending",
 
       // States used for filter
+      star_rate: 0,
+      guest_rate: 0,
+      price_low: 0,
+      price_high: 0,
       free_wifi: false,
       free_parking: false,
       free_breakfast: false,
@@ -60,29 +64,53 @@ class searchResultOverview extends Component {
       pet_friendly: false
     };
 
+    // Methods passed to child components
     this.handleChange = this.handleChange.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
+    this.handleStarRatings = this.handleStarRatings.bind(this);
+    this.handleGuestRatings = this.handleGuestRatings.bind(this);
+    this.handleAmenities = this.handleAmenities.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
   }
-
-  // Used to store input on sort category and order
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
-
-  // Used to store user input for the Filters Window
-  handleCheck = name => event => {
-    this.setState({
-      [name]: event.target.checked
-    });
-  };
 
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };
 
+  // Used to store the input in the price ranges textfields in <FiltersWindow />
+  handlePriceChange = () => {};
+
+  // Used to store the star rating input in <FiltersWindow />
+  handleStarRatings = newRating => {
+    this.setState({
+      star_rate: newRating
+    });
+  };
+
+  // Used to store the star rating input in <FiltersWindow />
+  handleGuestRatings = newRating => {
+    this.setState({
+      guest_rate: newRating
+    });
+  };
+
+  // Used to store user input for the Filters Window
+  handleAmenities = event => {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.checked
+    });
+  };
+
+  // Used to store the inputs from selections felds in <SortBar />
+  handleChange = event => {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: [event.target.value]
+    });
+  };
+
   render() {
+    let { star_rate, guest_rate } = this.state;
     let { classes, width } = this.props;
     let { hotelQuery, searchQuery } = this.props.query;
 
@@ -212,8 +240,14 @@ class searchResultOverview extends Component {
         <SearchWidget />
         <Grid container direction="flow" spacing={8}>
           {/* xs={12} md={2} */}
-          <FiltersWindow handleCheck={this.handleCheck} />
-          <Grid item xs={12} md="auto" direction="column" spacing={0}>
+          <FiltersWindow
+            star_rate={star_rate}
+            guest_rate={guest_rate}
+            handleAmenities={this.handleAmenities}
+            handleStarRatings={this.handleStarRatings}
+            handleGuestRatings={this.handleGuestRatings}
+          />
+          <Grid item xs={12} md={10} direction="column" spacing={0}>
             <SortBar
               sortCategory={this.state.sortCategory}
               sortOrder={this.state.sortOrder}
@@ -231,7 +265,9 @@ class searchResultOverview extends Component {
 }
 
 searchResultOverview.propTypes = {
-  query: PropTypes.object.isRequired
+  query: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  width: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({

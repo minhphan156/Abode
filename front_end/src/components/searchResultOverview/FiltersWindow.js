@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ReactStars from "react-stars";
 
 // Material UI Imports
 import {
@@ -9,7 +10,9 @@ import {
   FormControlLabel,
   Grid,
   Card,
-  Typography
+  Typography,
+  TextField,
+  InputAdornment
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
 
@@ -24,7 +27,15 @@ let styles = theme => ({
 
 // React Functional Component (has no states) for the filters window of SearchResultOverview component
 let FiltersWindow = props => {
-  let { classes, width, handleCheck } = props;
+  let {
+    classes,
+    width,
+    handleAmenities,
+    handleStarRatings,
+    handleGuestRatings,
+    guest_rate,
+    star_rate
+  } = props;
   return (
     <Grid
       item
@@ -35,93 +46,89 @@ let FiltersWindow = props => {
       justify={isWidthDown("sm", width) ? "center" : "flex-start"}
       spacing={0}
     >
-      <Grid item xs={6} md="auto">
+      <Grid item xs={12} md="auto">
         <Card style={{ padding: 10 }} square="false">
           <Grid container direction="column" spacing={0}>
             <Grid item>
               <Typography className={classes.subtitles} variant="subtitle2">
-                Star Rating:
+                {`Star Rating: ${star_rate > 0 ? `(${star_rate})` : ""}`}
               </Typography>
             </Grid>
             <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="star5" />}
-                label="5-star"
-                className={classes.rating}
-              />
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="star4" />}
-                label="4-star"
-                className={classes.rating}
-              />
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="star3" />}
-                label="3-star"
-                className={classes.rating}
-              />
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="star2" />}
-                label="2-star"
-                className={classes.rating}
-              />
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="star1" />}
-                label="1-star"
-                className={classes.rating}
+              <ReactStars
+                value={star_rate}
+                count={5}
+                onChange={handleStarRatings}
+                size={32}
+                color2={"#ffd700"}
               />
             </Grid>
           </Grid>
         </Card>
       </Grid>
-      <Grid item xs={6} md="auto">
+      <Grid item xs={12} md="auto">
         <Card style={{ padding: 10 }} square="false">
-          <Grid container direction="column" spacing={0}>
-            <Grid item>
+          <Grid container direction="flow" spacing={0}>
+            <Grid item xs={12}>
               <Typography className={classes.subtitles} variant="subtitle2">
-                Guest Rating:
+                {`Guest Rating: ${guest_rate > 0 ? `(${guest_rate})` : ""}`}
               </Typography>
             </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="Awesome" />}
-                label="Awesome: (9+)"
-                className={classes.rating}
+            <Grid item direction="flow">
+              <ReactStars
+                value={guest_rate}
+                count={10}
+                onChange={handleGuestRatings}
+                size={24}
+                color2={"#ffd700"}
               />
             </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="Very Good" />}
-                label="Very Good: (8+)"
-                className={classes.rating}
+          </Grid>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md="auto" spacing={0}>
+        <Card style={{ padding: 10 }} square="false">
+          <Grid
+            container
+            direction="flow"
+            alignItems="center"
+            justify="center"
+            spacing={8}
+          >
+            <Grid item xs={12}>
+              <Typography className={classes.subtitles} variant="subtitle2">
+                Price Range:
+              </Typography>
+            </Grid>
+            <Grid item xs={5}>
+              <TextField
+                id="min_price"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  )
+                }}
+                margin="none"
               />
             </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="Good" />}
-                label="Good: (7+)"
-                className={classes.rating}
-              />
+            <Grid item xs={1}>
+              <Typography
+                className={classes.subtitles}
+                style={{ height: "auto" }}
+                variant="subtitle2"
+              >
+                -
+              </Typography>
             </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="Adequate" />}
-                label="Adequate: (6+)"
-                className={classes.rating}
-              />
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={<Checkbox value="No Rating" />}
-                label="No Rating"
-                className={classes.rating}
+            <Grid item xs={5}>
+              <TextField
+                id="max_price"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  )
+                }}
+                margin="none"
               />
             </Grid>
           </Grid>
@@ -138,7 +145,8 @@ let FiltersWindow = props => {
             <FormControlLabel
               className={classes.rating}
               label="Free WiFi"
-              onChange={handleCheck("free_wifi")}
+              name="free_wifi"
+              onChange={handleAmenities}
               control={<Checkbox value="free_wifi" />}
             />
           </Grid>
@@ -146,32 +154,36 @@ let FiltersWindow = props => {
             <FormControlLabel
               className={classes.rating}
               label="Free Parking"
+              name="free_parking"
               control={<Checkbox value="free_parking" />}
-              onChange={handleCheck("free_parking")}
+              onChange={handleAmenities}
             />
           </Grid>
           <Grid item>
             <FormControlLabel
               className={classes.rating}
               label="Free Breakfast"
+              name="free_breakfast"
               control={<Checkbox value="free_breakfast" />}
-              onChange={handleCheck("free_breakfast")}
+              onChange={handleAmenities}
             />
           </Grid>
           <Grid item>
             <FormControlLabel
               className={classes.rating}
               label="Recreational Pool"
+              name="pool"
               control={<Checkbox value="pool" />}
-              onChange={handleCheck("pool")}
+              onChange={handleAmenities}
             />
           </Grid>
           <Grid item>
             <FormControlLabel
               className={classes.rating}
               label="Pet Friendly"
+              name="pet_friendly"
               control={<Checkbox value="pet_friendly" />}
-              onChange={handleCheck("pet_friendly")}
+              onChange={handleAmenities}
             />
           </Grid>
         </Card>

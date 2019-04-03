@@ -9,10 +9,12 @@ import {
   Typography,
   Card,
   FormControl,
+  InputLabel,
   Select,
   MenuItem
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
+import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 
 // Component styling
 let styles = theme => ({
@@ -24,13 +26,11 @@ let SortBar = props => {
   let { classes, width, handleChange, sortCategory, sortOrder } = props;
 
   return (
-    <Grid item>
+    <Grid item xs={12} md="auto">
       <Card style={{ padding: 10, width: "auto" }} square="false">
         <Grid
           container
-          spacing={8}
-          xs={12}
-          md="auto"
+          spacing={16}
           direction="flow"
           justify={isWidthDown("sm", width) ? "center" : "flex-start"}
           alignItems="center"
@@ -42,6 +42,7 @@ let SortBar = props => {
           </Grid>
           <Grid item md="auto">
             <FormControl>
+              <InputLabel>Category</InputLabel>
               <Select
                 value={sortCategory}
                 onChange={handleChange}
@@ -57,14 +58,19 @@ let SortBar = props => {
           </Grid>
           <Grid item md="auto">
             <FormControl>
+              <InputLabel>Order</InputLabel>
               <Select
                 value={sortOrder}
                 onChange={handleChange}
                 displayEmpty
                 name="sortOrder"
               >
-                <MenuItem value={"descending"}>Descending</MenuItem>
-                <MenuItem value={"ascending"}>Ascending</MenuItem>
+                <MenuItem value={"descending"}>
+                  <ArrowDownward />
+                </MenuItem>
+                <MenuItem value={"ascending"}>
+                  <ArrowUpward />
+                </MenuItem>
               </Select>
             </FormControl>
           </Grid>
