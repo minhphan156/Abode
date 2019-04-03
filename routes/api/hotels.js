@@ -89,10 +89,10 @@ router.get('/search',(req,res)=>{
     const NUM_RESULTS = req.query.numResults;
     const regex = new RegExp(searchKey,"ig");
     Hotel.find({
-        amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
-        $and:[{'price.singlePrice': {$gt: price_low}}, {'price.singlePrice': {$lt: price_high}}],
-        star_rating: {$gt: star_rating},
-        guest_rating: {$gt: review_score},
+        // amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
+        // $and:[{'price.singlePrice': {$gt: price_low}}, {'price.singlePrice': {$lt: price_high}}],
+        // star: {$gt: star_rating},
+        // hdc_rating: {$gt: review_score},
         $or:[{name:regex}, {city:regex},{airports:regex}]
     }).sort(sortByObject).then((doc,err)=>{
         if(err) res.status(400).json(err);
@@ -108,12 +108,12 @@ router.get('/search',(req,res)=>{
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
-                    street:arr.street,
+                    address:arr.address,
                     city:arr.city,
                     price:arr.price.singlePrice,
-                    star_rates:arr.star_rating,
-                    guest_rate:arr.guest_rating,
-                    img:arr.img[0]
+                    star_rates:arr.star,
+                    guest_rate:arr.hdc_rating,
+                    img:arr.images[0]
                 }
                 result.push(item);
             }
@@ -153,8 +153,25 @@ router.get('/individual', (req,res) =>{
             if(checkAvailability(hotel.roomTypeAndNumber.studio, date, numberOfRooms, "PlaceHolder").length == 0)
                 studioRoomAvailability = false;
         }
-        res.json({singleAvailability: singleRoomAvailability, doubleAvailability: doubleRoomAvailability, kingAvailability: kingRoomAvailablity, studioAvailability: studioRoomAvailability, name: hotel.name, hotelID: hotel._id, street: hotel.street, city: hotel.city, img: hotel.img, price: hotel.price, star_rating: hotel.star_rating, guest_rating: hotel.guest_rating,
-            guest_review: hotel.guest_review, amenities: hotel.amenities, airports: hotel.airports, })
+        res.json({
+            singleAvailability: singleRoomAvailability, 
+            doubleAvailability: doubleRoomAvailability, 
+            kingAvailability: kingRoomAvailablity, 
+            studioAvailability: studioRoomAvailability, 
+            name: hotel.name, 
+            hotelID: hotel._id, 
+            address: hotel.address, 
+            city: hotel.city, 
+            img: hotel.images, 
+            price: hotel.price,
+            star_rating: hotel.star, 
+            guest_rating: hotel.ta_rating,
+            guest_review: hotel.hdc_rating, 
+            amenities: hotel.amenities, 
+            airports: hotel.airports,
+            review:hotel.reviews,
+            top_spots:hotel.top_spots,
+        })
     })
     .catch(err => res.status(404));
 
