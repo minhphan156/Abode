@@ -24,17 +24,17 @@ router.get('/search',(req,res)=>{
             case "-name":
                 sortByObject = {name: -1};
                 break;
-            case "star_rating":
-                sortByObject = {star_rating: 1};
+            case "star":
+                sortByObject = {star: 1};
                 break;
-            case "-star_rating":
-                sortByObject = {star_rating: -1};
+            case "-star":
+                sortByObject = {star: -1};
                 break;
-            case "guest_rating":
-                sortByObject = {guest_rating: 1};
+            case "hdc_rating":
+                sortByObject = {hdc_rating: 1};
                 break;
-            case "-guest_rating":
-                sortByObject = {guest_rating: -1};
+            case "-hdc_rating":
+                sortByObject = {hdc_rating: -1};
                 break;
             }
     }
@@ -89,10 +89,10 @@ router.get('/search',(req,res)=>{
     const NUM_RESULTS = req.query.numResults;
     const regex = new RegExp(searchKey,"ig");
     Hotel.find({
-        // amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
-        // $and:[{'price.singlePrice': {$gt: price_low}}, {'price.singlePrice': {$lt: price_high}}],
-        // star: {$gt: star_rating},
-        // hdc_rating: {$gt: review_score},
+        amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
+        $and:[{'price.singlePrice': {$gt: price_low}}, {'price.singlePrice': {$lt: price_high}}],
+        star: {$gt: star_rating},
+        hdc_rating: {$gt: review_score},
         $or:[{name:regex}, {city:regex},{airports:regex}]
     }).sort(sortByObject).then((doc,err)=>{
         if(err) res.status(400).json(err);
@@ -113,7 +113,7 @@ router.get('/search',(req,res)=>{
                     price:arr.price.singlePrice,
                     star_rates:arr.star,
                     guest_rate:arr.hdc_rating,
-                    img:arr.images[0]
+                    img:arr.images[0],
                 }
                 result.push(item);
             }
