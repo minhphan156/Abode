@@ -94,7 +94,7 @@ router.post("/login", (req, res) => {
   //find user email {email} = {email : email}
   User.findOne({
     email
-  }).then(user => {
+  }).populate("customerID").then(user => {
     if (!user) {
       // if user not found
       errors.email = "User not found";
@@ -120,6 +120,8 @@ router.post("/login", (req, res) => {
             res.json({
               // sent to some cloud or local storage
               email: email,
+              firstname:user.customerID.Firstname,
+              lastname:user.customerID.Lastname,
               success: true,
               token: "Bearer " + token
             });
