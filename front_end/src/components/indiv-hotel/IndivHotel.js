@@ -53,12 +53,17 @@ class IndivHotel extends Component {
       const { individualHotelData } = this.props.individualHotelData;
       const { searchQuery } = this.props.query;
 
-      var duration = moment.duration(
-        searchQuery.checkOut.diff(searchQuery.checkIn)
-      );
+      // TODO: MAKE HOTEL ROOMS ONLY VISIBLE IF DATE IS PROVIDED.
+      // IF NOT PROVIDED, POP UP A MESSAGE, ASKING THE USER TO ENTER THE DATES.
+      if (1 == 2) {
+        var duration = moment.duration(
+          searchQuery.checkOut.diff(searchQuery.checkIn)
+        );
 
-      this.state.daysOfStay = duration.asDays();
-
+        this.state.daysOfStay = duration.asDays();
+      } else {
+        this.state.daysOfStay = 0;
+      }
       return (
         <div>
           <div className="d-flex justify-content-center mt-3">
