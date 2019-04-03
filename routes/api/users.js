@@ -122,6 +122,7 @@ router.post("/login", (req, res) => {
               email: email,
               firstname:user.customerID.Firstname,
               lastname:user.customerID.Lastname,
+              rewardPoints:user.rewardPoints,
               success: true,
               token: "Bearer " + token
             });
