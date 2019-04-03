@@ -11,8 +11,8 @@ const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const hotel = require("./routes/api/hotels");
-const book = require("./routes/api/bookin")
-
+const book = require("./routes/api/bookin");
+const landing = require("./routes/api/landing");
 // get some functionalities from express library like get() function
 const app = express();
 
@@ -46,6 +46,8 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 // individual search result route
 app.use("/api/hotel", hotel);
+// landing page w/ random cities
+app.use("/api/landing", landing);
 
 // this will append to home route 'localHost:5000/api/booking/{what ever book.js dictate}'
 app.use("/api/booking", book);

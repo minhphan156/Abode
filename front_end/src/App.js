@@ -22,11 +22,14 @@ import EditProfile from "./components/edit-profile/EditProfile";
 import NotFound from "./components/layout/NotFound";
 import searchResultOverview from "./components/searchResultOverview/searchResultOverview";
 import Confirmation from "./components/booking/Confirmation";
-// trying individual page
+
 import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
+<<<<<<< HEAD
 import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import HistorySearch from "./components/history-search/HistorySeach";
+=======
+>>>>>>> dev-frontend
 import AboutUs from "./components/about_page/AboutUs";
 
 import "./App.css";
@@ -70,43 +73,28 @@ class App extends Component {
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
 
-            
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/indiv-hotel" component={IndivHotel} />
-              <Route exact path="/history-search" component={HistorySearch} />
-              <Route exact path="/not-found/:attempt" component={NotFound} />
-              <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              </Switch>
-              <Switch>
-                <PrivateRoute
-                  exact
-                  path="/history"
-                  component={HistoryOverview}
-                />
-              </Switch>
-              <Switch>
-                <PrivateRoute
-                  exact
-                  path="/history/:order"
-                  component={HistorySingleOrder}
-                />
-              </Switch>
-              <Switch>
-                <PrivateRoute
-                  exact
-                  path="/create-profile"
-                  component={CreateProfile}
-                />
-              </Switch>
-              <Switch>
-                <PrivateRoute
-                  exact
-                  path="/edit-profile"
-                  component={EditProfile}
-                />
-              </Switch>
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/indiv-hotel" component={IndivHotel} />
+            <Route exact path="/not-found/:attempt" component={NotFound} />
+
+            <Switch>
+              <PrivateRoute exact path="/history" component={HistoryOverview} />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/create-profile"
+                component={CreateProfile}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/edit-profile"
+                component={EditProfile}
+              />
+            </Switch>
             <Footer />
           </div>
         </Router>
