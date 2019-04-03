@@ -25,11 +25,8 @@ import Confirmation from "./components/booking/Confirmation";
 
 import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
-<<<<<<< HEAD
-import HistorySingleOrder from "./components/history/HistorySingleOrder";
+//import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import HistorySearch from "./components/history-search/HistorySeach";
-=======
->>>>>>> dev-frontend
 import AboutUs from "./components/about_page/AboutUs";
 
 import "./App.css";
@@ -72,7 +69,7 @@ class App extends Component {
             />
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
-
+            <Route exact path="/history-search" component={HistorySearch}/>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/indiv-hotel" component={IndivHotel} />
