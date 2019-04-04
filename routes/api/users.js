@@ -145,10 +145,6 @@ router.get(
     session: false
   }), // not using session
   (req, res) => {
-    if (req.user){
-      req.user.rewardPoints = req.user.rewardPoints +50
-    }
-    req.user.save();
     res.json({
       id: req.user.id,
       name: req.user.name,
