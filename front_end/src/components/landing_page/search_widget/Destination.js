@@ -8,18 +8,11 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
-
-const suggestions = [
-  { label: "San Jose" },
-  { label: "San Diego" },
-  { label: "NYC" },
-  { label: "Denver" },
-  { label: "Los Angeles" },
-  { label: "Miami" },
-  { label: "Las Vegas" },
-  { label: "Seattle" },
-  { label: "San Francisco" }
-];
+import suggestions from "../search_widget/autosuggest.json";
+import Room from "@material-ui/icons/Room";
+import Hotel from "@material-ui/icons/Hotel";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps;
@@ -44,21 +37,29 @@ function renderInputComponent(inputProps) {
 function renderSuggestion(suggestion, { query, isHighlighted }) {
   const matches = match(suggestion.label, query);
   const parts = parse(suggestion.label, matches);
-
+  let add = null;
+  if (suggestion.style === "dest") {
+    add = <Room />;
+  } else {
+    add = <Hotel />;
+  }
   return (
     <MenuItem selected={isHighlighted} component="div">
+      <ListItemIcon>{add}</ListItemIcon>
       <div>
-        {parts.map((part, index) =>
-          part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </strong>
-          )
-        )}
+        <ListItemText>
+          {parts.map((part, index) =>
+            part.highlight ? (
+              <span key={String(index)} style={{ fontWeight: 900 }}>
+                {part.text}
+              </span>
+            ) : (
+              <strong key={String(index)} style={{ fontWeight: 100 }}>
+                {part.text}
+              </strong>
+            )
+          )}
+        </ListItemText>
       </div>
     </MenuItem>
   );
@@ -71,10 +72,22 @@ function getSuggestions(value) {
 
   return inputLength === 0
     ? []
-    : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 &&
-          suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+    : suggestions.name.filter(suggestion => {
+        var checkPartialString = true;
+
+        var inputValues = inputValue.split(" ");
+        var inputValuesAmount = inputValues.length;
+
+        for (var i = 0; i < inputValuesAmount; i++) {
+          const partialString = suggestion.label
+            .toLowerCase()
+            .indexOf(inputValues[i]);
+          if (partialString < 0) {
+            checkPartialString = false;
+          }
+        }
+
+        const keep = count < 7 && checkPartialString;
 
         if (keep) {
           count += 1;
