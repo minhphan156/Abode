@@ -1,0 +1,271 @@
+/* Font Boldness:
+100 Thin
+200 Extra Light
+300 Light
+400 Normal
+500 Medium
+600 Semi Bold
+700 Bold
+800 Extra Bold
+900 Ultra Bold */
+
+/* X-Small Screen */
+@media screen and (max-width: 600px) {
+  .smallMenu {
+    position: relative;
+    /* top: -5px; */
+    /* right: 45px; */
+  }
+
+  .navbarLogo {
+    position: relative;
+    left: 5%;
+  }
+
+  img.abode-logo {
+    position: relative;
+    width: 45px;
+    height: auto;
+  }
+
+  .abodeHome {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+    left: 20px;
+    text-decoration: none;
+    color: white;
+    border-bottom: 0px;
+  }
+
+  .navButtons {
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .buttonGrey {
+    background-color: #f0f0f0;
+    color: #0c4b78;
+    width: 63px;
+    position: relative;
+  }
+
+  .buttonBlue {
+    background-color: #0c4b78;
+    color: #f0f0f0;
+    width: 63px;
+    position: relative;
+  }
+
+  .headerMenu {
+    display: none;
+  }
+}
+
+/* Small Screen */
+@media screen and (min-width: 600px) and (max-width: 960px) {
+  .smallMenu {
+    display: none;
+  }
+
+  .navbarLogo {
+    position: relative;
+    left: 7%;
+  }
+
+  img.abode-logo {
+    position: relative;
+    width: 70px;
+    height: auto;
+  }
+
+  .abodeHome {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+    left: 20px;
+    text-decoration: none;
+    color: white;
+    border-bottom: 0px;
+  }
+
+  .navButtons {
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 800;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .buttonGrey {
+    background-color: #f0f0f0;
+    color: #0c4b78;
+    width: 80px;
+    position: relative;
+  }
+
+  .buttonBlue {
+    background-color: #0c4b78;
+    color: #f0f0f0;
+    width: 80px;
+    position: relative;
+  }
+
+  .headerMenu {
+    display: none;
+  }
+}
+
+/* Medium Screen (Landscape Phones, Tablets) */
+@media screen and (min-width: 960px) and (max-width: 1200px) {
+  .smallMenu {
+    display: none;
+  }
+
+  .navbarLogo {
+    position: relative;
+    left: 7%;
+  }
+
+  img.abode-logo {
+    position: relative;
+    width: 70px;
+    height: auto;
+  }
+
+  .abodeHome {
+    font-size: 26px;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+    left: 20px;
+    text-decoration: none;
+    color: white;
+    border-bottom: 0px;
+  }
+
+  .navButtons {
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .buttonGrey {
+    background-color: #f0f0f0;
+    color: #0c4b78;
+    width: 100px;
+    position: relative;
+  }
+
+  .buttonBlue {
+    background-color: #0c4b78;
+    color: #f0f0f0;
+    width: 100px;
+    position: relative;
+  }
+
+  .headerMenu {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+  }
+
+  .adjustMenuBurger {
+    left: 22%;
+    position: relative;
+  }
+}
+
+/* Large Screen (Laptops, Desktop monitors) */
+@media screen and (min-width: 1200px) {
+  .smallMenu {
+    display: none;
+  }
+
+  .navbarLogo {
+    position: relative;
+    left: 7%;
+  }
+
+  img.abode-logo {
+    position: relative;
+    width: 70px;
+    height: auto;
+  }
+
+  .abodeHome {
+    font-size: 28px;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+    left: 20px;
+    text-decoration: none;
+    color: white;
+    border-bottom: 0px;
+  }
+
+  .navButtons {
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 800;
+    height: 45px;
+    border-radius: 10px;
+  }
+
+  .buttonGrey {
+    background-color: #f0f0f0;
+    color: #0c4b78;
+    width: 108px;
+    position: relative;
+  }
+
+  .buttonBlue {
+    background-color: #0c4b78;
+    color: #f0f0f0;
+    width: 108px;
+    position: relative;
+  }
+
+  .headerMenu {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+  }
+
+  .adjustMenuBurger {
+    left: 22%;
+    position: relative;
+  }
+}
+
+.headerfont {
+  color: #ffffff;
+}
+
+.menuBurger {
+  color: #ffffff;
+}
+
+.navbarContainer {
+  height: 102px;
+  overflow-x: hidden;
+  background-color: #0c4b78; /* For browsers that do not support gradients */
+  background-image: linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9);
+}
