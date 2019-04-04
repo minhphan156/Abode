@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
 import { submitBooking } from "../../actions/bookingActions";
+import moment from "moment";
 
 import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
@@ -38,7 +39,8 @@ class Payment extends Component {
       expMonth: "",
       expYear: "",
       cvv: "",
-      errors: {}
+      errors: {},
+      numDays: 0
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -76,7 +78,10 @@ class Payment extends Component {
       Firstname: "minh",
       Lastname: "and sandro",
       email: "email",
-      subtotal: this.props.bookingData.tempBookingData.subtotal,
+      subtotal:
+        this.props.bookingData.tempBookingData.pricePerNight *
+        this.props.bookingData.tempBookingData.numRooms *
+        this.state.numDays,
       discount: this.props.bookingData.tempBookingData.discounts,
       rewardPointsUsed: this.state.rewardPointsUsed,
       rewardPointsEarned: this.state.rewardPointsEarned
@@ -88,6 +93,11 @@ class Payment extends Component {
     const { tempBookingData } = this.props.bookingData;
     const { classes } = this.props;
     const { errors } = this.state;
+
+    var duration = moment.duration(
+      tempBookingData.checkOut.diff(tempBookingData.checkIn)
+    );
+    this.state.numDays = duration.asDays();
 
     var numberOfRooms = Array.from(
       { length: tempBookingData.numRooms - 1 },

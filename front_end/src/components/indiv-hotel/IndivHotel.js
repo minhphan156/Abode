@@ -7,17 +7,13 @@ import ReactStars from "react-stars";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
-import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
-import moment from "moment";
 
 class IndivHotel extends Component {
   constructor() {
     super();
-    this.state = {
-      daysOfStay: null
-    };
+    this.state = {};
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
 
@@ -32,10 +28,7 @@ class IndivHotel extends Component {
       checkIn: this.props.query.searchQuery.checkIn,
       checkOut: this.props.query.searchQuery.checkOut,
       numRooms: this.props.query.searchQuery.numberRooms,
-      subtotal:
-        price *
-        this.props.query.searchQuery.numberRooms *
-        this.state.daysOfStay,
+      pricePerNight: price,
       discounts: 999, // needs to be updated!!!
       hotelImage: this.props.individualHotelData.individualHotelData.img[0]
     };
@@ -51,20 +44,6 @@ class IndivHotel extends Component {
       return null;
     } else {
       const { individualHotelData } = this.props.individualHotelData;
-      const { searchQuery } = this.props.query;
-
-      // TODO: MAKE HOTEL ROOMS ONLY VISIBLE IF DATE IS PROVIDED.
-      // IF NOT PROVIDED, POP UP A MESSAGE, ASKING THE USER TO ENTER THE DATES.
-      if (1 == 2) {
-        var duration = moment.duration(
-          searchQuery.checkOut.diff(searchQuery.checkIn)
-        );
-
-        // daysOfStay is used to calculate subtotal, so this calculation should take place before leaving indiv-hotel.js
-        this.state.daysOfStay = duration.asDays();
-      } else {
-        this.state.daysOfStay = 0;
-      }
       return (
         <div>
           <div className="d-flex justify-content-center mt-3">

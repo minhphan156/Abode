@@ -17,6 +17,9 @@ export class BookingInfo extends Component {
     );
     var days = duration.asDays();
 
+    var subtotal =
+      tempBookingData.pricePerNight * tempBookingData.numRooms * days;
+
     let rewardsContainer = null;
     if (this.props.auth.isAuthenticated) {
       rewardsContainer = (
@@ -70,25 +73,18 @@ export class BookingInfo extends Component {
           <Card style={{ marginTop: "2%" }}>
             <CardContent>
               <h5 style={{ marginTop: "1%" }}>
-                {tempBookingData.numberRooms} Room: {tempBookingData.roomType}
+                Rooms: {tempBookingData.numRooms} x {tempBookingData.roomType}
               </h5>
               <hr />
               <div>
-                <p>Subtotal: $ {tempBookingData.subtotal.toFixed(2)}</p>
-                <p>
-                  Taxes and fees (10%) ${" "}
-                  {(tempBookingData.subtotal * 0.1).toFixed(2)}
-                </p>
+                <p>Subtotal: $ {subtotal.toFixed(2)}</p>
+                <p>Taxes and fees (10%) $ {(subtotal * 0.1).toFixed(2)}</p>
               </div>
             </CardContent>
           </Card>
           {rewardsContainer}
           <h3 className="text-center">
-            Total to pay now: ${" "}
-            {(
-              tempBookingData.subtotal * 0.1 +
-              tempBookingData.subtotal
-            ).toFixed(2)}
+            Total to pay now: $ {(subtotal * 0.1 + subtotal).toFixed(2)}
           </h3>
           <Card>
             <CardContent>
