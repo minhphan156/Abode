@@ -42,66 +42,64 @@ let SortBar = props => {
   let { classes, width, handleChange, sortCategory, sortOrder } = props;
 
   return (
-    <Grid item>
-      <ExpansionPanel
-        defaultExpanded={width == "xs" ? false : true}
-        square="false"
+    <ExpansionPanel
+      defaultExpanded={width == "xs" ? false : true}
+      square="false"
+    >
+      <ExpansionPanelSummary
+        className={classes.mar0}
+        expandIcon={<ExpandMore />}
       >
-        <ExpansionPanelSummary
-          className={classes.mar0}
-          expandIcon={<ExpandMore />}
+        <Typography variant="subtitle2" className={classes.subtitles}>
+          <Sort /> Sort By:
+        </Typography>
+      </ExpansionPanelSummary>
+      <Divider />
+      <ExpansionPanelDetails className={classes.marPadSummary}>
+        <Grid
+          container
+          spacing={16}
+          direction="flow"
+          justify={width == "xs" ? "center" : "flex-start"}
+          alignItems="center"
         >
-          <Typography variant="subtitle2" className={classes.subtitles}>
-            <Sort /> Sort By:
-          </Typography>
-        </ExpansionPanelSummary>
-        <Divider />
-        <ExpansionPanelDetails className={classes.marPadSummary}>
-          <Grid
-            container
-            spacing={16}
-            direction="flow"
-            justify={width == "xs" ? "center" : "flex-start"}
-            alignItems="center"
-          >
-            <Grid item xs={6} sm="auto">
-              <InputLabel>Category</InputLabel>
-              <Select
-                name="sortCategory"
-                style={{ width: "100%" }}
-                variant="standard"
-                value={sortCategory}
-                onChange={handleChange}
-                displayEmpty
-              >
-                <MenuItem value={"name"}>Name</MenuItem>
-                <MenuItem value={"price"}>Price</MenuItem>
-                <MenuItem value={"star_rating"}>Star Rating</MenuItem>
-                <MenuItem value={"guest_rating"}>Guest Rating</MenuItem>
-              </Select>
-            </Grid>
-            <Grid item xs={4} sm="auto">
-              <InputLabel>Order</InputLabel>
-              <Select
-                name="sortOrder"
-                style={{ width: "100%" }}
-                variant="standard"
-                value={sortOrder}
-                onChange={handleChange}
-                displayEmpty
-              >
-                <MenuItem value={"descending"}>
-                  <ArrowDownward fontSize="small" />
-                </MenuItem>
-                <MenuItem value={"ascending"}>
-                  <ArrowUpward fontSize="small" />
-                </MenuItem>
-              </Select>
-            </Grid>
+          <Grid item xs={6} sm="auto">
+            <InputLabel>Category</InputLabel>
+            <Select
+              name="sortCategory"
+              style={{ width: "100%" }}
+              variant="standard"
+              value={sortCategory}
+              onChange={handleChange}
+              displayEmpty
+            >
+              <MenuItem value={"name"}>Name</MenuItem>
+              <MenuItem value={"price"}>Price</MenuItem>
+              <MenuItem value={"star_rating"}>Star Rating</MenuItem>
+              <MenuItem value={"guest_rating"}>Guest Rating</MenuItem>
+            </Select>
           </Grid>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </Grid>
+          <Grid item xs={4} sm="auto">
+            <InputLabel>Order</InputLabel>
+            <Select
+              name="sortOrder"
+              style={{ width: "100%" }}
+              variant="standard"
+              value={sortOrder}
+              onChange={handleChange}
+              displayEmpty
+            >
+              <MenuItem value={"descending"}>
+                <ArrowDownward fontSize="small" />
+              </MenuItem>
+              <MenuItem value={"ascending"}>
+                <ArrowUpward fontSize="small" />
+              </MenuItem>
+            </Select>
+          </Grid>
+        </Grid>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
   );
 };
 
