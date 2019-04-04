@@ -4,6 +4,7 @@ const router = express.Router();
 const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 const Customer = require("../../models/customer");
+const City = require("../../models/city")
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
@@ -53,16 +54,18 @@ router.post("/confirm",(req,res)=>{
         Hotel.find({_id:hotelID}).then((doc,err)=>{
             if(err) res.status(400).json(err)
             var newDoc = doc[0]
+            var hotelName = doc[0].name
+            var destinationName = doc[0].city
             // check require room avaliablity 
             if(roomType === 'single') arr = doc[0].roomTypeAndNumber.single;
             else if(roomType === 'double') arr = doc[0].roomTypeAndNumber.double;
             else if(roomType === 'king') arr = doc[0].roomTypeAndNumber.king;
-            else if(roomType === 'studio') arr = doc[0].roomTypeAndNumber.single;
+            else if(roomType === 'studio') arr = doc[0].roomTypeAndNumber.studio;
 
             // if the room is avaliable
             if(checkAvailability(arr,date,numberRooms,bookingID).length !==0){
                 // check the customer made a resevation for the same checkin date
-                Booking.find({$and:[{customerID:customerID},{check_in_date:date.checkin}]})
+                Booking.find({$and:[{customerID:customerID},{$or:[{check_in_date:date.checkin},{new_check_in_date:date.checkin}]}]})
                 .then((doc,err)=>{
                     if(err) res.status(400).json(err);
                     // if they dont, store the booking information into booking db
@@ -87,18 +90,45 @@ router.post("/confirm",(req,res)=>{
                             }
                             newDoc.bookingStats += 1;
                             newDoc.save().catch(err=>res.send(err))
-                            res.status(200).send({bookingID:doc._id})
+                            var city = new RegExp(destinationName,'i')
+                            City.find({name:city}).then(city=>{
+                                if(city.length === 0) {
+                                    destinationImg = null
+                                }else{
+                                    destinationImg = city[0].imgAlt[0]
+                                }
+                                res.status(200).send({
+                                    bookingID:doc._id,
+                                    hotelName: hotelName,
+                                    destinationName:destinationName,
+                                    destinationImg:destinationImg,
+                                    checkIn:doc.check_in_date,
+                                    checkOut:doc.check_out_date,
+                                    numRooms:doc.numOfRoom,
+                                    roomType:doc.typeOfRoom,
+                                    Firstname:firstname,
+                                    Lastname:lastname,
+                                    email:email,
+                                    subtotal:subtotal,
+                                    discounts:discount,
+                                    rewardPointsUsed:doc.rewardPointsUsed,
+                                    rewardPointsEarned:doc.rewardPointsEarned,
+                                    reservedDate:doc.reservedDate
+                                })
+                            }).catch(err=>res.send({message:"cannot find city",code:404}))
                         })
                     }
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
-                        res.status(409).send({error1:"You are not allow to make multilple reservation for same check in date"})
+                        res.status(409).send({error1:"doubleBooking",
+                                                code:409})
                     }
                 })
             }
             // if the type of room is not avaliable
             else{
-                res.status(409).send({error2:"No rooms avaliable for this hotel in our website anymore"})
+                res.send({error2:"noRoomAvailable",
+                            code:409})
             }
         })
     }
@@ -162,7 +192,7 @@ router.post('/changeReservation',(req,res)=>{
                       res.status(200).json(
                         {
                           message:"Successfully change",
-                          code:"200"
+                          code:200
                         })
                 }else{
                     res.status(409).json({
@@ -172,7 +202,7 @@ router.post('/changeReservation',(req,res)=>{
                 }
             }).catch(err=>{res.status(400).json(err)})
         }else{
-            res.status(400).json({message:`cannot find ${bookingID}`,code:404})
+            res.status(404).json({message:`cannot find ${bookingID}`,code:404})
         }
     })
 })
