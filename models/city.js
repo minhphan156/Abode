@@ -7,6 +7,11 @@ const CitySchema = new Schema({
     required: true
   },
 
+  inspire: {
+    type: String
+    //required: true
+  },
+
   imgMain: {
     type: String, //url
     required: true
@@ -14,6 +19,10 @@ const CitySchema = new Schema({
 
   imgAlt: {
     type: Array
+  },
+
+  bookings: {
+    type: Number
   }
 });
 
