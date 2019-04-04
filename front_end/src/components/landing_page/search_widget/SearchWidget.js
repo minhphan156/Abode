@@ -85,7 +85,6 @@ class SearchWidget extends Component {
 
   render() {
     const { classes } = this.props;
-    const { query } = this.props.query;
 
     return (
       <div className={classes.root}>

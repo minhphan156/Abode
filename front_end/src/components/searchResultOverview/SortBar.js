@@ -22,7 +22,7 @@ import {
   ExpandMore
 } from "@material-ui/icons";
 
-// Component styling
+// Component CSS to Javascript styles
 let styles = theme => ({
   marPadSummary: {
     paddingLeft: 25,
@@ -113,48 +113,3 @@ SortBar.propTypes = {
 };
 
 export default withStyles(styles)(withWidth()(SortBar));
-
-/*
-<Card style={{ padding: 10, width: "auto" }} square="false">
-        <Grid
-          container
-          spacing={16}
-          direction="flow"
-          justify={width == "xs" ? "center" : "flex-start"}
-          alignItems="center"
-        >
-          <Grid item xs={6} sm="auto">
-            <InputLabel>Category</InputLabel>
-            <Select
-              style={{ width: "100%" }}
-              name="sortCategory"
-              value={sortCategory}
-              onChange={handleChange}
-              displayEmpty
-            >
-              <MenuItem value={"name"}>Name</MenuItem>
-              <MenuItem value={"price"}>Price</MenuItem>
-              <MenuItem value={"star_rating"}>Star Rating</MenuItem>
-              <MenuItem value={"guest_rating"}>Guest Rating</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item xs={4} sm="auto">
-            <InputLabel>Order</InputLabel>
-            <Select
-              style={{ width: "100%" }}
-              value={sortOrder}
-              onChange={handleChange}
-              displayEmpty
-              name="sortOrder"
-            >
-              <MenuItem value={"descending"}>
-                <ArrowDownward />
-              </MenuItem>
-              <MenuItem value={"ascending"}>
-                <ArrowUpward />
-              </MenuItem>
-            </Select>
-          </Grid>
-        </Grid>
-      </Card>
-*/

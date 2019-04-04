@@ -146,7 +146,7 @@ class searchResultOverview extends Component {
       hotels = hotelQuery.map(hotel => {
         return (
           <Grid item>
-            <Card style={{ padding: 25 }} square="false">
+            <Card className={classes.pad25} square="false">
               <Grid
                 container
                 direction="flow"
@@ -296,6 +296,7 @@ class searchResultOverview extends Component {
               </Grid>
               <Grid item xs={12}>
                 <Grid container spacing={8}>
+                  {/* TODO: Show Spinner when fetching from backend*/}
                   {hotels}
                 </Grid>
               </Grid>
