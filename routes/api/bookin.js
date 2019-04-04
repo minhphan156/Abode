@@ -56,6 +56,8 @@ router.post("/confirm",(req,res)=>{
             var newDoc = doc[0]
             var hotelName = doc[0].name
             var destinationName = doc[0].city
+            var address = doc[0].address
+            var hotelImg = doc[0].images[0]
             // check require room avaliablity 
             if(roomType === 'single') arr = doc[0].roomTypeAndNumber.single;
             else if(roomType === 'double') arr = doc[0].roomTypeAndNumber.double;
@@ -95,11 +97,13 @@ router.post("/confirm",(req,res)=>{
                                 if(city.length === 0) {
                                     destinationImg = null
                                 }else{
-                                    destinationImg = city[0].imgAlt[0]
+                                    destinationImg = city[0].imgMain
                                 }
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
+                                    hotelAddress:address,
+                                    hotelImg:hotelImg,
                                     destinationName:destinationName,
                                     destinationImg:destinationImg,
                                     checkIn:doc.check_in_date,
