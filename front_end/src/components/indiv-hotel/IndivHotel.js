@@ -60,6 +60,7 @@ class IndivHotel extends Component {
           searchQuery.checkOut.diff(searchQuery.checkIn)
         );
 
+        // daysOfStay is used to calculate subtotal, so this calculation should take place before leaving indiv-hotel.js
         this.state.daysOfStay = duration.asDays();
       } else {
         this.state.daysOfStay = 0;

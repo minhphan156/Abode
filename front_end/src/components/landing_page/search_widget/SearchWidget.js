@@ -133,5 +133,3 @@ export default connect(
   mapStateToProps,
   { submitQuery, saveQuery }
 )(withStyles(styles)(SearchWidget));
-
-// connect() --> this connects react component with redux store & action (f.e. saveQuery)

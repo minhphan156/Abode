@@ -8,7 +8,6 @@ import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { CreditCard, Room } from "@material-ui/icons/";
 import { CardElement, injectStripe } from "react-stripe-elements";
-import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core";
 
 import TextFieldGroup from "../common/TextFieldGroup";
@@ -47,7 +46,6 @@ class Payment extends Component {
   }
 
   stripeValidate(e) {
-    console.log([e.complete]);
     this.setState({ paymentField: e.complete });
   }
 
@@ -96,7 +94,6 @@ class Payment extends Component {
       (v, k) => k + 1
     );
 
-    console.log(numberOfRooms);
     let roomContainer;
     let additionalRoomContainers;
     additionalRoomContainers = numberOfRooms.map(room => {

@@ -22,7 +22,6 @@ const initialState = {
   // rewardPointsEarned: 1000
 };
 
-// ...state = current state
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_BOOKING:
