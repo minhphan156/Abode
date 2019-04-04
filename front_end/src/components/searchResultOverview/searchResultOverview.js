@@ -23,7 +23,6 @@ import {
   Typography,
   TablePagination
 } from "@material-ui/core";
-import { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
 // Component CSS to Javascript styles
 let styles = theme => ({
@@ -75,7 +74,6 @@ class searchResultOverview extends Component {
     this.handleStarRatings = this.handleStarRatings.bind(this);
     this.handleGuestRatings = this.handleGuestRatings.bind(this);
     this.handleAmenities = this.handleAmenities.bind(this);
-    this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handlePriceRangeChange = this.handlePriceRangeChange.bind(this);
   }
 
@@ -83,9 +81,6 @@ class searchResultOverview extends Component {
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };
-
-  // Used to store the input in the price ranges textfields in <FiltersWindow />
-  handlePriceChange = () => {};
 
   // Used to store the star rating input in <FiltersWindow />
   handleStarRatings = newRating => {
@@ -110,10 +105,9 @@ class searchResultOverview extends Component {
   };
 
   // Used to store the inputs from price range fields in <FiltersWindow />
-  handlePriceRangeChange = event => {
-    event.preventDefault();
+  handlePriceRangeChange = name => event => {
     this.setState({
-      [event.target.name]: Number(event.target.value)
+      [name]: Number(event.target.value)
     });
   };
 
@@ -255,7 +249,7 @@ class searchResultOverview extends Component {
       <div className={classes.pageMargins}>
         <SearchWidget />
         <Grid container direction="flow" spacing={8}>
-          {/* xs={12} md={2} */}
+          {/* xs={12} sm={4} md={3} lg={2} */}
           <FiltersWindow
             star_rate={star_rate}
             guest_rate={guest_rate}
@@ -266,7 +260,15 @@ class searchResultOverview extends Component {
             handleGuestRatings={this.handleGuestRatings}
             handlePriceRangeChange={this.handlePriceRangeChange}
           />
-          <Grid item xs={12} md={10} direction="column" spacing={0}>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={9}
+            lg={10}
+            direction="column"
+            spacing={8}
+          >
             <SortBar
               sortCategory={this.state.sortCategory}
               sortOrder={this.state.sortOrder}
