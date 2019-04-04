@@ -10,7 +10,6 @@ router.get("/", function (req, res) {
     var i;
     //change loop limit if want more featured cities
     var index = Math.floor(Math.random() * doc.length)
-    console.log(doc[index])
     var headImg = doc[index].imgMain
     var headCityName = doc[index].name
     for (i = 0; i < 5; i++) {

@@ -120,14 +120,14 @@ router.post("/confirm",(req,res)=>{
                     }
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
-                        res.status(409).send({error1:"doubleBooking",
+                        res.send({message:"doubleBooking",
                                                 code:409})
                     }
                 })
             }
             // if the type of room is not avaliable
             else{
-                res.send({error2:"noRoomAvailable",
+                res.send({message:"noRoomAvailable",
                             code:409})
             }
         })
