@@ -1,51 +1,27 @@
 import React from "react";
+import "./Footer.css";
 import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
 
-// Material UI Imports below
-import { withStyles, AppBar, Toolbar, Button, Grid } from "@material-ui/core";
-
-let styles = {
-  margin: {
-    marginRight: "auto",
-    marginLeft: "auto"
-  },
-  footer: {
-    top: "auto",
-    minheight: 140
-  },
-  footerMargin: {
-    marginLeft: 150,
-    marginRight: 150
-  }
-};
-
-function Footer(props) {
-  let { classes } = props;
-
+function Footer() {
   return (
-    <div>
-      <AppBar className={classes.footer} position="static">
-        <Toolbar className={classes.footerMargin}>
-          <Grid container spacing={2} justify="center" alignItems="center">
-            <Grid item xs={1}>
-              <Button variant="text" color="inherit">
-                <Link to="/aboutus" style={{color: "white"}}>
-                  About Us
-                </Link>
-              </Button>
-            </Grid>
-            <Grid item xs={1}>
-              <Button variant="text" color="inherit">
-                <Link to="/disclaimer" style={{color: "white"}}>
-                  Disclaimer
-                </Link>
-              </Button>
-            </Grid>
+    <footer id="footer">
+      <Grid container alignItems="center" justify="space-evenly">
+        <Grid container lg={7} alignItems="center" justify="space-evenly">
+          <Grid className="footerLayout" item>
+            <Link to="/aboutus" className="footerMenuLink">
+              About Us
+            </Link>
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
+          <Grid className="footerLayout" item>
+            <Link to="/disclaimer" className="footerMenuLink">
+              Disclaimer
+            </Link>
+          </Grid>
+        </Grid>
+      </Grid>
+    </footer>
   );
 }
 
-export default withStyles(styles)(Footer);
+export default Footer;

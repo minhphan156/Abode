@@ -3,17 +3,16 @@ import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import queryReducer from "./queryReducer";
 import profileReducer from "./profileReducer";
-import searchResultReducer from "./searchResultReducer";
 import landingReducer from "./landingReducer";
 import individualHotelReducer from "./individualHotelReducer";
-
+import bookingReducer from "./bookingReducer";
 
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
   query: queryReducer,
   profile: profileReducer,
-  searchResult: searchResultReducer,
   landing: landingReducer,
-  individualHotelData: individualHotelReducer
+  individualHotelData: individualHotelReducer,
+  bookingData: bookingReducer
 });
