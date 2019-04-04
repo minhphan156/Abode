@@ -69,7 +69,10 @@ class searchResultOverview extends Component {
       free_parking: false,
       free_breakfast: false,
       pool: false,
-      pet_friendly: false
+      pet_friendly: false,
+
+      // State used for pagination
+      page: 0
     };
 
     // Methods passed to child components
@@ -94,9 +97,10 @@ class searchResultOverview extends Component {
   };
 
   // Used to store the star rating input in <FiltersWindow />
-  handleGuestRatings = newRating => {
+  handleGuestRatings = (event, value) => {
+    event.preventDefault();
     this.setState({
-      guest_rate: newRating
+      guest_rate: value
     });
   };
 
@@ -137,110 +141,117 @@ class searchResultOverview extends Component {
   };
 
   render() {
-    let { star_rate, guest_rate, price_low, price_high } = this.state;
+    let { star_rate, guest_rate, price_low, price_high, page } = this.state;
     let { classes, width } = this.props;
     let { hotelQuery } = this.props.query;
 
     let hotels;
-    if (hotelQuery.length > 0) {
-      hotels = hotelQuery.map(hotel => {
-        return (
-          <Grid item>
-            <Card className={classes.pad25} square="false">
-              <Grid
-                container
-                direction="flow"
-                justify={isWidthDown("sm", width) ? "center" : "flex-start"}
-                alignItems="center"
-                spacing={8}
-              >
-                <Grid item xs={12} md>
-                  <Grid container direction="column" spacing={0}>
-                    <Grid item>
-                      <Typography variant="h5" color="primary">
-                        Mandalay Bay Resort And Casino
-                      </Typography>
+    if (true) {
+      hotels = (
+      <Grid item>
+        <Card className={classes.pad25} square="false">
+          <Grid
+            container
+            direction="flow"
+            justify={isWidthDown("sm", width) ? "center" : "flex-start"}
+            alignItems="center"
+            spacing={8}
+          >
+            <Grid item xs={12} md>
+              <Grid container direction="column" spacing={0}>
+                <Grid item>
+                  <Typography variant="h5" color="primary">
+                    Mandalay Bay Resort And Casino
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1" color="secondary">
+                    Las Vegas, Nevada
+                  </Typography>
+                </Grid>
+                <Grid item style={{ paddingTop: 8 }}>
+                  <Grid container direction="flow" spacing={16}>
+                    <Grid item xs={12} md={4} lg={3}>
+                      <Card style={{ padding: 7 }}>
+                        <img src={LV} />
+                      </Card>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1" color="secondary">
-                        Las Vegas, Nevada
-                      </Typography>
-                    </Grid>
-                    <Grid item style={{ paddingTop: 8 }}>
-                      <Grid container direction="flow" spacing={16}>
-                        <Grid item xs={12} md={4} lg={3}>
-                          <Card style={{ padding: 7 }}>
-                            <img src={LV} />
-                          </Card>
-                        </Grid>
+                    <Grid item xs={12} md="auto">
+                      <Grid
+                        container
+                        direction="column"
+                        justify={
+                          isWidthDown("sm", width) ? "center" : "flex-start"
+                        }
+                        alignItems={
+                          isWidthDown("sm", width) ? "center" : "flex-start"
+                        }
+                        spacing={0}
+                      >
                         <Grid item xs={12} md="auto">
                           <Grid
                             container
-                            direction="column"
+                            direction="flow"
                             justify={
-                              isWidthDown("sm", width) ? "center" : "flex-start"
+                              isWidthDown("sm", width)
+                                ? "center"
+                                : "flex-start"
                             }
-                            alignItems={
-                              isWidthDown("sm", width) ? "center" : "flex-start"
-                            }
-                            spacing={0}
+                            alignItems="center"
+                            spacing={8}
                           >
-                            <Grid item xs={12} md="auto">
-                              <Grid
-                                container
-                                direction="flow"
-                                justify={
-                                  isWidthDown("sm", width)
-                                    ? "center"
-                                    : "flex-start"
-                                }
-                                alignItems="center"
-                                spacing={8}
-                              >
-                                <Grid item>
-                                  <ReactStars
-                                    value={4}
-                                    count={5}
-                                    size={32}
-                                    color2={"#ffd700"}
-                                    edit={false}
-                                  />
-                                </Grid>
-                                <Grid item>
-                                  <Typography
-                                    variant="subtitle2"
-                                    color="default"
-                                  >
-                                    4 out of 5 Star Rating
-                                  </Typography>
-                                </Grid>
-                              </Grid>
+                            <Grid item>
+                              <ReactStars
+                                value={4}
+                                count={5}
+                                size={32}
+                                color2={"#ffd700"}
+                                edit={false}
+                              />
                             </Grid>
                             <Grid item>
-                              <Typography variant="h6" color="default">
-                                Fabulous! 8.9 Guest Rating
+                              <Typography
+                                variant="subtitle2"
+                                color="default"
+                              >
+                                4 out of 5 Star Rating
                               </Typography>
                             </Grid>
                           </Grid>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="h6" color="default">
+                            Fabulous! 8.9 Guest Rating
+                          </Typography>
                         </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs="auto">
+              </Grid>
+            </Grid>
+            <Grid item xs="auto" style={{height: "100%"}}>
+              <Grid container className="border" direction="column">
+                <Grid item>
+                  <Typography variant="h5">
+                    $500
+                  </Typography>
+                </Grid>
+                <Grid item xs>
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={this.handleClickToHotel(hotel)}
+                    onClick={this.handleClickToHotel(hotels)}
                   >
                     Book Now
                   </Button>
                 </Grid>
               </Grid>
-            </Card>
+            </Grid>
           </Grid>
-        );
-      });
+        </Card>
+      </Grid>
+      );
     }
 
     let pagination = (
@@ -249,7 +260,7 @@ class searchResultOverview extends Component {
           style={{ float: "right" }}
           rowsPerPageOptions={[5, 10, 25]}
           count={100}
-          page={9}
+          page={page}
           rowsPerPage={10}
         />
       </Grid>

@@ -20,10 +20,12 @@ import {
   ExpansionPanelDetails,
   MenuItem,
   Button,
-  Menu
+  Menu,
+  Hidden
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
 import { ExpandMore, FilterList } from "@material-ui/icons";
+import { Slider } from "@material-ui/lab";
 
 // Component styling
 let styles = theme => ({
@@ -177,12 +179,13 @@ class FiltersWindow extends Component {
                     </Typography>
                   </Grid>
                   <Grid item direction="flow">
-                    <ReactStars
+                    <Slider
+                      style={{padding: 15}}
                       value={guest_rate}
-                      count={10}
+                      min={0}
+                      max={10}
+                      step={1}
                       onChange={handleGuestRatings}
-                      size={24}
-                      color2={"#ffd700"}
                     />
                   </Grid>
                 </Grid>
@@ -205,18 +208,20 @@ class FiltersWindow extends Component {
                       Price Range:
                     </Typography>
                   </Grid>
-                  <Grid item xs>
-                    <TextField
-                      value={priceRangeEquality != "To" ? "" : price_low}
-                      disabled={priceRangeEquality != "To" ? true : false}
-                      InputProps={{
-                        inputComponent: NumberFormatCustom
-                      }}
-                      onChange={handlePriceRangeChange("price_low")}
-                      error={price_low > price_high ? true : false}
-                      margin="none"
-                    />
-                  </Grid>
+                  <Hidden lgDown={priceRangeEquality != "To" ? true : false}>
+                    <Grid item xs>
+                      <TextField
+                        value={priceRangeEquality != "To" ? "" : price_low}
+                        disabled={priceRangeEquality != "To" ? true : false}
+                        InputProps={{
+                          inputComponent: NumberFormatCustom
+                        }}
+                        onChange={handlePriceRangeChange("price_low")}
+                        error={price_low > price_high ? true : false}
+                        margin="none"
+                      />
+                    </Grid>
+                  </Hidden>
                   <Grid item xs>
                     <Button
                       variant="outlined"
