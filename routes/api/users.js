@@ -94,7 +94,7 @@ router.post("/login", (req, res) => {
   //find user email {email} = {email : email}
   User.findOne({
     email
-  }).then(user => {
+  }).populate("customerID").then(user => {
     if (!user) {
       // if user not found
       errors.email = "User not found";
@@ -120,6 +120,9 @@ router.post("/login", (req, res) => {
             res.json({
               // sent to some cloud or local storage
               email: email,
+              firstname:user.customerID.Firstname,
+              lastname:user.customerID.Lastname,
+              rewardPoints:user.rewardPoints,
               success: true,
               token: "Bearer " + token
             });
@@ -142,10 +145,15 @@ router.get(
     session: false
   }), // not using session
   (req, res) => {
+    if (req.user){
+      req.user.rewardPoints = req.user.rewardPoints +50
+    }
+    req.user.save();
     res.json({
       id: req.user.id,
       name: req.user.name,
-      email: req.user.email
+      email: req.user.email,
+      rewardPoints:req.user.rewardPoints
     });
   }
 );

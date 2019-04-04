@@ -54,6 +54,17 @@ const BookingSchema = new Schema({
     discount:{
         type:Number,
         default:0
+    },
+    rewardPointsUsed:{
+        type:Number,
+        default:0
+    },
+    rewardPointsEarned:{
+        type:Number,
+        default:0
+    },
+    review:{
+        type:String
     }
 })
 
