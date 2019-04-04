@@ -54,7 +54,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
                 {part.text}
               </span>
             ) : (
-              <strong key={String(index)} style={{ fontWeight: 300 }}>
+              <strong key={String(index)} style={{ fontWeight: 100 }}>
                 {part.text}
               </strong>
             )
@@ -63,13 +63,6 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
       </div>
     </MenuItem>
   );
-}
-
-{
-  /* <ListItemIcon className={classes.icon}>
-<SendIcon />
-</ListItemIcon>
-<ListItemText classes={{ primary: classes.primary }} inset primary="Sent mail" /> */
 }
 
 function getSuggestions(value) {
