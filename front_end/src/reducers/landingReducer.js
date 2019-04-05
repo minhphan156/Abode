@@ -2,10 +2,6 @@ import { GET_LANDING_DATA, SET_LANDING_STATUS } from "../actions/types";
 
 // TODO: Edit initialState once backend implementation is implemented.
 const initialState = {
-  header: {
-    cityName: "String",
-    headImg: "String"
-  },
   deals1: {
     name: "String",
     picurl: "String",
@@ -24,12 +20,9 @@ const initialState = {
     rates: 1,
     price: 1
   },
-  featureDestination: [
-    {
-      cityName: "String",
-      picurl: "String"
-    }
-  ],
+  inspire: "",
+  inspireCity: "",
+  featCities: [],
   isInLanding: false
 };
 
@@ -38,8 +31,9 @@ export default function(state = initialState, action) {
     case GET_LANDING_DATA:
       return {
         ...state, 
-        header: action.payload.header, 
-        featureDestination: action.payload.featureDestination
+        inspire: action.payload.inspire, 
+        inspireCity: action.payload.inspireCity,
+        featCities: action.payload.featCities
       }
     case SET_LANDING_STATUS:
     return {
