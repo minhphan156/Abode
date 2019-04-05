@@ -154,7 +154,6 @@ class searchResultOverview extends Component {
             container
             direction="flow"
             justify={isWidthDown("sm", width) ? "center" : "flex-start"}
-            alignItems="center"
             spacing={8}
           >
             <Grid item xs={12} md>
@@ -230,14 +229,14 @@ class searchResultOverview extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs="auto" style={{height: "100%"}}>
-              <Grid container className="border" direction="column">
-                <Grid item>
+            <Grid item>
+              <Grid container direction="column" justify="space-between" alignItems="center">
+                <Grid item xs="auto">
                   <Typography variant="h5">
                     $500
                   </Typography>
                 </Grid>
-                <Grid item xs>
+                <Grid item xs="auto">
                   <Button
                     variant="contained"
                     color="primary"
