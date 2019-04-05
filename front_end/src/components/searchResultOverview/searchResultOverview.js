@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { submitQuery, saveQuery } from "../../actions/searchActions";
 
 // Additional libraries
 import ReactStars from "react-stars";
@@ -56,6 +57,14 @@ class searchResultOverview extends Component {
     super();
 
     this.state = {
+      // Search Widget Input
+      destinationName: "",
+      checkIn: {},
+      checkOut: {},
+      numberRoom: 0,
+      lastIndex: 0,
+      numResults: 5,
+
       // States used for sorting
       sortCategory: "name",
       sortOrder: "descending",
@@ -82,6 +91,10 @@ class searchResultOverview extends Component {
     this.handleAmenities = this.handleAmenities.bind(this);
     this.handlePriceRangeChange = this.handlePriceRangeChange.bind(this);
     this.handleClickToHotel = this.handleClickToHotel.bind(this);
+
+    // Action calls
+    this.handleApply = this.handleApply.bind(this);
+    this.handleSearchWidget = this.handleSearchWidget.bind(this);
   }
 
   // Used to force user browser to scroll to top of page upon mounting this component
@@ -127,6 +140,42 @@ class searchResultOverview extends Component {
     });
   };
 
+  handleApply = event => {
+    event.preventDefault();
+    console.log('test');
+    let newQuery = {
+      destinationName: this.state.destinationName,
+      checkIn: this.state.checkIn,
+      checkOut: this.state.checkOut,
+      numberRooms: this.state.numberRooms,
+      lastIndex: 0,
+      numResults: this.props.query.searchQuery.numResults,
+      free_wifi: this.state.free_wifi,
+      free_parking: this.state.free_parking,
+      free_breakfast: this.state.free_breakfast,
+      pool: this.state.pool,
+      pet_friendly: this.state.pet_friendly,
+      price_low: this.state.low_price,
+      price_high: this.state.high_price,
+      review_score: this.state.guest_rate,
+      star_rating: this.state.star_rate
+    }
+    this.props.submitQuery(newQuery);
+    this.props.saveQuery(newQuery);
+  }
+
+  handleSearchWidget = obj => event => {
+    event.preventDefault();
+    this.setState({
+      destinationName: obj.destinationName,
+      checkIn: obj.checkIn,
+      checkOut: obj.checkOut,
+      numberRoom: obj.numberRoom,
+      lastIndex: obj.lastIndex,
+      numResults: obj.numResults,
+    })
+  }
+
   handleClickToHotel = hotel => event => {
     event.preventDefault();
     /*
@@ -161,19 +210,19 @@ class searchResultOverview extends Component {
                   <Grid container direction="column" spacing={0}>
                     <Grid item>
                       <Typography variant="h5" color="primary">
-                        Mandalay Bay Resort And Casino
+                        {hotel.name}
                       </Typography>
                     </Grid>
                     <Grid item>
                       <Typography variant="subtitle1" color="secondary">
-                        Las Vegas, Nevada
+                        {hotel.address}
                       </Typography>
                     </Grid>
                     <Grid item style={{ paddingTop: 8 }}>
                       <Grid container direction="flow" spacing={16}>
                         <Grid item xs={12} md={4} lg={3}>
                           <Card style={{ padding: 7 }}>
-                            <img src={LV} />
+                            <img src={hotel.img} />
                           </Card>
                         </Grid>
                         <Grid item xs={12} md="auto">
@@ -202,7 +251,7 @@ class searchResultOverview extends Component {
                               >
                                 <Grid item>
                                   <ReactStars
-                                    value={4}
+                                    value={hotel.star_rates}
                                     count={5}
                                     size={32}
                                     color2={"#ffd700"}
@@ -214,14 +263,14 @@ class searchResultOverview extends Component {
                                     variant="subtitle2"
                                     color="default"
                                   >
-                                    4 out of 5 Star Rating
+                                    {hotel.star_rates} out of 5 Star Rating
                                   </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
                             <Grid item>
                               <Typography variant="h6" color="default">
-                                Fabulous! 8.9 Guest Rating
+                                {hotel.guest_rate} Guest Rating
                               </Typography>
                             </Grid>
                           </Grid>
@@ -234,7 +283,7 @@ class searchResultOverview extends Component {
                   <Grid container direction="column" justify="space-between" alignItems="center">
                     <Grid item xs="auto">
                       <Typography variant="h5">
-                        $500
+                        $ {hotel.price}
                       </Typography>
                     </Grid>
                     <Grid item xs="auto">
@@ -285,6 +334,7 @@ class searchResultOverview extends Component {
             pool: this.state.pool,
             pet_friendly: this.state.pet_friendly
           }}
+          handleSearchWidget={this.handleSearchWidget}
         />
         <Grid container direction="flow" spacing={8}>
           <FiltersWindow
@@ -296,6 +346,7 @@ class searchResultOverview extends Component {
             handleStarRatings={this.handleStarRatings}
             handleGuestRatings={this.handleGuestRatings}
             handlePriceRangeChange={this.handlePriceRangeChange}
+            handleApply={this.handleApply}
           />
           <Grid item xs={12} sm={8} md={9} lg={10}>
             <Grid container direction="flow" justify="center" spacing={8}>

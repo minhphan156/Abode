@@ -43,7 +43,7 @@ let SortBar = props => {
 
   return (
     <ExpansionPanel
-      defaultExpanded={width == "xs" ? false : true}
+      defaultExpanded={true}
       square="false"
     >
       <ExpansionPanelSummary

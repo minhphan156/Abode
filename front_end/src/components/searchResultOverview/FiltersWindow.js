@@ -134,6 +134,16 @@ class FiltersWindow extends Component {
               justify="flex-start"
               spacing={0}
             >
+              <Grid item xs={12} md="auto">
+                <Grid container className={classes.pad10} justify="center">
+                  <Grid item>
+                    <Button variant="contained" color="primary" onClick={this.props.handleApply}>
+                      Apply
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Divider />
               <Grid item xs={12} md="auto" boxShadow="false">
                 <Grid
                   container
@@ -146,7 +156,7 @@ class FiltersWindow extends Component {
                       className={classes.subtitles}
                       variant="subtitle2"
                     >
-                      {`Star Rating: ${star_rate > 0 ? `(${star_rate})` : ""}`}
+                      {`Star Rating: ${star_rate > 0 ? `(${star_rate}) and Up` : ""}`}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -174,7 +184,7 @@ class FiltersWindow extends Component {
                       variant="subtitle2"
                     >
                       {`Guest Rating: ${
-                        guest_rate > 0 ? `(${guest_rate})` : ""
+                        guest_rate > 0 ? `(${guest_rate} & Up)` : ""
                       }`}
                     </Typography>
                   </Grid>

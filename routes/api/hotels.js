@@ -9,6 +9,7 @@ const Hotel = require("../../models/Hotel");
 // @desc Search Overview with Sorting and Filtering
 router.get('/search',(req,res)=>{
     //Sorting
+    console.log(req.query);
     var sortByObject = req.query.sortObject;
     if (typeof sortByOject !== 'undefined'){
         switch (sortByObject){
