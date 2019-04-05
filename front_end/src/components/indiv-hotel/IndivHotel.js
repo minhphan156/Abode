@@ -22,8 +22,8 @@ class IndivHotel extends Component {
 
     let tempBookingInfo = {
       name: this.props.individualHotelData.individualHotelData.name,
-      street: this.props.individualHotelData.individualHotelData.street,
-      city: this.props.individualHotelData.individualHotelData.city,
+      street: this.props.individualHotelData.individualHotelData.address,
+      //city: this.props.individualHotelData.individualHotelData.city,
       roomType: roomTypeSelected,
       checkIn: this.props.query.searchQuery.checkIn,
       checkOut: this.props.query.searchQuery.checkOut,
@@ -81,7 +81,7 @@ class IndivHotel extends Component {
               className="display-4 test-left"
               style={{ fontSize: 24, color: "#808080" }}
             >
-              {individualHotelData.street}, {individualHotelData.city}
+              {individualHotelData.address}
             </h2>
 
             <div className="row">
@@ -247,7 +247,7 @@ class IndivHotel extends Component {
 
                     <ReactStars
                       count={5}
-                      value={individualHotelData.tripAdvisorRate}
+                      value={individualHotelData.ta_rating}
                       size={22}
                       edit={false}
                       color2={"#00af87"}
@@ -263,7 +263,7 @@ class IndivHotel extends Component {
                     </h3>
                     <ReactStars
                       count={5}
-                      value={individualHotelData.hotelsRate}
+                      value={individualHotelData.hdc_rating / 2}
                       size={22}
                       edit={false}
                       color2={"#d32f2f"}
@@ -381,14 +381,14 @@ class IndivHotel extends Component {
                   {individualHotelData.studioAvailability ? (
                     <tr>
                       <th scope="row">Studio Suite</th>
-                      <td>${individualHotelData.price.studioPrice}</td>
+                      <td>${individualHotelData.price.suitePrice}</td>
                       <td>
                         <Link
                           to="/payment"
                           onClick={() =>
                             this.saveBookingInfo(
                               "studio",
-                              individualHotelData.price.studioPrice
+                              individualHotelData.price.suitePrice
                             )
                           }
                         >
