@@ -7,15 +7,49 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+let id = 0;
+function createData(firstCol, secondCol) {
+  id += firstCol + 1;
+  return { id, firstCol, secondCol };
+}
 function Confirmation(props) {
   const bookingData = props.bookingData;
+  const ReservationRows = [
+    createData("Confirmation Number", bookingData.bookingId),
+    createData(
+      "Guest Name",
+      bookingData.Firstname + " " + bookingData.Lastname
+    ),
+    createData("Arrival Date", bookingData.checkIn),
+    createData("Departure Date", bookingData.checkOut),
+    createData("Room Type", bookingData.roomType)
+  ];
 
+  const PoliciesRows = [
+    createData("Check-In Time", "3:00 PM"),
+    createData("Check-Out Time", "12:00 noon"),
+    createData("Reward Poinst Earned", bookingData.rewardPointsEarned),
+    createData(
+      "Cancellation Policy",
+      "Quos blanditiis tenetur unde suscipit, quam beatae inventoreconsectetur, neque doloribus, cupiditate numquam dignissimos laborum"
+    )
+  ];
   return (
     <Card>
       <Grid container spacing={16} justify="center">
         <Grid item xs={10}>
-          <CardHeader title={bookingData.name} />
+          <Typography variant="h4" gutterBottom>
+            {bookingData.hotelName}
+          </Typography>
+          <br />
+          <Typography variant="h6" gutterBottom>
+            {bookingData.destinationName}
+          </Typography>
         </Grid>
 
         <Grid item xs={5}>
@@ -33,115 +67,76 @@ function Confirmation(props) {
         </Grid>
         <Grid item xs={10}>
           <Typography>
+            {" "}
+            <br /> <br />
             Dear Mr/Mrs {bookingData.Lastname},
-            <br />
-            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
-            consectetur, neque doloribus, cupiditate numquam dignissimos laborum
-            fugiat deleniti? Eum quasi quidem quibusdam.
+            <br /> <br />
+            Thank you for choosing {bookingData.hotelName}. It is our pleasure
+            to confirm the following reservation.
           </Typography>
         </Grid>
-        <Grid item xs={5}>
-          <Card>
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Confirmation Number
-            </Typography>
-            {bookingData.bookingId}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Guest Name
-            </Typography>
-            {bookingData.Firstname} {bookingData.Lastname}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Arrival Date
-            </Typography>
-            {bookingData.checkIn}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Departure Date
-            </Typography>
-            {bookingData.checkOut}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Room Type
-            </Typography>
-            {bookingData.numRooms}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Nightly Rate
-            </Typography>
-            {bookingData.roomType}
-          </Card>
+
+        <Grid item xs={4}>
+          <div
+            style={{
+              color: "white",
+              background: "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
+            }}
+          >
+            {" "}
+            RESERVATION DETAILS
+          </div>
+          <Table>
+            <TableBody>
+              {ReservationRows.map(row => (
+                <TableRow
+                  key={row.id}
+                  style={{
+                    padding: 0
+                  }}
+                >
+                  <TableCell align="left" style={{ padding: 0, width: 150 }}>
+                    {row.firstCol}
+                  </TableCell>
+                  <TableCell align="left" style={{ padding: 0 }}>
+                    {row.secondCol}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Grid>
-        <Grid item xs={5}>
-          <Card>
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Check-In Time
-            </Typography>
-            {bookingData.bookingId}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Check-Out Time
-            </Typography>
-            {bookingData.Firstname} {bookingData.Lastname}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Room Tax
-            </Typography>
-            {bookingData.checkIn}
-            <br />
-            <Typography
-              variant="subtitle2"
-              gutterBottom
-              style={{ fontWeight: 800 }}
-            >
-              Cancellation Policy
-            </Typography>
-            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
-            quam beatae rerum inventore.
-            <br />
-          </Card>
+
+        <Grid item xs={4}>
+          <div
+            style={{
+              color: "white",
+              background: "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
+            }}
+          >
+            {" "}
+            RESERVATION DETAILS
+          </div>{" "}
+          <Table>
+            <TableBody>
+              {PoliciesRows.map(row => (
+                <TableRow key={row.id} style={{ padding: 0 }}>
+                  <TableCell align="left" style={{ padding: 0, width: 150 }}>
+                    {row.firstCol}
+                  </TableCell>
+                  <TableCell align="left" style={{ padding: 0 }}>
+                    {row.secondCol}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Grid>
+
         <Grid item xs={10}>
-          <Typography>{bookingData.name}</Typography>
+          <Typography>
+            {bookingData.hotelName} {bookingData.hotelAddress}
+          </Typography>
         </Grid>
       </Grid>
     </Card>

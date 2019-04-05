@@ -5,7 +5,7 @@ const initialState = {
   hotelName: "Hampton Inn San Francisco Downtown/Convention Center",
   hotelAddress: "942 Mission Street San Francisco, CA, 94103, United States",
   hotelImg: "",
-  destinationName: "",
+  destinationName: "San Francisco",
   destinationImg: null,
   checkIn: "4/2/2019",
   checkOut: "4/6/2019",
@@ -19,7 +19,7 @@ const initialState = {
   hotelImage: "",
   rewardPointsUsed: 100,
   rewardPointsEarned: 1000,
-  reservedDate: ""
+  reservedDate: "3/2/2019"
 };
 
 // ...state = current state
