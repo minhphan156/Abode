@@ -75,6 +75,7 @@ class FiltersWindow extends Component {
     this.handleEqualityMenuOpen = this.handleEqualityMenuOpen.bind(this);
   }
 
+  // Handles the Equality button
   handleEqualityMenuOpen = event => {
     event.preventDefault();
     this.setState({
@@ -135,32 +136,23 @@ class FiltersWindow extends Component {
               justify="flex-start"
               spacing={0}
             >
-              <Grid item xs={12} md="auto">
-                <Grid container className={classes.pad10} justify="center">
-                  <Grid item>
-                    <Button variant="contained" color="primary" onClick={handleFiltersApply}>
-                      Apply
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Divider />
               <Grid item xs={12} md="auto" boxShadow="false">
                 <Grid
                   container
                   className={classes.pad10}
-                  direction="column"
+                  direction="row"
+                  justify="center"
                   spacing={0}
                 >
-                  <Grid item>
+                  <Grid item xs={12}>
                     <Typography
                       className={classes.subtitles}
                       variant="subtitle2"
                     >
-                      {`Star Rating: ${star_rate > 0 ? `(${star_rate} and up)` : ""}`}
+                      {`Star Rating: (${star_rate} and up)`}
                     </Typography>
                   </Grid>
-                  <Grid item>
+                  <Grid item xs="auto">
                     <ReactStars
                       value={star_rate}
                       count={5}
@@ -184,14 +176,12 @@ class FiltersWindow extends Component {
                       className={classes.subtitles}
                       variant="subtitle2"
                     >
-                      {`Guest Rating: ${
-                        guest_rate > 0 ? `(${guest_rate} and up)` : ""
-                      }`}
+                      {`Guest Rating: (${guest_rate} and up)`}
                     </Typography>
                   </Grid>
                   <Grid item direction="flow">
                     <Slider
-                      style={{padding: 15}}
+                      style={{ padding: 15 }}
                       value={guest_rate}
                       min={0}
                       max={10}
@@ -207,8 +197,8 @@ class FiltersWindow extends Component {
                   container
                   className={classes.pad10}
                   direction="flow"
-                  alignItems="center"
                   justify="center"
+                  alignItems="center"
                   spacing={8}
                 >
                   <Grid item xs={12}>
@@ -222,14 +212,21 @@ class FiltersWindow extends Component {
                   <Hidden lgDown={priceRangeEquality != "To" ? true : false}>
                     <Grid item xs>
                       <TextField
+                        label="min"
                         value={priceRangeEquality != "To" ? "" : price_low}
                         disabled={priceRangeEquality != "To" ? true : false}
                         InputProps={{
                           inputComponent: NumberFormatCustom
                         }}
                         onChange={handlePriceRangeChange("price_low")}
-                        error={price_low > price_high ? true : false}
+                        error={
+                          (price_low != null && price_low == price_high) ||
+                          price_low > price_high
+                            ? true
+                            : false
+                        }
                         margin="none"
+                        variant="outlined"
                       />
                     </Grid>
                   </Hidden>
@@ -270,13 +267,20 @@ class FiltersWindow extends Component {
                   </Grid>
                   <Grid item xs>
                     <TextField
+                      label="max"
                       value={price_high}
                       InputProps={{
                         inputComponent: NumberFormatCustom
                       }}
                       onChange={handlePriceRangeChange("price_high")}
-                      error={price_low > price_high ? true : false}
+                      error={
+                        (price_high != null && price_low == price_high) ||
+                        price_low > price_high
+                          ? true
+                          : false
+                      }
                       margin="none"
+                      variant="outlined"
                     />
                   </Grid>
                 </Grid>
@@ -336,6 +340,21 @@ class FiltersWindow extends Component {
                       control={<Checkbox value="pet_friendly" />}
                       onChange={handleAmenities}
                     />
+                  </Grid>
+                </Grid>
+                <Divider />
+              </Grid>
+              <Grid item xs={12} md="auto">
+                <Grid container className={classes.pad10} justify="center">
+                  <Grid item xs={8}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleFiltersApply}
+                      style={{ width: "100%" }}
+                    >
+                      Apply
+                    </Button>
                   </Grid>
                 </Grid>
               </Grid>

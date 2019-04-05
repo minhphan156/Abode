@@ -25,9 +25,14 @@ import {
   Button,
   Typography,
   TablePagination,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Divider,
   CircularProgress
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
+import { Search, ExpandMore } from "@material-ui/icons";
 
 // Component CSS to Javascript styles
 let styles = theme => ({
@@ -47,8 +52,8 @@ let styles = theme => ({
       marginBottom: "1%"
     }
   },
-  subtitles: { fontWeight: "bold", color: "#808080" },
-  pad25: { padding: 25 }
+  pad25: { padding: 25 },
+  subtitles: { fontWeight: "bold", color: "#808080" }
 });
 
 // Main component of the Search Result Overview Page
@@ -64,8 +69,8 @@ class searchResultOverview extends Component {
       // States used for filter
       star_rate: 0,
       guest_rate: 0,
-      price_low: 0,
-      price_high: 0,
+      price_low: null,
+      price_high: null,
       free_wifi: false,
       free_parking: false,
       free_breakfast: false,
@@ -86,6 +91,7 @@ class searchResultOverview extends Component {
 
     // Action calls
     this.handleFiltersApply = this.handleFiltersApply.bind(this);
+    this.backendCall = this.backendCall.bind(this);
   }
 
   // Used to force user browser to scroll to top of page upon mounting this component
@@ -118,9 +124,20 @@ class searchResultOverview extends Component {
 
   // Used to store the inputs from price range fields in <FiltersWindow />
   handlePriceRangeChange = name => event => {
+    let value;
+    if (event.target.value == "") {
+      value = null;
+    } else {
+      value = Number(event.target.value);
+    }
     this.setState({
-      [name]: Number(event.target.value)
+      [name]: value
     });
+  };
+
+  handleFiltersApply = event => {
+    event.preventDefault();
+    this.backendCall(null);
   };
 
   // Used to store the inputs from selections felds in <SortBar />
@@ -131,10 +148,38 @@ class searchResultOverview extends Component {
     sortObject = {
       ...sortObject,
       [event.target.name]: event.target.value
-    }
+    };
 
-    let { destinationName, checkIn, checkOut, numberRooms, lastIndex, numResults } = this.props.query.searchQuery;
-    let { sortCategory, sortOrder } = sortObject;
+    this.backendCall(sortObject);
+
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  backendCall = sortObject => {
+    let {
+      destinationName,
+      checkIn,
+      checkOut,
+      numberRooms,
+      lastIndex,
+      numResults
+    } = this.props.query.searchQuery;
+    let {
+      price_low,
+      price_high,
+      guest_rate,
+      star_rate,
+      free_wifi,
+      free_parking,
+      free_breakfast,
+      pool,
+      pet_friendly
+    } = this.state;
+
+    let { sortCategory, sortOrder } =
+      sortObject == null ? this.state : sortObject;
 
     let orderSign;
     switch (sortOrder) {
@@ -154,51 +199,31 @@ class searchResultOverview extends Component {
       numberRooms: numberRooms,
       lastIndex: lastIndex,
       numResults: numResults,
-      sortObject: `${orderSign}${sortCategory}`
-    }
-    this.props.saveQuery(newQuery);
-    this.props.submitQuery(newQuery);
-
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  };
-
-  handleFiltersApply = event => {
-    event.preventDefault();
-
-    // Assuming at this point that searchQuery has been filled in
-    let { destinationName, checkIn, checkOut, numberRooms, lastIndex, numResults } = this.props.query.searchQuery;
-    let { price_low, price_high, guest_rate, star_rate, free_wifi, free_parking, free_breakfast, pool, pet_friendly } = this.state;
-
-    let newQuery = {
-      destinationName: destinationName,
-      checkIn: checkIn,
-      checkOut: checkOut,
-      numberRooms: numberRooms,
-      lastIndex: lastIndex,
-      numResults: numResults,
-      free_wifi: free_wifi,
-      free_parking: free_parking,
-      free_breakfast: free_breakfast,
-      pool: pool,
-      pet_friendly: pet_friendly,
-      price_low: price_low,
-      price_high: price_high,
+      free_wifi: free_wifi ? 1 : 0,
+      free_parking: free_parking ? 1 : 0,
+      free_breakfast: free_breakfast ? 1 : 0,
+      pool: pool ? 1 : 0,
+      pet_friendly: pet_friendly ? 1 : 0,
+      price_low:
+        price_low == null || price_low > price_high || price_low == price_high
+          ? null
+          : price_low,
+      price_high:
+        price_high == null || price_low > price_high || price_low == price_high
+          ? null
+          : price_high,
       review_score: guest_rate,
-      star_rating: star_rate
-    }
+      star_rating: star_rate,
+      sortObject: `${orderSign}${sortCategory}`
+    };
+
     this.props.saveQuery(newQuery);
     this.props.submitQuery(newQuery);
-
-    this.setState({
-      [event.target.name]: [event.target.value]
-    });
-  }
+  };
 
   handlePagination = event => {
     event.preventDefault();
-  }
+  };
 
   handleClickToHotel = hotel => event => {
     event.preventDefault();
@@ -208,6 +233,7 @@ class searchResultOverview extends Component {
       checkOut: this.props.query.searchQuery.checkOut,
       numberRooms: this.props.query.searchQuery.numberRooms
     });
+    this.props.history.push("/indiv-hotel");
   };
 
   render() {
@@ -222,8 +248,8 @@ class searchResultOverview extends Component {
       let hotels;
       if (hotelQuery.length > 0) {
         hotels = hotelQuery.map(hotel => {
-          return(
-            <Grid item>
+          return (
+            <Grid item xs={12}>
               <Card className={classes.pad25} square="false">
                 <Grid
                   container
@@ -255,10 +281,14 @@ class searchResultOverview extends Component {
                               container
                               direction="column"
                               justify={
-                                isWidthDown("sm", width) ? "center" : "flex-start"
+                                isWidthDown("sm", width)
+                                  ? "center"
+                                  : "flex-start"
                               }
                               alignItems={
-                                isWidthDown("sm", width) ? "center" : "flex-start"
+                                isWidthDown("sm", width)
+                                  ? "center"
+                                  : "flex-start"
                               }
                               spacing={0}
                             >
@@ -305,11 +335,14 @@ class searchResultOverview extends Component {
                     </Grid>
                   </Grid>
                   <Grid item>
-                    <Grid container direction="column" justify="space-between" alignItems="center">
+                    <Grid
+                      container
+                      direction="column"
+                      justify="space-between"
+                      alignItems="center"
+                    >
                       <Grid item xs="auto">
-                        <Typography variant="h5">
-                          ${hotel.price}
-                        </Typography>
+                        <Typography variant="h5">${hotel.price}</Typography>
                       </Grid>
                       <Grid item xs="auto">
                         <Button
@@ -326,7 +359,7 @@ class searchResultOverview extends Component {
               </Card>
             </Grid>
           );
-        })
+        });
       }
 
       let pagination = (
@@ -343,23 +376,23 @@ class searchResultOverview extends Component {
 
       return (
         <div className={classes.pageMargins}>
-          <SearchWidget
-            sortObject={{
-              sortCategory: this.state.sortCategory,
-              sortOrder: this.state.sortOrder
-            }}
-            filterObject={{
-              star_rate: this.state.star_rate,
-              guest_rate: this.state.guest_rate,
-              price_low: this.state.price_low,
-              price_high: this.state.price_high,
-              free_wifi: this.state.free_wifi,
-              free_parking: this.state.free_parking,
-              free_breakfast: this.state.free_breakfast,
-              pool: this.state.pool,
-              pet_friendly: this.state.pet_friendly
-            }}
-          />
+          <ExpansionPanel
+            defaultExpanded={width == "xs" ? false : true}
+            square="false"
+            style={{ marginBottom: 8 }}
+          >
+            <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+              <Typography className={classes.subtitles} variant="subtitle2">
+                <Search /> Search
+              </Typography>
+            </ExpansionPanelSummary>
+            <Divider />
+            <ExpansionPanelDetails>
+              <div style={{ width: "100%" }}>
+                <SearchWidget />
+              </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
           <Grid container direction="flow" spacing={8}>
             <FiltersWindow
               star_rate={star_rate}
@@ -409,5 +442,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getIndividualHotelResult,submitQuery, saveQuery}
+  { getIndividualHotelResult, submitQuery, saveQuery }
 )(withStyles(styles)(withWidth()(searchResultOverview)));

@@ -42,10 +42,7 @@ let SortBar = props => {
   let { classes, width, handleChange, sortCategory, sortOrder } = props;
 
   return (
-    <ExpansionPanel
-      defaultExpanded={false}
-      square="false"
-    >
+    <ExpansionPanel defaultExpanded={false} square="false">
       <ExpansionPanelSummary
         className={classes.mar0}
         expandIcon={<ExpandMore />}
