@@ -1,42 +1,151 @@
-import React, { Component } from "react";
+import React from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
 
-import styled, { keyframes } from "styled-components";
-import { bounce } from "react-animations";
+function Confirmation(props) {
+  const bookingData = props.bookingData;
 
-import BookingBreakdownTable from "./BookingBreakdownTable";
-import BookingDetailsCard from "./BookingDetailsCard";
+  return (
+    <Card>
+      <Grid container spacing={16} justify="center">
+        <Grid item xs={10}>
+          <CardHeader title={bookingData.name} />
+        </Grid>
 
-const Bounce = styled.div`
-  animation: 2s ${keyframes`${bounce}`} infinite;
-`;
+        <Grid item xs={5}>
+          <CardMedia
+            style={{ width: "100%", height: 200 }}
+            image={require("../landing_page/SF.jpg")}
+          />
+        </Grid>
 
-class Confirmation extends Component {
-  render() {
-    return (
-      <div className="confirmation">
-        <div className="landing-inner">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 ">
-                <p class="float-left">
-                  <Bounce>
-                    <h1>You're All Set!</h1>
-                  </Bounce>
-                  <BookingDetailsCard />
-                </p>
-                <p class="float-right">
-                  <BookingBreakdownTable />
-                </p>
-                <hr />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+        <Grid item xs={5}>
+          <CardMedia
+            style={{ width: "100%", height: 200 }}
+            image={require("../landing_page/SD.jpg")}
+          />
+        </Grid>
+        <Grid item xs={10}>
+          <Typography>
+            Dear Mr/Mrs {bookingData.Lastname},
+            <br />
+            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
+            consectetur, neque doloribus, cupiditate numquam dignissimos laborum
+            fugiat deleniti? Eum quasi quidem quibusdam.
+          </Typography>
+        </Grid>
+        <Grid item xs={5}>
+          <Card>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Confirmation Number
+            </Typography>
+            {bookingData.bookingId}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Guest Name
+            </Typography>
+            {bookingData.Firstname} {bookingData.Lastname}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Arrival Date
+            </Typography>
+            {bookingData.checkIn}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Departure Date
+            </Typography>
+            {bookingData.checkOut}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Room Type
+            </Typography>
+            {bookingData.numRooms}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Nightly Rate
+            </Typography>
+            {bookingData.roomType}
+          </Card>
+        </Grid>
+        <Grid item xs={5}>
+          <Card>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Check-In Time
+            </Typography>
+            {bookingData.bookingId}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Check-Out Time
+            </Typography>
+            {bookingData.Firstname} {bookingData.Lastname}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Room Tax
+            </Typography>
+            {bookingData.checkIn}
+            <br />
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              style={{ fontWeight: 800 }}
+            >
+              Cancellation Policy
+            </Typography>
+            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
+            quam beatae rerum inventore.
+            <br />
+          </Card>
+        </Grid>
+        <Grid item xs={10}>
+          <Typography>{bookingData.name}</Typography>
+        </Grid>
+      </Grid>
+    </Card>
+  );
 }
 
 Confirmation.propTypes = {
@@ -44,7 +153,8 @@ Confirmation.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  bookingData: state.bookingData
 });
 
 export default connect(mapStateToProps)(Confirmation);

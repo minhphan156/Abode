@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import lightBlue from "@material-ui/core/colors/lightBlue";
 import SvgIcon from "@material-ui/core/SvgIcon";
+import { connect } from "react-redux";
 
 function HomeIcon(props) {
   return (
@@ -36,7 +37,7 @@ const styles = {
 
 function BookingDetailsCard(props) {
   const { classes } = props;
-
+  const bookingData = props.bookingData;
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -45,7 +46,7 @@ function BookingDetailsCard(props) {
           color="textSecondary"
           gutterBottom
         >
-          Hotel de Glace, Canada
+          {bookingData.name}
           <HomeIcon
             className={classes.icon}
             color="primary"
@@ -95,4 +96,11 @@ BookingDetailsCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(BookingDetailsCard);
+const mapStateToProps = state => ({
+  bookingData: state.bookingData
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withStyles(styles)(BookingDetailsCard));
