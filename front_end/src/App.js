@@ -28,6 +28,8 @@ import HistoryOverview from "./components/history/HistoryOverview";
 //import HistorySingleOrder from "./components/history/HistorySingleOrder";
 import HistorySearch from "./components/history-search/HistorySeach";
 import AboutUs from "./components/about_page/AboutUs";
+import PaymentPage from "./components/payment/PaymentPage";
+import { Elements, StripeProvider } from "react-stripe-elements";
 
 import "./App.css";
 
@@ -67,6 +69,11 @@ class App extends Component {
               path="/searchResultOverview"
               component={searchResultOverview}
             />
+            <StripeProvider apiKey="pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx">
+              <Elements>
+                <Route exact path="/payment" component={PaymentPage} />
+              </Elements>
+            </StripeProvider>
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
             <Route exact path="/history-search" component={HistorySearch}/>

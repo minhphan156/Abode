@@ -76,7 +76,7 @@ class Landing extends Component {
   render() {
     // TODO: Create slideshow that dynamically changes based on featured cities
     if (this.props.landing != null) {
-      let { classes } = this.props;
+      let { classes, landing } = this.props;
       
       let {
         header,
@@ -108,23 +108,11 @@ class Landing extends Component {
         }
       });
 
-      // Generates an array of cities that are unique in featureDestination array in O(n) time.
-      let genFeatureDestination = () => {
-        let names = [];
-        let uniqueFeatureDestination = featureDestination.filter(city => {
-          if (names.includes(city.cityName) == false) {
-            names.push(city.cityName);
-            return city;
-          }
-        });
-        return uniqueFeatureDestination;
-      }
-
       // Uses genFeatureDestination() to create markup for each featured city.
-      let featureDestinationMarkup = genFeatureDestination().map(city => {
+      let featureDestinationMarkup = landing.featCities.map(city => {
         return (
           <Grid item className="mouseHover" xs={3}>
-            <img className={classes.collageImg} src={city.picurl} />
+            <img className={classes.collageImg} src={city.imgMain} />
           </Grid>
         );
       });
@@ -133,7 +121,7 @@ class Landing extends Component {
       let genBackgroundImgStyle = () => {
         return {
           display: "flex",
-          backgroundImage: `url(${header.headImg})`,
+          backgroundImage: `url(${this.props.landing.inspire})`,
           backgroundSize: "cover",
           maxWidth: "100%",
           maxHeight: "100%",
