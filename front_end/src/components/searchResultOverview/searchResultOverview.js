@@ -8,8 +8,7 @@ import {
   Checkbox,
   FormControlLabel,
   TablePagination,
-  CardHeader,
-  Button
+  CardHeader
 } from "@material-ui/core";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { connect } from "react-redux";
@@ -53,6 +52,9 @@ class searchResultOverview extends Component {
       this.props.saveQuery(newQuery);
       window.scrollTo(0,0);
   }
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  };
 
   render() {
     let { classes } = this.props;
@@ -64,9 +66,8 @@ class searchResultOverview extends Component {
       hotels = hotelResult.map(hotel => {
         return (
           <Card style={{ marginBottom: 10 }}>
-            
-              <CardContent>
-                <div>
+            <CardContent>
+              <div>
                 <Link
                   to="/indiv-hotel"
                   onClick={() =>
@@ -78,64 +79,88 @@ class searchResultOverview extends Component {
                     })
                   }
                 >
-                <div className="row">
-                <div className="col-10" style={{align:'left'}}>
-                      <Typography gutterBottom variant="h5" component="h2" style={{display:'inline'}}>
+                  <div className="row">
+                    <div className="col-10" style={{ align: "left" }}>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="h2"
+                        style={{ display: "inline" }}
+                      >
                         {hotel.name}
                       </Typography>
-                </div>
-                <div className="col-2" style={{align:'right'}}>
-                        <Typography gutterBottom variant="h5" component="h5" style={{color:"green", display:'inline'}} align="right">
-                          ${hotel.price}
-                        </Typography>
-                </div>
-                </div>
+                    </div>
+                    <div className="col-2" style={{ align: "right" }}>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="h5"
+                        style={{ color: "green", display: "inline" }}
+                        align="right"
+                      >
+                        ${hotel.price}
+                      </Typography>
+                    </div>
+                  </div>
                 </Link>
-                
-                <Typography style={{color: "#808080", marginLeft:'1%', marginTop:'1%'}} component="h3">{hotel.city}</Typography>
-                </div>
-              </CardContent>
-              <div style={{float: "left"}}>
-            <CardMedia
-              className={classes.imageStyle}
-              image={`${hotel.img}`}
-              title="Hotel Image"
-            />
+
+                <Typography
+                  style={{
+                    color: "#808080",
+                    marginLeft: "1%",
+                    marginTop: "1%"
+                  }}
+                  component="h3"
+                >
+                  {hotel.address}
+                </Typography>
+              </div>
+            </CardContent>
+            <div style={{ float: "left" }}>
+              <CardMedia
+                className={classes.imageStyle}
+                image={`${hotel.img}`}
+                title="Hotel Image"
+              />
             </div>
             <div style={{ float: "right" }}>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2" style={{marginRight:'0'}}>
-                <h5 >{hotel.star_rates}-Star Hotel</h5>
-                <ReactStars
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="h2"
+                  style={{ marginRight: "0" }}
+                >
+                  <h5>{hotel.star_rates}-Star Hotel</h5>
+                  <ReactStars
                     count={5}
                     value={hotel.star_rates}
                     size={22}
                     edit={false}
                     color2={"#FFD700"}
-                    style={{align:'right'}}
+                    style={{ align: "right" }}
                   />
                 </Typography>
 
-                <Typography variant="h5" component="h5">Guest Rating: {hotel.guest_rate}</Typography>
-                
-                      <Link
-                      to="/indiv-hotel"
-                      onClick={() =>
-                        this.props.getIndividualHotelResult({
-                          id: hotel.hotelID,
-                          checkIn: searchQuery.checkIn,
-                          checkOut: searchQuery.checkOut,
-                          numberRooms: searchQuery.numberRooms
-                        })
-                      }
-                    >
-                       <button 
-                      type="button" 
-                      class="btn btn-success h-100"
-                      >
-                        Book Now
-                      </button>
-                        </Link>
+                <Typography variant="h5" component="h5">
+                  Guest Rating: {hotel.guest_rate}
+                </Typography>
+
+                <Link
+                  to="/indiv-hotel"
+                  onClick={() =>
+                    this.props.getIndividualHotelResult({
+                      id: hotel.hotelID,
+                      checkIn: searchQuery.checkIn,
+                      checkOut: searchQuery.checkOut,
+                      numberRooms: searchQuery.numberRooms
+                    })
+                  }
+                >
+                  <button type="button" class="btn btn-success h-100">
+                    Book Now
+                  </button>
+                </Link>
               </CardContent>
             </div>
           </Card>
@@ -213,32 +238,66 @@ class searchResultOverview extends Component {
           <Grid item xs={7}>
             {hotels}
 
-          {/* Pagination, please fix the style */}
+            {/* Pagination, please fix the style */}
             <Grid item sm={12}>
-            <div className="row" style={{marginBottom:40,justifyContent:"flex-end",marginRight:-1}}>
-{/* previous page button */}
-            <div classNmae="col-4" style={{align:'left'}}>
-            {queryResult.pageNumber === "1"? 
-            <button className="btn btn-outline-danger" disabled>Previous</button>
-            :<button className="btn btn-outline-danger" onClick={() => this.goToPreviousPage(queryResult,searchQuery)}>Previous</button>}
-            </div>
-{/* show current page */}
-            <div classNmae="col-4" style={{align:'center',marginLeft:50,marginRight:50}}>
-            <h6 style={{fontWeight: 'bold'}}>{queryResult.pageNumber}</h6>
-            </div>
-{/* Next page button */}
-            <div classNmae="col-4" style={{align:'right'}}>
-            {queryResult.nextExists ?
-            <button className="btn btn-outline-danger"
-            onClick={() => this.goToNextPage(queryResult,searchQuery)}
-            >Next</button> 
-            :<button className="btn btn-outline-danger" disabled>Next</button>}
-            </div>
+              <div
+                className="row"
+                style={{
+                  marginBottom: 40,
+                  justifyContent: "flex-end",
+                  marginRight: -1
+                }}
+              >
+                {/* previous page button */}
+                <div classNmae="col-4" style={{ align: "left" }}>
+                  {queryResult.pageNumber === "1" ? (
+                    <button className="btn btn-outline-danger" disabled>
+                      Previous
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() =>
+                        this.goToPreviousPage(queryResult, searchQuery)
+                      }
+                    >
+                      Previous
+                    </button>
+                  )}
+                </div>
+                {/* show current page */}
+                <div
+                  classNmae="col-4"
+                  style={{
+                    align: "center",
+                    marginLeft: 50,
+                    marginRight: 50
+                  }}
+                >
+                  <h6 style={{ fontWeight: "bold" }}>
+                    {queryResult.pageNumber}
+                  </h6>
+                </div>
+                {/* Next page button */}
+                <div classNmae="col-4" style={{ align: "right" }}>
+                  {queryResult.nextExists ? (
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() =>
+                        this.goToNextPage(queryResult, searchQuery)
+                      }
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    <button className="btn btn-outline-danger" disabled>
+                      Next
+                    </button>
+                  )}
 
-            </div>
-          </Grid>
-
-
+                </div>
+              </div>
+            </Grid>
           </Grid>
         </Grid>
       </div>
@@ -251,5 +310,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getIndividualHotelResult,submitQuery, saveQuery }
+  { getIndividualHotelResult,submitQuery, saveQuery  }
 )(withStyles(styles)(searchResultOverview));

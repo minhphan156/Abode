@@ -2,10 +2,6 @@ import { GET_LANDING_DATA, SET_LANDING_STATUS } from "../actions/types";
 
 // TODO: Edit initialState once backend implementation is implemented.
 const initialState = {
-  header: {
-    cityName: "String",
-    head: "String"
-  },
   deals1: {
     name: "String",
     picurl: "String",
@@ -24,22 +20,22 @@ const initialState = {
     rates: 1,
     price: 1
   },
-  featureDestination: [
-    {
-      cityName: "String",
-      picurl: "String"
-    }
-  ],
+  inspire: "",
+  inspireCity: "",
+  featCities: [],
   isInLanding: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_LANDING_DATA:
-      // TODO: Once backend is done, include backend call here!
-      return state;
+      return {
+        ...state, 
+        inspire: action.payload.inspire, 
+        inspireCity: action.payload.inspireCity,
+        featCities: action.payload.featCities
+      }
     case SET_LANDING_STATUS:
-    // TODO: Once backend is done, include backend call here!
     return {
       ...state,
       isInLanding: action.payload

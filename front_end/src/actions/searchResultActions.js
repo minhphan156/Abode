@@ -9,7 +9,7 @@ export const getIndividualHotelResult = hotel => dispatch => {
     .get("/api/hotel/individual", { params: hotel })
     .then(res => {
       var hotelInfo = res.data
-      Geocode.fromAddress(hotelInfo.street + hotelInfo.city).then(
+      Geocode.fromAddress(hotelInfo.address).then(
         response => {
           const { lat, lng } = response.results[0].geometry.location;
           hotelInfo.lat = lat;

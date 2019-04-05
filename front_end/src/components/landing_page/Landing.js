@@ -9,18 +9,9 @@ import SearchWidget from "./search_widget/SearchWidget";
 import "./Landing.css";
 
 // Image imports (For Prototype Only)
-import SF from "./SF.jpg";
-import LA from "./LA.jpg";
-import NY from "./NY.jpg";
-import CH from "./CH.jpg";
-import AU from "./AU.jpg";
-import DE from "./DE.jpg";
-import PO from "./PO.jpg";
-import SA from "./SA.jpg";
 import SD from "./SD.jpg";
 import VG from "./Vegas.jpg";
 import WA from "./WA.jpg";
-import PA from "./PA.jpg";
 
 // Material-UI Imports
 import {
@@ -39,16 +30,6 @@ let styles = {
     width: "auto",
     justify: "center",
     flexGrow: 1
-  },
-  // TODO: Remove following Prototype CSS Class
-  imgSlideShow: {
-    display: "flex",
-    backgroundImage: `url(${SF})`,
-    backgroundSize: "cover",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    height: "95vh",
-    minHeight: 450
   },
   centerFlexbox: {
     display: "flex"
@@ -95,10 +76,8 @@ class Landing extends Component {
   render() {
     // TODO: Create slideshow that dynamically changes based on featured cities
     if (this.props.landing != null) {
-      let { classes } = this.props;
-
-      // TODO: The following code segment(*) needs to be edited once backend is connected:
-      // BEGINNING OF CODE SEGMENT (*)
+      let { classes, landing } = this.props;
+      
       let {
         header,
         deals1,
@@ -129,18 +108,20 @@ class Landing extends Component {
         }
       });
 
-      let featureDestinationMarkup = featureDestination.map(city => {
+      // Uses genFeatureDestination() to create markup for each featured city.
+      let featureDestinationMarkup = landing.featCities.map(city => {
         return (
           <Grid item className="mouseHover" xs={3}>
-            <img className={classes.collageImg} src={city.picurl} />
+            <img className={classes.collageImg} src={city.imgMain} />
           </Grid>
         );
       });
 
-      var genBackgroundImgStyle = () => {
+      // Generates markup for the header city.
+      let genBackgroundImgStyle = () => {
         return {
           display: "flex",
-          backgroundImage: `url(${featureDestination[0]})`,
+          backgroundImage: `url(${this.props.landing.inspire})`,
           backgroundSize: "cover",
           maxWidth: "100%",
           maxHeight: "100%",
@@ -148,15 +129,10 @@ class Landing extends Component {
           minHeight: 450
         };
       };
-      // ENDING OF CODE SEGMENT (*)
 
       return (
         <div>
-          {/* TODO: Uncomment the line below and remove prototype line */}
-          {/*<div className={genBackgroundImgStyle()} boxShadow={3}>*/}
-          {/* PROTOTYPE LINE BEGINNING */}
-          <div className={classes.imgSlideShow} boxShadow={3}>
-            {/* PROTOTYPE LINE BEGINNING */}
+          <div style={genBackgroundImgStyle()} boxShadow={3}>
             <div className={`${classes.searchWidgetBox} fadeIn`}>
               <SearchWidget />
             </div>
@@ -181,8 +157,6 @@ class Landing extends Component {
                 <hr className={classes.noYMarginTop} />
               </div>
               <Grid container spacing={8} direction="row" justify="center">
-                {/* TODO: Uncomment the line below and remove prototype line */}
-                {/* topDealsMarkup */}
                 {/* Prototype Markup BEGINNING */}
                 <Grid item xs={4} className="mouseHover">
                   <Card>
@@ -241,34 +215,7 @@ class Landing extends Component {
                 <hr className={classes.noYMarginTop} />
               </div>
               <Grid container spacing={8} direction="row" justify="center" style={{marginBottom: 20}}>
-                {/* TODO: Uncomment the line below and remove prototype line */}
-                {/* featureDestinationMarkup */}
-                {/* Prototype Markup BEGINNING */}
-                <Grid item xs={3} className="mouseHover">
-                  <img src={AU} backgroundSize="contain" />
-                </Grid>
-                <Grid item xs={3} className="mouseHover">
-                  <img src={CH} backgroundSize="contain" />
-                </Grid>
-                <Grid item xs={3} className="mouseHover">
-                  <img src={DE} backgroundSize="contain" />
-                </Grid>
-                <Grid item xs={3} className="mouseHover">
-                  <img src={LA} backgroundSize="contain" />
-                </Grid>
-                <Grid item xs={3} className="mouseHover">
-                  <img src={NY} backgroundSize="contain" />
-                </Grid>
-                <Grid item xs={3} className="mouseHover">
-                  <img src={PA} backgroundSize="contain" />
-                </Grid>
-                <Grid item xs={3} className="mouseHover">
-                  <img src={PO} backgroundSize="contain" />
-                </Grid>
-                <Grid item xs={3} className="mouseHover">
-                  <img src={SA} backgroundSize="contain" />
-                </Grid>
-                {/* Prototype Markup ENDING */}
+                { featureDestinationMarkup }
               </Grid>
             </div>
           </div>
