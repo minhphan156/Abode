@@ -27,6 +27,7 @@ function Confirmation(props) {
     ),
     createData("Arrival Date", bookingData.checkIn),
     createData("Departure Date", bookingData.checkOut),
+    createData("Room Type", bookingData.roomType),
     createData("Room Type", bookingData.roomType)
   ];
 
