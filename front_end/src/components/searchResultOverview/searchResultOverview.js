@@ -33,15 +33,10 @@ class searchResultOverview extends Component {
     let lastIndex = queryResult.lastIndex - 2*searchQuery.numResults
     if(lastIndex < 0 || queryResult.pageNumber === 1)
       {lastIndex = 0}
-      const newQuery = {
-        destinationName:searchQuery.destinationName,
-        checkIn:searchQuery.checkIn,
-        checkOut:searchQuery.checkOut,
-        numberRooms:searchQuery.numberRooms,
-        lastIndex:lastIndex,
-        numResults:searchQuery.numResults,
-        pageNumber:queryResult.pageNumber
-      }
+      let newQuery = searchQuery;
+      newQuery.lastIndex = lastIndex;
+      newQuery.pageNumber = queryResult.pageNumber;
+
       this.props.submitQuery(newQuery);
       this.props.saveQuery(newQuery);
       window.scrollTo(0,0);
@@ -49,16 +44,11 @@ class searchResultOverview extends Component {
 
   goToNextPage(queryResult,searchQuery){
     window.scrollTo(0,0);
-    queryResult.pageNumber++;
-      const newQuery = {
-        destinationName:searchQuery.destinationName,
-        checkIn:searchQuery.checkIn,
-        checkOut:searchQuery.checkOut,
-        numberRooms:searchQuery.numberRooms,
-        lastIndex:queryResult.lastIndex,
-        numResults:searchQuery.numResults,
-        pageNumber:queryResult.pageNumber
-      }
+    queryResult.pageNumber++
+    let newQuery = searchQuery;
+    newQuery.lastIndex = queryResult.lastIndex;
+    newQuery.pageNumber = queryResult.pageNumber;
+
       this.props.submitQuery(newQuery);
       this.props.saveQuery(newQuery);
       window.scrollTo(0,0);
