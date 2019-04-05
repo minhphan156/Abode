@@ -1,9 +1,27 @@
 import React from "react";
+import "./Footer.css";
+import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
 
-export default () => {
+function Footer() {
   return (
-    <footer className="bg-dark text-white mt-5 p-4 text-center">
-      Copyright © {new Date().getFullYear()} LikeHome
+    <footer id="footer">
+      <Grid container alignItems="center" justify="space-evenly">
+        <Grid container lg={7} alignItems="center" justify="space-evenly">
+          <Grid className="footerLayout" item>
+            <Link to="/aboutus" className="footerMenuLink">
+              About Us
+            </Link>
+          </Grid>
+          <Grid className="footerLayout" item>
+            <Link to="/disclaimer" className="footerMenuLink">
+              Disclaimer
+            </Link>
+          </Grid>
+        </Grid>
+      </Grid>
     </footer>
   );
-};
+}
+
+export default Footer;

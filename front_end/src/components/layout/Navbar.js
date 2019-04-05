@@ -3,35 +3,19 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { submitQuery } from "../../actions/queryActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
+import AnchorLink from "react-anchor-link-smooth-scroll";
+import NavbarMenu from "./NavbarMenu";
+
+import "./navbar.css";
+
+// Material-UI Imports Below
+import { Button, Grid } from "@material-ui/core";
 
 class Navbar extends Component {
   constructor() {
     super();
-    this.state = {
-      query: "",
-      modalShow: false
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSearchClick = this.onSearchClick.bind(this);
-  }
-
-  onChange(e) {
-    this.setState({ query: e.target.value });
-  }
-
-  onSearchClick() {
-    //NOTE: we assume user will search for name
-    // submit query as object with to submitQuery at queryActions.js
-
-    const newQuery = {
-      name: this.state.query
-    };
-    this.props.submitQuery(newQuery);
-
-    this.setState({ query: "" });
+    this.onLogoutClick = this.onLogoutClick.bind(this);
   }
 
   onLogoutClick(e) {
@@ -41,97 +25,139 @@ class Navbar extends Component {
   }
 
   render() {
-    let modalClose = () => this.setState({ modalShow: false });
-
-    const { isAuthenticated, user } = this.props.auth;
-
-    const authLinks = (
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link className="nav-link" to="/dashboard">
-            {user.name}
+    // Markup shown on the right hand side of Navbar when user is GUEST.
+    let guestMarkUp = (
+      <Grid
+        container
+        spacing={0}
+        justify="space-evenly"
+        alignItems="center"
+        xs={4}
+        sm={4}
+        md={3}
+        lg={3}
+      >
+        <Grid item>
+          <Link to="/register">
+            <Button class="navButtons buttonGrey" primary>
+              Sign Up
+            </Button>
           </Link>
-        </li>
-        <li className="nav-item">
-          <a
-            href="#"
-            onClick={this.onLogoutClick.bind(this)}
-            className="nav-link"
+        </Grid>
+        <Grid item>
+          <Link to="/login">
+            <Button class="navButtons buttonBlue" primary>
+              Login
+            </Button>
+          </Link>
+        </Grid>
+      </Grid>
+    );
+
+    // Markup shown on the right hand side of Navbar when user is LOGGED IN.
+    let loggedInMarkup = (
+      <Grid
+        container
+        spacing={0}
+        justify="space-around"
+        alignItems="center"
+        xs={2}
+        sm={2}
+        md={3}
+        lg={3}
+      >
+        <Grid className="adjustMenuBurger" item>
+          <NavbarMenu
+            onLogoutClick={this.onLogoutClick}
+            userEmail={this.props.auth.user.email}
+          />
+        </Grid>
+      </Grid>
+    );
+
+    let inLandingMarkup = (
+      <Grid
+        container
+        spacing={0}
+        justify="space-evenly"
+        alignItems="center"
+        xs={4}
+        sm={4}
+        md={5}
+        lg={4}
+      >
+        <Grid item className="headerMenu">
+          <AnchorLink
+            href="#topDealsAnchor"
+            offset="-450"
+            style={{ color: "white" }}
           >
-            Logout
-          </a>
-        </li>
-      </ul>
+            Deals of the Week
+          </AnchorLink>
+        </Grid>
+        <Grid item className="headerMenu">
+          <AnchorLink
+            href="#featuredCitiesAnchor"
+            offset="-500"
+            style={{ color: "white" }}
+          >
+            Featured Cities
+          </AnchorLink>
+        </Grid>
+      </Grid>
     );
 
-    const guestLinks = (
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link className="nav-link" to="/register">
-            Sign Up
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/login">
-            Login
-          </Link>
-        </li>
-      </ul>
-    );
+    let notInLandingMarkup = <Grid item />;
 
     return (
-      <div>
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-          <div className="container">
-            <Link className="navbar-brand" to="/">
-              Home
+      <div className="navbarContainer ">
+        <Grid
+          container
+          className="navbarContainer headerfont"
+          spacing={0}
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+        >
+          <Grid className="navbarLogo" item>
+            <Link to="/">
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+                <Grid item>
+                  <img className="abode-logo" src="logo.png" alt="" />
+                </Grid>
+
+                <Grid item className="abodeHome">
+                  Abode
+                </Grid>
+              </Grid>
             </Link>
-
-            <form onSubmit={this.onSearchClick}>
-              <div className="input-group mr-auto">
-                <input
-                  style={{ height: 36 }}
-                  type="input"
-                  className="form-control"
-                  name="search"
-                  value={this.state.query}
-                  onChange={this.onChange}
-                />
-                <div className="input-group-append">
-                  <Link to="/Search">
-                    <button
-                      className="btn btn-outline-secondary"
-                      type="button"
-                      onClick={this.onSearchClick}
-                      type="submit"
-                    >
-                      Search
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </form>
-
-            {isAuthenticated ? authLinks : guestLinks}
-          </div>
-        </nav>
+          </Grid>
+          {this.props.landing.isInLanding == true
+            ? inLandingMarkup
+            : notInLandingMarkup}
+          {this.props.auth.isAuthenticated ? loggedInMarkup : guestMarkUp}
+        </Grid>
       </div>
     );
   }
 }
 
 Navbar.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  landing: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+let mapStateToProps = state => ({
   auth: state.auth,
-  query: state.query
+  landing: state.landing
 });
-// if this.props.query is empty we will not show the Search page
 
 export default connect(
   mapStateToProps,
-  { logoutUser, submitQuery, clearCurrentProfile }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);

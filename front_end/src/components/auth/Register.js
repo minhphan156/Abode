@@ -4,12 +4,17 @@ import { withRouter } from "react-router-dom"; // to route to other pages
 import { connect } from "react-redux"; // use this to connect react component to redux
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import AbodeLogo from "../../images/logo.png";
+import { Link } from "react-router-dom";
 
 class Register extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
       password2: "", //for inputing password again
@@ -25,6 +30,7 @@ class Register extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
+    window.scrollTo(0, 0);
   };
 
   componentWillReceiveProps = nextProps => {
@@ -42,7 +48,8 @@ class Register extends Component {
     e.preventDefault();
 
     const newUser = {
-      name: this.state.name,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2
@@ -52,21 +59,53 @@ class Register extends Component {
   //NOTE: component dispatch -> action give new data to -> reducer update new state and pass as props to -> component
   render() {
     const { errors } = this.state;
-    // this achieved by mapStateToProps()
+    let paperSize;
 
+    if (Object.keys(errors).length == 0) {
+      paperSize = "AuthPaperSignUp";
+    } else {
+      paperSize = "AuthPaperSignUpError";
+    }
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Sign Up</h1>
+      <Grid
+        container
+        className="AuthContainerSignUp"
+        spacing={0}
+        direction="column"
+        justify="center"
+        alignItems="center"
+      >
+        <Paper className={paperSize}>
+          <Grid item className="AuthTitle">
+            Sign Up
+          </Grid>
+          <br />
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <img className="loginLogo" src={AbodeLogo} alt="" />
+
+            <br />
+            <Grid className="AuthTextFields">
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
-                  placeholder="Name"
-                  name="name"
-                  value={this.state.name}
+                  placeholder="First Name"
+                  name="firstname"
+                  value={this.state.firstname}
                   onChange={this.onChange}
-                  error={errors.name}
+                  error={errors.firstname}
+                />
+
+                <TextFieldGroup
+                  placeholder="Last Name"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.onChange}
+                  error={errors.lastname}
                 />
 
                 <TextFieldGroup
@@ -98,10 +137,14 @@ class Register extends Component {
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid>
+            <br />
+            <Link to="/login" className="linkToOhter">
+              already have an account?
+            </Link>
+          </Grid>
+        </Paper>
+      </Grid>
     );
   }
 }
