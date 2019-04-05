@@ -94,7 +94,6 @@ class searchResultOverview extends Component {
 
     // Action calls
     this.handleApply = this.handleApply.bind(this);
-    this.handleSearchWidget = this.handleSearchWidget.bind(this);
   }
 
   // Used to force user browser to scroll to top of page upon mounting this component
@@ -161,18 +160,6 @@ class searchResultOverview extends Component {
     }
     this.props.submitQuery(newQuery);
     this.props.saveQuery(newQuery);
-  }
-
-  handleSearchWidget = obj => event => {
-    event.preventDefault();
-    this.setState({
-      destinationName: obj.destinationName,
-      checkIn: obj.checkIn,
-      checkOut: obj.checkOut,
-      numberRoom: obj.numberRoom,
-      lastIndex: obj.lastIndex,
-      numResults: obj.numResults,
-    })
   }
 
   handleClickToHotel = hotel => event => {
@@ -333,7 +320,6 @@ class searchResultOverview extends Component {
             pool: this.state.pool,
             pet_friendly: this.state.pet_friendly
           }}
-          handleSearchWidget={this.handleSearchWidget}
         />
         <Grid container direction="flow" spacing={8}>
           <FiltersWindow

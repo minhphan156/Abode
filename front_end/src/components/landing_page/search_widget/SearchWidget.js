@@ -65,14 +65,6 @@ class SearchWidget extends Component {
     };
     this.props.submitQuery(newQuery);
     this.props.saveQuery(newQuery);
-    if (this.props.handleSearchWidget != null) {
-      this.props.handleSearchWidget({
-        destinationName: this.state.destinationName,
-        checkIn: this.state.checkIn,
-        checkOut: this.state.checkOut,
-        numberRooms: this.state.numberRooms
-      });
-    }
    }
 
   onHandleDate(startingDate, endingDate) {
