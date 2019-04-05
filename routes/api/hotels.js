@@ -90,7 +90,7 @@ router.get('/search',(req,res)=>{
     const regex = new RegExp(searchKey,"ig");
     Hotel.find({
         amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
-        $and:[{'price.singlePrice': {$gt: price_low}}, {'price.singlePrice': {$lt: price_high}}],
+        $and:[{'price.singlePrice': {$gte: price_low}}, {'price.singlePrice': {$lte: price_high}}],
         star: {$gte: star_rating},
         hdc_rating: {$gte: review_score},
         $or:[{name:regex}, {city:regex},{airports:regex}]
