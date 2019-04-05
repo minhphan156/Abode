@@ -20,8 +20,7 @@ const styles = theme => ({
   },
   paper: {
     textAlign: "center",
-    height: 70,
-    margin: 10
+    height: 70
   }
 });
 
@@ -103,7 +102,7 @@ class SearchWidget extends Component {
               />
             </Paper>
           </Grid>
-          <Grid item xs={3} sm={3} md={4} lg={1}>
+          <Grid item xs={3} sm={3} md={2} lg={1}>
             <Paper className={classes.paper}>
               <RoomNumber
                 numberRooms={this.state.numberRooms}

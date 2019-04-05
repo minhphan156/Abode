@@ -1,13 +1,13 @@
 /* Will edit everything selected including everything between a range of dates */
 .CalendarDay__selected_span {
   background: #a0cdfd;
-  color: white; /*text*/
+  color: white;
   border: 1px solid #568cba; /* default styles include a border */
 }
 
 .CalendarDay__selected_span:hover {
   background: #568cba;
-  color: white; /*text*/
+  color: white;
   border: 1px solid #568cba; /* default styles include a border */
 }
 
@@ -28,7 +28,8 @@
 /* is not yet selected. Edits the dates between your mouse and said date */
 .CalendarDay__hovered_span:hover,
 .CalendarDay__hovered_span {
-  background: rgb(14, 13, 13);
+  background: #a0cdfd;
+  color: white;
 }
 
 /* This is the month "February 2019" when opening the calendar */
@@ -41,21 +42,6 @@
   caption-side: initial;
 }
 
-/* This is the input field where it says "Start Date" and "End Date" */
-.DateInput {
-  font-weight: 200;
-  font-size: 18px;
-  line-height: 24px;
-  color: #757575;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  position: relative;
-  display: inline-block;
-  width: 130px;
-  vertical-align: middle;
-}
-
 /* This is the little calendar icon */
 .DateRangePickerInput_calendarIcon {
   background: 0 0;
@@ -65,8 +51,67 @@
   line-height: normal;
   overflow: visible;
   cursor: pointer;
-  display: inline-block;
   vertical-align: middle;
   padding: 10px;
   margin: 0 0px 0 0px;
+  position: relative;
+  bottom: 2px;
+}
+
+/* This is the input field where it says "Start Date" and "End Date" */
+.DateInput {
+  font-weight: 200;
+  line-height: 14px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+  width: 118px;
+  vertical-align: middle;
+}
+
+/* LargeER Screen (Laptops, Desktop monitors) */
+@media screen and (min-width: 601px) {
+  .DateInput {
+    font-weight: 200;
+    font-size: 18px;
+    line-height: 24px;
+    color: #757575;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    position: relative;
+    display: inline-block;
+    width: 130px;
+    vertical-align: middle;
+  }
+  .DateInput_input {
+    font-weight: 200;
+    font-size: 19px;
+    color: #565a5c;
+    background-color: #fff;
+    width: 130px;
+    padding: 12px;
+    border: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 2px solid transparent;
+    border-left: 0;
+    text-align: center;
+  }
+}
+
+/* X-Small Screen */
+@media screen and (max-width: 600px) {
+  .DateInput_input {
+    font-weight: 200;
+    font-size: 16px;
+    color: #565a5c;
+    background-color: #fff;
+    width: 118;
+    border: 0;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+  }
 }
