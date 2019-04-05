@@ -142,12 +142,11 @@ class searchResultOverview extends Component {
 
   handleApply = event => {
     event.preventDefault();
-    console.log('test');
     let newQuery = {
-      destinationName: this.state.destinationName,
+      destinationName: this.props.query.searchQuery.destinationName,
       checkIn: this.state.checkIn,
       checkOut: this.state.checkOut,
-      numberRooms: this.state.numberRooms,
+      numberRooms: this.props.query.searchQuery.numberRooms,
       lastIndex: 0,
       numResults: this.props.query.searchQuery.numResults,
       free_wifi: this.state.free_wifi,
@@ -155,8 +154,8 @@ class searchResultOverview extends Component {
       free_breakfast: this.state.free_breakfast,
       pool: this.state.pool,
       pet_friendly: this.state.pet_friendly,
-      price_low: this.state.low_price,
-      price_high: this.state.high_price,
+      price_low: this.state.price_low,
+      price_high: this.state.price_high,
       review_score: this.state.guest_rate,
       star_rating: this.state.star_rate
     }
@@ -384,5 +383,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getIndividualHotelResult }
+  { getIndividualHotelResult,submitQuery, saveQuery}
 )(withStyles(styles)(withWidth()(searchResultOverview)));

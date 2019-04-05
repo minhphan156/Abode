@@ -7,6 +7,7 @@ export const submitQuery = newQuery => dispatch => {
     .get("/api/hotel/search", { params: newQuery })
     // if success then res.data will be the product object we looking for
     .then(res => {
+      console.log("response from backend", res);
       dispatch({
         type: SET_QUERY,
         payload: res.data

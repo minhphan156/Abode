@@ -156,7 +156,7 @@ class FiltersWindow extends Component {
                       className={classes.subtitles}
                       variant="subtitle2"
                     >
-                      {`Star Rating: ${star_rate > 0 ? `(${star_rate}) and Up` : ""}`}
+                      {`Star Rating: ${star_rate > 0 ? `(${star_rate} and up)` : ""}`}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -184,7 +184,7 @@ class FiltersWindow extends Component {
                       variant="subtitle2"
                     >
                       {`Guest Rating: ${
-                        guest_rate > 0 ? `(${guest_rate} & Up)` : ""
+                        guest_rate > 0 ? `(${guest_rate} and up)` : ""
                       }`}
                     </Typography>
                   </Grid>
