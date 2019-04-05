@@ -43,7 +43,7 @@ let SortBar = props => {
 
   return (
     <ExpansionPanel
-      defaultExpanded={true}
+      defaultExpanded={false}
       square="false"
     >
       <ExpansionPanelSummary
@@ -75,8 +75,8 @@ let SortBar = props => {
             >
               <MenuItem value={"name"}>Name</MenuItem>
               <MenuItem value={"price"}>Price</MenuItem>
-              <MenuItem value={"star_rating"}>Star Rating</MenuItem>
-              <MenuItem value={"guest_rating"}>Guest Rating</MenuItem>
+              <MenuItem value={"star"}>Star Rating</MenuItem>
+              <MenuItem value={"hdc_rating"}>Guest Rating</MenuItem>
             </Select>
           </Grid>
           <Grid item xs={4} sm="auto">

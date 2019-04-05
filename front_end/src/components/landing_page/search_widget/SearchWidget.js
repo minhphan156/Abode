@@ -63,9 +63,9 @@ class SearchWidget extends Component {
       lastIndex: 0,
       numResults: 5
     };
-    this.props.submitQuery(newQuery);
     this.props.saveQuery(newQuery);
-   }
+    this.props.submitQuery(newQuery);
+  }
 
   onHandleDate(startingDate, endingDate) {
     this.setState({ checkIn: startingDate });

@@ -103,7 +103,8 @@ class FiltersWindow extends Component {
       handleAmenities,
       handleStarRatings,
       handleGuestRatings,
-      handlePriceRangeChange
+      handlePriceRangeChange,
+      handleFiltersApply
     } = this.props;
 
     return (
@@ -137,7 +138,7 @@ class FiltersWindow extends Component {
               <Grid item xs={12} md="auto">
                 <Grid container className={classes.pad10} justify="center">
                   <Grid item>
-                    <Button variant="contained" color="primary" onClick={this.props.handleApply}>
+                    <Button variant="contained" color="primary" onClick={handleFiltersApply}>
                       Apply
                     </Button>
                   </Grid>
@@ -355,7 +356,8 @@ FiltersWindow.propTypes = {
   handleAmenities: PropTypes.func.isRequired,
   handleStarRatings: PropTypes.func.isRequired,
   handleGuestRatings: PropTypes.func.isRequired,
-  handlePriceRangeChange: PropTypes.func.isRequired
+  handlePriceRangeChange: PropTypes.func.isRequired,
+  width: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(withWidth()(FiltersWindow));

@@ -15,9 +15,9 @@ export const submitQuery = newQuery => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const saveQuery = newQuery => {
-  return {
+export const saveQuery = newQuery => dispatch => {
+  dispatch({
     type: SAVE_QUERY,
     payload: newQuery
-  };
+  })
 };
