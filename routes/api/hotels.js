@@ -90,9 +90,9 @@ router.get('/search',(req,res)=>{
     const regex = new RegExp(searchKey,"ig");
     Hotel.find({
         amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
-        $and:[{'price.singlePrice': {$gt: price_low}}, {'price.singlePrice': {$lt: price_high}}],
-        star: {$gt: star_rating},
-        hdc_rating: {$gt: review_score},
+        $and:[{'price.singlePrice': {$gte: price_low}}, {'price.singlePrice': {$lte: price_high}}],
+        star: {$gte: star_rating},
+        hdc_rating: {$gte: review_score},
         $or:[{name:regex}, {city:regex},{airports:regex}]
     }).sort(sortByObject).then((doc,err)=>{
         if(err) res.status(400).json(err);
@@ -165,8 +165,8 @@ router.get('/individual', (req,res) =>{
             img: hotel.images, 
             price: hotel.price,
             star_rating: hotel.star, 
-            guest_rating: hotel.ta_rating,
-            guest_review: hotel.hdc_rating, 
+            ta_rating: hotel.ta_rating,
+            hdc_rating: hotel.hdc_rating, 
             amenities: hotel.amenities, 
             airports: hotel.airports,
             review:hotel.reviews,
