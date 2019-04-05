@@ -209,7 +209,7 @@ class FiltersWindow extends Component {
                       Price Range:
                     </Typography>
                   </Grid>
-                  <Hidden lgDown={priceRangeEquality != "To" ? true : false}>
+                  <Hidden xlDown={priceRangeEquality != "To" ? true : false}>
                     <Grid item xs>
                       <TextField
                         label="min"
