@@ -82,7 +82,7 @@ class searchResultOverview extends Component {
                   }}
                   component="h3"
                 >
-                  {hotel.city}
+                  {hotel.address}
                 </Typography>
               </div>
             </CardContent>
