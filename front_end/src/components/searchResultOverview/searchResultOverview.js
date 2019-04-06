@@ -13,9 +13,6 @@ import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import FiltersWindow from "./FiltersWindow.js";
 import SortBar from "./SortBar.js";
 
-// PROTOTYPE IMPORTS
-import LV from "./hotel-img-5.jpg";
-
 // Material UI Imports
 import {
   withStyles,
@@ -53,6 +50,7 @@ let styles = theme => ({
     }
   },
   pad25: { padding: 25 },
+  msgHeight: { height: "25vh" },
   subtitles: { fontWeight: "bold", color: "#808080" }
 });
 
@@ -108,7 +106,6 @@ class searchResultOverview extends Component {
 
   // Used to store the star rating input in <FiltersWindow />
   handleGuestRatings = (event, value) => {
-    event.preventDefault();
     this.setState({
       guest_rate: value
     });
@@ -221,7 +218,7 @@ class searchResultOverview extends Component {
     this.props.submitQuery(newQuery);
   };
 
-  handlePagination = event => {
+  handlePagination = move => event => {
     event.preventDefault();
   };
 
@@ -243,123 +240,153 @@ class searchResultOverview extends Component {
     } else {
       let { star_rate, guest_rate, price_low, price_high, page } = this.state;
       let { classes, width } = this.props;
-      let { hotelQuery } = this.props.query;
+      let { hotelQuery, loading } = this.props.query;
 
       let hotels;
-      if (hotelQuery.length > 0) {
-        hotels = hotelQuery.map(hotel => {
-          return (
-            <Grid item xs={12}>
-              <Card className={classes.pad25} square="false">
-                <Grid
-                  container
-                  direction="flow"
-                  justify={isWidthDown("sm", width) ? "center" : "flex-start"}
-                  spacing={8}
-                >
-                  <Grid item xs={12} md>
-                    <Grid container direction="column" spacing={0}>
-                      <Grid item>
-                        <Typography variant="h5" color="primary">
-                          {hotel.name}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="subtitle1" color="secondary">
-                          {hotel.address}
-                        </Typography>
-                      </Grid>
-                      <Grid item style={{ paddingTop: 8 }}>
-                        <Grid container direction="flow" spacing={16}>
-                          <Grid item xs={12} md={4} lg={3}>
-                            <Card style={{ padding: 7 }}>
-                              <img src={hotel.img} />
-                            </Card>
-                          </Grid>
-                          <Grid item xs={12} md="auto">
-                            <Grid
-                              container
-                              direction="column"
-                              justify={
-                                isWidthDown("sm", width)
-                                  ? "center"
-                                  : "flex-start"
-                              }
-                              alignItems={
-                                isWidthDown("sm", width)
-                                  ? "center"
-                                  : "flex-start"
-                              }
-                              spacing={0}
-                            >
-                              <Grid item xs={12} md="auto">
-                                <Grid
-                                  container
-                                  direction="flow"
-                                  justify={
-                                    isWidthDown("sm", width)
-                                      ? "center"
-                                      : "flex-start"
-                                  }
-                                  alignItems="center"
-                                  spacing={8}
-                                >
-                                  <Grid item>
-                                    <ReactStars
-                                      value={hotel.star_rates}
-                                      count={5}
-                                      size={32}
-                                      color2={"#ffd700"}
-                                      edit={false}
-                                    />
-                                  </Grid>
-                                  <Grid item>
-                                    <Typography
-                                      variant="subtitle2"
-                                      color="default"
-                                    >
-                                      {hotel.star_rates} out of 5 Star Rating
-                                    </Typography>
+      if (loading) {
+        hotels = (
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            className={classes.msgHeight}
+          >
+            <Grid item>
+              <CircularProgress />
+            </Grid>
+          </Grid>
+        );
+      } else if (hotelQuery.length > 0) {
+        if (hotelQuery.length > 0) {
+          hotels = hotelQuery.map(hotel => {
+            return (
+              <Grid item xs={12}>
+                <Card className={classes.pad25} square="false">
+                  <Grid
+                    container
+                    direction="flow"
+                    justify={isWidthDown("sm", width) ? "center" : "flex-start"}
+                    spacing={8}
+                  >
+                    <Grid item xs={12} md>
+                      <Grid container direction="column" spacing={0}>
+                        <Grid item>
+                          <Typography variant="h5" color="primary">
+                            {hotel.name}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="subtitle1" color="secondary">
+                            {hotel.address}
+                          </Typography>
+                        </Grid>
+                        <Grid item style={{ paddingTop: 8 }}>
+                          <Grid container direction="flow" spacing={16}>
+                            <Grid item xs={12} md={4} lg={3}>
+                              <Card style={{ padding: 7 }}>
+                                <img src={hotel.img} />
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} md="auto">
+                              <Grid
+                                container
+                                direction="column"
+                                justify={
+                                  isWidthDown("sm", width)
+                                    ? "center"
+                                    : "flex-start"
+                                }
+                                alignItems={
+                                  isWidthDown("sm", width)
+                                    ? "center"
+                                    : "flex-start"
+                                }
+                                spacing={0}
+                              >
+                                <Grid item xs={12} md="auto">
+                                  <Grid
+                                    container
+                                    direction="flow"
+                                    justify={
+                                      isWidthDown("sm", width)
+                                        ? "center"
+                                        : "flex-start"
+                                    }
+                                    alignItems="center"
+                                    spacing={8}
+                                  >
+                                    <Grid item>
+                                      <ReactStars
+                                        value={hotel.star_rates}
+                                        count={5}
+                                        size={32}
+                                        color2={"#ffd700"}
+                                        edit={false}
+                                      />
+                                    </Grid>
+                                    <Grid item>
+                                      <Typography
+                                        variant="subtitle2"
+                                        color="default"
+                                      >
+                                        {hotel.star_rates} out of 5 Star Rating
+                                      </Typography>
+                                    </Grid>
                                   </Grid>
                                 </Grid>
-                              </Grid>
-                              <Grid item>
-                                <Typography variant="h6" color="default">
-                                  {hotel.guest_rate} Guest Rating
-                                </Typography>
+                                <Grid item>
+                                  <Typography variant="h6" color="default">
+                                    {hotel.guest_rate} Guest Rating
+                                  </Typography>
+                                </Grid>
                               </Grid>
                             </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Grid
-                      container
-                      direction="column"
-                      justify="space-between"
-                      alignItems="center"
-                    >
-                      <Grid item xs="auto">
-                        <Typography variant="h5">${hotel.price}</Typography>
-                      </Grid>
-                      <Grid item xs="auto">
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={this.handleClickToHotel(hotel)}
-                        >
-                          Book Now
-                        </Button>
+                    <Grid item>
+                      <Grid
+                        container
+                        direction="column"
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Grid item xs="auto">
+                          <Typography variant="h5">${hotel.price}</Typography>
+                        </Grid>
+                        <Grid item xs="auto">
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleClickToHotel(hotel)}
+                          >
+                            Book Now
+                          </Button>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </Card>
+                </Card>
+              </Grid>
+            );
+          });
+        }
+      } else {
+        hotels = (
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            className={classes.msgHeight}
+          >
+            <Grid item>
+              <Typography variant="subtitle1" className={classes.subtitles}>
+                There are no hotels that satisfy your search criteria...
+              </Typography>
             </Grid>
-          );
-        });
+          </Grid>
+        );
       }
 
       let pagination = (
@@ -416,12 +443,11 @@ class searchResultOverview extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={8}>
-                    {/* TODO: Show Spinner when fetching from backend*/}
                     {hotels}
                   </Grid>
                 </Grid>
               </Grid>
-              {hotelQuery.length ? pagination : <div />}
+              {loading == false && hotelQuery.length > 0 ? pagination : <div />}
             </Grid>
           </Grid>
         </div>
