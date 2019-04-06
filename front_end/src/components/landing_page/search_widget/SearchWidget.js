@@ -25,8 +25,8 @@ const styles = theme => ({
 });
 
 class SearchWidget extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       destinationName: "",
       checkIn: "",
@@ -61,8 +61,23 @@ class SearchWidget extends Component {
       numberRooms: this.state.numberRooms,
       lastIndex: 0,
       numResults: 10,
-      pageNumber: 1
+      pageNumber: 1,
+      free_wifi: 0,
+      free_parking: 0,
+      free_breakfast: 0,
+      pool: 0,
+      pet_friendly: 0,
+      price_low: null,
+      price_high: null,
+      review_score: 0,
+      star_rating: 0
     };
+
+    // Reset the <FiltersWindow/> component if the user is in /searchResultOverview page
+    if (this.props.handleResetFilters != null) {
+      this.props.handleResetFilters();
+    }
+
     this.props.saveQuery(newQuery);
     this.props.submitQuery(newQuery);
   }
@@ -85,7 +100,7 @@ class SearchWidget extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid container justify={"center"} spacing={8}>
+        <Grid container justify="center" alignItems="center" spacing={8}>
           <Grid item xs={12} sm={10} md={6} lg={4}>
             <Paper className={classes.paper}>
               <Destination
@@ -111,10 +126,14 @@ class SearchWidget extends Component {
               />
             </Paper>
           </Grid>
-          <Grid item className="buttonSearchContainer">
+          <Grid item>
             <Link to="/searchResultOverview">
-              <Button class="buttonSearch" primary onClick={this.onSearchClick}>
-                SEARCH
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.onSearchClick}
+              >
+                Search
               </Button>
             </Link>
           </Grid>
