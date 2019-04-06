@@ -84,20 +84,13 @@ let FiltersWindow = props => {
     handlePriceRangeChange,
     handleFiltersApply,
     handleEqualityMenuOpen,
-    handleEqualityMenuClose
+    handleEqualityMenuClose,
+    free_wifi,
+    free_parking,
+    free_breakfast,
+    pool,
+    pet_friendly
   } = props;
-
-  let priceRangeSymbol = () => {
-    switch (props.priceRangeEquality) {
-      case "Greater than":
-        return <ChevronRight />;
-      case "Less than":
-        return <ChevronLeft />;
-      case "To":
-      default:
-        return <Remove />;
-    }
-  };
 
   return (
     <Grid
@@ -220,7 +213,7 @@ let FiltersWindow = props => {
                     onClick={handleEqualityMenuOpen}
                   >
                     <Typography className={classes.subtitles} variant="caption">
-                      {priceRangeSymbol()}
+                      {priceRangeEquality}
                     </Typography>
                   </Button>
                   <Menu
@@ -229,13 +222,13 @@ let FiltersWindow = props => {
                     onClose={handleEqualityMenuClose(null)}
                   >
                     <MenuItem onClick={handleEqualityMenuClose("To")}>
-                      <Remove />
+                      To
                     </MenuItem>
                     <MenuItem onClick={handleEqualityMenuClose("Greater than")}>
-                      <ChevronRight />
+                      Greater than
                     </MenuItem>
                     <MenuItem onClick={handleEqualityMenuClose("Less than")}>
-                      <ChevronLeft />
+                      Less than
                     </MenuItem>
                   </Menu>
                 </Grid>
@@ -271,45 +264,60 @@ let FiltersWindow = props => {
                   <FormControlLabel
                     className={classes.rating}
                     label="Free WiFi"
-                    name="free_wifi"
-                    onChange={handleAmenities}
-                    control={<Checkbox value="free_wifi" />}
+                    control={
+                      <Checkbox
+                        checked={free_wifi}
+                        onChange={handleAmenities("free_wifi")}
+                      />
+                    }
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
                     label="Free Parking"
-                    name="free_parking"
-                    control={<Checkbox value="free_parking" />}
-                    onChange={handleAmenities}
+                    control={
+                      <Checkbox
+                        checked={free_parking}
+                        onChange={handleAmenities("free_parking")}
+                      />
+                    }
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
                     label="Free Breakfast"
-                    name="free_breakfast"
-                    control={<Checkbox value="free_breakfast" />}
-                    onChange={handleAmenities}
+                    control={
+                      <Checkbox
+                        checked={free_breakfast}
+                        onChange={handleAmenities("free_breakfast")}
+                      />
+                    }
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
                     label="Recreational Pool"
-                    name="pool"
-                    control={<Checkbox value="pool" />}
-                    onChange={handleAmenities}
+                    control={
+                      <Checkbox
+                        checked={pool}
+                        onChange={handleAmenities("pool")}
+                      />
+                    }
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
                     label="Pet Friendly"
-                    name="pet_friendly"
-                    control={<Checkbox value="pet_friendly" />}
-                    onChange={handleAmenities}
+                    control={
+                      <Checkbox
+                        checked={pet_friendly}
+                        onChange={handleAmenities("pet_friendly")}
+                      />
+                    }
                   />
                 </Grid>
               </Grid>

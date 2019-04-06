@@ -103,7 +103,7 @@ let SortBar = props => {
 // Expected props
 SortBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  width: PropTypes.func.isRequied,
+  width: PropTypes.func.isRequired,
   sortCategory: PropTypes.string.isRequired,
   sortOrder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired

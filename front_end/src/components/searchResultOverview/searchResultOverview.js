@@ -137,10 +137,9 @@ class searchResultOverview extends Component {
   };
 
   // Used to store the amenities input in <FiltersWindow />
-  handleAmenities = event => {
-    event.preventDefault();
+  handleAmenities = name => event => {
     this.setState({
-      [event.target.name]: event.target.checked
+      [name]: event.target.checked
     });
   };
 
@@ -217,12 +216,12 @@ class searchResultOverview extends Component {
       price_high,
       guest_rate,
       star_rate,
+      priceRangeEquality,
       free_wifi,
       free_parking,
       free_breakfast,
       pool,
-      pet_friendly,
-      priceRangeEquality
+      pet_friendly
     } = this.state;
 
     let { sortCategory, sortOrder } =
@@ -343,7 +342,12 @@ class searchResultOverview extends Component {
         price_low,
         price_high,
         priceRangeEquality,
-        priceRangeAnchorEl
+        priceRangeAnchorEl,
+        free_wifi,
+        free_parking,
+        free_breakfast,
+        pool,
+        pet_friendly
       } = this.state;
       let { classes, width } = this.props;
       let { hotelQuery, searchQuery, loading } = this.props.query;
@@ -567,6 +571,11 @@ class searchResultOverview extends Component {
               handleFiltersApply={this.handleFiltersApply}
               handleEqualityMenuOpen={this.handleEqualityMenuOpen}
               handleEqualityMenuClose={this.handleEqualityMenuClose}
+              free_wifi={free_wifi}
+              free_parking={free_parking}
+              free_breakfast={free_breakfast}
+              pool={pool}
+              pet_friendly={pet_friendly}
             />
             <Grid item xs={12} sm={8} md={9} lg={9}>
               <Grid container direction="flow" justify="center" spacing={8}>
