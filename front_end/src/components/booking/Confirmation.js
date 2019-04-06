@@ -29,34 +29,36 @@ function Confirmation(props) {
     createData("Arrival Date", bookingData.checkIn),
     createData("Departure Date", bookingData.checkOut),
     createData("Room Type", bookingData.roomType),
-    createData("Nightly Rate", bookingData.nightlyRate)
+    createData("Nightly Rate", "$" + bookingData.nightlyRate)
   ];
 
   const PoliciesRows = [
     createData("Check-In Time", "3:00 PM"),
     createData("Check-Out Time", "12:00 noon"),
-    createData("Room Tax", "14% State Tax"),
-    createData("Reward Poinst Earned", bookingData.rewardPointsEarned),
+    createData("Reward Points Used", bookingData.rewardPointsUsed),
+
+    createData("Reward Points Earned", bookingData.rewardPointsEarned),
+    createData("Subtotal", "$" + bookingData.subtotal.toFixed(2)),
     createData(
       "Cancellation Policy",
-      "Cancellations must be received by 4:00 PM the day prior to arrival to avoid a charge of one night's room"
+      "Cancellations must be received 48 hours before check-in date for full refund"
     )
   ];
 
   return (
     <Grid
+      xs={isWidthDown("xs", width) ? 11 : 12}
       container
-      spacing={16}
-      direction={isWidthDown("sm", width) ? "column" : ""}
-      justify={isWidthDown("sm", width) ? "flex-start" : "center"}
-      style={{ margin: isWidthDown("sm", width) ? 10 : -8 }}
+      spacing={isWidthDown("xs", width) ? 0 : 8}
+      justify="center"
+      style={{ margin: isWidthDown("xs", width) ? 10 : -8 }}
     >
       <Grid item xs={10}>
         <Typography
           variant="h4"
           gutterBottom
           align="center"
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 40 }}
         >
           {bookingData.hotelName}
         </Typography>
@@ -65,16 +67,20 @@ function Confirmation(props) {
         </Typography>
       </Grid>
 
-      <Grid item xs={isWidthDown("sm", width) ? 11 : 5}>
+      <Grid item xs={isWidthDown("xs", width) ? 11 : 5}>
         <CardMedia
           style={{ width: "100%", height: 200 }}
           image={require("../landing_page/SF.jpg")}
         />
       </Grid>
 
-      <Grid item xs={isWidthDown("sm", width) ? 11 : 5}>
+      <Grid item xs={isWidthDown("xs", width) ? 11 : 5}>
         <CardMedia
-          style={{ width: "100%", height: 200 }}
+          style={
+            isWidthDown("xs", width)
+              ? { width: "100%", height: 200, marginTop: 20 }
+              : { width: "100%", height: 200 }
+          }
           image={require("../landing_page/SD.jpg")}
         />
       </Grid>
@@ -82,7 +88,8 @@ function Confirmation(props) {
         <Typography
           style={{
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
+            marginBottom: 20
           }}
         >
           {" "}
@@ -93,7 +100,7 @@ function Confirmation(props) {
           confirm the following reservation.
         </Typography>
       </Grid>
-      <Grid item xs={isWidthDown("sm", width) ? 11 : 4}>
+      <Grid item xs={isWidthDown("xs", width) ? 11 : 4}>
         <div
           style={{
             color: "white",
@@ -124,7 +131,7 @@ function Confirmation(props) {
         </Table>
       </Grid>
 
-      <Grid item xs={isWidthDown("sm", width) ? 11 : 4}>
+      <Grid item xs={isWidthDown("xs", width) ? 11 : 4}>
         <div
           style={{
             color: "white",
@@ -150,7 +157,11 @@ function Confirmation(props) {
         </Table>
       </Grid>
       <Grid item xs={10}>
-        <Typography align="center" gutterBottom variant="h5">
+        <Typography
+          align="center"
+          variant="h5"
+          style={{ marginBottom: 40, marginTop: 20 }}
+        >
           We Look Forward To Seeing You Soon
         </Typography>
       </Grid>
