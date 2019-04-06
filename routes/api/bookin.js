@@ -59,10 +59,22 @@ router.post("/confirm",(req,res)=>{
             var address = doc[0].address
             var hotelImg = doc[0].images[0]
             // check require room avaliablity 
-            if(roomType === 'single') arr = doc[0].roomTypeAndNumber.single;
-            else if(roomType === 'double') arr = doc[0].roomTypeAndNumber.double;
-            else if(roomType === 'king') arr = doc[0].roomTypeAndNumber.king;
-            else if(roomType === 'studio') arr = doc[0].roomTypeAndNumber.studio;
+            if(roomType === 'single') {
+                arr = doc[0].roomTypeAndNumber.single;
+                roomPrice = doc[0].price.singlePrice;
+            }
+            else if(roomType === 'double'){
+                arr = doc[0].roomTypeAndNumber.double;
+                roomPrice = doc[0].price.doublePrice;
+            } 
+            else if(roomType === 'king'){
+                arr = doc[0].roomTypeAndNumber.king;
+                roomPrice = doc[0].price.kingPrice;
+            } 
+            else if(roomType === 'studio'){
+                arr = doc[0].roomTypeAndNumber.studio;
+                roomPrice = doc[0].price.suitePrice;
+            } 
 
             // if the room is avaliable
             if(checkAvailability(arr,date,numberRooms,bookingID).length !==0){
@@ -102,6 +114,7 @@ router.post("/confirm",(req,res)=>{
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
+                                    nightlyRate:roomPrice,
                                     hotelAddress:address,
                                     hotelImg:hotelImg,
                                     destinationName:destinationName,
