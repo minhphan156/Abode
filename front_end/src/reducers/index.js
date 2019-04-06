@@ -6,6 +6,7 @@ import profileReducer from "./profileReducer";
 import landingReducer from "./landingReducer";
 import individualHotelReducer from "./individualHotelReducer";
 import bookingReducer from "./bookingReducer";
+import searchHistoryReducer from "./searchHistoryReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   profile: profileReducer,
   landing: landingReducer,
   individualHotelData: individualHotelReducer,
-  bookingData: bookingReducer
+  bookingData: bookingReducer,
+  searchHistoryData: searchHistoryReducer, 
 });

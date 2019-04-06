@@ -17,10 +17,16 @@ class HistorySearch extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.onSearchClick = this.onSearchClick.bind(this);
   }
 
   onSearchClick(){
-
+    const newQuery = {
+      bookingID: this.state.bookingID,
+      email: this.state.email
+    };
+    this.props.submitQuery(newQuery);
+    this.props.saveQuery(newQuery);
   };
 
   handleChange = ({target:{name,value}}) => {
@@ -31,6 +37,9 @@ class HistorySearch extends Component {
 
 
   render() {
+    const { historyData } = this.props.searchHistoryData;
+
+
     return (
       <div
         id="whole page"
@@ -85,4 +94,11 @@ class HistorySearch extends Component {
     }
   }
   
-export default HistorySearch;
+const mapStateToProps = state => ({
+  historyData: state.historyData
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(HistorySearch);
