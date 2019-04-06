@@ -21,7 +21,7 @@ import {
   Card,
   Button,
   Typography,
-  TablePagination,
+  IconButton,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
@@ -29,7 +29,12 @@ import {
   CircularProgress
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
-import { Search, ExpandMore } from "@material-ui/icons";
+import {
+  Search,
+  ExpandMore,
+  NavigateNext,
+  NavigateBefore
+} from "@material-ui/icons";
 
 // Component CSS to Javascript styles
 let styles = theme => ({
@@ -90,37 +95,11 @@ class searchResultOverview extends Component {
     // Action calls
     this.handleFiltersApply = this.handleFiltersApply.bind(this);
     this.backendCall = this.backendCall.bind(this);
+    this.goToPreviousPage = this.goToPreviousPage.bind(this);
+    this.goToNextPage = this.goToNextPage.bind(this);
   }
 
-  // Used to force user browser to scroll to top of page upon mounting this component
-
-  goToPreviousPage(queryResult, searchQuery) {
-    window.scrollTo(0, 0);
-    queryResult.pageNumber--;
-    let lastIndex = queryResult.lastIndex - 2 * searchQuery.numResults;
-    if (lastIndex < 0 || queryResult.pageNumber === 1) {
-      lastIndex = 0;
-    }
-    let newQuery = searchQuery;
-    newQuery.lastIndex = lastIndex;
-    newQuery.pageNumber = queryResult.pageNumber;
-
-    this.props.submitQuery(newQuery);
-    this.props.saveQuery(newQuery);
-    window.scrollTo(0, 0);
-  }
-
-  goToNextPage(queryResult, searchQuery) {
-    window.scrollTo(0, 0);
-    queryResult.pageNumber++;
-    let newQuery = searchQuery;
-    newQuery.lastIndex = queryResult.lastIndex;
-    newQuery.pageNumber = queryResult.pageNumber;
-
-    this.props.submitQuery(newQuery);
-    this.props.saveQuery(newQuery);
-    window.scrollTo(0, 0);
-  }
+  // Upon mounting this component, browser is moved to the top of page.
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };
@@ -160,6 +139,7 @@ class searchResultOverview extends Component {
     });
   };
 
+  // Handles clicks to the apply filter button
   handleFiltersApply = event => {
     event.preventDefault();
     this.backendCall(null);
@@ -182,6 +162,7 @@ class searchResultOverview extends Component {
     });
   };
 
+  // Handles backend call for filter and sort
   backendCall = sortObject => {
     let {
       destinationName,
@@ -246,10 +227,7 @@ class searchResultOverview extends Component {
     this.props.submitQuery(newQuery);
   };
 
-  handlePagination = move => event => {
-    event.preventDefault();
-  };
-
+  // Handles 'Navigate to Hotel card'
   handleClickToHotel = hotel => event => {
     event.preventDefault();
     this.props.getIndividualHotelResult({
@@ -261,6 +239,38 @@ class searchResultOverview extends Component {
     this.props.history.push("/indiv-hotel");
   };
 
+  // Handles navigation to previous page of pagination
+  goToPreviousPage = (queryResult, searchQuery) => event => {
+    event.preventDefault();
+
+    window.scrollTo(0, 0);
+    queryResult.pageNumber--;
+    let lastIndex = queryResult.lastIndex - 2 * searchQuery.numResults;
+    if (lastIndex < 0 || queryResult.pageNumber === 1) {
+      lastIndex = 0;
+    }
+    let newQuery = searchQuery;
+    newQuery.lastIndex = lastIndex;
+    newQuery.pageNumber = queryResult.pageNumber;
+
+    this.props.saveQuery(newQuery);
+    this.props.submitQuery(newQuery);
+  };
+
+  // Handles navigation to next page of pagination
+  goToNextPage = (queryResult, searchQuery) => event => {
+    event.preventDefault();
+
+    window.scrollTo(0, 0);
+    queryResult.pageNumber++;
+    let newQuery = searchQuery;
+    newQuery.lastIndex = queryResult.lastIndex;
+    newQuery.pageNumber = queryResult.pageNumber;
+
+    this.props.saveQuery(newQuery);
+    this.props.submitQuery(newQuery);
+  };
+
   render() {
     if (this.props.query.searchQuery == null) {
       this.props.history.push("/");
@@ -268,8 +278,9 @@ class searchResultOverview extends Component {
     } else {
       let { star_rate, guest_rate, price_low, price_high, page } = this.state;
       let { classes, width } = this.props;
-      let { hotelQuery, loading } = this.props.query;
+      let { hotelQuery, searchQuery, loading } = this.props.query;
 
+      // Markup for each hotel result card
       let hotels;
       if (loading) {
         hotels = (
@@ -284,9 +295,9 @@ class searchResultOverview extends Component {
             </Grid>
           </Grid>
         );
-      } else if (hotelQuery.length > 0) {
-        if (hotelQuery.length > 0) {
-          hotels = hotelQuery.map(hotel => {
+      } else if (hotelQuery.results.length > 0) {
+        if (hotelQuery.results.length > 0) {
+          hotels = hotelQuery.results.map(hotel => {
             return (
               <Grid item xs={12}>
                 <Card className={classes.pad25} square="false">
@@ -417,15 +428,40 @@ class searchResultOverview extends Component {
         );
       }
 
+      // Markup for pagination
       let pagination = (
-        <Grid item>
-          <TablePagination
-            style={{ float: "right" }}
-            rowsPerPageOptions={[5, 10, 25]}
-            count={100}
-            page={page}
-            rowsPerPage={10}
-          />
+        <Grid
+          container
+          direction="flow"
+          justify="center"
+          alignItems="center"
+          spacing={8}
+        >
+          <Grid item>
+            <IconButton
+              onClick={this.goToPreviousPage(hotelQuery, searchQuery)}
+              disabled={
+                loading == true && hotelQuery.pageNumber == "1" ? true : false
+              }
+            >
+              <NavigateBefore />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <Typography variant="subtitle1" className={classes.subtitles}>
+              {hotelQuery.pageNumber}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <IconButton
+              onClick={this.goToNextPage(hotelQuery, searchQuery)}
+              disabled={
+                loading == true && hotelQuery.nextExists != true ? true : false
+              }
+            >
+              <NavigateNext />
+            </IconButton>
+          </Grid>
         </Grid>
       );
 
@@ -475,7 +511,11 @@ class searchResultOverview extends Component {
                   </Grid>
                 </Grid>
               </Grid>
-              {loading == false && hotelQuery.length > 0 ? pagination : <div />}
+              {loading == false && hotelQuery.results.length > 0 ? (
+                pagination
+              ) : (
+                <div />
+              )}
             </Grid>
           </Grid>
         </div>

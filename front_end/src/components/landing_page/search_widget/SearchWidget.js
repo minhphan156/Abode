@@ -61,8 +61,8 @@ class SearchWidget extends Component {
       checkOut: this.state.checkOut,
       numberRooms: this.state.numberRooms,
       lastIndex: 0,
-      numResults: 5,
-      pageNumber:1
+      numResults: 10,
+      pageNumber: 1
     };
     this.props.saveQuery(newQuery);
     this.props.submitQuery(newQuery);
