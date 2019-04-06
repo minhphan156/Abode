@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withWidth } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
@@ -28,11 +29,19 @@ class CalendarPicker extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, width } = this.props;
 
     return (
       <div className={classes.root}>
         <DateRangePicker
+          startDatePlaceholderText={"Check In"}
+          endDatePlaceholderText={"Check Out"}
+          withFullScreenPortal={width == "xs" ? true : false}
+          numberOfMonths={
+            width == "xs" || width == "sm" || width == "md" ? 1 : 2
+          }
+          showDefaultInputIcon={width == "xs" ? false : true}
+          keepOpenOnDateSelect={true}
           startDate={this.props.checkIn} // momentPropTypes.momentObj or null,
           startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
           endDate={this.props.checkOut} // momentPropTypes.momentObj or null,
@@ -44,11 +53,15 @@ class CalendarPicker extends Component {
           focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
           onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
           noBorder={true}
-          showDefaultInputIcon={true}
         />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(CalendarPicker);
+// Expected props
+CalendarPicker.propTypes = {
+  width: PropTypes.func.isRequied
+};
+
+export default withStyles(styles)(withWidth()(CalendarPicker));

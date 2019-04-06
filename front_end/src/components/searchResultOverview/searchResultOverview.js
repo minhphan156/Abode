@@ -15,16 +15,16 @@ import SortBar from "./SortBar.js";
 
 // Material UI Imports
 import {
-  withStyles,
-  withWidth,
   Grid,
   Card,
-  Button,
   Typography,
   IconButton,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  Button,
+  withStyles,
+  withWidth,
   Divider,
   CircularProgress
 } from "@material-ui/core";
@@ -59,7 +59,6 @@ let styles = theme => ({
   subtitles: { fontWeight: "bold", color: "#808080" }
 });
 
-// Main component of the Search Result Overview Page
 class searchResultOverview extends Component {
   constructor() {
     super();
@@ -92,6 +91,7 @@ class searchResultOverview extends Component {
     this.handleClickToHotel = this.handleClickToHotel.bind(this);
     this.handleEqualityMenuOpen = this.handleEqualityMenuOpen.bind(this);
     this.handleEqualityMenuClose = this.handleEqualityMenuClose.bind(this);
+    this.handleResetFilters = this.handleResetFilters.bind(this);
 
     // Action calls
     this.handleFiltersApply = this.handleFiltersApply.bind(this);
@@ -103,6 +103,23 @@ class searchResultOverview extends Component {
   // Upon mounting this component, browser is moved to the top of page.
   componentDidMount = () => {
     window.scrollTo(0, 0);
+  };
+
+  // Used to reset <FiltersWindow /> upon pressing 'Search'
+  handleResetFilters = () => {
+    this.setState({
+      star_rate: 0,
+      guest_rate: 0,
+      price_low: null,
+      price_high: null,
+      free_wifi: false,
+      free_parking: false,
+      free_breakfast: false,
+      pool: false,
+      pet_friendly: false,
+      priceRangeEquality: "To",
+      priceRangeAnchorEl: null
+    });
   };
 
   // Used to store the star rating input in <FiltersWindow />
@@ -173,10 +190,16 @@ class searchResultOverview extends Component {
 
   handleEqualityMenuClose = value => event => {
     event.preventDefault();
-    this.setState({
-      priceRangeEquality: value,
-      priceRangeAnchorEl: null
-    });
+    if (value == null) {
+      this.setState({
+        priceRangeAnchorEl: null
+      });
+    } else {
+      this.setState({
+        priceRangeEquality: value,
+        priceRangeAnchorEl: null
+      });
+    }
   };
 
   // Handles backend call for filter and sort
@@ -525,7 +548,7 @@ class searchResultOverview extends Component {
             <Divider />
             <ExpansionPanelDetails>
               <div style={{ width: "100%" }}>
-                <SearchWidget />
+                <SearchWidget handleResetFilters={this.handleResetFilters} />
               </div>
             </ExpansionPanelDetails>
           </ExpansionPanel>
@@ -545,7 +568,7 @@ class searchResultOverview extends Component {
               handleEqualityMenuOpen={this.handleEqualityMenuOpen}
               handleEqualityMenuClose={this.handleEqualityMenuClose}
             />
-            <Grid item xs={12} sm={8} md={9} lg={10}>
+            <Grid item xs={12} sm={8} md={9} lg={9}>
               <Grid container direction="flow" justify="center" spacing={8}>
                 <Grid item xs={12}>
                   <SortBar
@@ -574,9 +597,12 @@ class searchResultOverview extends Component {
 }
 
 searchResultOverview.propTypes = {
-  query: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  width: PropTypes.func.isRequired
+  width: PropTypes.func.isRequired,
+  getIndividualHotelResult: PropTypes.func.isRequired,
+  submitQuery: PropTypes.func.isRequired,
+  saveQuery: PropTypes.func.isRequired,
+  query: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

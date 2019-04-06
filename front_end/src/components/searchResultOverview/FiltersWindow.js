@@ -24,7 +24,13 @@ import {
   Hidden
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
-import { ExpandMore, FilterList } from "@material-ui/icons";
+import {
+  ExpandMore,
+  FilterList,
+  ChevronLeft,
+  ChevronRight,
+  Remove
+} from "@material-ui/icons";
 import { Slider } from "@material-ui/lab";
 
 // Component styling
@@ -81,13 +87,25 @@ let FiltersWindow = props => {
     handleEqualityMenuClose
   } = props;
 
+  let priceRangeSymbol = () => {
+    switch (props.priceRangeEquality) {
+      case "Greater than":
+        return <ChevronRight />;
+      case "Less than":
+        return <ChevronLeft />;
+      case "To":
+      default:
+        return <Remove />;
+    }
+  };
+
   return (
     <Grid
       item
       xs={12}
       sm={4}
       md={3}
-      lg={2}
+      lg={3}
       direction={isWidthDown("sm", width) ? "row" : "column"}
       justify={"flex-start"}
       spacing={0}
@@ -194,31 +212,30 @@ let FiltersWindow = props => {
                     />
                   </Grid>
                 </Hidden>
-                <Grid item xs>
+                <Grid item xs="auto">
                   <Button
+                    size="small"
                     variant="outlined"
                     color="primary"
-                    style={{ width: "100%" }}
                     onClick={handleEqualityMenuOpen}
-                    textTransform="false"
                   >
                     <Typography className={classes.subtitles} variant="caption">
-                      {priceRangeEquality}
+                      {priceRangeSymbol()}
                     </Typography>
                   </Button>
                   <Menu
                     anchorEl={priceRangeAnchorEl}
                     open={Boolean(priceRangeAnchorEl)}
-                    onClose={handleEqualityMenuClose}
+                    onClose={handleEqualityMenuClose(null)}
                   >
                     <MenuItem onClick={handleEqualityMenuClose("To")}>
-                      To
+                      <Remove />
                     </MenuItem>
                     <MenuItem onClick={handleEqualityMenuClose("Greater than")}>
-                      Greater than
+                      <ChevronRight />
                     </MenuItem>
                     <MenuItem onClick={handleEqualityMenuClose("Less than")}>
-                      Less than
+                      <ChevronLeft />
                     </MenuItem>
                   </Menu>
                 </Grid>
