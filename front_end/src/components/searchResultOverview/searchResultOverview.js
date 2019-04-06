@@ -93,6 +93,34 @@ class searchResultOverview extends Component {
   }
 
   // Used to force user browser to scroll to top of page upon mounting this component
+
+  goToPreviousPage(queryResult, searchQuery) {
+    window.scrollTo(0, 0);
+    queryResult.pageNumber--;
+    let lastIndex = queryResult.lastIndex - 2 * searchQuery.numResults;
+    if (lastIndex < 0 || queryResult.pageNumber === 1) {
+      lastIndex = 0;
+    }
+    let newQuery = searchQuery;
+    newQuery.lastIndex = lastIndex;
+    newQuery.pageNumber = queryResult.pageNumber;
+
+    this.props.submitQuery(newQuery);
+    this.props.saveQuery(newQuery);
+    window.scrollTo(0, 0);
+  }
+
+  goToNextPage(queryResult, searchQuery) {
+    window.scrollTo(0, 0);
+    queryResult.pageNumber++;
+    let newQuery = searchQuery;
+    newQuery.lastIndex = queryResult.lastIndex;
+    newQuery.pageNumber = queryResult.pageNumber;
+
+    this.props.submitQuery(newQuery);
+    this.props.saveQuery(newQuery);
+    window.scrollTo(0, 0);
+  }
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };

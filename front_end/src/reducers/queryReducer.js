@@ -6,7 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  hotelQuery: [], // all the hotels that match
+  hotelQuery: { results: [] }, // all the hotels that match
   searchQuery: null, // the search arguments
   loading: true
 };
@@ -22,7 +22,7 @@ export default function(state = initialState, action) {
     case SET_QUERY:
       return {
         ...state,
-        hotelQuery: action.payload.results,
+        hotelQuery: action.payload,
         loading: false
       };
     case SAVE_QUERY:
