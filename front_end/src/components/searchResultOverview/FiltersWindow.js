@@ -62,219 +62,129 @@ let NumberFormatCustom = props => {
 };
 
 // React Functional Component (has no states) for the filters window of SearchResultOverview component
-class FiltersWindow extends Component {
-  constructor() {
-    super();
+let FiltersWindow = props => {
+  let {
+    classes,
+    width,
+    guest_rate,
+    star_rate,
+    price_low,
+    price_high,
+    priceRangeEquality,
+    priceRangeAnchorEl,
+    handleAmenities,
+    handleStarRatings,
+    handleGuestRatings,
+    handlePriceRangeChange,
+    handleFiltersApply,
+    handleEqualityMenuOpen,
+    handleEqualityMenuClose
+  } = props;
 
-    this.state = {
-      priceRangeAnchorEl: null,
-      priceRangeEquality: "To"
-    };
-
-    this.handleEqualityMenuClose = this.handleEqualityMenuClose.bind(this);
-    this.handleEqualityMenuOpen = this.handleEqualityMenuOpen.bind(this);
-  }
-
-  // Handles the Equality button
-  handleEqualityMenuOpen = event => {
-    event.preventDefault();
-    this.setState({
-      priceRangeAnchorEl: event.currentTarget
-    });
-  };
-
-  handleEqualityMenuClose = value => event => {
-    event.preventDefault();
-    this.setState({
-      priceRangeEquality: value,
-      priceRangeAnchorEl: null
-    });
-  };
-
-  render() {
-    let { priceRangeEquality, priceRangeAnchorEl } = this.state;
-
-    let {
-      classes,
-      width,
-      guest_rate,
-      star_rate,
-      price_low,
-      price_high,
-      handleAmenities,
-      handleStarRatings,
-      handleGuestRatings,
-      handlePriceRangeChange,
-      handleFiltersApply
-    } = this.props;
-
-    return (
-      <Grid
-        item
-        xs={12}
-        sm={4}
-        md={3}
-        lg={2}
-        direction={isWidthDown("sm", width) ? "row" : "column"}
-        justify={"flex-start"}
-        spacing={0}
+  return (
+    <Grid
+      item
+      xs={12}
+      sm={4}
+      md={3}
+      lg={2}
+      direction={isWidthDown("sm", width) ? "row" : "column"}
+      justify={"flex-start"}
+      spacing={0}
+    >
+      <ExpansionPanel
+        defaultExpanded={width == "xs" ? false : true}
+        square="false"
       >
-        <ExpansionPanel
-          defaultExpanded={width == "xs" ? false : true}
-          square="false"
-        >
-          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-            <Typography className={classes.subtitles} variant="subtitle2">
-              <FilterList /> Filters
-            </Typography>
-          </ExpansionPanelSummary>
-          <Divider />
-          <ExpansionPanelDetails className={classes.rating}>
-            <Grid
-              container
-              direction={isWidthDown("sm", width) ? "row" : "column"}
-              justify="flex-start"
-              spacing={0}
-            >
-              <Grid item xs={12} md="auto" boxShadow="false">
-                <Grid
-                  container
-                  className={classes.pad10}
-                  direction="row"
-                  justify="center"
-                  spacing={0}
-                >
-                  <Grid item xs={12}>
-                    <Typography
-                      className={classes.subtitles}
-                      variant="subtitle2"
-                    >
-                      {`Star Rating: (${star_rate} and up)`}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs="auto">
-                    <ReactStars
-                      value={star_rate}
-                      count={5}
-                      onChange={handleStarRatings}
-                      size={32}
-                      color2={"#ffd700"}
-                    />
-                  </Grid>
+        <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+          <Typography className={classes.subtitles} variant="subtitle2">
+            <FilterList /> Filters
+          </Typography>
+        </ExpansionPanelSummary>
+        <Divider />
+        <ExpansionPanelDetails className={classes.rating}>
+          <Grid
+            container
+            direction={isWidthDown("sm", width) ? "row" : "column"}
+            justify="flex-start"
+            spacing={0}
+          >
+            <Grid item xs={12} md="auto" boxShadow="false">
+              <Grid
+                container
+                className={classes.pad10}
+                direction="row"
+                justify="center"
+                spacing={0}
+              >
+                <Grid item xs={12}>
+                  <Typography className={classes.subtitles} variant="subtitle2">
+                    {`Star Rating: (${star_rate} and up)`}
+                  </Typography>
                 </Grid>
-                <Divider />
-              </Grid>
-              <Grid item xs={12} md="auto">
-                <Grid
-                  container
-                  className={classes.pad10}
-                  direction="column"
-                  spacing={0}
-                >
-                  <Grid item xs={12}>
-                    <Typography
-                      className={classes.subtitles}
-                      variant="subtitle2"
-                    >
-                      {`Guest Rating: (${guest_rate} and up)`}
-                    </Typography>
-                  </Grid>
-                  <Grid item direction="flow">
-                    <Slider
-                      style={{ padding: 15 }}
-                      value={guest_rate}
-                      min={0}
-                      max={10}
-                      step={1}
-                      onChange={handleGuestRatings}
-                    />
-                  </Grid>
+                <Grid item xs="auto">
+                  <ReactStars
+                    value={star_rate}
+                    count={5}
+                    onChange={handleStarRatings}
+                    size={32}
+                    color2={"#ffd700"}
+                  />
                 </Grid>
-                <Divider />
               </Grid>
-              <Grid item xs={12} md="auto" spacing={0}>
-                <Grid
-                  container
-                  className={classes.pad10}
-                  direction="flow"
-                  justify="center"
-                  alignItems="center"
-                  spacing={8}
-                >
-                  <Grid item xs={12}>
-                    <Typography
-                      className={classes.subtitles}
-                      variant="subtitle2"
-                    >
-                      Price Range:
-                    </Typography>
-                  </Grid>
-                  <Hidden xlDown={priceRangeEquality != "To" ? true : false}>
-                    <Grid item xs>
-                      <TextField
-                        label="min"
-                        value={priceRangeEquality != "To" ? "" : price_low}
-                        disabled={priceRangeEquality != "To" ? true : false}
-                        InputProps={{
-                          inputComponent: NumberFormatCustom
-                        }}
-                        onChange={handlePriceRangeChange("price_low")}
-                        error={
-                          (price_low != null && price_low == price_high) ||
-                          price_low > price_high
-                            ? true
-                            : false
-                        }
-                        margin="none"
-                        variant="outlined"
-                      />
-                    </Grid>
-                  </Hidden>
-                  <Grid item xs>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      style={{ width: "100%" }}
-                      onClick={this.handleEqualityMenuOpen}
-                      textTransform="false"
-                    >
-                      <Typography
-                        className={classes.subtitles}
-                        variant="caption"
-                      >
-                        {priceRangeEquality}
-                      </Typography>
-                    </Button>
-                    <Menu
-                      anchorEl={priceRangeAnchorEl}
-                      open={Boolean(priceRangeAnchorEl)}
-                      onClose={this.handleEqualityMenuClose}
-                    >
-                      <MenuItem onClick={this.handleEqualityMenuClose("To")}>
-                        To
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleEqualityMenuClose("Greater than")}
-                      >
-                        Greater than
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleEqualityMenuClose("Less than")}
-                      >
-                        Less than
-                      </MenuItem>
-                    </Menu>
-                  </Grid>
+              <Divider />
+            </Grid>
+            <Grid item xs={12} md="auto">
+              <Grid
+                container
+                className={classes.pad10}
+                direction="column"
+                spacing={0}
+              >
+                <Grid item xs={12}>
+                  <Typography className={classes.subtitles} variant="subtitle2">
+                    {`Guest Rating: (${guest_rate} and up)`}
+                  </Typography>
+                </Grid>
+                <Grid item direction="flow">
+                  <Slider
+                    style={{ padding: 15 }}
+                    value={guest_rate}
+                    min={0}
+                    max={10}
+                    step={1}
+                    onChange={handleGuestRatings}
+                  />
+                </Grid>
+              </Grid>
+              <Divider />
+            </Grid>
+            <Grid item xs={12} md="auto" spacing={0}>
+              <Grid
+                container
+                className={classes.pad10}
+                direction="flow"
+                justify="center"
+                alignItems="center"
+                spacing={8}
+              >
+                <Grid item xs={12}>
+                  <Typography className={classes.subtitles} variant="subtitle2">
+                    Price Range:
+                  </Typography>
+                </Grid>
+                <Hidden xlDown={priceRangeEquality != "To" ? true : false}>
                   <Grid item xs>
                     <TextField
-                      label="max"
-                      value={price_high}
+                      label="min"
+                      value={priceRangeEquality != "To" ? "" : price_low}
+                      disabled={priceRangeEquality != "To" ? true : false}
                       InputProps={{
                         inputComponent: NumberFormatCustom
                       }}
-                      onChange={handlePriceRangeChange("price_high")}
+                      onChange={handlePriceRangeChange("price_low")}
                       error={
-                        (price_high != null && price_low == price_high) ||
+                        (price_low != null && price_low == price_high) ||
                         price_low > price_high
                           ? true
                           : false
@@ -283,88 +193,131 @@ class FiltersWindow extends Component {
                       variant="outlined"
                     />
                   </Grid>
-                </Grid>
-                <Divider />
-              </Grid>
-              <Grid item xs={12} md="auto" spacing={0}>
-                <Grid container direction="column" className={classes.pad10}>
-                  <Grid item>
-                    <Typography
-                      className={classes.subtitles}
-                      variant="subtitle2"
-                    >
-                      Amenities:
+                </Hidden>
+                <Grid item xs>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ width: "100%" }}
+                    onClick={handleEqualityMenuOpen}
+                    textTransform="false"
+                  >
+                    <Typography className={classes.subtitles} variant="caption">
+                      {priceRangeEquality}
                     </Typography>
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      className={classes.rating}
-                      label="Free WiFi"
-                      name="free_wifi"
-                      onChange={handleAmenities}
-                      control={<Checkbox value="free_wifi" />}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      className={classes.rating}
-                      label="Free Parking"
-                      name="free_parking"
-                      control={<Checkbox value="free_parking" />}
-                      onChange={handleAmenities}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      className={classes.rating}
-                      label="Free Breakfast"
-                      name="free_breakfast"
-                      control={<Checkbox value="free_breakfast" />}
-                      onChange={handleAmenities}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      className={classes.rating}
-                      label="Recreational Pool"
-                      name="pool"
-                      control={<Checkbox value="pool" />}
-                      onChange={handleAmenities}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <FormControlLabel
-                      className={classes.rating}
-                      label="Pet Friendly"
-                      name="pet_friendly"
-                      control={<Checkbox value="pet_friendly" />}
-                      onChange={handleAmenities}
-                    />
-                  </Grid>
+                  </Button>
+                  <Menu
+                    anchorEl={priceRangeAnchorEl}
+                    open={Boolean(priceRangeAnchorEl)}
+                    onClose={handleEqualityMenuClose}
+                  >
+                    <MenuItem onClick={handleEqualityMenuClose("To")}>
+                      To
+                    </MenuItem>
+                    <MenuItem onClick={handleEqualityMenuClose("Greater than")}>
+                      Greater than
+                    </MenuItem>
+                    <MenuItem onClick={handleEqualityMenuClose("Less than")}>
+                      Less than
+                    </MenuItem>
+                  </Menu>
                 </Grid>
-                <Divider />
+                <Grid item xs>
+                  <TextField
+                    label="max"
+                    value={price_high}
+                    InputProps={{
+                      inputComponent: NumberFormatCustom
+                    }}
+                    onChange={handlePriceRangeChange("price_high")}
+                    error={
+                      (price_high != null && price_low == price_high) ||
+                      price_low > price_high
+                        ? true
+                        : false
+                    }
+                    margin="none"
+                    variant="outlined"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} md="auto">
-                <Grid container className={classes.pad10} justify="center">
-                  <Grid item xs={8}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleFiltersApply}
-                      style={{ width: "100%" }}
-                    >
-                      Apply
-                    </Button>
-                  </Grid>
+              <Divider />
+            </Grid>
+            <Grid item xs={12} md="auto" spacing={0}>
+              <Grid container direction="column" className={classes.pad10}>
+                <Grid item>
+                  <Typography className={classes.subtitles} variant="subtitle2">
+                    Amenities:
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.rating}
+                    label="Free WiFi"
+                    name="free_wifi"
+                    onChange={handleAmenities}
+                    control={<Checkbox value="free_wifi" />}
+                  />
+                </Grid>
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.rating}
+                    label="Free Parking"
+                    name="free_parking"
+                    control={<Checkbox value="free_parking" />}
+                    onChange={handleAmenities}
+                  />
+                </Grid>
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.rating}
+                    label="Free Breakfast"
+                    name="free_breakfast"
+                    control={<Checkbox value="free_breakfast" />}
+                    onChange={handleAmenities}
+                  />
+                </Grid>
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.rating}
+                    label="Recreational Pool"
+                    name="pool"
+                    control={<Checkbox value="pool" />}
+                    onChange={handleAmenities}
+                  />
+                </Grid>
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.rating}
+                    label="Pet Friendly"
+                    name="pet_friendly"
+                    control={<Checkbox value="pet_friendly" />}
+                    onChange={handleAmenities}
+                  />
+                </Grid>
+              </Grid>
+              <Divider />
+            </Grid>
+            <Grid item xs={12} md="auto">
+              <Grid container className={classes.pad10} justify="center">
+                <Grid item xs={8}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleFiltersApply}
+                    style={{ width: "100%" }}
+                  >
+                    Apply
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </Grid>
-    );
-  }
-}
+          </Grid>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </Grid>
+  );
+};
 
 FiltersWindow.propTypes = {
   classes: PropTypes.object.isRequired,

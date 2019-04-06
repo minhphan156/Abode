@@ -48,7 +48,7 @@ let SortBar = props => {
         expandIcon={<ExpandMore />}
       >
         <Typography variant="subtitle2" className={classes.subtitles}>
-          <Sort /> Sort By:
+          <Sort /> Sort By
         </Typography>
       </ExpansionPanelSummary>
       <Divider />

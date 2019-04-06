@@ -79,9 +79,8 @@ class searchResultOverview extends Component {
       free_breakfast: false,
       pool: false,
       pet_friendly: false,
-
-      // State used for pagination
-      page: 0
+      priceRangeEquality: "To",
+      priceRangeAnchorEl: null
     };
 
     // Methods passed to child components
@@ -91,6 +90,8 @@ class searchResultOverview extends Component {
     this.handleAmenities = this.handleAmenities.bind(this);
     this.handlePriceRangeChange = this.handlePriceRangeChange.bind(this);
     this.handleClickToHotel = this.handleClickToHotel.bind(this);
+    this.handleEqualityMenuOpen = this.handleEqualityMenuOpen.bind(this);
+    this.handleEqualityMenuClose = this.handleEqualityMenuClose.bind(this);
 
     // Action calls
     this.handleFiltersApply = this.handleFiltersApply.bind(this);
@@ -162,6 +163,22 @@ class searchResultOverview extends Component {
     });
   };
 
+  // Handles the Equality button
+  handleEqualityMenuOpen = event => {
+    event.preventDefault();
+    this.setState({
+      priceRangeAnchorEl: event.currentTarget
+    });
+  };
+
+  handleEqualityMenuClose = value => event => {
+    event.preventDefault();
+    this.setState({
+      priceRangeEquality: value,
+      priceRangeAnchorEl: null
+    });
+  };
+
   // Handles backend call for filter and sort
   backendCall = sortObject => {
     let {
@@ -181,7 +198,8 @@ class searchResultOverview extends Component {
       free_parking,
       free_breakfast,
       pool,
-      pet_friendly
+      pet_friendly,
+      priceRangeEquality
     } = this.state;
 
     let { sortCategory, sortOrder } =
@@ -198,6 +216,31 @@ class searchResultOverview extends Component {
         break;
     }
 
+    let price_low_validated, price_high_validated;
+    switch (priceRangeEquality) {
+      case "Greater than":
+        price_low_validated = price_high;
+        price_high_validated = Number.MAX_SAFE_INTEGER;
+        break;
+      case "Less than":
+        price_low_validated = 0;
+        price_high_validated = price_high;
+        break;
+      case "To":
+      default:
+        price_low_validated =
+          price_low == null || price_low > price_high || price_low == price_high
+            ? null
+            : price_low;
+        price_high_validated =
+          price_high == null ||
+          price_low > price_high ||
+          price_low == price_high
+            ? null
+            : price_high;
+        break;
+    }
+
     let newQuery = {
       destinationName: destinationName,
       checkIn: checkIn,
@@ -211,14 +254,8 @@ class searchResultOverview extends Component {
       free_breakfast: free_breakfast ? 1 : 0,
       pool: pool ? 1 : 0,
       pet_friendly: pet_friendly ? 1 : 0,
-      price_low:
-        price_low == null || price_low > price_high || price_low == price_high
-          ? null
-          : price_low,
-      price_high:
-        price_high == null || price_low > price_high || price_low == price_high
-          ? null
-          : price_high,
+      price_low: price_low_validated,
+      price_high: price_high_validated,
       review_score: guest_rate,
       star_rating: star_rate,
       sortObject: `${orderSign}${sortCategory}`
@@ -277,7 +314,14 @@ class searchResultOverview extends Component {
       this.props.history.push("/");
       return null;
     } else {
-      let { star_rate, guest_rate, price_low, price_high, page } = this.state;
+      let {
+        star_rate,
+        guest_rate,
+        price_low,
+        price_high,
+        priceRangeEquality,
+        priceRangeAnchorEl
+      } = this.state;
       let { classes, width } = this.props;
       let { hotelQuery, searchQuery, loading } = this.props.query;
 
@@ -491,11 +535,15 @@ class searchResultOverview extends Component {
               guest_rate={guest_rate}
               price_low={price_low}
               price_high={price_high}
+              priceRangeEquality={priceRangeEquality}
+              priceRangeAnchorEl={priceRangeAnchorEl}
               handleAmenities={this.handleAmenities}
               handleStarRatings={this.handleStarRatings}
               handleGuestRatings={this.handleGuestRatings}
               handlePriceRangeChange={this.handlePriceRangeChange}
               handleFiltersApply={this.handleFiltersApply}
+              handleEqualityMenuOpen={this.handleEqualityMenuOpen}
+              handleEqualityMenuClose={this.handleEqualityMenuClose}
             />
             <Grid item xs={12} sm={8} md={9} lg={10}>
               <Grid container direction="flow" justify="center" spacing={8}>
