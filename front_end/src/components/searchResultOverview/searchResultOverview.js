@@ -205,6 +205,7 @@ class searchResultOverview extends Component {
       numberRooms: numberRooms,
       lastIndex: lastIndex,
       numResults: numResults,
+      pageNumber: 1,
       free_wifi: free_wifi ? 1 : 0,
       free_parking: free_parking ? 1 : 0,
       free_breakfast: free_breakfast ? 1 : 0,
@@ -441,7 +442,7 @@ class searchResultOverview extends Component {
             <IconButton
               onClick={this.goToPreviousPage(hotelQuery, searchQuery)}
               disabled={
-                loading == true && hotelQuery.pageNumber == "1" ? true : false
+                loading == true || hotelQuery.pageNumber == "1" ? true : false
               }
             >
               <NavigateBefore />
@@ -456,7 +457,7 @@ class searchResultOverview extends Component {
             <IconButton
               onClick={this.goToNextPage(hotelQuery, searchQuery)}
               disabled={
-                loading == true && hotelQuery.nextExists != true ? true : false
+                loading == true || hotelQuery.nextExists != true ? true : false
               }
             >
               <NavigateNext />
