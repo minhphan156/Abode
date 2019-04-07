@@ -17,7 +17,7 @@ const initialState = {
     Lastname: "Phan",
     email: "minh156@gmail.com",
     nightlyRate: 123,
-    subtotal: 123,
+    subtotal: 800,
     discounts: 22,
     rewardPointsUsed: 100,
     rewardPointsEarned: 1000,
