@@ -123,11 +123,7 @@ function Confirmation(props) {
           >
             RESERVATION DETAILS
           </div>
-          <Table
-            style={{
-              marginLeft: 10
-            }}
-          >
+          <Table>
             <TableBody>
               {ReservationRows.map(row => (
                 <TableRow
@@ -136,7 +132,10 @@ function Confirmation(props) {
                     padding: 0
                   }}
                 >
-                  <TableCell align="left" style={{ padding: 0, width: 150 }}>
+                  <TableCell
+                    align="left"
+                    style={{ paddingLeft: 5, paddingRight: 5, width: 150 }}
+                  >
                     {row.firstCol}
                   </TableCell>
                   <TableCell align="left" style={{ padding: 0 }}>
@@ -156,15 +155,14 @@ function Confirmation(props) {
           >
             POLICIES
           </div>
-          <Table
-            style={{
-              marginLeft: 10
-            }}
-          >
+          <Table>
             <TableBody>
               {PoliciesRows.map(row => (
                 <TableRow key={row.id} style={{ padding: 0 }}>
-                  <TableCell align="left" style={{ padding: 0, width: 150 }}>
+                  <TableCell
+                    align="left"
+                    style={{ paddingLeft: 5, paddingRight: 5, width: 150 }}
+                  >
                     {row.firstCol}
                   </TableCell>
                   <TableCell align="left" style={{ padding: 0 }}>
@@ -187,27 +185,22 @@ function Confirmation(props) {
           >
             FINAL BILL
           </div>
-          <Table
-            style={{
-              marginLeft: 10
-            }}
-          >
+          <Table>
             <TableBody>
               {BillRows.map(row => {
-                if (row.secondCol === "$0.00") {
+                if (row.secondCol === "$-1.00") {
+                  // if no discounts, dont render the row
                   return;
                 } else {
                   return (
                     <TableRow key={row.id} style={{ padding: 0 }}>
                       <TableCell
                         align="left"
-                        style={{ padding: 0, width: 150 }}
+                        style={{ paddingLeft: 5, paddingRight: 5, width: 150 }}
                       >
                         {row.firstCol}
                       </TableCell>
-                      <TableCell align="left" style={{ padding: 0 }}>
-                        {row.secondCol}
-                      </TableCell>
+                      <TableCell align="right">{row.secondCol}</TableCell>
                     </TableRow>
                   );
                 }
