@@ -18,11 +18,11 @@ const initialState = {
     email: "minh156@gmail.com",
     nightlyRate: 123,
     subtotal: 800,
-    discounts: -1, // if no discounts, value should be -1
+    discounts: null, // if no discounts, value should be null
     rewardPointsUsed: 100,
     rewardPointsEarned: 1000,
     reservedDate: "3/2/2019",
-    rewardsDiscount: -1, // if no discounts, value should be -1
+    rewardsDiscount: null, // if no discounts, value should be null
     taxesAndFees: 0,
     total: 1110,
     numberOfNights: 5

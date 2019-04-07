@@ -50,14 +50,26 @@ function Confirmation(props) {
       createData("Number of Rooms", bookingData.numRooms),
       createData("Number of Nights", bookingData.numberOfNights),
       createData("Subtotal", "$" + bookingData.subtotal.toFixed(2)),
-      createData("Discounts", "$" + bookingData.discounts.toFixed(2)),
+      createData(
+        "Discounts",
+        bookingData.discounts
+          ? "$" + bookingData.discounts.toFixed(2)
+          : bookingData.discounts
+      ),
       createData(
         "Rewards Discount",
-        "$" + bookingData.rewardsDiscount.toFixed(2)
+        bookingData.rewardsDiscount
+          ? "$" + bookingData.rewardsDiscount.toFixed(2)
+          : bookingData.rewardsDiscount
       ),
       createData("Taxes and Fees", "$" + bookingData.taxesAndFees.toFixed(2)),
       createData("Total", "$" + bookingData.total.toFixed(2)),
-      createData("Reward Points Earned", bookingData.rewardPointsEarned)
+      createData(
+        "Reward Points Earned",
+        bookingData.rewardPointsEarned
+          ? bookingData.rewardPointsEarned.toFixed(2)
+          : bookingData.rewardPointsEarned
+      )
     ];
     return (
       <Grid
@@ -188,7 +200,7 @@ function Confirmation(props) {
           <Table>
             <TableBody>
               {BillRows.map(row => {
-                if (row.secondCol === "$-1.00") {
+                if (row.secondCol === null) {
                   // if no discounts, dont render the row
                   return;
                 } else {
