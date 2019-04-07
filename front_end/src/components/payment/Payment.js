@@ -1,36 +1,26 @@
-// TO DO: name and email need to be stored in this.state and then passed on
+// TO DO:
 // Input validation for this page
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
-import { submitBooking } from "../../actions/bookingActions";
 import moment from "moment";
 
 import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { CreditCard, Room } from "@material-ui/icons/";
 import { CardElement, injectStripe } from "react-stripe-elements";
-import { withStyles } from "@material-ui/core";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-
-const styles = theme => ({
-  cssLabel: {
-    "&$cssFocused": {
-      color: "#0c4b78"
-    }
-  }
-});
 
 class Payment extends Component {
   constructor() {
     super();
     this.state = {
-      firstname: "",
-      lastName: "",
-      email: "",
+      firstname: null,
+      lastname: null,
+      email: null,
       address1: "",
       address2: "",
       city: "",
@@ -69,32 +59,27 @@ class Payment extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const bookingData = {
+    const paymentData = {
       hotelID: this.props.individualHotelData.individualHotelData.hotelID,
       roomType: this.props.bookingData.tempBookingData.roomType,
       checkIn: this.props.bookingData.tempBookingData.checkIn,
       checkOut: this.props.bookingData.tempBookingData.checkOut,
       numberRooms: this.props.bookingData.tempBookingData.numRooms,
-      // Firstname: this.state.firstname,
-      // Lastname: this.state.lastName,
-      // email: this.state.email,
-      Firstname: "minh",
-      Lastname: "and sandro",
-      email: "email",
+      Firstname: this.state.firstname,
+      Lastname: this.state.lastname,
+      email: this.state.email,
       subtotal:
         this.props.bookingData.tempBookingData.pricePerNight *
         this.props.bookingData.tempBookingData.numRooms *
         this.state.numDays,
-      discount: this.props.bookingData.tempBookingData.discounts,
-      rewardPointsUsed: this.state.rewardPointsUsed,
-      rewardPointsEarned: this.state.rewardPointsEarned
+      discount: this.props.bookingData.tempBookingData.discounts
     };
-    this.props.submitBooking(bookingData);
+
+    this.props.getDataFromPaymentPage(paymentData);
   }
 
   render() {
     const { tempBookingData } = this.props.bookingData;
-    const { classes } = this.props;
     const { errors } = this.state;
 
     var duration = moment.duration(
@@ -111,28 +96,26 @@ class Payment extends Component {
     let additionalRoomContainers;
     additionalRoomContainers = numberOfRooms.map(room => {
       roomContainer = (
-        <Paper style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}>
-          <CardContent>
-            <h4 style={{ marginTop: "1%" }}>Room {room + 1}:</h4>
-            <hr />
-            <input
-              type="text"
-              id="sample-input"
-              name="fname"
-              placeholder="First Name"
-              onChange={this.onChange}
-            />
-            <br />
-            <br />
-            <input
-              type="text"
-              id="sample-input"
-              name="lname"
-              placeholder="Last Name"
-              onChange={this.onChange}
-            />
-          </CardContent>
-        </Paper>
+        <Grid>
+          <Paper className="paymentContainers">
+            <CardContent>
+              <h4 style={{ marginTop: "1%" }}>Room {room + 1}:</h4>
+              <hr />
+              <TextFieldGroup
+                placeholder="First Name"
+                name="fname"
+                onChange={this.onChange}
+                error={errors.firstname}
+              />
+              <TextFieldGroup
+                placeholder="Last Name"
+                name="lname"
+                onChange={this.onChange}
+                error={errors.lastname}
+              />
+            </CardContent>
+          </Paper>
+        </Grid>
       );
 
       return <div>{roomContainer}</div>;
@@ -140,147 +123,134 @@ class Payment extends Component {
 
     return (
       <React.Fragment>
-        <Grid>
-          <div style={{ marginLeft: "8%", marginTop: "5%" }}>
-            <h3 className="PaymentSmallTitle">Your Stay at</h3>
-            <h4 className="PaymentTitle">{tempBookingData.name}</h4>
-          </div>
+        <form onSubmit={this.onSubmit}>
+          <Grid
+            container
+            direction="column"
+            justify="flex-start"
+            alignContent="center"
+          >
+            <Grid>
+              <Paper className="paymentContainers">
+                <CardContent>
+                  <h4 style={{ marginTop: "1%" }}>Room 1:</h4>
+                  <hr />
+                  <TextFieldGroup
+                    placeholder="First Name"
+                    name="firstname"
+                    value={this.state.firstname}
+                    onChange={this.onChange}
+                    error={errors.firstname}
+                  />
+                  <TextFieldGroup
+                    placeholder="Last Name"
+                    name="lastname"
+                    value={this.state.lastname}
+                    onChange={this.onChange}
+                    error={errors.lastname}
+                  />
+                </CardContent>
+              </Paper>
+            </Grid>
 
-          <form onSubmit={this.onSubmit}>
-            <Paper
-              style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}
-            >
-              <CardContent>
-                <h4 style={{ marginTop: "1%" }}>Room 1 here:</h4>
-                <hr />
-                <TextFieldGroup
-                  placeholder="First Name"
-                  name="firstname"
-                  value={this.state.firstname}
-                  onChange={this.onChange}
-                  error={errors.firstname}
-                />
-                <br />
-                <br />
-                <TextFieldGroup
-                  placeholder="Last Name"
-                  name="lastname"
-                  value={this.state.lastname}
-                  onChange={this.onChange}
-                  error={errors.lastname}
-                />
-              </CardContent>
-            </Paper>
             {additionalRoomContainers}
-            <Paper
-              style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}
-            >
-              <CardContent>
-                <h4 style={{ marginTop: "1%" }}>Step 2: Your details</h4>
-                <hr />
-                <p style={{ fontSize: 14, color: "#808080" }}>
-                  We’ll send your confirmation email to this address
-                </p>
-                <label for="email">
-                  <i className="fa fa-envelope" /> Email
-                </label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="email"
-                  placeholder="john@example.com"
-                  onChange={this.onChange}
-                />
-                <label for="address1">
-                  <Room /> Address 1
-                </label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="address1"
-                  placeholder="542 W. 15th Street"
-                  onChange={this.onChange}
-                />
-                <label for="address2">
-                  <Room />
-                  Address 2
-                </label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="address2"
-                  placeholder="optional"
-                  onChange={this.onChange}
-                />
-                <label for="city">
-                  <i className="fa fa-institution" /> City
-                </label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="city"
-                  placeholder="San Jose"
-                  value={this.state.firstname}
-                  onChange={this.onChange}
-                />
-                <label for="aState">State</label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="aState"
-                  placeholder="CA"
-                  onChange={this.onChange}
-                />
-                <label for="country">Country</label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="country"
-                  placeholder="USA"
-                  onChange={this.onChange}
-                />
-                <label for="zip">Zip</label>
-                <input
-                  type="text"
-                  id="sample-input"
-                  name="zip"
-                  placeholder="95111"
-                  onChange={this.onChange}
-                />
-              </CardContent>
-            </Paper>
+            <Grid>
+              <Paper className="paymentContainers">
+                <CardContent>
+                  <h4 style={{ marginTop: "1%" }}>Booking Information:</h4>
+                  <hr />
 
-            <Paper
-              style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}
+                  <TextFieldGroup
+                    placeholder="Email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    error={errors.email}
+                  />
+                  <TextFieldGroup
+                    placeholder="Address"
+                    name="address"
+                    value={this.state.address}
+                    onChange={this.onChange}
+                    error={errors.address}
+                  />
+                  <TextFieldGroup
+                    placeholder="Address 2"
+                    name="address2"
+                    value={this.state.address2}
+                    onChange={this.onChange}
+                    error={errors.address2}
+                  />
+                  <TextFieldGroup
+                    placeholder="City"
+                    name="city"
+                    value={this.state.addcityress2}
+                    onChange={this.onChange}
+                    error={errors.city}
+                  />
+                  <TextFieldGroup
+                    placeholder="State"
+                    name="state"
+                    value={this.state.state}
+                    onChange={this.onChange}
+                    error={errors.state}
+                  />
+                  <TextFieldGroup
+                    placeholder="Country"
+                    name="country"
+                    value={this.state.country}
+                    onChange={this.onChange}
+                    error={errors.country}
+                  />
+                  <TextFieldGroup
+                    placeholder="Zip"
+                    name="zip"
+                    value={this.state.zip}
+                    onChange={this.onChange}
+                    error={errors.zip}
+                  />
+                </CardContent>
+              </Paper>
+            </Grid>
+            <Grid>
+              <Paper className="paymentContainers">
+                <CardContent>
+                  <h4 style={{ marginTop: "1%" }}>Credit Card Details</h4>
+                  <hr />
+                  {/* <CreditCard /> */}
+                  <TextFieldGroup
+                    placeholder="Name on Card"
+                    name="creditcard"
+                    value={this.state.creditcard}
+                    onChange={this.onChange}
+                    error={errors.creditcard}
+                  />
+
+                  <CardElement
+                    name="paymentField"
+                    onChange={this.stripeValidate}
+                    id="sample-input"
+                  />
+                </CardContent>
+              </Paper>
+            </Grid>
+            <Grid
+              container
+              direction="column"
+              justify="flex-start"
+              alignContent="center"
             >
-              <CardContent>
-                <h4 style={{ marginTop: "1%" }}>Step 3: Payment details</h4>
-                <hr />
-                <CreditCard />
-                <label for="nameOnCard">Name on Card</label>
+              <Grid style={{ marginBottom: "7%" }}>
                 <input
-                  type="text"
                   id="sample-input"
-                  name="nameOnCard"
-                  placeholder="John More Doe"
-                  onChange={this.onChange}
+                  type="submit"
+                  value="Checkout"
+                  class="payment-btn"
                 />
-                <label for="cardNumber">Credit card number</label>
-                <CardElement
-                  name="paymentField"
-                  onChange={this.stripeValidate}
-                  id="sample-input"
-                />
-              </CardContent>
-            </Paper>
-            <input
-              id="sample-input"
-              type="submit"
-              value="Checkout"
-              class="payment-btn"
-            />
-          </form>
-        </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
       </React.Fragment>
     );
   }
@@ -301,6 +271,6 @@ const mapStateToProps = state => ({
 export default injectStripe(
   connect(
     mapStateToProps,
-    { submitBooking }
-  )(withStyles(styles)(Payment))
+    {}
+  )(Payment)
 );

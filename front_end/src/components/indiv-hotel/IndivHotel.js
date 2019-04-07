@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
+import moment from "moment";
 
 class IndivHotel extends Component {
   constructor() {
@@ -20,17 +21,26 @@ class IndivHotel extends Component {
   saveBookingInfo(roomTypeSelected, price) {
     // IN HERE WE SAVE ALL THE INFO WE NEED FOR THE PAYMENT PAGE
 
+    var duration = moment.duration(
+      this.props.query.searchQuery.checkOut.diff(
+        this.props.query.searchQuery.checkIn
+      )
+    );
+    var days = duration.asDays();
+
     let tempBookingInfo = {
       name: this.props.individualHotelData.individualHotelData.name,
-      street: this.props.individualHotelData.individualHotelData.address,
-      //city: this.props.individualHotelData.individualHotelData.city,
+      address: this.props.individualHotelData.individualHotelData.address,
       roomType: roomTypeSelected,
       checkIn: this.props.query.searchQuery.checkIn,
       checkOut: this.props.query.searchQuery.checkOut,
       numRooms: this.props.query.searchQuery.numberRooms,
       pricePerNight: price,
-      discounts: 999, // needs to be updated!!!
-      hotelImage: this.props.individualHotelData.individualHotelData.img[0]
+      // discounts: this.props.individualHotelData.individualHotelData.discount,
+      discounts: 50, // needs to be updated!!!
+      hotelImage: this.props.individualHotelData.individualHotelData.img[0],
+      numberOfNights: days,
+      subtotal: days * price * this.props.query.searchQuery.numberRooms
     };
     this.props.saveBooking(tempBookingInfo);
   }
