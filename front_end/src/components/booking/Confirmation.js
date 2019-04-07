@@ -33,23 +33,31 @@ function Confirmation(props) {
       ),
       createData("Arrival Date", bookingData.checkIn),
       createData("Departure Date", bookingData.checkOut),
-      createData("Room Type", bookingData.roomType),
-      createData("Number of Rooms", bookingData.numRooms),
-      createData("Nightly Rate", "$" + bookingData.nightlyRate.toFixed(2)),
-      createData("Subtotal", "$" + bookingData.subtotal.toFixed(2))
+      createData("Room Type", bookingData.roomType)
     ];
 
     const PoliciesRows = [
       createData("Check-In Time", "3:00 PM"),
       createData("Check-Out Time", "12:00 noon"),
-      createData("Reward Points Used", bookingData.rewardPointsUsed),
-
-      createData("Reward Points Earned", bookingData.rewardPointsEarned),
-
       createData(
         "Cancellation Policy",
         "Cancellations must be received 48 hours before check-in date for full refund"
       )
+    ];
+
+    const BillRows = [
+      createData("Nightly Rate", "$" + bookingData.nightlyRate.toFixed(2)),
+      createData("Number of Rooms", bookingData.numRooms),
+      createData("Number of Nights", bookingData.numberOfNights),
+      createData("Subtotal", "$" + bookingData.subtotal.toFixed(2)),
+      createData("Discounts", "$" + bookingData.discounts.toFixed(2)),
+      createData(
+        "Rewards Discount",
+        "$" + bookingData.rewardsDiscount.toFixed(2)
+      ),
+      createData("Taxes and Fees", "$" + bookingData.taxesAndFees.toFixed(2)),
+      createData("Total", "$" + bookingData.total.toFixed(2)),
+      createData("Reward Points Earned", bookingData.rewardPointsEarned)
     ];
     return (
       <Grid
@@ -115,7 +123,11 @@ function Confirmation(props) {
           >
             RESERVATION DETAILS
           </div>
-          <Table>
+          <Table
+            style={{
+              marginLeft: 10
+            }}
+          >
             <TableBody>
               {ReservationRows.map(row => (
                 <TableRow
@@ -124,6 +136,34 @@ function Confirmation(props) {
                     padding: 0
                   }}
                 >
+                  <TableCell align="left" style={{ padding: 0, width: 150 }}>
+                    {row.firstCol}
+                  </TableCell>
+                  <TableCell align="left" style={{ padding: 0 }}>
+                    {row.secondCol}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div
+            style={{
+              color: "white",
+              paddingLeft: 10,
+
+              background: "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
+            }}
+          >
+            POLICIES
+          </div>
+          <Table
+            style={{
+              marginLeft: 10
+            }}
+          >
+            <TableBody>
+              {PoliciesRows.map(row => (
+                <TableRow key={row.id} style={{ padding: 0 }}>
                   <TableCell align="left" style={{ padding: 0, width: 150 }}>
                     {row.firstCol}
                   </TableCell>
@@ -145,20 +185,33 @@ function Confirmation(props) {
               background: "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
             }}
           >
-            POLICIES
+            FINAL BILL
           </div>
-          <Table>
+          <Table
+            style={{
+              marginLeft: 10
+            }}
+          >
             <TableBody>
-              {PoliciesRows.map(row => (
-                <TableRow key={row.id} style={{ padding: 0 }}>
-                  <TableCell align="left" style={{ padding: 0, width: 150 }}>
-                    {row.firstCol}
-                  </TableCell>
-                  <TableCell align="left" style={{ padding: 0 }}>
-                    {row.secondCol}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {BillRows.map(row => {
+                if (row.secondCol === "$0.00") {
+                  return;
+                } else {
+                  return (
+                    <TableRow key={row.id} style={{ padding: 0 }}>
+                      <TableCell
+                        align="left"
+                        style={{ padding: 0, width: 150 }}
+                      >
+                        {row.firstCol}
+                      </TableCell>
+                      <TableCell align="left" style={{ padding: 0 }}>
+                        {row.secondCol}
+                      </TableCell>
+                    </TableRow>
+                  );
+                }
+              })}
             </TableBody>
           </Table>
         </Grid>

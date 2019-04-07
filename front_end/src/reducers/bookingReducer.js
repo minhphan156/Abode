@@ -18,10 +18,14 @@ const initialState = {
     email: "minh156@gmail.com",
     nightlyRate: 123,
     subtotal: 800,
-    discounts: 22,
+    discounts: 10,
     rewardPointsUsed: 100,
     rewardPointsEarned: 1000,
-    reservedDate: "3/2/2019"
+    reservedDate: "3/2/2019",
+    rewardsDiscount: 20,
+    taxesAndFees: 70,
+    total: 100,
+    numberOfNights: 5
   }
 };
 
