@@ -4,29 +4,88 @@ import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import { withStyles, withTheme } from "@material-ui/core/styles";
+import Spinner from "../common/Spinner";
+import Chip from "@material-ui/core/Chip";
+import DoneIcon from "@material-ui/icons/Done";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
+import CancelIcon from "@material-ui/icons/Cancel";
+import ExitIcon from "@material-ui/icons/ExitToApp";
+
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import Table from "@material-ui/core/Table";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+
+import "../history/history.css";
+
+const styles = theme => ({
+  table: {
+    maxWidth: 330,
+    minWidth: 300,
+    maxHeight: 50
+  },
+  paddingDense: {
+    paddingTop: 0,
+    paddingBottom: 0
+  },
+  tableCell: {
+    maxHeight: 50
+  },
+  tableNoBorder: {
+    maxHeight: 10,
+
+    border: 0
+  },
+  chipChange: {
+    marginLeft: 3,
+    backgroundColor: "#FFA500"
+  },
+  chipCancel: {
+    backgroundColor: "#FF4500"
+  },
+  chipCheckin: {
+    backgroundColor: "#3ba711"
+  },
+  dateChangedFrom: {
+    textDecoration: "line-through"
+  },
+  dateChangedTo: {
+    color: "#FFA500"
+  },
+  backgroundStyle: {
+    background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
+  }
+});
+
+
 
 class HistorySearch extends Component {
   constructor() {
     super();
     this.state = {
-      bookingID:"",
-      email:"",
+      boID:"",
+      boEmail:"",
       mockID:"123",
       mockEmail:"123@gmail.com",
       match:false
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.onSearchClick = this.onSearchClick.bind(this);
+    //this.onSearchClick = this.onSearchClick.bind(this);
   }
 
   onSearchClick(){
-    const newQuery = {
-      bookingID: this.state.bookingID,
-      email: this.state.email
-    };
-    this.props.submitQuery(newQuery);
-    this.props.saveQuery(newQuery);
+    // const newQuery = {
+    //   bookingID: this.state.bookingID,
+    //   email: this.state.email
+    // };
+    // this.props.submitQuery(newQuery);
+    // this.props.saveQuery(newQuery);
   };
 
   handleChange = ({target:{name,value}}) => {
@@ -37,13 +96,318 @@ class HistorySearch extends Component {
 
 
   render() {
-    const { historyData } = this.props.searchHistoryData;
+    const { classes, searchHistoryData } = this.props;
+    let bookings;
+    let displayChangeChip;
+    let displayRegularChip;
+    let dateOverview;
+    let cancelAndChangeButtons;
 
+    bookings = searchHistoryData.booking.history.map(booking => {
+      displayChangeChip = null;
+      displayRegularChip = null;
+      dateOverview = null;
+      cancelAndChangeButtons = null;
+
+      // if the booking was not changed, we display the regular CheckIn and Checkout Overview
+      if (booking.changed === false) {
+        displayChangeChip = null;
+        dateOverview = (
+          <Table className="HistoryContainerDates">
+            <TableRow>
+              <TableCell
+                classes={{
+                  paddingDense: classes.paddingDense
+                }}
+                padding="dense"
+                className={classes.tableNoBorder}
+              >
+                Check In:
+              </TableCell>
+              <TableCell
+                padding="dense"
+                align="right"
+                className={classes.tableNoBorder}
+              >
+                {booking.check_in_date}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell padding="dense" className={classes.tableNoBorder}>
+                Check Out:
+              </TableCell>
+              <TableCell
+                padding="dense"
+                align="right"
+                className={classes.tableNoBorder}
+              >
+                {booking.check_out_date}
+              </TableCell>
+            </TableRow>
+          </Table>
+        );
+      } else {
+        // if the booking was changed, we display a different CheckIn and Checkout Overview, with all 4 dates
+        // we also display the "Changed" chip
+        displayChangeChip = (
+          <Chip
+            label="Changed"
+            color="primary"
+            className={classes.chipChange}
+            icon={<SwapHorizIcon />}
+          />
+        );
+        dateOverview = (
+          <Table className="HistoryContainerDates">
+            <TableRow>
+              <TableCell className={classes.tableNoBorder}>Check In:</TableCell>
+              <TableCell
+                align="right"
+                classes={{
+                  root: classes.dateChangedFrom
+                }}
+                className={classes.tableNoBorder}
+              >
+                {booking.check_in_date}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="right" className={classes.tableNoBorder} />
+              <TableCell
+                align="right"
+                classes={{
+                  root: classes.dateChangedTo
+                }}
+                className={classes.tableNoBorder}
+              >
+                {booking.new_check_in_date}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={classes.tableNoBorder}>
+                Check Out:
+              </TableCell>
+              <TableCell
+                align="right"
+                classes={{
+                  root: classes.dateChangedFrom
+                }}
+                className={classes.tableNoBorder}
+              >
+                {booking.check_out_date}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="right" className={classes.tableNoBorder} />
+              <TableCell
+                align="right"
+                classes={{
+                  root: classes.dateChangedTo
+                }}
+                className={classes.tableNoBorder}
+              >
+                {booking.new_check_out_date}
+              </TableCell>
+            </TableRow>
+          </Table>
+        );
+      }
+
+      // here we determine which chip to display. There are four different statuses that each correspond to a chip
+      switch (booking.status) {
+        case 1:
+          displayRegularChip = (
+            <Chip
+              label="Coming Up"
+              color="secondary"
+              className={classes.chip}
+              icon={<DoneIcon />}
+            />
+          );
+          cancelAndChangeButtons = (
+            <Grid>
+              <Button>CHANGE</Button>
+              <br />
+              <Button>CANCEL</Button>
+            </Grid>
+          );
+          break;
+        case 2:
+          displayRegularChip = (
+            <Chip
+              label="Checked In"
+              color="primary"
+              className={classes.chipCheckin}
+              icon={<DoneIcon />}
+            />
+          );
+          break;
+        case 3:
+          displayRegularChip = (
+            <Chip
+              label="Checked Out"
+              color="primary"
+              className={classes.chipCheckout}
+              icon={<ExitIcon />}
+            />
+          );
+          break;
+        case 4:
+          displayRegularChip = (
+            <Chip
+              label="Canceled"
+              color="primary"
+              className={classes.chipCancel}
+              icon={<CancelIcon />}
+            />
+          );
+          break;
+        default:
+        // code block
+      }
+
+      // these are the expansionpanels for all the different bookings
+      return (
+        <ExpansionPanel
+          classes={{
+            expanded: classes.backgroundStyle
+          }}
+        >
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Grid container spacing={0} direction="row" justify="space-evenly">
+              <Grid item>
+                <img
+                  className="historyHotelImage"
+                  src={booking.img}
+                  alt="hotel img"
+                />
+              </Grid>
+
+              <Grid className="HistoryContainerHotelName">
+                <Grid item className="HistoryPageHotelName">
+                  {booking.hotelName}
+                </Grid>
+                <Grid item className="HistoryPageDestinationName">
+                  {booking.destination}
+                </Grid>
+                <Grid item className="chipsAndTotal">
+                  <br />
+                  {displayRegularChip}
+                  {displayChangeChip}
+                </Grid>
+                {/* We display a different layout for small screens */}
+                <Grid item className="chipsAndTotalSmall">
+                  <br />
+                  <Grid
+                    container
+                    spacing={0}
+                    direction="row"
+                    justify="space-between"
+                  >
+                    <Grid item>{displayRegularChip}</Grid>
+                    <Grid item className="HistoryPageTotalSmall">
+                      Total: ${" "}
+                      {(booking.subtotal - booking.discount).toFixed(2)}
+                    </Grid>
+                  </Grid>
+
+                  {displayChangeChip}
+                </Grid>
+              </Grid>
+
+              <Grid className="HistoryContainerDates">
+                <Grid item className="HistoryPageDates HistoryContainerDates">
+                  {dateOverview}
+                </Grid>
+              </Grid>
+              <Grid>
+                <Grid item className="HistoryPageTotal">
+                  Total: $ {(booking.subtotal - booking.discount).toFixed(2)}
+                </Grid>
+              </Grid>
+            </Grid>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid
+              container
+              spacing={0}
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+            >
+              <Grid className="HistoryContainerExpand">
+                <Grid item className="HistoryPageText2 HistoryContainerExpand">
+                  <Table className={classes.table}>
+                    <TableRow>
+                      <TableCell className={classes.tableNoBorder}>
+                        Room type:
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        className={classes.tableNoBorder}
+                      >
+                        {booking.typeOfRoom}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className={classes.tableNoBorder}>
+                        Number of Rooms:
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        className={classes.tableNoBorder}
+                      >
+                        {booking.numOfRoom}
+                      </TableCell>
+                    </TableRow>
+                  </Table>
+                </Grid>
+              </Grid>
+
+              <Grid>
+                <Grid item className="HistoryPageText2">
+                  <Table className={classes.table}>
+                    <TableRow>
+                      <TableCell className={classes.tableNoBorder}>
+                        Subtotal:
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        className={classes.tableNoBorder}
+                      >
+                        $ {booking.subtotal.toFixed(2)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Discount:</TableCell>
+                      <TableCell align="right">
+                        $ {booking.discount.toFixed(2)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className={classes.tableNoBorder}>
+                        Total:
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        className={classes.tableNoBorder}
+                      >
+                        $ {(booking.subtotal - booking.discount).toFixed(2)}
+                      </TableCell>
+                    </TableRow>
+                  </Table>
+                </Grid>
+              </Grid>
+            </Grid>
+            {cancelAndChangeButtons}
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      );
+    });
 
     return (
       <div
         id="whole page"
-        className="container"
         style={{ marginTop: "2%", minHeight:window.innerHeight-223}}
       >
         <h1 className="text-center"
@@ -56,8 +420,8 @@ class HistorySearch extends Component {
             <div className="col">
             <label class="sr-only" for="inlineFormInputName2">BookingID</label>
             <input type="text"
-                   name="bookingID"
-                   value={this.state.bookingID}  
+                   name="boID"
+                   value={this.state.boID}  
                    className="form-control mb-2 mr-sm-2"
                    placeholder="Enter Booking ID" 
                    onChange={this.handleChange}/>
@@ -65,10 +429,10 @@ class HistorySearch extends Component {
             <div className='col'>
               <label class="sr-only" for="inlineFormInputName2">Email</label>
               <input type="text"
-                     name="email"
-                     value={this.state.email}
+                     name="boEmail"
+                     value={this.state.boEmail}
                      className="form-control mb-2 mr-sm-2"
-                     placeholder="Enter Your Email" 
+                     placeholder="Enter Your Email or Last Name" 
                      onChange= {this.handleChange}/>  
             </div>
             <div className='col'>
@@ -81,10 +445,14 @@ class HistorySearch extends Component {
           </div>
         </div>
         <div>
+          {console.log(searchHistoryData.booking.bookingID)}
           {console.log(this.state)}
-          {this.state.mockID === this.state.bookingID &&
-           this.state.mockEmail === this.state.email ? (
-            <h1> here comes again </h1>
+          {searchHistoryData.booking.bookingID === this.state.boID &&
+           searchHistoryData.booking.email === this.state.boEmail ? (
+            <div style={{marginTop:'2%'}}>
+              { bookings }
+              <br /> <br />
+            </div>
             ):(
               <h1> not found </h1>
             )}
@@ -95,10 +463,10 @@ class HistorySearch extends Component {
   }
   
 const mapStateToProps = state => ({
-  historyData: state.historyData
+  searchHistoryData: state.searchHistoryData
 });
 
 export default connect(
   mapStateToProps,
   {}
-)(HistorySearch);
+)(withStyles(styles)(HistorySearch));
