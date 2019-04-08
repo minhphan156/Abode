@@ -21,6 +21,8 @@ import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
+import notFound from "./not_found.png"
+
 import "../history/history.css";
 
 const styles = theme => ({
@@ -72,14 +74,15 @@ class HistorySearch extends Component {
       boEmail:"",
       mockID:"123",
       mockEmail:"123@gmail.com",
-      match:false
+      firstFlag:true,
     };
 
     this.handleChange = this.handleChange.bind(this);
-    //this.onSearchClick = this.onSearchClick.bind(this);
+    this.onSearchClick = this.onSearchClick.bind(this);
   }
 
   onSearchClick(){
+    this.setState({firstFlag:false});
     // const newQuery = {
     //   bookingID: this.state.bookingID,
     //   email: this.state.email
@@ -418,26 +421,35 @@ class HistorySearch extends Component {
           <div className="row">
             <div className="col-2"></div>
             <div className="col">
-            <label class="sr-only" for="inlineFormInputName2">BookingID</label>
-            <input type="text"
-                   name="boID"
-                   value={this.state.boID}  
-                   className="form-control mb-2 mr-sm-2"
-                   placeholder="Enter Booking ID" 
-                   onChange={this.handleChange}/>
+              <label class="sr-only" for="inlineFormInputName2">BookingID</label>
+              <small id="enterBookingID" 
+                   class="form-text text-muted"
+              >Please enter your Booking ID.
+              </small>
+              <input type="text"
+                    name="boID"
+                    value={this.state.boID}  
+                    className="form-control mb-2 mr-sm-2"
+                    placeholder="Enter Booking ID" 
+                    onChange={this.handleChange}/>
             </div>
             <div className='col'>
               <label class="sr-only" for="inlineFormInputName2">Email</label>
+              <small id="enterEmail" 
+                      class="form-text text-muted"
+               >Please enter your Last Name or your email.
+               </small>
               <input type="text"
                      name="boEmail"
                      value={this.state.boEmail}
                      className="form-control mb-2 mr-sm-2"
                      placeholder="Enter Your Email or Last Name" 
-                     onChange= {this.handleChange}/>  
+                     onChange= {this.handleChange}/>
             </div>
             <div className='col'>
               <Button type="submit" 
                       class="buttonSearch" 
+                      style={{marginTop:'4%'}}
                       primary onClick={this.onSearchClick}>
                 SEARCH
               </Button>
@@ -453,8 +465,32 @@ class HistorySearch extends Component {
               { bookings }
               <br /> <br />
             </div>
+            ):( this.state.firstFlag === true ?(
+              null
             ):(
-              <h1> not found </h1>
+              <div className="row text-center">
+              <div className="text-right col-7" 
+                   style={{marginTop:'9%', color: '#3d4e96'}}
+              >
+                <h1> Sorry, we didn't find your reservation... </h1>
+                <h4> Verify your information and try agin. </h4>
+                <h4 className="inline" 
+                    style={{display:'inline'}}
+                > If you are an Abode Member, please  </h4>
+                <a href="/login" 
+                    className="inline" 
+                    style={{fontSize:40, color:'#a0cdfd', display:'inline'}}
+                > Login </a>
+              </div>
+              <div className="col-5 text-left">
+                <img className="rounded float-left" 
+                     src={ notFound } 
+                     alt="Not Found Img" 
+                     style={{marginTop:'7%', height:'60%', width:'40%'}}
+                ></img>
+              </div>
+              </div>
+            )
             )}
         </div>
       </div>
