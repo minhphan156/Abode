@@ -64,12 +64,8 @@ function Confirmation(props) {
       ),
       createData("Taxes and Fees", "$" + bookingData.taxesAndFees.toFixed(2)),
       createData("Total", "$" + bookingData.total.toFixed(2)),
-      createData(
-        "Reward Points Earned",
-        bookingData.rewardPointsEarned
-          ? bookingData.rewardPointsEarned.toFixed(2)
-          : bookingData.rewardPointsEarned
-      )
+            createData("Reward Points Earned", bookingData.rewardPointsEarned)
+
     ];
     return (
       <Grid
