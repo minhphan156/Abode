@@ -70,6 +70,7 @@ let SortBar = props => {
               onChange={handleChange}
               displayEmpty
             >
+              <MenuItem value={null}>---</MenuItem>
               <MenuItem value={"name"}>Name</MenuItem>
               <MenuItem value={"price"}>Price</MenuItem>
               <MenuItem value={"star"}>Star Rating</MenuItem>
@@ -86,6 +87,9 @@ let SortBar = props => {
               onChange={handleChange}
               displayEmpty
             >
+              <MenuItem value={null}>
+                ---
+              </MenuItem>
               <MenuItem value={"descending"}>
                 <ArrowDownward fontSize="small" />
               </MenuItem>

@@ -65,8 +65,8 @@ class searchResultOverview extends Component {
 
     this.state = {
       // States used for sorting
-      sortCategory: "name",
-      sortOrder: "descending",
+      sortCategory: null,
+      sortOrder: null,
 
       // States used for filter
       star_rate: 0,
