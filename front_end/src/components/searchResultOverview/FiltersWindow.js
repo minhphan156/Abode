@@ -234,7 +234,7 @@ let FiltersWindow = props => {
                 </Grid>
                 <Grid item xs>
                   <TextField
-                    label="max"
+                    label={priceRangeEquality != "To" ? "price" : "max"}
                     value={price_high}
                     InputProps={{
                       inputComponent: NumberFormatCustom

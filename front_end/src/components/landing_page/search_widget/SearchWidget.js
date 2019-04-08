@@ -118,7 +118,7 @@ class SearchWidget extends Component {
               />
             </Paper>
           </Grid>
-          <Grid item xs={3} sm={3} md={2} lg={1}>
+          <Grid item xs={4} sm={3} md={2} lg={1}>
             <Paper className={classes.paper}>
               <RoomNumber
                 numberRooms={this.state.numberRooms}
