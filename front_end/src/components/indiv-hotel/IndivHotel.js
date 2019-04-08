@@ -67,10 +67,10 @@ class IndivHotel extends Component {
                 className="display-4 text-center col-2"
                 style={{ fontSize: 24, color: "#FFD700" }}
               >
-                {individualHotelData.star_rates}
+              >{individualHotelData.star_rating} Star Hotel
                 <ReactStars
                   count={5}
-                  value={4}
+                  value={individualHotelData.star_rating}
                   size={28}
                   edit={false}
                   color2={"#FFD700"}
