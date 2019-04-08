@@ -5,9 +5,117 @@ const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 const Customer = require("../../models/customer");
 const City = require("../../models/city")
+const User = require("../../models/User")
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
+
+// @route GET /api/booking/history
+// @desc History page
+// @access public
+router.get("/history", (req, res) => {
+    const userEmail = req.body.email;
+    var historyPack = [];
+
+    User.findOne({email: userEmail}).then((err, doc) => {
+        if(err) res.status(400).json(err)
+
+        // Uncomment below during production
+        // idToSearch = doc.customerID;
+
+        // Searching with a Customer ID of a User that has a booking
+        idToSearch = "5ca03969306f0952106d6eed";
+
+        Booking.find({customerID: idToSearch}).then((err, bookings) => {
+            if(err) res.status(400).json(err)
+
+            bookings.forEach((elements) => { 
+
+                Hotel.findById(elements.hotelID).then((err, hotelDoc) => {
+                    if(err) res.status(400).json(err)
+
+                    historyPack.push(
+                    {
+                        hotelName: hotelDoc.name,
+                        img: hotelDoc.images[0],
+                        city: hotelDoc.city,
+                        check_in_date: elements.check_in_date,
+                        check_out_date: elements.check_out_date,
+                        typeOfRoom: elements.typeOfRoom,
+                        numOfRoom: elements.numOfRoom,
+                        status: elements.status,
+                        changed: elements.changed,
+                        new_check_in_date: elements.new_check_in_date,
+                        new_check_out_date: elements.new_check_out_date,
+                        subtotal: elements.subtotal,
+                        discount: elements.discount
+                    });    
+
+                }).then(() => {
+
+                    // After finding the Hotel info of every booking,
+                    // Give frontend the goods
+                    res.send(historyPack)
+
+                });
+            }); 
+        
+        });
+    
+    });
+
+});
+
+// @route GET /api/booking/history
+// @desc History page
+// @access public
+router.get("/guest-history", (req, res) => {
+    const bookingID = req.body.bookingID;
+    const lastName = req.body.lastName;
+    const errMessage = "Wrong Last Name";
+    
+    var historyPack = {};
+
+    Booking.findById(bookingID).then((book,err) => {
+        if(err) res.status(400).json(err)
+
+        Customer.findById(book.customerID, (err, custDoc) => {
+            if(err) res.status(400).json(err);
+
+            // Block request if the last name does not match the booking
+            else if(custDoc.Lastname !== lastName) res.status(403).json({
+                err: errMessage
+            })
+
+            // User checking history has been authorized
+            // Proceed with preparing history package
+            historyPack.check_in_date = book.check_in_date;
+            historyPack.check_out_date = book.check_out_date;
+            historyPack.typeOfRoom = book.typeOfRoom;
+            historyPack.numOfRoom = book.numOfRoom;
+            historyPack.status = book.status;
+            historyPack.changed = book.changed;
+            historyPack.new_check_in_date = book.new_check_in_date;
+            historyPack.new_check_out_date = book.new_check_out_date;
+            historyPack.subtotal = book.subtotal;
+            historyPack.discount = book.discount;
+
+
+        }).then(() => {
+            Hotel.findById(book.hotelID, (err, hotelDoc) => {
+                if(err) res.status(400).json(err);
+
+                // Get the name, city and image of the hotel the User is staying at
+                historyPack.hotelName = hotelDoc.name;
+                historyPack.img = hotelDoc.images[0];
+                historyPack.city = hotelDoc.city;
+
+                // Give frontend the goods
+                res.send(historyPack)
+            });
+        });
+    });
+});
 
 // @route POST /api/booking/confirm
 // @desc Comfirmation page
