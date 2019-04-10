@@ -95,7 +95,7 @@ class IndivHotel extends Component {
                     className="display-4"
                     style={{ fontSize: 24, color: "#FFD700" }}
                   >
-                    {individualHotelData.star_rating} Star Hotel
+                    {individualHotelData.star_rating} star hotel
                   </h1>
                 <div className="col-lg-1 col-sm-6 col-6" />
                 </div>
@@ -299,6 +299,7 @@ class IndivHotel extends Component {
                       size={22}
                       edit={false}
                       color2={"#d32f2f"}
+                      background={"red"}
                     />
                   </div>
                 </div>
