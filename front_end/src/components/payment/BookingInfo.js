@@ -1,62 +1,262 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withStyles, withWidth } from "@material-ui/core";
 
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import moment from "moment";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import "./PaymentPage.css";
+import Table from "@material-ui/core/Table";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import InfoOutline from "@material-ui/icons/Info";
+import Checkbox from "@material-ui/core/Checkbox";
 
-export class BookingInfo extends Component {
+const styles = theme => ({
+  cellRoot: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  tableNoBorder: {
+    maxHeight: 10,
+    border: 0
+  },
+  tableBlackBorder: {
+    maxHeight: 10,
+    borderColor: "#000000"
+  },
+  disabledCheckbox: {
+    display: "none"
+  }
+});
+
+class BookingInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      checkedA: false,
+      actualRewardsDiscount: 0,
+      rewardsPoints: 9900, /// NEEDS TO BE LIVE DATA
+      possibleRewardsDiscount: 0
+    };
+  }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked }, () => {
+      if (this.state.checkedA === true) {
+        this.setState(
+          {
+            actualRewardsDiscount: this.state.possibleRewardsDiscount
+          },
+          () => {
+            var rewardsPointsEarned =
+              100 *
+              (this.props.bookingData.tempBookingData.subtotal +
+                (this.props.bookingData.tempBookingData.subtotal -
+                  this.props.bookingData.tempBookingData.discounts -
+                  this.state.actualRewardsDiscount) *
+                  0.1 -
+                this.props.bookingData.tempBookingData.discounts -
+                this.state.actualRewardsDiscount);
+
+            this.props.getDataFromBookingInfoPage(
+              Math.round(this.state.actualRewardsDiscount),
+              Math.round(rewardsPointsEarned)
+            );
+          }
+        );
+      } else {
+        this.setState(
+          {
+            actualRewardsDiscount: 0
+          },
+          () => {
+            var rewardsPointsEarned =
+              100 *
+              (this.props.bookingData.tempBookingData.subtotal +
+                this.props.bookingData.tempBookingData.subtotal * 0.1 -
+                this.props.bookingData.tempBookingData.discounts -
+                this.state.actualRewardsDiscount);
+
+            this.props.getDataFromBookingInfoPage(
+              this.state.actualRewardsDiscount,
+              rewardsPointsEarned
+            );
+          }
+        );
+      }
+    });
+  };
+
+  calculatePossibleRewardsDiscountInDollar(rewardsPoints, subtotal, discounts) {
+    if (rewardsPoints > 9999) {
+      if (rewardsPoints / 100 < subtotal - discounts) {
+        return rewardsPoints / 100;
+      } else {
+        return subtotal - discounts;
+      }
+    } else {
+      return 0;
+    }
+  }
+
   render() {
+    const { classes, profile, width } = this.props;
     const { tempBookingData } = this.props.bookingData;
 
-    var duration = moment.duration(
-      tempBookingData.checkOut.diff(tempBookingData.checkIn)
-    );
-    var days = duration.asDays();
-
-    var subtotal =
-      tempBookingData.pricePerNight * tempBookingData.numRooms * days;
-
     let rewardsContainer = null;
+    let discountContainer = null;
+
+    /// The following is all about rewards calculations and rewards container
+    this.state.possibleRewardsDiscount = this.calculatePossibleRewardsDiscountInDollar(
+      this.state.rewardsPoints,
+      tempBookingData.subtotal,
+      tempBookingData.discounts
+    );
+
+    let rewardsPointsDiscountDisplay = null;
+    let checkboxState = true;
+
+    if (this.state.possibleRewardsDiscount > 0) {
+      checkboxState = false;
+    }
+    if (this.state.checkedA === true) {
+      rewardsPointsDiscountDisplay =
+        "- $ " + this.state.possibleRewardsDiscount.toFixed(2);
+    } else {
+      rewardsPointsDiscountDisplay = "-";
+    }
+
     if (this.props.auth.isAuthenticated) {
       rewardsContainer = (
-        <Paper style={{ marginLeft: "8%", marginTop: "5%", marginRight: "5%" }}>
-          <CardContent>
-            <h4 style={{ marginTop: "1%" }}>You got some rewards points.</h4>
-            <hr />
-            do you want to use them
-            {/* /TO DO HERE: ADD CHECKBOX OR SIMILAR/ */}
-          </CardContent>
-        </Paper>
+        <TableRow>
+          <TableCell
+            classes={{
+              root: classes.cellRoot
+            }}
+            className={classes.tableNoBorder}
+          >
+            Rewards Points
+            <Checkbox
+              disabled={checkboxState}
+              classes={{
+                disabled: classes.disabledCheckbox
+              }}
+              className="rewardsCheckbox"
+              disableRipple={true}
+              checked={this.state.checkedA}
+              onChange={this.handleChange("checkedA")}
+              value="checkedA"
+              color="primary"
+            />
+            <IconButton
+              className="infoButton"
+              color="secondary"
+              aria-label="Info"
+              onClick={this.handleClickOpen}
+            >
+              <InfoOutline />
+            </IconButton>
+          </TableCell>
+          <TableCell
+            align="right"
+            classes={{
+              root: classes.cellRoot
+            }}
+            className={classes.tableNoBorder}
+          >
+            {rewardsPointsDiscountDisplay}
+          </TableCell>
+        </TableRow>
+      );
+    }
+
+    /// The following is all about discounts calculations and discount container
+    let promotionDiscount = tempBookingData.discounts;
+
+    if (promotionDiscount) {
+      discountContainer = (
+        <TableRow>
+          <TableCell
+            classes={{
+              root: classes.cellRoot
+            }}
+            className={classes.tableNoBorder}
+          >
+            Discounts:
+          </TableCell>
+          <TableCell
+            align="right"
+            classes={{
+              root: classes.cellRoot
+            }}
+            className={classes.tableNoBorder}
+          >
+            - $ {promotionDiscount.toFixed(2)}
+          </TableCell>
+        </TableRow>
       );
     }
 
     return (
       <React.Fragment>
-        <br />
-        <br />
-        <Paper style={{ margin: "10%", backgroundColor: "#e3ecf7" }}>
+        <Paper
+          className="bookingInfoContainer"
+          style={{
+            backgroundColor: "#e3ecf7"
+          }}
+        >
           <div>
             <img src={tempBookingData.hotelImage} alt="image" />
           </div>
           <h4
             className="display-4 test-left"
-            style={{ marginTop: "5%", fontSize: 14, fontWeight: "bold" }}
+            style={{
+              marginLeft: "3%",
+              marginTop: "5%",
+              fontSize: 14,
+              fontWeight: "bold"
+            }}
           >
             {tempBookingData.name}
           </h4>
           <h5
             className="display-4 test-left"
-            style={{ fontSize: 14, color: "#808080" }}
+            style={{
+              marginLeft: "3%",
+              marginBottom: "5%",
+              fontSize: 14,
+              color: "#808080"
+            }}
           >
-            {tempBookingData.street}, {tempBookingData.city}
+            {tempBookingData.address}
           </h5>
 
           <Card style={{ marginTop: "2%" }}>
             <CardContent>
+              <h4 className="BookingInfoTitle">
+                Total Nights: {tempBookingData.numberOfNights}
+              </h4>
+              <hr />
               <div className=".payment-row">
                 <p style={{ fontWeight: "bold" }}>Check-in: </p>
                 <p> {tempBookingData.checkIn.format("dddd, MMMM Do YYYY")}</p>
@@ -65,35 +265,193 @@ export class BookingInfo extends Component {
                 <p style={{ fontWeight: "bold" }}>Check-out: </p>
                 <p>{tempBookingData.checkOut.format("dddd, MMMM Do YYYY")}</p>
               </div>
-              <hr />
-              <p># of Nights: {days}</p>
             </CardContent>
           </Card>
-          <h4 className="text-center">Summary</h4>
+          <br />
           <Card style={{ marginTop: "2%" }}>
             <CardContent>
-              <h5 style={{ marginTop: "1%" }}>
-                Rooms: {tempBookingData.numRooms} x {tempBookingData.roomType}
-              </h5>
+              <h4 className="BookingInfoTitle">Rooms & Charges:</h4>
               <hr />
-              <div>
-                <p>Subtotal: $ {subtotal.toFixed(2)}</p>
-                <p>Taxes and fees (10%) $ {(subtotal * 0.1).toFixed(2)}</p>
-              </div>
-            </CardContent>
-          </Card>
-          {rewardsContainer}
-          <h3 className="text-center">
-            Total to pay now: $ {(subtotal * 0.1 + subtotal).toFixed(2)}
-          </h3>
-          <Card>
-            <CardContent>
-              <p style={{ margin: "1%", fontWeight: "bold" }}>
-                This price may increase if you book later.
-              </p>
+              <Table className="smallText">
+                <TableRow>
+                  <TableCell
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    Rooms ({tempBookingData.numRooms} x{" "}
+                    {tempBookingData.roomType}, {tempBookingData.numberOfNights}{" "}
+                    nights):
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    $ {tempBookingData.subtotal.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+                {discountContainer}
+                {rewardsContainer}
+                <TableRow>
+                  <TableCell
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableBlackBorder}
+                  >
+                    Taxes and fees:
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableBlackBorder}
+                  >
+                    $
+                    {(
+                      (tempBookingData.subtotal -
+                        tempBookingData.discounts -
+                        this.state.actualRewardsDiscount) *
+                      0.1
+                    ).toFixed(2)}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                    style={{ fontWeight: "600" }}
+                  >
+                    Total:
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                    style={{ fontWeight: "600" }}
+                  >
+                    $
+                    {(
+                      (tempBookingData.subtotal -
+                        tempBookingData.discounts -
+                        this.state.actualRewardsDiscount) *
+                        0.1 +
+                      tempBookingData.subtotal -
+                      promotionDiscount -
+                      this.state.actualRewardsDiscount
+                    ).toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              </Table>
             </CardContent>
           </Card>
         </Paper>
+        <Dialog
+          fullWidth={
+            width === "md" || width === "lg" || width === "sm" ? true : false
+          }
+          fullScreen={width === "xs" ? true : false}
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle className="BookingInfoTitle">
+            Your Rewards Points:
+          </DialogTitle>
+          <p className="supportTextDialog">
+            *A minimum of 10,000 points are required
+          </p>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <Table className="smallTextDialog">
+                <TableRow>
+                  <TableCell
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    Rewards Points Balance:
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    {this.state.rewardsPoints} pts.
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    Possible Rewards Discount:
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    $ {this.state.possibleRewardsDiscount.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    style={{ fontWeight: "600" }}
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    Total After Rewards Discount:
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    style={{ fontWeight: "600" }}
+                    classes={{
+                      root: classes.cellRoot
+                    }}
+                    className={classes.tableNoBorder}
+                  >
+                    $
+                    {(
+                      (tempBookingData.subtotal -
+                        tempBookingData.discounts -
+                        this.state.possibleRewardsDiscount) *
+                        0.1 +
+                      tempBookingData.subtotal -
+                      promotionDiscount -
+                      this.state.possibleRewardsDiscount
+                    ).toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              </Table>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Got it
+            </Button>
+          </DialogActions>
+        </Dialog>
       </React.Fragment>
     );
   }
@@ -111,4 +469,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {}
-)(BookingInfo);
+)(withStyles(styles)(withWidth()(BookingInfo)));
