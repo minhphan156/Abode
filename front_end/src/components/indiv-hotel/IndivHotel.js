@@ -54,19 +54,18 @@ class IndivHotel extends Component {
       return null;
     } else {
       const { individualHotelData } = this.props.individualHotelData;
-      return (
-        <div>
-          <div className="d-flex justify-content-center mt-3">
-            <div className="col-12">
-              <SearchWidget />
-            </div>
-          </div>
+      return (  
           <div
             id="whole page"
             className="container"
             style={{ marginTop: "2%" }}
           >
-            <div id="hotel info" className="row">
+            <div className="d-flex justify-content-center mt-3">
+              <div className="col-12">
+                <SearchWidget />
+              </div>
+            </div>
+            <div id="hotel info" className="row" style={{marginTop:'3%'}}>
             <div id="hotel Name Address" className="col-lg-10 col-sm-12 col-12 text-left">
               <h1
                 className="display-4 text-left"
@@ -432,7 +431,6 @@ class IndivHotel extends Component {
             </section>
             </div>
           </div>
-        </div>
       );
     }
   }
