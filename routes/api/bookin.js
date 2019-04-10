@@ -16,151 +16,167 @@ const checkAvalibity = require("../../validation/checkAvailableHotels");
 // @access public
 router.post("/confirm",(req,res)=>{
     passport.authenticate("jwt",function(err, user, info){
+        // check if user is logged 
+        var isLogged = false
         if(user){
             console.log(user)
-            user.rewardPoints += 10000
-            user.save()
+            isLogged = true
         }
-        console.log(req.body)
+    var hotelID = req.body.hotelID;
+    var roomType = req.body.roomType;
+    var date = {
+        checkin:req.body.checkIn.replace('"','').replace('"',''),
+        checkout:req.body.checkOut.replace('"','').replace('"','')
+        }
+    var numberRooms = req.body.numberRooms;
+    var firstname = req.body.Firstname;
+    var lastname = req.body.Lastname;
+    var email = req.body.email;
+    var subtotal = req.body.subtotal;
+    var discount = req.body.discount;
+    var customerID;
+    var bookingID = "tempBookingID"
+    var rewardPointsUsed = req.body.rewardPointsUsed ? req.body.rewardPointsUsed : null;
+    var rewardPointsEarned = null;
+    //check this user visit our website before and get customerID
+    Customer.find({email:email},function(err,doc){
+        if(err) res.status(400).json(err);
+
+        if(doc.length === 0){
+            const newCustomer = new Customer({
+                Firstname:firstname,
+                Lastname: lastname,
+                email:email
+            })
+            newCustomer.save().then((doc,err)=>{
+                if(err) res.status(400).json(err)
+                customerID = doc._id;
+                bookHotel()
+            })
+        }else{
+            customerID = doc[0]._id;
+            bookHotel()
+        }
+    })
+    
+    function bookHotel(){
+        // find the hotel to book in db
+        Hotel.find({_id:hotelID}).then((doc,err)=>{
+            if(err) res.status(400).json(err)
+            var newDoc = doc[0]
+            var hotelName = doc[0].name
+            var destinationName = doc[0].city
+            var address = doc[0].address
+            var hotelImg = doc[0].images[0]
+            // check require room avaliablity 
+            if(roomType === 'single') {
+                arr = doc[0].roomTypeAndNumber.single;
+                roomPrice = doc[0].price.singlePrice;
+            }
+            else if(roomType === 'double'){
+                arr = doc[0].roomTypeAndNumber.double;
+                roomPrice = doc[0].price.doublePrice;
+            } 
+            else if(roomType === 'king'){
+                arr = doc[0].roomTypeAndNumber.king;
+                roomPrice = doc[0].price.kingPrice;
+            } 
+            else if(roomType === 'studio'){
+                arr = doc[0].roomTypeAndNumber.studio;
+                roomPrice = doc[0].price.suitePrice;
+            } 
+
+            // if the room is avaliable
+            if(checkAvailability(arr,date,numberRooms,bookingID).length !==0){
+                // check the customer made a resevation for the same checkin date
+                Booking.find({$and:[{customerID:customerID},{$or:[{check_in_date:date.checkin},{new_check_in_date:date.checkin}]}]})
+                .then((doc,err)=>{
+                    if(err) res.status(400).json(err);
+                    // if they dont, store the booking information into booking db
+                    if(doc.length === 0){
+                        if(isLogged){
+                            rewardPointsEarned = subtotal * 1000;
+                            if( rewardPointsUsed && user.rewardPoints < rewardPointsUsed){
+                                res.status(403).send({error: "not enought rewardPoints"})
+                                return
+                            }
+                            user.rewardPoints = user.rewardPoints + rewardPointsEarned - rewardPointsUsed
+                            user.save()
+                        }
+                        const newBooking = new Booking({
+                            customerID:customerID,
+                            hotelID:hotelID,
+                            check_in_date: date.checkin,
+                            check_out_date: date.checkout,
+                            typeOfRoom:roomType,
+                            numOfRoom:numberRooms,
+                            subtotal:subtotal,
+                            discount:discount,
+                            rewardPointsUsed:rewardPointsUsed,
+                            rewardPointsEarned:rewardPointsEarned,
+                        })
+                        // reward points for logged user
+                        // save new booking
+                        newBooking.save().then((doc,err)=>{
+                            if(err) res.status(400).json(err)
+                            var rooms = []
+                            arr.forEach(elements =>  elements.dates.forEach(item => {if(item.bookingID === bookingID){rooms.push(item)}}))
+                            for(let i = 0; i < rooms.length; i++){
+                                rooms[i].bookingID = doc._id
+                            }
+                            newDoc.bookingStats += 1;
+                            newDoc.save().catch(err=>res.send(err))
+                            // find the related city for hotel
+                            var city = new RegExp(destinationName,'i')
+                            City.find({name:city}).then(city=>{
+                                if(city.length === 0) {
+                                    destinationImg = null
+                                }else{
+                                    destinationImg = city[0].imgMain
+                                }
+                                res.status(200).send({
+                                    bookingID:doc._id,
+                                    hotelName: hotelName,
+                                    nightlyRate:roomPrice,
+                                    hotelAddress:address,
+                                    hotelImg:hotelImg,
+                                    destinationName:destinationName,
+                                    destinationImg:destinationImg,
+                                    checkIn:doc.check_in_date,
+                                    checkOut:doc.check_out_date,
+                                    numRooms:doc.numOfRoom,
+                                    roomType:doc.typeOfRoom,
+                                    Firstname:firstname,
+                                    Lastname:lastname,
+                                    email:email,
+                                    subtotal:subtotal,
+                                    discounts:discount,
+                                    rewardPointsUsed:rewardPointsUsed,
+                                    rewardPointsEarned:rewardPointsEarned,
+                                    reservedDate:doc.reservedDate
+                                })
+                            }).catch(err=>res.send({message:"cannot find city",code:404}))
+                        })
+                    }
+                    // if the customer already have one reservation for the same checkin date, return error message  
+                    else{
+                        res.send({message:"doubleBooking",
+                                                code:409})
+                    }
+                })
+            }
+            // if the type of room is not avaliable
+            else{
+                res.send({message:"noRoomAvailable",
+                            code:409})
+            }
+        })
+    }
+
       })(req, res)
 
 
-    // var hotelID = req.body.hotelID;
-    // var roomType = req.body.roomType;
-    // var date = {
-    //     checkin:req.body.checkIn.replace('"','').replace('"',''),
-    //     checkout:req.body.checkOut.replace('"','').replace('"','')
-    //     }
-    // var numberRooms = req.body.numberRooms;
-    // var firstname = req.body.Firstname;
-    // var lastname = req.body.Lastname;
-    // var email = req.body.email;
-    // var subtotal = req.body.subtotal;
-    // var discount = req.body.discount;
-    // var customerID;
-    // var bookingID = "tempBookingID"
-
-    // //check this user visit our website before and get customerID
-    // Customer.find({email:email},function(err,doc){
-    //     if(err) res.status(400).json(err);
-
-    //     if(doc.length === 0){
-    //         const newCustomer = new Customer({
-    //             Firstname:firstname,
-    //             Lastname: lastname,
-    //             email:email
-    //         })
-    //         newCustomer.save().then((doc,err)=>{
-    //             if(err) res.status(400).json(err)
-    //             customerID = doc._id;
-    //             bookHotel()
-    //         })
-    //     }else{
-    //         customerID = doc[0]._id;
-    //         bookHotel()
-    //     }
-    // })
     
-    // function bookHotel(){
-    //     // find the hotel to book in db
-    //     Hotel.find({_id:hotelID}).then((doc,err)=>{
-    //         if(err) res.status(400).json(err)
-    //         var newDoc = doc[0]
-    //         var hotelName = doc[0].name
-    //         var destinationName = doc[0].city
-    //         var address = doc[0].address
-    //         var hotelImg = doc[0].images[0]
-    //         // check require room avaliablity 
-    //         if(roomType === 'single') {
-    //             arr = doc[0].roomTypeAndNumber.single;
-    //             roomPrice = doc[0].price.singlePrice;
-    //         }
-    //         else if(roomType === 'double'){
-    //             arr = doc[0].roomTypeAndNumber.double;
-    //             roomPrice = doc[0].price.doublePrice;
-    //         } 
-    //         else if(roomType === 'king'){
-    //             arr = doc[0].roomTypeAndNumber.king;
-    //             roomPrice = doc[0].price.kingPrice;
-    //         } 
-    //         else if(roomType === 'studio'){
-    //             arr = doc[0].roomTypeAndNumber.studio;
-    //             roomPrice = doc[0].price.suitePrice;
-    //         } 
-
-    //         // if the room is avaliable
-    //         if(checkAvailability(arr,date,numberRooms,bookingID).length !==0){
-    //             // check the customer made a resevation for the same checkin date
-    //             Booking.find({$and:[{customerID:customerID},{$or:[{check_in_date:date.checkin},{new_check_in_date:date.checkin}]}]})
-    //             .then((doc,err)=>{
-    //                 if(err) res.status(400).json(err);
-    //                 // if they dont, store the booking information into booking db
-    //                 if(doc.length === 0){
-    //                     const newBooking = new Booking({
-    //                         customerID:customerID,
-    //                         hotelID:hotelID,
-    //                         check_in_date: date.checkin,
-    //                         check_out_date: date.checkout,
-    //                         typeOfRoom:roomType,
-    //                         numOfRoom:numberRooms,
-    //                         subtotal:subtotal,
-    //                         discount:discount,
-    //                     })
-                        
-    //                     newBooking.save().then((doc,err)=>{
-    //                         if(err) res.status(400).json(err)
-    //                         var rooms = []
-    //                         arr.forEach(elements =>  elements.dates.forEach(item => {if(item.bookingID === bookingID){rooms.push(item)}}))
-    //                         for(let i = 0; i < rooms.length; i++){
-    //                             rooms[i].bookingID = doc._id
-    //                         }
-    //                         newDoc.bookingStats += 1;
-    //                         newDoc.save().catch(err=>res.send(err))
-    //                         var city = new RegExp(destinationName,'i')
-    //                         City.find({name:city}).then(city=>{
-    //                             if(city.length === 0) {
-    //                                 destinationImg = null
-    //                             }else{
-    //                                 destinationImg = city[0].imgMain
-    //                             }
-    //                             res.status(200).send({
-    //                                 bookingID:doc._id,
-    //                                 hotelName: hotelName,
-    //                                 nightlyRate:roomPrice,
-    //                                 hotelAddress:address,
-    //                                 hotelImg:hotelImg,
-    //                                 destinationName:destinationName,
-    //                                 destinationImg:destinationImg,
-    //                                 checkIn:doc.check_in_date,
-    //                                 checkOut:doc.check_out_date,
-    //                                 numRooms:doc.numOfRoom,
-    //                                 roomType:doc.typeOfRoom,
-    //                                 Firstname:firstname,
-    //                                 Lastname:lastname,
-    //                                 email:email,
-    //                                 subtotal:subtotal,
-    //                                 discounts:discount,
-    //                                 rewardPointsUsed:doc.rewardPointsUsed,
-    //                                 rewardPointsEarned:doc.rewardPointsEarned,
-    //                                 reservedDate:doc.reservedDate
-    //                             })
-    //                         }).catch(err=>res.send({message:"cannot find city",code:404}))
-    //                     })
-    //                 }
-    //                 // if the customer already have one reservation for the same checkin date, return error message  
-    //                 else{
-    //                     res.send({message:"doubleBooking",
-    //                                             code:409})
-    //                 }
-    //             })
-    //         }
-    //         // if the type of room is not avaliable
-    //         else{
-    //             res.send({message:"noRoomAvailable",
-    //                         code:409})
-    //         }
-    //     })
-    // }
 })
 
 
