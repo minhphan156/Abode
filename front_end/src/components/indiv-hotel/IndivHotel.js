@@ -55,11 +55,19 @@ class IndivHotel extends Component {
     } else {
       const { individualHotelData } = this.props.individualHotelData;
       return (  
-          <div
+          <div style={{ margin:"auto", minHeight:window.innerHeight-180}}>
+          {individualHotelData.hotelsRate === "" ? (
+            <div class="d-flex justify-content-center">
+            <div class="spinner-boarder text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            </div>
+          ):(
+            <div
             id="whole page"
             className="container"
             style={{ marginTop: "2%" }}
-          >
+            >
             <div className="d-flex justify-content-center mt-3">
               <div className="col-12">
                 <SearchWidget />
@@ -82,14 +90,14 @@ class IndivHotel extends Component {
             </div>
             <div id="hotel ratings" className="col-lg-2 col-sm-12 col-12">
               <div id="hotel star rating" className="row">
-                <div className="col-lg-10 col-sm-6 col-6">
+                <div className="col-lg-11 col-sm-6 col-6">
                   <h1
                     className="display-4"
                     style={{ fontSize: 24, color: "#FFD700" }}
                   >
                     {individualHotelData.star_rating} Star Hotel
                   </h1>
-                <div className="col-lg-2 col-sm-6 col-6" />
+                <div className="col-lg-1 col-sm-6 col-6" />
                 </div>
               </div>
               <div id="hotel stars" className="row">
@@ -246,14 +254,14 @@ class IndivHotel extends Component {
               <div className="col" style={{ marginTop: "2%", height:'590px'}}>
                 <h2
                   className="text-center"
-                  style={{ fontSize: 40, color: "red" }}
+                  style={{ fontSize: 40, color: "#3ba711" }}
                 >
                   ${individualHotelData.price.singlePrice}
                 </h2>
                 <AnchorLink href="#table1">
                   <button
                     type="button"
-                    class="btn btn-success h-10"
+                    class="btn btn-primary h-10"
                     style={{ width: "100%" }}
                   >
                     See Rooms
@@ -345,7 +353,10 @@ class IndivHotel extends Component {
                   {individualHotelData.singleAvailability ? (
                     <tr>
                       <th scope="row">Single Room</th>
-                      <td>${individualHotelData.price.singlePrice}</td>
+                      <td style={{fontSize:20,
+                                  fontWeight:'bold', 
+                                  color:'#3ba711'}}
+                      >${individualHotelData.price.singlePrice}</td>
                       <td>
                         <Link
                           onClick={() =>
@@ -356,9 +367,11 @@ class IndivHotel extends Component {
                           }
                           to="/payment"
                         >
-                          <button type="button" class="btn btn-success h-100">
+                        <div className="col-lg-6 col-sm-12 col-12">
+                          <button type="button" class="btn btn-primary h-100 w-100">
                             Book Single Room
                           </button>
+                        </div>
                         </Link>
                       </td>
                     </tr>
@@ -366,7 +379,10 @@ class IndivHotel extends Component {
                   {individualHotelData.doubleAvailability ? (
                     <tr>
                       <th scope="row">Double Room</th>
-                      <td>${individualHotelData.price.doublePrice}</td>
+                      <td style={{fontSize:20,
+                                  fontWeight:'bold', 
+                                  color:'#3ba711'}}
+                      >${individualHotelData.price.doublePrice}</td>
                       <td>
                         <Link
                           to="/payment"
@@ -377,9 +393,11 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                          <button type="button" class="btn btn-success h-100">
+                        <div className="col-lg-6 col-sm-12 col-12">
+                          <button type="button" class="btn btn-primary h-100 w-100">
                             Book Double Room
                           </button>
+                        </div>
                         </Link>
                       </td>
                     </tr>
@@ -387,7 +405,10 @@ class IndivHotel extends Component {
                   {individualHotelData.kingAvailability ? (
                     <tr>
                       <th scope="row">King Room</th>
-                      <td>${individualHotelData.price.kingPrice}</td>
+                      <td style={{fontSize:20,
+                                  fontWeight:'bold', 
+                                  color:'#3ba711'}}
+                      >${individualHotelData.price.kingPrice}</td>
                       <td>
                         <Link
                           to="/payment"
@@ -398,9 +419,11 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                          <button type="button" class="btn btn-success h-100">
+                        <div className="col-lg-6 col-sm-12 col-12">
+                          <button type="button" class="btn btn-primary h-100 w-100">
                             Book King Room
                           </button>
+                        </div>
                         </Link>
                       </td>
                     </tr>
@@ -408,7 +431,10 @@ class IndivHotel extends Component {
                   {individualHotelData.studioAvailability ? (
                     <tr>
                       <th scope="row">Studio Suite</th>
-                      <td>${individualHotelData.price.suitePrice}</td>
+                      <td style={{fontSize:20,
+                                  fontWeight:'bold', 
+                                  color:'#3ba711'}}
+                      >${individualHotelData.price.suitePrice}</td>
                       <td>
                         <Link
                           to="/payment"
@@ -419,9 +445,11 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                          <button type="button" class="btn btn-success h-100">
+                        <div className="col-lg-6 col-sm-12 col-12">
+                          <button type="button" class="btn btn-primary h-100 w-100">
                             Book Studio Suite
                           </button>
+                        </div>
                         </Link>
                       </td>
                     </tr>
@@ -429,7 +457,8 @@ class IndivHotel extends Component {
                 </tbody>
               </table>
             </section>
-            </div>
+            </div> 
+          </div> )}
           </div>
       );
     }
