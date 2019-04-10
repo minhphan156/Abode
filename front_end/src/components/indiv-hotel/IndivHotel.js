@@ -66,8 +66,8 @@ class IndivHotel extends Component {
             className="container"
             style={{ marginTop: "2%" }}
           >
-            <div className="row">
-            <div className="col-xs-8 col-sm-6 col-6 text-left">
+            <div id="hotel info" className="row">
+            <div id="hotel Name Address" className="col-lg-10 col-sm-12 col-12 text-left">
               <h1
                 className="display-4 text-left"
                 style={{ fontSize: 40, fontWeight: "bold" }}
@@ -81,22 +81,21 @@ class IndivHotel extends Component {
                 {individualHotelData.address}
               </h2>
             </div>
-            <div className="col-lg-4 col-sm-6 col-6">
-              <div className="row">
-                <div className="col-5" />
-                <div className="col-6">
+            <div id="hotel ratings" className="col-lg-2 col-sm-12 col-12">
+              <div id="hotel star rating" className="row">
+                <div className="col-lg-10 col-sm-6 col-6">
                   <h1
-                    className="display-4 text-right"
+                    className="display-4"
                     style={{ fontSize: 24, color: "#FFD700" }}
                   >
                     {individualHotelData.star_rating} Star Hotel
                   </h1>
-                <div className="col-1" />
+                <div className="col-lg-2 col-sm-6 col-6" />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-7" />
-                <div className="col-5">
+              <div id="hotel stars" className="row">
+                <div className="col-lg-1 col-sm-12 col-12" />
+                <div className="col-lg-11 col-sm-12 col-12">
                   <ReactStars
                     count={5}
                     value={individualHotelData.star_rating}
@@ -200,7 +199,7 @@ class IndivHotel extends Component {
                     <i class="fas fa-concierge-bell" /> Main Amentities
                   </h5>
                   <div className="row">
-                    <div id="amentities row" className="col">
+                    <div id="amentities row" className="col-lg-6 col-sm-12 col-12">
                       {individualHotelData.amenities
                         .slice(0, individualHotelData.amenities.length / 2)
                         .map((item, key) => {
@@ -219,7 +218,7 @@ class IndivHotel extends Component {
                           );
                         })}
                     </div>
-                    <div id="amentities row" className="col">
+                    <div id="amentities row" className="col-lg-6 col-sm-12 col-12">
                       {individualHotelData.amenities
                         .slice(
                           individualHotelData.amenities.length / 2,
