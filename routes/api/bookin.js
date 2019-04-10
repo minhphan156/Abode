@@ -33,11 +33,12 @@ router.post("/confirm",(req,res)=>{
     var lastname = req.body.Lastname;
     var email = req.body.email;
     var subtotal = req.body.subtotal;
-    var discount = req.body.discount;
+    var discount = req.body.discount? req.body.discount: null ;
     var customerID;
     var bookingID = "tempBookingID"
     var rewardPointsUsed = req.body.rewardPointsUsed ? req.body.rewardPointsUsed : null;
     var rewardPointsEarned = null;
+    var rewardDiscount = null;
     //check this user visit our website before and get customerID
     Customer.find({email:email},function(err,doc){
         if(err) res.status(400).json(err);
@@ -153,6 +154,7 @@ router.post("/confirm",(req,res)=>{
                                     discounts:discount,
                                     rewardPointsUsed:rewardPointsUsed,
                                     rewardPointsEarned:rewardPointsEarned,
+                                    rewardDiscount:rewardDiscount,
                                     reservedDate:doc.reservedDate
                                 })
                             }).catch(err=>res.send({message:"cannot find city",code:404}))
