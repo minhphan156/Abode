@@ -57,38 +57,53 @@ class IndivHotel extends Component {
             style={{ marginTop: "2%" }}
           >
             <div className="row">
+            <div className="col-xs-8 col-sm-6 col-6 text-left">
               <h1
-                className="display-4 text-left col-8"
+                className="display-4 text-left"
                 style={{ fontSize: 40, fontWeight: "bold" }}
               >
                 {individualHotelData.name}
               </h1>
-              <h1
-                className="display-4 text-left col-4"
-                style={{ fontSize: 24, color: "#FFD700" }}
+              <h2
+                className="display-4 test-left"
+                style={{ fontSize: 24, color: "#808080" }}
               >
-              {individualHotelData.star_rating} Star Hotel
-                <ReactStars
-                  className="text-right"
-                  count={5}
-                  value={individualHotelData.star_rating}
-                  size={28}
-                  edit={false}
-                  color2={"#FFD700"}
-                />
-              </h1>
+                {individualHotelData.address}
+              </h2>
             </div>
-            <h2
-              className="display-4 test-left"
-              style={{ fontSize: 24, color: "#808080" }}
-            >
-              {individualHotelData.address}
-            </h2>
+            <div className="col-lg-4 col-sm-6 col-6">
+              <div className="row">
+                <div className="col-5" />
+                <div className="col-6">
+                  <h1
+                    className="display-4 text-right"
+                    style={{ fontSize: 24, color: "#FFD700" }}
+                  >
+                    {individualHotelData.star_rating} Star Hotel
+                  </h1>
+                <div className="col-1" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-7" />
+                <div className="col-5">
+                  <ReactStars
+                    count={5}
+                    value={individualHotelData.star_rating}
+                    size={28}
+                    edit={false}
+                    color2={"#FFD700"}
+                  />
+                </div>
+             </div>
+             </div>
+            </div>
+
 
             <div className="row">
               <div
                 id="pics and amentities"
-                className="col-8 w-75 h-75"
+                className="col-lg-8 col-sm-12 col-12"
                 style={{ marginLeft: "0", marginTop: "30px" }}
               >
                 <div id="pics sliding show" className="container">
@@ -220,7 +235,7 @@ class IndivHotel extends Component {
                 </div>
               </div>
 
-              <div className="col" style={{ marginTop: "0" }}>
+              <div className="col" style={{ marginTop: "2%", height:'590px'}}>
                 <h2
                   className="text-center"
                   style={{ fontSize: 40, color: "red" }}
@@ -280,7 +295,7 @@ class IndivHotel extends Component {
                     lng: individualHotelData.alt
                   }}
                   style={{
-                    height: "50%",
+                    height: "70%",
                     width: "97%",
                     marginTop: "1%",
                     align: "left"
