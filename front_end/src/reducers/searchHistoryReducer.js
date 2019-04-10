@@ -11,7 +11,7 @@ const initialState = {
             img:
               "https://thumbnails.trvl-media.com/G6DYD561zx1K_xvmgckqNQtLGV0=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/1000000/480000/476800/476728/bc0ee6ed_z.jpg",
             hotelName: "Paris Las Vegas Hotel and Casino",
-            destination: "Las Vegas, NV",
+            city: "Las Vegas, NV",
             check_in_date: "3/3/2019",
             check_out_date: "3/5/2019",
             typeOfRoom: "King",

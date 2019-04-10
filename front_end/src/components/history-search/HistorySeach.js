@@ -465,7 +465,7 @@ class HistorySearch extends Component {
               { bookings }
               <br /> <br />
             </div>
-            ):( this.state.firstFlag === true ?(
+            ):( this.state.firstFlag ?(
               null
             ):(
               <div className="row text-center">

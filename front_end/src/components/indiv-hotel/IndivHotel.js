@@ -58,17 +58,18 @@ class IndivHotel extends Component {
           >
             <div className="row">
               <h1
-                className="display-4 text-left col-10"
+                className="display-4 text-left col-8"
                 style={{ fontSize: 40, fontWeight: "bold" }}
               >
                 {individualHotelData.name}
               </h1>
               <h1
-                className="display-4 text-center col-2"
+                className="display-4 text-left col-4"
                 style={{ fontSize: 24, color: "#FFD700" }}
               >
-              >{individualHotelData.star_rating} Star Hotel
+              {individualHotelData.star_rating} Star Hotel
                 <ReactStars
+                  className="text-right"
                   count={5}
                   value={individualHotelData.star_rating}
                   size={28}
@@ -270,6 +271,7 @@ class IndivHotel extends Component {
                     />
                   </div>
                 </div>
+                <div className='row'>
                 <Map
                   google={this.props.google}
                   zoom={15}
@@ -299,9 +301,11 @@ class IndivHotel extends Component {
                     </div>
                   </InfoWindow>
                 </Map>
+                </div>
               </div>
             </div>
 
+            <div className="row-12">
             <section id="table1">
               <table
                 class="table table-bordered"
@@ -402,6 +406,7 @@ class IndivHotel extends Component {
                 </tbody>
               </table>
             </section>
+            </div>
           </div>
         </div>
       );
