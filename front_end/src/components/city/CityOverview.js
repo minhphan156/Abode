@@ -1,15 +1,25 @@
-// React Essentials
+// React essential imports
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-// Redux-Action Workflow Imports
+// Redux-Action workflow imports
 import { connect } from "react-redux";
 import { fetchCityById } from "../../actions/cityActions";
 
-// Material-UI Imports
-import { Grid, withStyles, withWidth } from "@material-ui/core";
+// Child component imports
+import ImageCarousel from "./ImageCarousel";
 
-// CSS to JavaScript Component Styling
+// Material-UI imports
+import {
+  Grid,
+  withStyles,
+  withWidth,
+  CircularProgress
+} from "@material-ui/core";
+
+// Prototype Imports
+
+// CSS to JavaScript component styling
 let styles = theme => ({
   pageMargins: {
     [theme.breakpoints.down("lg")]: {
@@ -24,6 +34,14 @@ let styles = theme => ({
       marginTop: "2%",
       marginBottom: "2%"
     }
+  },
+  loadingSpinner: {
+    height: "82vh",
+    width: "100%"
+  },
+  rootContainer: {
+    height: "100%",
+    width: "100%"
   }
 });
 
@@ -34,16 +52,50 @@ class CityOverview extends Component {
     this.state = {};
   }
 
-  /*
-    TODO: Call backend to fetch city data based on :cityid parameter
-    componentDidMount = () => {
-        this.props.fetchCityById(this.props.match.params.id);
-    }
-  */
+  // TODO: Call backend to fetch city data using :cityId parameter
+  componentDidMount = () => {
+    this.props.fetchCityById(this.props.match.params.cityId);
+  };
 
   render() {
-    let { classes } = this.props;
-    return <div className={classes.pageMargins} />;
+    let { classes, city } = this.props;
+    if (city.fetchingCity == false) {
+      return (
+        <div className={classes.pageMargins}>
+          <Grid
+            container
+            className={`${classes.rootContainer} border border-primary`}
+            direction="flow"
+            spacing={8}
+          >
+            <Grid item className="border" xl={8}>
+              <Grid container direction="column" spacing={8}>
+                <Grid item>
+                  <ImageCarousel />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item className="border" />
+          </Grid>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.pageMargins}>
+          <Grid
+            container
+            className={classes.loadingSpinner}
+            direction="flow"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item>
+              <CircularProgress />
+            </Grid>
+          </Grid>
+        </div>
+      );
+    }
   }
 }
 
@@ -51,7 +103,8 @@ CityOverview.PropTypes = {
   auth: PropTypes.object.isRequired,
   city: PropTypes.object.isRequired,
   width: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  fetchCityById: PropTypes.func.isRequired
 };
 
 let mapStateToProps = state => ({
