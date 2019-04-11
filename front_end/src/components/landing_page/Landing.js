@@ -3,27 +3,22 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { readyLanding, setLandingStatus } from "../../actions/landingActions";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import SearchWidget from "./search_widget/SearchWidget";
+import ReactStars from "react-stars";
 
 // Animation CSS imports
 import "./Landing.css";
-
-// Image imports (For Prototype Only)
-import SD from "./SD.jpg";
-import VG from "./Vegas.jpg";
-import WA from "./WA.jpg";
 
 // Material-UI Imports
 import {
   Grid,
   Typography,
   withStyles,
+  withWidth,
   Card,
-  CardActionArea,
   CardContent,
   CardMedia
 } from "@material-ui/core";
@@ -31,27 +26,23 @@ import {
 // Component CSS
 let styles = {
   card: {
-    maxWidth: 400,
-    height: 490
+    maxWidth: 400
   },
   media: {
     height: 0,
     paddingTop: "56.25%" // 16:9
   },
-  actions: {
-    display: "flex"
-  },
   avatar: {
     backgroundColor: "#B22222"
   },
-
-  root: {
-    width: "auto",
-    justify: "center",
-    flexGrow: 1
-  },
   centerFlexbox: {
     display: "flex"
+  },
+  inspirationBox: {
+    // alignSelf: "center",
+    background: "rgba(0,0,0,1)",
+    padding: 5,
+    width: "25%"
   },
   searchWidgetBox: {
     alignSelf: "center",
@@ -60,6 +51,10 @@ let styles = {
     width: "100%"
   },
   collageImg: {
+    width: "100%"
+  },
+  collageImgSmall: {
+    width: "98%",
     height: "100%"
   },
   noYMarginTop: {
@@ -95,36 +90,48 @@ class Landing extends Component {
   render() {
     // TODO: Create slideshow that dynamically changes based on featured cities
     if (this.props.landing != null) {
-      let { classes, landing } = this.props;
+      let { classes, landing, width } = this.props;
 
       let deals1a = {
         CityAbbr: "LA",
-        HotelName: "Some Hotel in LA",
+        HotelName: "Freehand Los Angeles",
         CityName: "Los Angeles, CA",
-        Image: SD,
+        Image:
+          "https://thumbnails.trvl-media.com/rmHwfoL4I1mySzyzLHoF1hu1f_w=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/17000000/16320000/16317400/16317325/3fdedd72_z.jpg",
         PromoText:
           "The ABC is a beautiful hotel at the pacific coast. Offers great food. LA is cool too. just book it already!",
-        DiscountRate: 15
+        DiscountRate: 15,
+        NumStars: 4,
+        GuestRating: 8.8,
+        LowPrice: 229
       };
       let deals2a = {
         CityAbbr: "NYC",
-        HotelName: "Some Hotel in New York",
+        HotelName: "DoubleTree New York Time Square West",
         CityName: "New York City, NY",
-        Image: VG,
+        Image:
+          "https://thumbnails.trvl-media.com/CLyK-qc_c1FqmYigHzHpfxL52y8=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/17000000/16260000/16255100/16255092/0697a962_z.jpg",
         PromoText:
           "The ABC is a beautiful hotel at the pacific coast. Offers great food. LA is cool too. just book it already!",
 
-        DiscountRate: 10
+        DiscountRate: 10,
+        NumStars: 4,
+        GuestRating: 8,
+        LowPrice: 367
       };
       let deals3a = {
         CityAbbr: "MIA",
-        HotelName: "Some Hotel in Miami",
+        HotelName: "The Setai",
         CityName: "Miami, FL",
-        Image: WA,
+        Image:
+          "https://thumbnails.trvl-media.com/IV6AxJfwZRwdeaEEJ8j_KELAlG0=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/2000000/1130000/1126600/1126560/61ad9b86_z.jpg",
         PromoText:
           "The ABC is a beautiful hotel at the pacific coast. Offers great food. LA is cool too. just book it already!",
 
-        DiscountRate: 20
+        DiscountRate: 20,
+        NumStars: 5,
+        GuestRating: 9.6,
+        LowPrice: 900
       };
 
       let {
@@ -153,25 +160,55 @@ class Landing extends Component {
                 />
                 <CardMedia
                   className={classes.media}
-                  // image={SD}
                   image={deal.Image}
                   title={deal.HotelName}
                 />
-                <CardContent>
-                  <h4>Get {deal.DiscountRate}% off!</h4>
-                  <Typography component="p">{deal.PromoText}</Typography>
+                <CardContent className="dealsSpacing">
+                  <Grid container direction="row" justify="space-between">
+                    <Grid>
+                      <h4>Get {deal.DiscountRate}% off!</h4>
+                    </Grid>
+                    <Grid className="newPrice">
+                      Starting from ${" "}
+                      {(
+                        (deal.LowPrice / 100) *
+                        (100 - deal.DiscountRate)
+                      ).toFixed(2)}
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="column"
+                    justify="space-between"
+                    alignItems="center"
+                    className="dealsSpacing2"
+                  >
+                    <Grid>
+                      <ReactStars
+                        count={5}
+                        value={deal.NumStars}
+                        size={28}
+                        edit={false}
+                        color2={"#FFD700"}
+                      />
+                    </Grid>
+                    <Grid className="dealsSpacing">
+                      <h5>Guest Rating: {deal.GuestRating}</h5>{" "}
+                    </Grid>
+
+                    <Grid className="dealsSpacing2">
+                      <Link to="/searchResultOverview">
+                        <Button
+                          class="buttonSearch"
+                          primary
+                          onClick={this.onSearchClick}
+                        >
+                          Book now
+                        </Button>
+                      </Link>
+                    </Grid>
+                  </Grid>
                 </CardContent>
-                <CardActions className={classes.actions} disableActionSpacing>
-                  <Link to="/searchResultOverview">
-                    <Button
-                      class="buttonSearch"
-                      primary
-                      onClick={this.onSearchClick}
-                    >
-                      Book now
-                    </Button>
-                  </Link>
-                </CardActions>
               </Card>
             </Grid>
           );
@@ -181,8 +218,48 @@ class Landing extends Component {
       // Uses genFeatureDestination() to create markup for each featured city.
       let featureDestinationMarkup = landing.featCities.map(city => {
         return (
-          <Grid item className="mouseHover" xs={3}>
-            <img className={classes.collageImg} src={city.imgMain} />
+          <Grid container direction="row" justify="center">
+            <Grid xs={12} sm={8} md={8} lg={8}>
+              <div className="imageContainer">
+                <img src={city.imgMain} className={classes.collageImg} />
+                <div class="text-block-cities">
+                  <h4 className=" imageTextCity">{city.name}</h4>
+                  <p>Bookings in the past week: {city.bookings}</p>
+                </div>
+              </div>
+            </Grid>
+            <Grid xs={12} sm={4} md={4} lg={4}>
+              <Grid
+                container
+                direction={width === "xs" ? "row" : "column"}
+                justify="center"
+              >
+                <Grid xs={6} sm={12}>
+                  <div className="imageContainer">
+                    <img
+                      src={city.imgMain}
+                      className={classes.collageImgSmall}
+                    />
+                    <div class="text-block-cities-small">
+                      <h4 className=" imageTextCity">Attraction 1</h4>
+                      <p>{city.name}</p>
+                    </div>
+                  </div>
+                </Grid>
+                <Grid xs={6} sm={12} md={12} lg={12}>
+                  <div className="imageContainer">
+                    <img
+                      src={city.imgMain}
+                      className={classes.collageImgSmall}
+                    />
+                    <div class="text-block-cities-small">
+                      <h4 className=" imageTextCity">Attraction 1</h4>
+                      <p>{city.name}</p>
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         );
       });
@@ -206,6 +283,9 @@ class Landing extends Component {
             <div className={`${classes.searchWidgetBox} fadeIn`}>
               <SearchWidget />
             </div>
+            <div class="text-block-inspiration">
+              <p>explore {this.props.landing.inspireCity}</p>
+            </div>
           </div>
           <br />
           <div
@@ -225,6 +305,7 @@ class Landing extends Component {
                   </Typography>
                 </div>
                 <hr className={classes.noYMarginTop} />
+                <br />
               </div>
               <Grid container spacing={8} direction="row" justify="center">
                 {/* Prototype Markup BEGINNING */}
@@ -274,4 +355,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { readyLanding, setLandingStatus }
-)(withStyles(styles)(Landing));
+)(withStyles(styles)(withWidth()(Landing)));

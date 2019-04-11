@@ -60,3 +60,65 @@
   animation-duration: 0.25s;
   animation-fill-mode: forwards;
 }
+
+.oldPrice {
+  font-size: 19px;
+  color: red;
+  text-decoration: line-through;
+}
+
+.newPrice {
+  font-size: 18px;
+  color: green;
+}
+
+.dealsSpacing {
+  margin-top: 8px;
+}
+
+.dealsSpacing2 {
+  margin-top: 12px;
+}
+
+.imageContainer {
+  position: relative;
+  margin: 10px;
+  color: white;
+}
+
+.imageTextCity {
+  font-size: 20px;
+}
+
+.text-block-cities {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: white;
+  padding-top: 7px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.text-block-cities-small {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: white;
+  padding-top: 7px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.text-block-inspiration {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: white;
+  padding-top: 7px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
