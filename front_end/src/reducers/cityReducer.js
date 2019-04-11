@@ -1,19 +1,29 @@
+// Type imports
 import {
   GET_CITY,
   GET_CITY_WEATHER,
   LOADING_CITY,
-  LOADING_CITY_WEATHER
+  LOADING_CITY_WEATHER,
+  CITY_ERRORS
 } from "../actions/types";
 
 let initialState = {
   cityData: null,
   weatherData: null,
   fetchingCity: false,
-  fetchingWeather: false
+  fetchingWeather: false,
+  errors: null
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case CITY_ERRORS:
+      return {
+        ...state,
+        errors: action.payload,
+        fetchingCity: false,
+        fetchingWeather: false
+      }
     case LOADING_CITY:
       return {
         ...state,
@@ -28,13 +38,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         weatherData: action.payload,
-        fetchingWeather: false
+        fetchingWeather: false,
+        errors: null
       };
     case GET_CITY:
       return {
         ...state,
         cityData: action.payload,
-        fetchingCity: false
+        fetchingCity: false,
+        errors: null
       };
     default:
       return state;

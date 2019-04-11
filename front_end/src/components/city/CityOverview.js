@@ -52,7 +52,6 @@ class CityOverview extends Component {
     this.state = {};
   }
 
-  // TODO: Call backend to fetch city data using :cityId parameter
   componentDidMount = () => {
     this.props.fetchCityById(this.props.match.params.cityId);
   };
