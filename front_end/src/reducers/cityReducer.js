@@ -5,7 +5,7 @@ import {
   LOADING_CITY_WEATHER
 } from "../actions/types";
 
-const initialState = {
+let initialState = {
   cityData: null,
   weatherData: null,
   fetchingCity: false,
