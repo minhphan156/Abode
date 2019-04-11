@@ -17,6 +17,7 @@ const checkAvalibity = require("../../validation/checkAvailableHotels");
 router.post("/confirm",(req,res)=>{
     passport.authenticate("jwt",function(err, user, info){
         // check if user is logged 
+        console.log(req.body)
         var isLogged = false
         if(user){
             console.log(user)
@@ -69,7 +70,8 @@ router.post("/confirm",(req,res)=>{
             var destinationName = doc[0].city
             var address = doc[0].address
             var hotelImg = doc[0].images[0]
-            // check require room avaliablity 
+            // check require room avaliablity
+            console.log(destinationName) 
             if(roomType === 'single') {
                 arr = doc[0].roomTypeAndNumber.single;
                 roomPrice = doc[0].price.singlePrice;
@@ -96,12 +98,11 @@ router.post("/confirm",(req,res)=>{
                     // if they dont, store the booking information into booking db
                     if(doc.length === 0){
                         if(isLogged){
-                            rewardPointsEarned = subtotal * 1000;
                             if( rewardPointsUsed && user.rewardPoints < rewardPointsUsed){
                                 res.status(403).send({error: "not enought rewardPoints"})
                                 return
                             }
-                            user.rewardPoints = user.rewardPoints + rewardPointsEarned - rewardPointsUsed
+                            user.rewardPoints = user.rewardPoints - rewardPointsUsed
                             user.save()
                         }
                         const newBooking = new Booking({
@@ -112,6 +113,7 @@ router.post("/confirm",(req,res)=>{
                             typeOfRoom:roomType,
                             numOfRoom:numberRooms,
                             subtotal:subtotal,
+                            total:req.body.total,
                             discount:discount,
                             rewardPointsUsed:rewardPointsUsed,
                             rewardPointsEarned:rewardPointsEarned,
@@ -155,7 +157,12 @@ router.post("/confirm",(req,res)=>{
                                     rewardPointsUsed:rewardPointsUsed,
                                     rewardPointsEarned:rewardPointsEarned,
                                     rewardDiscount:rewardDiscount,
-                                    reservedDate:doc.reservedDate
+                                    reservedDate:doc.reservedDate,
+                                    numberOfNights:req.body.numberOfNights,
+                                    total:req.body.total,
+                                    taxesAndFees:req.body.taxesAndFees,
+                                    rewardDiscount:req.body.rewardPointsUsed,
+                                    code:200
                                 })
                             }).catch(err=>res.send({message:"cannot find city",code:404}))
                         })
@@ -163,7 +170,7 @@ router.post("/confirm",(req,res)=>{
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
                         res.send({message:"doubleBooking",
-                                                code:409})
+                                code:409})
                     }
                 })
             }
@@ -174,11 +181,7 @@ router.post("/confirm",(req,res)=>{
             }
         })
     }
-
-      })(req, res)
-
-
-    
+      })(req, res)    
 })
 
 
