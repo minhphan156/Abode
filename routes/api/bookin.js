@@ -5,6 +5,7 @@ const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 const Customer = require("../../models/customer");
 const City = require("../../models/city")
+const User = require("../../models/User");
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
@@ -207,6 +208,61 @@ router.post('/changeReservation',(req,res)=>{
             }).catch(err=>{res.status(400).json(err)})
         }else{
             res.status(404).json({message:`cannot find ${bookingID}`,code:404})
+        }
+    })
+})
+
+// @route POST /api/booking/cancel
+// @desc cancel a reservation 
+// @access public
+router.post('/cancel', (req,res)=>{
+    Booking.findById(req.query.bookingID)
+    .then(booking => {
+        if (booking.status == 0){
+            booking.status = 3;
+            if (booking.rewardPointsUsed !== 0){
+                User.findOneAndUpdate(
+                    {'customerID': booking.customerID},
+                    {$inc: { "rewardPoints" : booking.rewardPointsUsed }
+                })
+            }
+            Hotel.findById(booking.hotelID)
+            .then(hotel => {
+                if(booking.typeOfRoom === 'single'){
+                    arr = hotel.roomTypeAndNumber.single;
+                }
+                if(booking.typeOfRoom === 'double'){
+                    arr = hotel.roomTypeAndNumber.double;
+                }
+                if(booking.typeOfRoom === 'king'){
+                    arr = hotel.roomTypeAndNumber.king;
+                }
+                if(booking.typeOfRoom === 'studio'){
+                    arr = hotel.roomTypeAndNumber.studio;
+                }
+                for(let i = 0;i<arr.length;i++){
+                    for(let j = 0;j<arr[i].dates.length;j++){
+                        if(arr[i].dates[j].bookingID === req.query.bookingID){
+                            arr[i].dates.splice(j,1)
+                        }
+                    }
+                }
+                hotel.save().catch(err=>res.status(400).json(err));
+                booking.save().catch( err => res.status(400).json({
+                    message: "not able to cancel",
+                    code: 400
+                }))
+                res.status(200).json({
+                    message: "successfully canceled",
+                    code: 200
+                })
+            })
+        }
+        else{
+            res.status(400).json({
+                message: "booking status is not 0.",
+                code: 400
+            })
         }
     })
 })
