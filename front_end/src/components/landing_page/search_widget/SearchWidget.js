@@ -8,8 +8,10 @@ import RoomNumber from "./RoomNumber";
 import CalendarPicker from "./CalendarPicker";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import Alert from "react-bootstrap/Alert";
 
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { submitQuery, saveQuery } from "../../../actions/searchActions";
 
 const styles = theme => ({
@@ -32,7 +34,8 @@ class SearchWidget extends Component {
       destinationName: "",
       checkIn: "",
       checkOut: "",
-      numberRooms: "1"
+      numberRooms: "1",
+      showAlert: false
     };
     this.onSearchClick = this.onSearchClick.bind(this);
     this.onHandleDate = this.onHandleDate.bind(this);
@@ -65,6 +68,14 @@ class SearchWidget extends Component {
     };
     this.props.submitQuery(newQuery);
     this.props.saveQuery(newQuery);
+
+    //Check if the destination is given or not.
+    if (this.state.destinationName === "") {
+      this.setState({ showAlert: true });
+    } else {
+      this.setState({ showAlert: false });
+      this.props.history.push("/searchResultOverview");
+    }
   }
 
   onHandleDate(startingDate, endingDate) {
@@ -83,9 +94,20 @@ class SearchWidget extends Component {
   render() {
     const { classes } = this.props;
     const { query } = this.props.query;
+    const handleHide = () => this.setState({ showAlert: false });
 
     return (
       <div className={classes.root}>
+        <Alert
+          style={{ marginLeft: "9%", marginTop: "1%" }}
+          variant="danger"
+          show={this.state.showAlert}
+        >
+          Please provide a destination
+          <Button onClick={handleHide} color="secondary">
+            Close
+          </Button>
+        </Alert>
         <Grid container justify={"center"} spacing={8}>
           <Grid item xs={12} sm={10} md={6} lg={4}>
             <Paper className={classes.paper}>
@@ -113,11 +135,9 @@ class SearchWidget extends Component {
             </Paper>
           </Grid>
           <Grid item className="buttonSearchContainer">
-            <Link to="/searchResultOverview">
-              <Button class="buttonSearch" primary onClick={this.onSearchClick}>
-                SEARCH
-              </Button>
-            </Link>
+            <Button class="buttonSearch" primary onClick={this.onSearchClick}>
+              SEARCH
+            </Button>
           </Grid>
         </Grid>
       </div>
@@ -132,4 +152,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { submitQuery, saveQuery }
-)(withStyles(styles)(SearchWidget));
+)(withStyles(styles)(withRouter(SearchWidget)));
