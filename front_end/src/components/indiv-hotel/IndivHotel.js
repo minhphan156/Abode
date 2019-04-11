@@ -66,7 +66,7 @@ class IndivHotel extends Component {
             <div
             id="whole page"
             className="container"
-            style={{ marginTop: "2%" }}
+            style={{ margin:'auto'}}
             >
             <div className="d-flex justify-content-center mt-3">
               <div className="col-12">
@@ -315,7 +315,7 @@ class IndivHotel extends Component {
                   }}
                   style={{
                     height: "70%",
-                    width: "97%",
+                    width: "100%",
                     marginTop: "1%",
                     align: "left"
                   }}
@@ -343,7 +343,7 @@ class IndivHotel extends Component {
             <section id="table1">
               <table
                 class="table table-bordered"
-                style={{ marginTop: "3%", position: "relative", z_index: 100 }}
+                style={{ marginTop: "3%", position: "relative"}}
               >
                 <thead>
                   <tr>
@@ -370,11 +370,11 @@ class IndivHotel extends Component {
                           }
                           to="/payment"
                         >
-                        <div className="col-lg-6 col-sm-12 col-12">
-                          <button type="button" class="btn btn-primary h-100 w-100">
+                          <button type="button" 
+                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          >
                             Book Single Room
                           </button>
-                        </div>
                         </Link>
                       </td>
                     </tr>
@@ -396,11 +396,11 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                        <div className="col-lg-6 col-sm-12 col-12">
-                          <button type="button" class="btn btn-primary h-100 w-100">
+                          <button type="button" 
+                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          >
                             Book Double Room
                           </button>
-                        </div>
                         </Link>
                       </td>
                     </tr>
@@ -422,11 +422,11 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                        <div className="col-lg-6 col-sm-12 col-12">
-                          <button type="button" class="btn btn-primary h-100 w-100">
+                          <button type="button" 
+                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          >
                             Book King Room
                           </button>
-                        </div>
                         </Link>
                       </td>
                     </tr>
@@ -448,11 +448,11 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                        <div className="col-lg-6 col-sm-12 col-12">
-                          <button type="button" class="btn btn-primary h-100 w-100">
+                          <button type="button" 
+                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          >
                             Book Studio Suite
                           </button>
-                        </div>
                         </Link>
                       </td>
                     </tr>
