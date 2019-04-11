@@ -13,7 +13,8 @@ import {
   MenuItem,
   ExpansionPanel,
   ExpansionPanelSummary,
-  ExpansionPanelDetails
+  ExpansionPanelDetails,
+  Hidden
 } from "@material-ui/core";
 import {
   ArrowDownward,
@@ -77,27 +78,26 @@ let SortBar = props => {
               <MenuItem value={"hdc_rating"}>Guest Rating</MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={4} sm="auto">
-            <InputLabel>Order</InputLabel>
-            <Select
-              name="sortOrder"
-              style={{ width: "100%" }}
-              variant="standard"
-              value={sortOrder}
-              onChange={handleChange}
-              displayEmpty
-            >
-              <MenuItem value={null}>
-                ---
-              </MenuItem>
-              <MenuItem value={"descending"}>
-                <ArrowDownward fontSize="small" />
-              </MenuItem>
-              <MenuItem value={"ascending"}>
-                <ArrowUpward fontSize="small" />
-              </MenuItem>
-            </Select>
-          </Grid>
+          <Hidden xlDown={sortCategory == null ? true : false}>
+            <Grid item xs={4} sm="auto">
+              <InputLabel>Order</InputLabel>
+              <Select
+                name="sortOrder"
+                style={{ width: "100%" }}
+                variant="standard"
+                value={sortOrder}
+                onChange={handleChange}
+                displayEmpty
+              >
+                <MenuItem value={"descending"}>
+                  <ArrowDownward fontSize="small" />
+                </MenuItem>
+                <MenuItem value={"ascending"}>
+                  <ArrowUpward fontSize="small" />
+                </MenuItem>
+              </Select>
+            </Grid>
+          </Hidden>
         </Grid>
       </ExpansionPanelDetails>
     </ExpansionPanel>

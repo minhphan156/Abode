@@ -66,7 +66,7 @@ class searchResultOverview extends Component {
     this.state = {
       // States used for sorting
       sortCategory: null,
-      sortOrder: null,
+      sortOrder: "descending",
 
       // States used for filter
       star_rate: 0,
@@ -172,7 +172,9 @@ class searchResultOverview extends Component {
       [event.target.name]: event.target.value
     };
 
-    this.backendCall(sortObject);
+    if (sortObject.sortCategory != null) {
+      this.backendCall(sortObject);
+    }
 
     this.setState({
       [event.target.name]: event.target.value
