@@ -10,12 +10,21 @@ import DoneIcon from "@material-ui/icons/Done";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ExitIcon from "@material-ui/icons/ExitToApp";
+import RateReview from "@material-ui/icons/RateReview";
 
 import Button from "@material-ui/core/Button";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Input from "@material-ui/core/Input";
+import ReactStars from "react-stars";
 
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
@@ -59,10 +68,32 @@ const styles = theme => ({
   },
   backgroundStyle: {
     background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
+  },
+  ReviewButton: {
+    borderRadius: 17,
+    textTransform: "none",
+    marginTop: 24,
+    marginRight: 10,
+    marginLeft: 10,
+    paddingTop: 1,
+    paddingBottom: 1
+  },
+  reviewForm: {
+    // maxWidth: 500,
+    // maxHeight: 500
   }
 });
 
 class HistoryOverview extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      open: false
+    };
+    this.handleCloseReviewForm = this.handleCloseReviewForm.bind(this);
+    this.handleOpenReviewForm = this.handleOpenReviewForm.bind(this);
+  }
   componentDidMount() {
     this.props.getCurrentProfile();
     this.props.getHistory();
@@ -71,6 +102,12 @@ class HistoryOverview extends Component {
     this.props.getHistory();
   }
 
+  handleOpenReviewForm() {
+    this.setState({ open: true });
+  }
+  handleCloseReviewForm() {
+    this.setState({ open: false });
+  }
   render() {
     const { classes, profile } = this.props;
     let bookings;
@@ -244,140 +281,197 @@ class HistoryOverview extends Component {
 
       // these are the expansionpanels for all the different bookings
       return (
-        <ExpansionPanel
-          classes={{
-            expanded: classes.backgroundStyle
-          }}
-        >
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Grid container spacing={0} direction="row" justify="space-evenly">
-              <Grid item>
-                <img
-                  className="historyHotelImage"
-                  src={booking.img}
-                  alt="hotel img"
-                />
-              </Grid>
+        <div>
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleCloseReviewForm}
+            aria-labelledby="form-dialog-title"
+            maxWidth="sm"
+            fullWidth="true"
+            className={classes.reviewForm}
+          >
+            <DialogTitle id="form-dialog-title">Rate and Review</DialogTitle>
+            <DialogContent>
+              <DialogContentText style={{ marginBottom: 22 }}>
+                Your review will be posted publicly on the web
+              </DialogContentText>
 
-              <Grid className="HistoryContainerHotelName">
-                <Grid item className="HistoryPageHotelName">
-                  {booking.hotelName}
+              <ReactStars count={5} size={24} color2={"#ffd700"} />
+              <Input
+                multiline
+                placeholder="Share details of your own experience at this hotel"
+                style={{ width: 450, marginTop: 13 }}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleCloseReviewForm} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.handleCloseReviewForm} color="primary">
+                Post
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <ExpansionPanel
+            classes={{
+              expanded: classes.backgroundStyle
+            }}
+          >
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Grid
+                container
+                spacing={0}
+                direction="row"
+                justify="space-evenly"
+              >
+                <Grid item>
+                  <img
+                    className="historyHotelImage"
+                    src={booking.img}
+                    alt="hotel img"
+                  />
                 </Grid>
-                <Grid item className="HistoryPageDestinationName">
-                  {booking.destination}
+
+                <Grid className="HistoryContainerHotelName">
+                  <Grid item className="HistoryPageHotelName">
+                    {booking.hotelName}
+                  </Grid>
+                  <Grid item className="HistoryPageDestinationName">
+                    {booking.destination}
+                  </Grid>
+                  <Grid item className="chipsAndTotal">
+                    <br />
+                    {displayRegularChip}
+                    {displayChangeChip}
+                  </Grid>
+                  {/* We display a different layout for small screens */}
+                  <Grid item className="chipsAndTotalSmall">
+                    <br />
+                    <Grid
+                      container
+                      spacing={0}
+                      direction="row"
+                      justify="space-between"
+                    >
+                      <Grid item>{displayRegularChip}</Grid>
+                      <Grid item className="HistoryPageTotalSmall">
+                        Total: ${" "}
+                        {(booking.subtotal - booking.discount).toFixed(2)}
+                      </Grid>
+                    </Grid>
+
+                    {displayChangeChip}
+                  </Grid>
                 </Grid>
-                <Grid item className="chipsAndTotal">
-                  <br />
-                  {displayRegularChip}
-                  {displayChangeChip}
+
+                <Grid className="HistoryContainerDates">
+                  <Grid item className="HistoryPageDates HistoryContainerDates">
+                    {dateOverview}
+                  </Grid>
                 </Grid>
-                {/* We display a different layout for small screens */}
-                <Grid item className="chipsAndTotalSmall">
-                  <br />
-                  <Grid
-                    container
-                    spacing={0}
-                    direction="row"
-                    justify="space-between"
-                  >
-                    <Grid item>{displayRegularChip}</Grid>
-                    <Grid item className="HistoryPageTotalSmall">
+                <Grid>
+                  <Grid item className="HistoryPageTotal">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
                       Total: ${" "}
                       {(booking.subtotal - booking.discount).toFixed(2)}
-                    </Grid>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        className={classes.ReviewButton}
+                        onClick={this.handleOpenReviewForm}
+                      >
+                        <RateReview style={{ fontSize: 16 }} />
+                        Review
+                      </Button>
+                    </div>
                   </Grid>
+                </Grid>
+              </Grid>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Grid
+                container
+                spacing={0}
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+              >
+                <Grid className="HistoryContainerExpand">
+                  <Grid
+                    item
+                    className="HistoryPageText2 HistoryContainerExpand"
+                  >
+                    <Table className={classes.table}>
+                      <TableRow>
+                        <TableCell className={classes.tableNoBorder}>
+                          Room type:
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          className={classes.tableNoBorder}
+                        >
+                          {booking.typeOfRoom}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={classes.tableNoBorder}>
+                          Number of Rooms:
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          className={classes.tableNoBorder}
+                        >
+                          {booking.numOfRoom}
+                        </TableCell>
+                      </TableRow>
+                    </Table>
+                  </Grid>
+                </Grid>
 
-                  {displayChangeChip}
+                <Grid>
+                  <Grid item className="HistoryPageText2">
+                    <Table className={classes.table}>
+                      <TableRow>
+                        <TableCell className={classes.tableNoBorder}>
+                          Subtotal:
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          className={classes.tableNoBorder}
+                        >
+                          $ {booking.subtotal.toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Discount:</TableCell>
+                        <TableCell align="right">
+                          $ {booking.discount.toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={classes.tableNoBorder}>
+                          Total:
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          className={classes.tableNoBorder}
+                        >
+                          $ {(booking.subtotal - booking.discount).toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    </Table>
+                  </Grid>
                 </Grid>
               </Grid>
-
-              <Grid className="HistoryContainerDates">
-                <Grid item className="HistoryPageDates HistoryContainerDates">
-                  {dateOverview}
-                </Grid>
-              </Grid>
-              <Grid>
-                <Grid item className="HistoryPageTotal">
-                  Total: $ {(booking.subtotal - booking.discount).toFixed(2)}
-                </Grid>
-              </Grid>
-            </Grid>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Grid
-              container
-              spacing={0}
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-            >
-              <Grid className="HistoryContainerExpand">
-                <Grid item className="HistoryPageText2 HistoryContainerExpand">
-                  <Table className={classes.table}>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Room type:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        {booking.typeOfRoom}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Number of Rooms:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        {booking.numOfRoom}
-                      </TableCell>
-                    </TableRow>
-                  </Table>
-                </Grid>
-              </Grid>
-
-              <Grid>
-                <Grid item className="HistoryPageText2">
-                  <Table className={classes.table}>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Subtotal:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        $ {booking.subtotal.toFixed(2)}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Discount:</TableCell>
-                      <TableCell align="right">
-                        $ {booking.discount.toFixed(2)}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Total:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        $ {(booking.subtotal - booking.discount).toFixed(2)}
-                      </TableCell>
-                    </TableRow>
-                  </Table>
-                </Grid>
-              </Grid>
-            </Grid>
-            {cancelAndChangeButtons}
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+              {cancelAndChangeButtons}
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </div>
       );
     });
 
