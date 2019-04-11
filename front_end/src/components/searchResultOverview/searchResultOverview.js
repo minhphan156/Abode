@@ -91,7 +91,7 @@ class searchResultOverview extends Component {
     this.handleClickToHotel = this.handleClickToHotel.bind(this);
     this.handleEqualityMenuOpen = this.handleEqualityMenuOpen.bind(this);
     this.handleEqualityMenuClose = this.handleEqualityMenuClose.bind(this);
-    this.handleResetFilters = this.handleResetFilters.bind(this);
+    this.handleResetSearchOverview = this.handleResetSearchOverview.bind(this);
 
     // Action calls
     this.handleFiltersApply = this.handleFiltersApply.bind(this);
@@ -106,7 +106,7 @@ class searchResultOverview extends Component {
   };
 
   // Used to reset <FiltersWindow /> upon pressing 'Search'
-  handleResetFilters = () => {
+  handleResetSearchOverview = () => {
     this.setState({
       star_rate: 0,
       guest_rate: 0,
@@ -118,7 +118,9 @@ class searchResultOverview extends Component {
       pool: false,
       pet_friendly: false,
       priceRangeEquality: "To",
-      priceRangeAnchorEl: null
+      priceRangeAnchorEl: null,
+      sortCategory: null,
+      sortOrder: "descending"
     });
   };
 
@@ -554,7 +556,9 @@ class searchResultOverview extends Component {
             <Divider />
             <ExpansionPanelDetails>
               <div style={{ width: "100%" }}>
-                <SearchWidget handleResetFilters={this.handleResetFilters} />
+                <SearchWidget
+                  handleResetSearchOverview={this.handleResetSearchOverview}
+                />
               </div>
             </ExpansionPanelDetails>
           </ExpansionPanel>

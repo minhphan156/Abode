@@ -73,9 +73,9 @@ class SearchWidget extends Component {
       star_rating: 0
     };
 
-    // Reset the <FiltersWindow/> component if the user is in /searchResultOverview page
-    if (this.props.handleResetFilters != null) {
-      this.props.handleResetFilters();
+    // Reset the <searchResultOverview/> component if the user is in /searchResultOverview page
+    if (this.props.handleResetSearchOverview != null) {
+      this.props.handleResetSearchOverview();
     }
 
     this.props.saveQuery(newQuery);
