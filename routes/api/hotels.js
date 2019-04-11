@@ -5,6 +5,49 @@ const checkAvailable = require("../../validation/checkAvailableHotels");
 var checkAvailability = require('../../validation/checkAvailibility.js')
 const Hotel = require("../../models/Hotel");
 
+// @route POST api/hotel/review
+// @desc Add a review and comment for a specific hotel
+router.post('/review',(req,res)=>{
+    ```
+    REQUEST SCHEMA
+
+    {
+        comment: String,
+        rating: int, // between 1 and 5 inclusive
+        hotelID: String
+    }
+    ```
+
+    const newReview = {
+        date: 'time',
+        comment: req.body.comment,
+        rating: req.body.rating
+    }
+
+    Hotel.findById(req.body.hotelID).then(doc => {
+        doc.reviews.push(req.body.comment);
+
+        var ratingAvg = doc.hdc_rating;
+        ratingAvg += req.body.rating;
+        ratingAvg /= (doc.reviews.length + 1)
+
+        doc.hdc_rating = ratingAvg;
+
+        doc.save((err) => {
+            return res.send(400).json({
+                err: "Cannot add review"
+            })
+        })
+
+
+    }).catch(err => {
+        return res.send(404).json({
+            err: "Cannot find Hotel"
+        })
+    });
+
+});
+
 // @route GET api/hotel/search
 // @desc Search Overview with Sorting and Filtering
 router.get('/search',(req,res)=>{
