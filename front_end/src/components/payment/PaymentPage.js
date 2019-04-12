@@ -58,14 +58,13 @@ class PaymentPage extends Component {
         paymentData.discount -
         this.state.combinedPaymentData.rewardDiscount) *
       this.props.bookingData.tempBookingData.taxRate;
-    this.state.combinedPaymentData.taxesAndFees = taxesAndFees.toFixed(2);
+    this.state.combinedPaymentData.taxesAndFees = taxesAndFees;
 
-    this.state.combinedPaymentData.total = (
+    this.state.combinedPaymentData.total =
       paymentData.subtotal -
       paymentData.discount -
       this.state.combinedPaymentData.rewardDiscount +
-      taxesAndFees
-    ).toFixed(2);
+      taxesAndFees;
 
     this.props.submitBooking(this.state.combinedPaymentData);
   }
