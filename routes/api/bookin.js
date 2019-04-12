@@ -8,6 +8,7 @@ const Customer = require("../../models/customer");
 const City = require("../../models/city")
 const User = require("../../models/User");
 
+
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
 
@@ -121,6 +122,12 @@ router.get("/guest-history", (req, res) => {
 // @desc Comfirmation page
 // @access public
 router.post("/confirm",(req,res)=>{
+    passport.authenticate("jwt",function(err, user, info){
+        // check if user is logged 
+        var isLogged = false
+        if(user){
+            isLogged = true
+        }
     var hotelID = req.body.hotelID;
     var roomType = req.body.roomType;
     var date = {
@@ -132,10 +139,12 @@ router.post("/confirm",(req,res)=>{
     var lastname = req.body.Lastname;
     var email = req.body.email;
     var subtotal = req.body.subtotal;
-    var discount = req.body.discount;
+    var discount = req.body.discount? req.body.discount: null ;
     var customerID;
     var bookingID = "tempBookingID"
-
+    var rewardPointsUsed = req.body.rewardPointsUsed ? req.body.rewardPointsUsed : null;
+    var rewardPointsEarned = req.body.rewardPointsEarned ? req.body.rewardPointsEarned : null;
+    var rewardDiscount = req.body.rewardDiscount ? req.body.rewardDiscount : null;
     //check this user visit our website before and get customerID
     Customer.find({email:email},function(err,doc){
         if(err) res.status(400).json(err);
@@ -166,11 +175,23 @@ router.post("/confirm",(req,res)=>{
             var destinationName = doc[0].city
             var address = doc[0].address
             var hotelImg = doc[0].images[0]
-            // check require room avaliablity 
-            if(roomType === 'single') arr = doc[0].roomTypeAndNumber.single;
-            else if(roomType === 'double') arr = doc[0].roomTypeAndNumber.double;
-            else if(roomType === 'king') arr = doc[0].roomTypeAndNumber.king;
-            else if(roomType === 'studio') arr = doc[0].roomTypeAndNumber.studio;
+            // check require room avaliablity
+            if(roomType === 'single') {
+                arr = doc[0].roomTypeAndNumber.single;
+                roomPrice = doc[0].price.singlePrice;
+            }
+            else if(roomType === 'double'){
+                arr = doc[0].roomTypeAndNumber.double;
+                roomPrice = doc[0].price.doublePrice;
+            } 
+            else if(roomType === 'king'){
+                arr = doc[0].roomTypeAndNumber.king;
+                roomPrice = doc[0].price.kingPrice;
+            } 
+            else if(roomType === 'studio'){
+                arr = doc[0].roomTypeAndNumber.studio;
+                roomPrice = doc[0].price.suitePrice;
+            } 
 
             // if the room is avaliable
             if(checkAvailability(arr,date,numberRooms,bookingID).length !==0){
@@ -180,6 +201,14 @@ router.post("/confirm",(req,res)=>{
                     if(err) res.status(400).json(err);
                     // if they dont, store the booking information into booking db
                     if(doc.length === 0){
+                        if(isLogged){
+                            if( rewardPointsUsed && user.rewardPoints < rewardPointsUsed){
+                                res.status(403).send({error: "not enought rewardPoints"})
+                                return
+                            }
+                            user.rewardPoints = user.rewardPoints - rewardPointsUsed
+                            user.save()
+                        }
                         const newBooking = new Booking({
                             customerID:customerID,
                             hotelID:hotelID,
@@ -188,9 +217,13 @@ router.post("/confirm",(req,res)=>{
                             typeOfRoom:roomType,
                             numOfRoom:numberRooms,
                             subtotal:subtotal,
+                            total:req.body.total,
                             discount:discount,
+                            rewardPointsUsed:rewardPointsUsed,
+                            rewardPointsEarned:rewardPointsEarned,
                         })
-                        
+                        // reward points for logged user
+                        // save new booking
                         newBooking.save().then((doc,err)=>{
                             if(err) res.status(400).json(err)
                             var rooms = []
@@ -200,6 +233,7 @@ router.post("/confirm",(req,res)=>{
                             }
                             newDoc.bookingStats += 1;
                             newDoc.save().catch(err=>res.send(err))
+                            // find the related city for hotel
                             var city = new RegExp(destinationName,'i')
                             City.find({name:city}).then(city=>{
                                 if(city.length === 0) {
@@ -210,6 +244,7 @@ router.post("/confirm",(req,res)=>{
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
+                                    nightlyRate:roomPrice,
                                     hotelAddress:address,
                                     hotelImg:hotelImg,
                                     destinationName:destinationName,
@@ -223,9 +258,15 @@ router.post("/confirm",(req,res)=>{
                                     email:email,
                                     subtotal:subtotal,
                                     discounts:discount,
-                                    rewardPointsUsed:doc.rewardPointsUsed,
-                                    rewardPointsEarned:doc.rewardPointsEarned,
-                                    reservedDate:doc.reservedDate
+                                    rewardPointsUsed:rewardPointsUsed,
+                                    rewardPointsEarned:rewardPointsEarned,
+                                    rewardDiscount:rewardDiscount,
+                                    reservedDate:doc.reservedDate,
+                                    numberOfNights:req.body.numberOfNights,
+                                    total:req.body.total,
+                                    taxesAndFees:req.body.taxesAndFees,
+                                    rewardDiscount:req.body.rewardPointsUsed,
+                                    code:200
                                 })
                             }).catch(err=>res.send({message:"cannot find city",code:404}))
                         })
@@ -233,7 +274,7 @@ router.post("/confirm",(req,res)=>{
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
                         res.send({message:"doubleBooking",
-                                                code:409})
+                                code:409})
                     }
                 })
             }
@@ -244,6 +285,7 @@ router.post("/confirm",(req,res)=>{
             }
         })
     }
+      })(req, res)    
 })
 
 
