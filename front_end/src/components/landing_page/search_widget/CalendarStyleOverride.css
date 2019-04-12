@@ -28,7 +28,9 @@
 /* is not yet selected. Edits the dates between your mouse and said date */
 .CalendarDay__hovered_span:hover,
 .CalendarDay__hovered_span {
-  background: rgb(14, 13, 13);
+  background: #a0cdfd;
+  color: white;
+
 }
 
 /* This is the month "February 2019" when opening the calendar */
