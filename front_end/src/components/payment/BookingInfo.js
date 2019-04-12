@@ -47,7 +47,7 @@ class BookingInfo extends Component {
       open: false,
       checkedA: false,
       actualRewardsDiscount: 0,
-      rewardsPoints: 9900, /// NEEDS TO BE LIVE DATA
+      rewardsPoints: 10000, /// NEEDS TO BE LIVE DATA
       possibleRewardsDiscount: 0
     };
   }
@@ -68,18 +68,20 @@ class BookingInfo extends Component {
             actualRewardsDiscount: this.state.possibleRewardsDiscount
           },
           () => {
-            var rewardsPointsEarned =
-              100 *
-              (this.props.bookingData.tempBookingData.subtotal +
-                (this.props.bookingData.tempBookingData.subtotal -
-                  this.props.bookingData.tempBookingData.discounts -
-                  this.state.actualRewardsDiscount) *
-                  0.1 -
+            var taxesAndFees =
+              (this.props.bookingData.tempBookingData.subtotal -
                 this.props.bookingData.tempBookingData.discounts -
-                this.state.actualRewardsDiscount);
+                this.state.actualRewardsDiscount) *
+              this.props.bookingData.tempBookingData.taxRate;
+            var total =
+              this.props.bookingData.tempBookingData.subtotal -
+              this.props.bookingData.tempBookingData.discounts -
+              this.state.actualRewardsDiscount +
+              taxesAndFees;
 
+            var rewardsPointsEarned = 10 * total;
             this.props.getDataFromBookingInfoPage(
-              Math.round(this.state.actualRewardsDiscount),
+              this.state.actualRewardsDiscount,
               Math.round(rewardsPointsEarned)
             );
           }
@@ -90,12 +92,18 @@ class BookingInfo extends Component {
             actualRewardsDiscount: 0
           },
           () => {
-            var rewardsPointsEarned =
-              100 *
-              (this.props.bookingData.tempBookingData.subtotal +
-                this.props.bookingData.tempBookingData.subtotal * 0.1 -
+            var taxesAndFees =
+              (this.props.bookingData.tempBookingData.subtotal -
                 this.props.bookingData.tempBookingData.discounts -
-                this.state.actualRewardsDiscount);
+                this.state.actualRewardsDiscount) *
+              this.props.bookingData.tempBookingData.taxRate;
+            var total =
+              this.props.bookingData.tempBookingData.subtotal -
+              this.props.bookingData.tempBookingData.discounts -
+              this.state.actualRewardsDiscount +
+              taxesAndFees;
+
+            var rewardsPointsEarned = 10 * total;
 
             this.props.getDataFromBookingInfoPage(
               this.state.actualRewardsDiscount,
@@ -303,7 +311,7 @@ class BookingInfo extends Component {
                     }}
                     className={classes.tableBlackBorder}
                   >
-                    Taxes and fees:
+                    Taxes ({tempBookingData.taxRate * 100}%) and fees:
                   </TableCell>
                   <TableCell
                     align="right"
@@ -317,7 +325,7 @@ class BookingInfo extends Component {
                       (tempBookingData.subtotal -
                         tempBookingData.discounts -
                         this.state.actualRewardsDiscount) *
-                      0.1
+                      tempBookingData.taxRate
                     ).toFixed(2)}
                   </TableCell>
                 </TableRow>
@@ -344,7 +352,7 @@ class BookingInfo extends Component {
                       (tempBookingData.subtotal -
                         tempBookingData.discounts -
                         this.state.actualRewardsDiscount) *
-                        0.1 +
+                        tempBookingData.taxRate +
                       tempBookingData.subtotal -
                       promotionDiscount -
                       this.state.actualRewardsDiscount
@@ -431,12 +439,12 @@ class BookingInfo extends Component {
                     }}
                     className={classes.tableNoBorder}
                   >
-                    $
+                    ${" "}
                     {(
                       (tempBookingData.subtotal -
                         tempBookingData.discounts -
                         this.state.possibleRewardsDiscount) *
-                        0.1 +
+                        tempBookingData.taxRate +
                       tempBookingData.subtotal -
                       promotionDiscount -
                       this.state.possibleRewardsDiscount

@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
 import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import moment from "moment";
+import taxrates from "../payment/taxrates.json";
 
 class IndivHotel extends Component {
   constructor() {
@@ -35,6 +36,17 @@ class IndivHotel extends Component {
     );
     var days = duration.asDays();
 
+    let taxRate = 12.22;
+
+    taxrates.name.filter(taxrate => {
+      if (
+        taxrate.label ===
+        this.props.individualHotelData.individualHotelData.city
+      ) {
+        taxRate = taxrate.rate;
+      }
+    });
+
     let tempBookingInfo = {
       name: this.props.individualHotelData.individualHotelData.name,
       address: this.props.individualHotelData.individualHotelData.address,
@@ -47,7 +59,8 @@ class IndivHotel extends Component {
       discounts: 50, // needs to be updated!!!
       hotelImage: this.props.individualHotelData.individualHotelData.img[0],
       numberOfNights: days,
-      subtotal: days * price * this.props.query.searchQuery.numberRooms
+      subtotal: days * price * this.props.query.searchQuery.numberRooms,
+      taxRate: taxRate
     };
     this.props.saveBooking(tempBookingInfo);
   }

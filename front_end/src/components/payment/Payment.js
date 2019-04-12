@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
 import moment from "moment";
+import { withRouter } from "react-router-dom";
 
 import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
@@ -32,8 +33,7 @@ class Payment extends Component {
       expMonth: "",
       expYear: "",
       cvv: "",
-      errors: {},
-      numDays: 0
+      errors: {}
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -49,6 +49,11 @@ class Payment extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.bookingData.bookingConfirmationData.code === 200) {
+      this.props.history.push("./confirmation");
+    }
+
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -71,8 +76,9 @@ class Payment extends Component {
       subtotal:
         this.props.bookingData.tempBookingData.pricePerNight *
         this.props.bookingData.tempBookingData.numRooms *
-        this.state.numDays,
-      discount: this.props.bookingData.tempBookingData.discounts
+        this.props.bookingData.tempBookingData.numberOfNights,
+      discount: this.props.bookingData.tempBookingData.discounts,
+      numberOfNights: this.props.bookingData.tempBookingData.numberOfNights
     };
 
     this.props.getDataFromPaymentPage(paymentData);
@@ -81,11 +87,6 @@ class Payment extends Component {
   render() {
     const { tempBookingData } = this.props.bookingData;
     const { errors } = this.state;
-
-    var duration = moment.duration(
-      tempBookingData.checkOut.diff(tempBookingData.checkIn)
-    );
-    this.state.numDays = duration.asDays();
 
     var numberOfRooms = Array.from(
       { length: tempBookingData.numRooms - 1 },
@@ -268,9 +269,11 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default injectStripe(
-  connect(
-    mapStateToProps,
-    {}
-  )(Payment)
+export default withRouter(
+  injectStripe(
+    connect(
+      mapStateToProps,
+      {}
+    )(Payment)
+  )
 );
