@@ -63,7 +63,7 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
         
 });
 
-// @route GET /api/booking/history
+// @route GET /api/booking/guest-history
 // @desc History page
 // @access public
 router.get("/guest-history", (req, res) => {
@@ -76,7 +76,8 @@ router.get("/guest-history", (req, res) => {
         if(err) return res.status(404).json(err);
 
         Customer.findById(book.customerID).then((custDoc) => {
-
+            console.log("doc:", custDoc.Lastname)
+            console.log("req",lastName)
             // Block request if the last name does not match the booking
             if(custDoc.Lastname !== lastName) return res.status(403).json({
                 err: true
