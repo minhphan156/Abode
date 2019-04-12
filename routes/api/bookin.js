@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 
 const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
@@ -9,6 +10,112 @@ const User = require("../../models/User");
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
+
+// @route GET /api/booking/history
+// @desc History page
+// @access private
+router.get("/history", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+    var historyPack = [];
+
+            // Get the User being requested from the JWT token
+            // Get all the Bookings that User has made
+            Booking.find({customerID: req.user.customerID}, (err, bookings) => {
+                if(err) return res.status(400).json(err);
+
+                    // Get the Hotel info of each of their Bookings
+                    bookings.map((element, i) => { 
+
+                        Hotel.findById(element.hotelID, (err, hotelDoc) => {
+                            if(err) return res.status(400).json(err)
+
+                            // Add the hotel details and relevant booking details as a history object
+                            historyPack.push(
+                            {
+                                bookingID: element._id,
+                                hotelName: hotelDoc.name,
+                                img: hotelDoc.images[0],
+                                city: hotelDoc.city,
+                                check_in_date: element.check_in_date,
+                                check_out_date: element.check_out_date,
+                                typeOfRoom: element.typeOfRoom,
+                                numOfRoom: element.numOfRoom,
+                                status: element.status,
+                                changed: element.changed,
+                                new_check_in_date: element.new_check_in_date,
+                                new_check_out_date: element.new_check_out_date,
+                                subtotal: element.subtotal,
+                                total: element.total,
+                                discount: element.discount,
+                                rewardPointsUsed:element.rewardPointsUsed,
+                                rewardPointsEarned:element.rewardPointsEarned,
+                                reservedDate:element.reservedDate
+                            });
+
+                            // Check if we've finished packing all the history objects
+                            if (i === (bookings.length - 1)) return res.status(200).send(historyPack);
+
+                        });
+
+                    }); // end map()
+
+            }); // end Booking.find
+        
+});
+
+// @route GET /api/booking/guest-history
+// @desc History page
+// @access public
+router.get("/guest-history", (req, res) => {
+    const bookingID = req.body.bookingID;
+    const lastName = req.body.lastName;
+    
+    var historyPack = {};
+
+    Booking.findById(bookingID, (err, book) => {
+        if(err) return res.status(404).json(err);
+
+        Customer.findById(book.customerID).then((custDoc) => {
+            console.log("doc:", custDoc.Lastname)
+            console.log("req",lastName)
+            // Block request if the last name does not match the booking
+            if(custDoc.Lastname !== lastName) return res.status(403).json({
+                err: true
+            })
+
+            // User checking history has been authorized
+            // Proceed with preparing history package
+            historyPack.bookingID = book._id,
+            historyPack.check_in_date = book.check_in_date;
+            historyPack.check_out_date = book.check_out_date;
+            historyPack.typeOfRoom = book.typeOfRoom;
+            historyPack.numOfRoom = book.numOfRoom;
+            historyPack.status = book.status;
+            historyPack.changed = book.changed;
+            historyPack.new_check_in_date = book.new_check_in_date;
+            historyPack.new_check_out_date = book.new_check_out_date;
+            historyPack.subtotal = book.subtotal;
+            historyPack.discount = book.discount;
+            historyPack.err = false;
+
+            Hotel.findById(book.hotelID).then(hotelDoc => {
+                // Get the name, city and image of the hotel the User is staying at
+                historyPack.hotelName = hotelDoc.name;
+                historyPack.img = hotelDoc.images[0];
+                historyPack.city = hotelDoc.city;
+
+                // Give frontend the goods
+                return res.status(200).send(historyPack);
+            });
+
+        }).catch((err) => {
+            
+            if(err) return res.status(404).json(err);
+
+        });
+
+    });
+});
 
 // @route POST /api/booking/confirm
 // @desc Comfirmation page
