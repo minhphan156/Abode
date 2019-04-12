@@ -1,0 +1,30 @@
+#DisclaimerContainer {
+  height: 400px;
+  /* background-color: #fbfbfd; */
+}
+
+#DisclaimerContainerTitle {
+    color: #0c4b78;
+    font-size: 34px;
+    font-weight: 900;
+    position: relative;
+    top: 45px;
+    text-align: center;
+  }
+
+  #DisclaimerContainerText {
+    color: #0c4b78;
+    font-size: 24px;
+    font-weight: 400;
+    position: relative;
+    top: 45px;
+    text-align: center;
+  }
+
+img.SJSU-icon {
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+  width: 500px;
+  padding: 5px;
+}

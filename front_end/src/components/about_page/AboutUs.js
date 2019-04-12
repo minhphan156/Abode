@@ -130,7 +130,7 @@ export default (class aboutUs extends Component {
               </Grid>
               <Grid item>
                 <img className="aboutPage-images" src={Yuta} alt="" />
-                <br /> <div id="AboutPageNames">Yuta</div>{" "}
+                <br /> <div id="AboutPageNames">Yuta Sugiura</div>{" "}
                 <div id="AboutPageRoles">Front-End Developer</div>
               </Grid>
             </Grid>
