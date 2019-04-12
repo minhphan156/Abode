@@ -18,10 +18,8 @@ const checkAvalibity = require("../../validation/checkAvailableHotels");
 router.post("/confirm",(req,res)=>{
     passport.authenticate("jwt",function(err, user, info){
         // check if user is logged 
-        console.log(req.body)
         var isLogged = false
         if(user){
-            console.log(user)
             isLogged = true
         }
     var hotelID = req.body.hotelID;
@@ -72,7 +70,6 @@ router.post("/confirm",(req,res)=>{
             var address = doc[0].address
             var hotelImg = doc[0].images[0]
             // check require room avaliablity
-            console.log(destinationName) 
             if(roomType === 'single') {
                 arr = doc[0].roomTypeAndNumber.single;
                 roomPrice = doc[0].price.singlePrice;
