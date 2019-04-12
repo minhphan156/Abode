@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 
 const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
@@ -13,16 +14,13 @@ const checkAvalibity = require("../../validation/checkAvailableHotels");
 // @route GET /api/booking/history
 // @desc History page
 // @access private
-router.get("/history", (req, res) => {
-    const userEmail = req.body.email;
+router.get("/history", passport.authenticate("jwt", { session: false }), (req, res) => {
+
     var historyPack = [];
 
-        // Get the User being requested
-        User.findOne({email: userEmail}, (err, doc) => {
-            if(err) return res.status(400).json(err)
-
+            // Get the User being requested from the JWT token
             // Get all the Bookings that User has made
-            Booking.find({customerID: doc.customerID}, (err, bookings) => {
+            Booking.find({customerID: req.user.customerID}, (err, bookings) => {
                 if(err) return res.status(400).json(err);
 
                     // Get the Hotel info of each of their Bookings
@@ -46,7 +44,11 @@ router.get("/history", (req, res) => {
                                 new_check_in_date: element.new_check_in_date,
                                 new_check_out_date: element.new_check_out_date,
                                 subtotal: element.subtotal,
-                                discount: element.discount
+                                total: element.total,
+                                discount: element.discount,
+                                rewardPointsUsed:element.rewardPointsUsed,
+                                rewardPointsEarned:element.rewardPointsEarned,
+                                reservedDate:element.reservedDate
                             });
 
                             // Check if we've finished packing all the history objects
@@ -57,8 +59,6 @@ router.get("/history", (req, res) => {
                     }); // end map()
 
             }); // end Booking.find
-
-        }); // end User.findOne()
         
 });
 
