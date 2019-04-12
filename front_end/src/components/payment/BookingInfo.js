@@ -47,7 +47,7 @@ class BookingInfo extends Component {
       open: false,
       checkedA: false,
       actualRewardsDiscount: 0,
-      rewardsPoints: 10000, /// NEEDS TO BE LIVE DATA
+      rewardsPoints: this.props.auth.user.rewardPoints,
       possibleRewardsDiscount: 0
     };
   }
@@ -311,7 +311,7 @@ class BookingInfo extends Component {
                     }}
                     className={classes.tableBlackBorder}
                   >
-                    Taxes ({tempBookingData.taxRate * 100}%) and fees:
+                    Taxes and fees ({tempBookingData.taxRate * 100}%):
                   </TableCell>
                   <TableCell
                     align="right"

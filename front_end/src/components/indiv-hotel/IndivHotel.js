@@ -47,6 +47,13 @@ class IndivHotel extends Component {
       }
     });
 
+    let calculateDiscount = 0;
+    if (this.props.individualHotelData.individualHotelData.discount > 0) {
+      calculateDiscount =
+        (1 - this.props.individualHotelData.individualHotelData.discount) *
+        (days * price * this.props.query.searchQuery.numberRooms);
+    }
+
     let tempBookingInfo = {
       name: this.props.individualHotelData.individualHotelData.name,
       address: this.props.individualHotelData.individualHotelData.address,
@@ -55,11 +62,12 @@ class IndivHotel extends Component {
       checkOut: this.props.query.searchQuery.checkOut,
       numRooms: this.props.query.searchQuery.numberRooms,
       pricePerNight: price,
-      // discounts: this.props.individualHotelData.individualHotelData.discount,
-      discounts: 50, // needs to be updated!!!
       hotelImage: this.props.individualHotelData.individualHotelData.img[0],
       numberOfNights: days,
       subtotal: days * price * this.props.query.searchQuery.numberRooms,
+      discounts: calculateDiscount,
+      // discounts: 50,
+
       taxRate: taxRate
     };
     this.props.saveBooking(tempBookingInfo);
