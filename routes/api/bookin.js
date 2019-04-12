@@ -32,6 +32,7 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                             // Add the hotel details and relevant booking details as a history object
                             historyPack.push(
                             {
+                                bookingID: element._id,
                                 hotelName: hotelDoc.name,
                                 img: hotelDoc.images[0],
                                 city: hotelDoc.city,
@@ -83,6 +84,7 @@ router.get("/guest-history", (req, res) => {
 
             // User checking history has been authorized
             // Proceed with preparing history package
+            historyPack.bookingID = book._id,
             historyPack.check_in_date = book.check_in_date;
             historyPack.check_out_date = book.check_out_date;
             historyPack.typeOfRoom = book.typeOfRoom;
