@@ -132,15 +132,15 @@ class HistoryOverview extends Component {
     this.handleReviewInput = this.handleReviewInput.bind(this);
   }
 
-  componentWillMount() {
-    const { review } = this.props.review;
-    if (review) {
-      this.setState({
-        starReview: review.starReview,
-        comment: review.comment
-      });
-    }
-  }
+  // componentWillMount() {
+  //   const { review } = this.props.review;
+  //   if (review) {
+  //     this.setState({
+  //       starReview: review.starReview,
+  //       comment: review.comment
+  //     });
+  //   }
+  // }
 
   componentDidMount() {
     this.props.getCurrentProfile();
@@ -178,7 +178,7 @@ class HistoryOverview extends Component {
 
   render() {
     const width = this.props.width;
-    const { review } = this.props.review;
+    // const { review } = this.props.review;
     const { classes, profile } = this.props;
     let bookings;
     let displayChangeChip;
@@ -325,7 +325,7 @@ class HistoryOverview extends Component {
                 icon={<DoneIcon />}
               />
               {isWidthDown("xs", width) ? ( // render this if it is opened on a phone
-                review.comment === "" && review.starReview === 0 ? (
+                booking.comment === "" && booking.starReview === 0 ? (
                   <Button
                     variant="contained"
                     size="small"
@@ -362,7 +362,7 @@ class HistoryOverview extends Component {
                 icon={<ExitIcon />}
               />
               {isWidthDown("xs", width) ? ( // render this if it is opened on a phone
-                review.comment === "" && review.starReview === 0 ? (
+                booking.comment === "" && booking.starReview === 0 ? (
                   <Button
                     variant="contained"
                     size="small"
@@ -554,7 +554,8 @@ class HistoryOverview extends Component {
                       {booking.status ? ( // only render this if customer checked in
                         isWidthDown("xs", width) ? (
                           "" // dont render here if it is opened on the phone
-                        ) : review.comment === "" && review.starReview === 0 ? ( // if reviews were left, change to ReviewedButton
+                        ) : booking.comment === "" &&
+                          booking.starReview === 0 ? ( // if reviews were left, change to ReviewedButton
                           <Button
                             variant="contained"
                             size="small"
@@ -693,8 +694,8 @@ HistoryOverview.propTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  history: state.history,
-  review: state.review
+  history: state.history
+  // review: state.review
 });
 
 export default connect(

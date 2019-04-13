@@ -2,9 +2,9 @@ import {
   GET_PROFILE,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  GET_HISTORY
+  GET_HISTORY,
+  PUBLISH_REVIEW
 } from "../actions/types";
-
 
 const initialState = {
   profile: null,
@@ -24,10 +24,12 @@ const initialState = {
       new_check_in_date: null,
       new_check_out_date: null,
       subtotal: 500.0,
-      discount: 10
-    }  
+      discount: 10,
+      starReview: 0,
+      comment: ""
+    }
   ]
-  };
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -52,6 +54,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: null
+      };
+    case PUBLISH_REVIEW:
+      return {
+        ...state,
+        starReview: action.payload.starReview,
+        comment: action.payload.comment
       };
     default:
       return state;
