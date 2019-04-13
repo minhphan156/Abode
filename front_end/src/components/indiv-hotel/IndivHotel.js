@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
+import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import moment from "moment";
 import Button from "@material-ui/core/Button";
 
@@ -20,6 +21,12 @@ class IndivHotel extends Component {
     this.state = {};
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
+
+  /*  TODO: Make backend API that searches for an individual hotel using its ID
+  componentDidMount = () => {
+    this.props.getIndividualHotelResult(this.props.match.params.hotelID);
+  };
+  */
 
   saveBookingInfo(roomTypeSelected, price) {
     // IN HERE WE SAVE ALL THE INFO WE NEED FOR THE PAYMENT PAGE
@@ -622,7 +629,7 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { saveBooking }
+  { saveBooking, getIndividualHotelResult }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"

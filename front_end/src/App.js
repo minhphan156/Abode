@@ -79,6 +79,7 @@ class App extends Component {
             <Route exact path="/history-search" component={HistorySearch}/>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            {/*<Route exact path="/indiv-hotel/:hotelID" component={IndivHotel} />*/}
             <Route exact path="/indiv-hotel" component={IndivHotel} />
             <Route exact path="/not-found/:attempt" component={NotFound} />
 
