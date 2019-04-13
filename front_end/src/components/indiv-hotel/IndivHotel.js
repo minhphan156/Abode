@@ -10,6 +10,9 @@ import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
 import moment from "moment";
+import Button from "@material-ui/core/Button";
+
+import "./indivHotel.css";
 
 class IndivHotel extends Component {
   constructor() {
@@ -55,7 +58,7 @@ class IndivHotel extends Component {
     } else {
       const { individualHotelData } = this.props.individualHotelData;
       return (  
-          <div style={{ margin:"auto", minHeight:window.innerHeight-180}}>
+          <div style={{ marginLeft: 40, marginRight: 40, minHeight:window.innerHeight-180}}>
           {individualHotelData.hotelsRate === "" ? (
             <div class="d-flex justify-content-center">
             <div class="spinner-boarder text-primary" role="status">
@@ -65,7 +68,6 @@ class IndivHotel extends Component {
           ):(
             <div
             id="whole page"
-            className="container"
             style={{ margin:'auto'}}
             >
             <div className="d-flex justify-content-center mt-3">
@@ -75,22 +77,21 @@ class IndivHotel extends Component {
             </div>
             <div id="hotel info" className="row" style={{marginTop:'3%'}}>
             <div id="hotel Name Address" className="col-lg-10 col-sm-12 col-12 text-left">
-              <h1
-                className="display-4 text-left"
-                style={{ fontSize: 40, fontWeight: "bold" }}
+              <p
+                class = "hotelName"
               >
                 {individualHotelData.name}
-              </h1>
-              <h2
-                className="display-4 test-left"
-                style={{ fontSize: 24, color: "#808080" }}
+              </p>
+              <p
+                class="hotelAdd"
               >
                 {individualHotelData.address}
-              </h2>
+              </p>
             </div>
             <div id="hotel ratings" className="col-lg-2 col-sm-12 col-12">
+            <div class = "hotelStar">
               <div id="hotel star rating" className="row">
-                <div className="col-lg-11 col-sm-6 col-6">
+                <div className="col-lg-11 col-sm-12 col-12">
                   <h1
                     className="display-4"
                     style={{ fontSize: 24, color: "#FFD700" }}
@@ -114,16 +115,141 @@ class IndivHotel extends Component {
                 </div>
              </div>
              </div>
+
+             <div class="hotelStarShrt">
+             <div id="hotel star rating" className="row">
+                <div className="col-lg-11 col-sm-12 col-12">
+                  <h1
+                    className="display-4"
+                    style={{ fontSize: 18, color: "#FFD700" }}
+                  >
+                    {individualHotelData.star_rating}-star hotel
+                  </h1>
+                <div className="col-lg-1 col-sm-6 col-6" />
+                </div>
+              </div>
+              <div id="hotel stars" className="row">
+                <div className="col-lg-1 col-sm-12 col-12" />
+                <div className="col-lg-11 col-sm-12 col-12">
+                  <ReactStars
+                    count={5}
+                    value={individualHotelData.star_rating}
+                    size={22}
+                    edit={false}
+                    color2={"#FFD700"}
+                    color1={"#dcdcdc"}
+                  />
+                </div>
+             </div>
+             </div>
+             </div>
             </div>
 
+            <div class = "priceAndRateHeader" style={{marginTop:'2%'}}>
+                <h2
+                  className="text-center"
+                  style={{ fontSize: 40, color: "#3ba711" }}
+                >
+                  ${individualHotelData.price.singlePrice}
+                </h2>
+                <div>
+                <AnchorLink href="#table1">
+                  <Button
+                    class="seeRoomBtn"
+                  >
+                    See Rooms
+                  </Button>
+                </AnchorLink>
+                </div>
+
+                <div class="singleRate">
+                <div className="row" style={{ marginTop: "2%" }}>
+                  <div className="col">
+                    <div class="otherRating">
+                      <img
+                        style={{ width: "20%", height: "18%" }}
+                        src="https://cdn-b.william-reed.com/var/wrbm_gb_hospitality/storage/images/7/8/9/3/673987-1-eng-GB/TripAdvisor-being-used-to-blackmail-hoteliers.jpg"
+                      />{" "}
+                      Trip Advisor
+                    </div>
+
+                    <ReactStars
+                      count={5}
+                      value={individualHotelData.ta_rating}
+                      size={22}
+                      edit={false}
+                      color2={"#00af87"}
+                      color1={"#dcdcdc"}
+                    />
+                  </div>
+                  <div className="col">
+                    <div class="otherRating">
+                      <img
+                        style={{ width: "14%", height: "5%" }}
+                        src="https://a.cdn-hotels.com/da/assets/s/63.0/images/brands/hcom/logos/logo-social.jpg"
+                      />{" "}
+                      Hotels.com
+                    </div>
+                    <ReactStars
+                      count={5}
+                      value={individualHotelData.hdc_rating / 2}
+                      size={22}
+                      edit={false}
+                      color2={"#d32f2f"}
+                      color1={"#dcdcdc"}
+                    />
+                  </div>
+                </div>
+                </div>
+
+                <div class="doubleRate">
+                  <div className="container" style={{marginTop:'0'}}>
+                  <div className="row">
+                    <div class="otherRating">
+                      <img
+                        style={{ width: "13%", height: "65%" }}
+                        src="https://cdn-b.william-reed.com/var/wrbm_gb_hospitality/storage/images/7/8/9/3/673987-1-eng-GB/TripAdvisor-being-used-to-blackmail-hoteliers.jpg"
+                      />{" "}
+                      Trip Advisor
+                    </div>
+
+                    <ReactStars
+                      count={5}
+                      value={individualHotelData.ta_rating}
+                      size={20}
+                      edit={false}
+                      color2={"#00af87"}
+                      color1={"#dcdcdc"}
+                    />
+                  </div>
+                  <div className="row">
+                    <div class="otherRating">
+                      <img
+                        style={{ width: "11%", height: "60%" }}
+                        src="https://a.cdn-hotels.com/da/assets/s/63.0/images/brands/hcom/logos/logo-social.jpg"
+                      />{" "}
+                      Hotels.com
+                    </div>
+                    <ReactStars
+                      count={5}
+                      value={individualHotelData.hdc_rating / 2}
+                      size={20}
+                      edit={false}
+                      color2={"#d32f2f"}
+                      color1={"#dcdcdc"}
+                    />
+                  </div>
+                </div>
+                </div>
+              </div>
 
             <div className="row">
               <div
                 id="pics and amentities"
                 className="col-lg-8 col-sm-12 col-12"
-                style={{ marginLeft: "0", marginTop: "30px" }}
+                style={{ marginLeft: "0", marginTop: "3%" }}
               >
-                <div id="pics sliding show" className="container">
+                <div id="pics sliding show">
                   <div
                     id="carouselExampleIndicators"
                     className="carousel slide w-100 h-50"
@@ -252,31 +378,34 @@ class IndivHotel extends Component {
                 </div>
               </div>
 
-              <div className="col" style={{ marginTop: "2%", height:'590px'}}>
+              <div className="col maps" 
+                   style={{ marginTop: "3%", overflow:'hidden'}}
+              >
+              <div class = "priceAndRate">
                 <h2
                   className="text-center"
                   style={{ fontSize: 40, color: "#3ba711" }}
                 >
                   ${individualHotelData.price.singlePrice}
                 </h2>
+                <div>
                 <AnchorLink href="#table1">
-                  <button
-                    type="button"
-                    class="btn btn-primary h-10"
-                    style={{ width: "100%" }}
+                  <Button
+                    class="seeRoomBtn"
                   >
                     See Rooms
-                  </button>
+                  </Button>
                 </AnchorLink>
+                </div>
                 <div className="row" style={{ marginTop: "2%" }}>
                   <div className="col">
-                    <h3 className="text-left" style={{ fontSize: 20 }}>
+                    <div class="otherRating">
                       <img
                         style={{ width: "20%", height: "18%" }}
                         src="https://cdn-b.william-reed.com/var/wrbm_gb_hospitality/storage/images/7/8/9/3/673987-1-eng-GB/TripAdvisor-being-used-to-blackmail-hoteliers.jpg"
                       />{" "}
                       Trip Advisor
-                    </h3>
+                    </div>
 
                     <ReactStars
                       count={5}
@@ -288,13 +417,13 @@ class IndivHotel extends Component {
                     />
                   </div>
                   <div className="col">
-                    <h3 className="text-left" style={{ fontSize: 20 }}>
+                    <div class="otherRating">
                       <img
                         style={{ width: "14%", height: "5%" }}
                         src="https://a.cdn-hotels.com/da/assets/s/63.0/images/brands/hcom/logos/logo-social.jpg"
                       />{" "}
                       Hotels.com
-                    </h3>
+                    </div>
                     <ReactStars
                       count={5}
                       value={individualHotelData.hdc_rating / 2}
@@ -305,6 +434,7 @@ class IndivHotel extends Component {
                     />
                   </div>
                 </div>
+                </div>
                 <div className='row'>
                 <Map
                   google={this.props.google}
@@ -314,10 +444,9 @@ class IndivHotel extends Component {
                     lng: individualHotelData.alt
                   }}
                   style={{
-                    height: "70%",
+                    height: "100%",
                     width: "100%",
-                    marginTop: "1%",
-                    align: "left"
+                    marginTop: "1%"
                   }}
                 >
                   <Marker
@@ -343,7 +472,7 @@ class IndivHotel extends Component {
             <section id="table1">
               <table
                 class="table table-bordered"
-                style={{ marginTop: "3%", position: "relative"}}
+                style={{ marginTop: "3%"}}
               >
                 <thead>
                   <tr>
@@ -370,11 +499,16 @@ class IndivHotel extends Component {
                           }
                           to="/payment"
                         >
-                          <button type="button" 
-                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          <Button
+                            class="bookBtn"
                           >
                             Book Single Room
-                          </button>
+                          </Button>
+                          <Button
+                            class="bookBtnShrt"
+                          >
+                            Book Single
+                          </Button>
                         </Link>
                       </td>
                     </tr>
@@ -396,11 +530,16 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                          <button type="button" 
-                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          <Button
+                            class="bookBtn"
                           >
                             Book Double Room
-                          </button>
+                          </Button>
+                          <Button
+                            class="bookBtnShrt"
+                          >
+                            Book Double
+                          </Button>
                         </Link>
                       </td>
                     </tr>
@@ -422,11 +561,16 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                          <button type="button" 
-                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          <Button
+                            class="bookBtn"
                           >
                             Book King Room
-                          </button>
+                          </Button>
+                          <Button
+                            class="bookBtnShrt"
+                          >
+                            Book King
+                          </Button>
                         </Link>
                       </td>
                     </tr>
@@ -448,11 +592,16 @@ class IndivHotel extends Component {
                             )
                           }
                         >
-                          <button type="button" 
-                                  class="btn btn-primary h-100 w-100 col-lg-6"
+                          <Button
+                            class="bookBtn"
                           >
                             Book Studio Suite
-                          </button>
+                          </Button>
+                          <Button
+                            class="bookBtnShrt"
+                          >
+                            Book Studio
+                          </Button>
                         </Link>
                       </td>
                     </tr>
