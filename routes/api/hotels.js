@@ -121,6 +121,7 @@ router.get('/search',(req,res)=>{
         }
         resultPack = {
             "lastIndex": startIndex,
+            "pageNumber": req.query.pageNumber,
             "nextExists": (doc[startIndex] !== undefined) ? true : false,
             "results": result
         }
