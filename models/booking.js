@@ -55,6 +55,10 @@ const BookingSchema = new Schema({
         type:Number,
         default:0
     },
+    total:{
+        type:Number,
+        required:true
+    },
     rewardPointsUsed:{
         type:Number,
         default:0
