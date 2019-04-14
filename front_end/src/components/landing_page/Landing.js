@@ -37,7 +37,7 @@ let styles = {
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%"
   },
   avatar: {
     backgroundColor: "#a0cdfd",
@@ -48,7 +48,6 @@ let styles = {
     display: "flex"
   },
   inspirationBox: {
-    // alignSelf: "center",
     background: "rgba(0,0,0,1)",
     padding: 5,
     width: "25%"
@@ -91,7 +90,7 @@ class Landing extends Component {
     this.handleClickChooseDeal = this.handleClickChooseDeal.bind(this);
   }
 
-  // Opens a pop and prompts calendar and room #
+  // sets state to be displayed in the deals pop-up
   handleClickChooseDeal = (hotel, img) => event => {
     event.preventDefault();
     this.setState({ chosenDealImage: img });
@@ -122,11 +121,11 @@ class Landing extends Component {
   };
 
   render() {
-    // TODO: Create slideshow that dynamically changes based on featured cities
     if (this.props.landing != null) {
       let { classes, landing, width } = this.props;
 
-      let deals1a = {
+      // Hotel Deals of the Week
+      let deals1 = {
         CityAbbr: "LA",
         HotelName: "Freehand Los Angeles",
         CityName: "Los Angeles, CA",
@@ -139,7 +138,7 @@ class Landing extends Component {
         GuestRating: 8.8,
         LowPrice: 229
       };
-      let deals2a = {
+      let deals2 = {
         CityAbbr: "NYC",
         HotelName: "DoubleTree by Hilton New York Times Square West",
         CityName: "New York City, NY",
@@ -153,7 +152,7 @@ class Landing extends Component {
         GuestRating: 8,
         LowPrice: 367
       };
-      let deals3a = {
+      let deals3 = {
         CityAbbr: "MIA",
         HotelName: "The Setai",
         CityName: "Miami, FL",
@@ -168,7 +167,7 @@ class Landing extends Component {
         LowPrice: 900
       };
 
-      let dealsArr = [deals1a, deals2a, deals3a];
+      let dealsArr = [deals1, deals2, deals3];
 
       // topDealMarkup is the collection of cards for hotel deals of the week
       let topDealsMarkup = dealsArr.map(deal => {
@@ -377,7 +376,7 @@ class Landing extends Component {
             </div>
           </div>
 
-          {/* / THIS IS A POP UP IF A USER CLICKS ON "BOOK NOW" FOR THE HOTEL DEALS */}
+          {/* <Dialog> is a material UI pop-up window. It appears if the user clicks on "Book now" for the hotel deals */}
           <Dialog
             maxWidth={"md"}
             scroll={"body"}

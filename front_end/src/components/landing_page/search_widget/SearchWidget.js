@@ -98,6 +98,8 @@ class SearchWidget extends Component {
   render() {
     const { classes } = this.props;
 
+    // Search widget can be displayed regular (Destination, Calendar, Rooms)
+    // or it can be displayed as a pop up of the deals of the week (Calendar, Rooms)
     if (this.props.dealPage) {
       this.state.destinationName = this.props.dealDestination;
 

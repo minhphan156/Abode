@@ -61,12 +61,6 @@
   animation-fill-mode: forwards;
 }
 
-.oldPrice {
-  font-size: 19px;
-  color: red;
-  text-decoration: line-through;
-}
-
 .newPrice {
   font-size: 18px;
   color: green;
