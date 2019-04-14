@@ -80,45 +80,152 @@
   margin-top: 12px;
 }
 
-.imageContainer {
-  position: relative;
-  margin: 10px;
-  color: white;
+/* X-Small Screen */
+@media screen and (max-width: 600px) {
+  .text-block-cities {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .text-block-cities-small {
+    position: absolute;
+    bottom: 1px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    margin-bottom: 0;
+    padding-top: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 15px;
+  }
+
+  .imageContainer {
+    position: relative;
+    margin: 5px;
+    color: white;
+  }
+
+  .imageTextCityTitle {
+    font-size: 13px;
+  }
+
+  .imageTextAttraction {
+    font-size: 10px;
+  }
+  .imageTextBookings {
+    font-size: 10px;
+  }
+  .imageTextCity {
+    display: none;
+    font-size: 10px;
+  }
+
+  .dealPopUpTitle {
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .BookingInfoTitle {
+    color: #0c4b78;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .dealImage {
+    width: 90%;
+  }
 }
 
-.imageTextCity {
-  font-size: 20px;
-}
+/* NOT X-Small Screen */
+@media screen and (min-width: 600px) {
+  .text-block-cities {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    padding-top: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
-.text-block-cities {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(0, 0, 0, 0.65);
-  color: white;
-  padding-top: 7px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
+  .text-block-cities-small {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    padding-top: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
-.text-block-cities-small {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(0, 0, 0, 0.65);
-  color: white;
-  padding-top: 7px;
-  padding-left: 20px;
-  padding-right: 20px;
+  .imageContainer {
+    position: relative;
+    margin: 10px;
+    color: white;
+  }
+
+  .imageTextCityTitle {
+    font-size: 20px;
+  }
+
+  .imageTextAttraction {
+    font-size: 16px;
+  }
+
+  .imageTextBookings {
+    font-size: 14px;
+  }
+
+  .imageTextCity {
+    font-size: 14px;
+  }
+
+  .dealPopUpTitle {
+    color: black;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .BookingInfoTitle {
+    color: #0c4b78;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .dealImage {
+    width: 60%;
+  }
 }
 
 .text-block-inspiration {
   position: absolute;
-  bottom: 0px;
+  bottom: -30px;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.65);
   color: white;
   padding-top: 7px;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.buttonCheckAvailability {
+  border: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  height: 38px;
+  border-radius: 12px;
+  background-color: #0c4b78;
+  color: white;
+  width: 150px;
 }

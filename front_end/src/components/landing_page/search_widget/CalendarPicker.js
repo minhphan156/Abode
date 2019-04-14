@@ -36,7 +36,9 @@ class CalendarPicker extends Component {
         <DateRangePicker
           startDatePlaceholderText={"Check In"}
           endDatePlaceholderText={"Check Out"}
-          withFullScreenPortal={width == "xs" ? true : false}
+          withFullScreenPortal={
+            width == "xs" && !this.props.dealPage ? true : false
+          }
           numberOfMonths={
             width == "xs" || width == "sm" || width == "md" ? 1 : 2
           }

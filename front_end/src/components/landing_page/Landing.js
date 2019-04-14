@@ -8,6 +8,10 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import SearchWidget from "./search_widget/SearchWidget";
 import ReactStars from "react-stars";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 // Animation CSS imports
 import "./Landing.css";
@@ -25,6 +29,9 @@ import {
 
 // Component CSS
 let styles = {
+  root: {
+    height: 90
+  },
   card: {
     maxWidth: 400
   },
@@ -33,7 +40,9 @@ let styles = {
     paddingTop: "56.25%" // 16:9
   },
   avatar: {
-    backgroundColor: "#B22222"
+    backgroundColor: "#a0cdfd",
+    height: 48,
+    width: 48
   },
   centerFlexbox: {
     display: "flex"
@@ -65,14 +74,39 @@ let styles = {
   },
   cardMedia: {
     height: "25vh"
+  },
+  dealImageSmall: {
+    width: 500
+  },
+  dealImageSmaller: {
+    width: 200
   }
 };
 
 class Landing extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = { open: false, chosenDealImage: null, chosenDealHotel: null };
+
+    this.handleClickChooseDeal = this.handleClickChooseDeal.bind(this);
   }
+
+  // Opens a pop and prompts calendar and room #
+  handleClickChooseDeal = (hotel, img) => event => {
+    event.preventDefault();
+    this.setState({ chosenDealImage: img });
+    this.setState({ chosenDealHotel: hotel });
+
+    this.handleClickOpen();
+  };
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   componentDidMount = () => {
     // during logged in , if we change url to landing/home it will redirect to homepage
@@ -107,7 +141,7 @@ class Landing extends Component {
       };
       let deals2a = {
         CityAbbr: "NYC",
-        HotelName: "DoubleTree New York Time Square West",
+        HotelName: "DoubleTree by Hilton New York Times Square West",
         CityName: "New York City, NY",
         Image:
           "https://thumbnails.trvl-media.com/CLyK-qc_c1FqmYigHzHpfxL52y8=/773x530/smart/filters:quality(60)/images.trvl-media.com/hotels/17000000/16260000/16255100/16255092/0697a962_z.jpg",
@@ -134,22 +168,16 @@ class Landing extends Component {
         LowPrice: 900
       };
 
-      let {
-        header,
-        deals1,
-        deals2,
-        deals3,
-        featureDestination
-      } = this.props.landing;
-
       let dealsArr = [deals1a, deals2a, deals3a];
 
+      // topDealMarkup is the collection of cards for hotel deals of the week
       let topDealsMarkup = dealsArr.map(deal => {
         if (deal != null) {
           return (
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
               <Card className={classes.card}>
                 <CardHeader
+                  className={classes.root}
                   avatar={
                     <Avatar aria-label="City" className={classes.avatar}>
                       {deal.CityAbbr}
@@ -197,15 +225,16 @@ class Landing extends Component {
                     </Grid>
 
                     <Grid className="dealsSpacing2">
-                      <Link to="/searchResultOverview">
-                        <Button
-                          class="buttonSearch"
-                          primary
-                          onClick={this.onSearchClick}
-                        >
-                          Book now
-                        </Button>
-                      </Link>
+                      <Button
+                        class="buttonSearch"
+                        primary
+                        onClick={this.handleClickChooseDeal(
+                          deal.HotelName,
+                          deal.Image
+                        )}
+                      >
+                        Book now
+                      </Button>
                     </Grid>
                   </Grid>
                 </CardContent>
@@ -215,17 +244,21 @@ class Landing extends Component {
         }
       });
 
-      // Uses genFeatureDestination() to create markup for each featured city.
+      // featureDestinationMarkup is the collection of images for feature cities
       let featureDestinationMarkup = landing.featCities.map(city => {
         return (
           <Grid container direction="row" justify="center">
             <Grid xs={12} sm={8} md={8} lg={8}>
               <div className="imageContainer">
-                <img src={city.imgMain} className={classes.collageImg} />
-                <div class="text-block-cities">
-                  <h4 className=" imageTextCity">{city.name}</h4>
-                  <p>Bookings in the past week: {city.bookings}</p>
-                </div>
+                <Link to="/cities">
+                  <img src={city.imgMain} className={classes.collageImg} />
+                  <div class="text-block-cities">
+                    <h4 className="imageTextCityTitle">{city.name}</h4>
+                    <p className="imageTextBookings">
+                      Bookings in the past week: {city.bookings}
+                    </p>
+                  </div>
+                </Link>
               </div>
             </Grid>
             <Grid xs={12} sm={4} md={4} lg={4}>
@@ -236,26 +269,30 @@ class Landing extends Component {
               >
                 <Grid xs={6} sm={12}>
                   <div className="imageContainer">
-                    <img
-                      src={city.imgMain}
-                      className={classes.collageImgSmall}
-                    />
-                    <div class="text-block-cities-small">
-                      <h4 className=" imageTextCity">Attraction 1</h4>
-                      <p>{city.name}</p>
-                    </div>
+                    <Link to="/cities">
+                      <img
+                        src={city.imgMain}
+                        className={classes.collageImgSmall}
+                      />
+                      <div class="text-block-cities-small">
+                        <h4 className="imageTextAttraction">Attraction 1</h4>
+                        <p className="imageTextCity">{city.name}</p>
+                      </div>
+                    </Link>
                   </div>
                 </Grid>
                 <Grid xs={6} sm={12} md={12} lg={12}>
                   <div className="imageContainer">
-                    <img
-                      src={city.imgMain}
-                      className={classes.collageImgSmall}
-                    />
-                    <div class="text-block-cities-small">
-                      <h4 className=" imageTextCity">Attraction 1</h4>
-                      <p>{city.name}</p>
-                    </div>
+                    <Link to="/cities">
+                      <img
+                        src={city.imgMain}
+                        className={classes.collageImgSmall}
+                      />
+                      <div class="text-block-cities-small">
+                        <h4 className="imageTextAttraction">Attraction 1</h4>
+                        <p className="imageTextCity">{city.name}</p>
+                      </div>
+                    </Link>
                   </div>
                 </Grid>
               </Grid>
@@ -264,7 +301,7 @@ class Landing extends Component {
         );
       });
 
-      // Generates markup for the header city.
+      // Generates markup for the inspiration picture
       let genBackgroundImgStyle = () => {
         return {
           display: "flex",
@@ -284,7 +321,9 @@ class Landing extends Component {
               <SearchWidget />
             </div>
             <div class="text-block-inspiration">
-              <p>explore {this.props.landing.inspireCity}</p>
+              <Link to="/cities" style={{ color: "white" }}>
+                <p>explore {this.props.landing.inspireCity}</p>
+              </Link>
             </div>
           </div>
           <br />
@@ -307,11 +346,14 @@ class Landing extends Component {
                 <hr className={classes.noYMarginTop} />
                 <br />
               </div>
-              <Grid container spacing={8} direction="row" justify="center">
-                {/* Prototype Markup BEGINNING */}
-                {topDealsMarkup}
 
-                {/* Prototype Markup ENDING */}
+              <Grid
+                container
+                spacing={8}
+                direction={width === "xs" ? "column" : "row"}
+                justify="center"
+              >
+                {topDealsMarkup}
               </Grid>
               <div>
                 <div
@@ -334,6 +376,46 @@ class Landing extends Component {
               </Grid>
             </div>
           </div>
+
+          {/* / THIS IS A POP UP IF A USER CLICKS ON "BOOK NOW" FOR THE HOTEL DEALS */}
+          <Dialog
+            maxWidth={"md"}
+            scroll={"body"}
+            fullScreen={width === "xs" ? true : false}
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle className="BookingInfoTitle">
+              <div className="BookingInfoTitle">
+                Please choose your travel dates and number of rooms:
+              </div>
+            </DialogTitle>
+
+            <DialogContent>
+              <SearchWidget
+                dealPage={true}
+                dealDestination={this.state.chosenDealHotel}
+              />
+              <Grid
+                container
+                className="dealPopUpTitle"
+                direction="column"
+                justify="space-between"
+                alignItems="center"
+              >
+                <br />
+                {this.state.chosenDealHotel} <br />
+                <img src={this.state.chosenDealImage} className="dealImage" />
+              </Grid>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       );
     } else {
