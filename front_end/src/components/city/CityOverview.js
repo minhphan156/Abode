@@ -26,7 +26,7 @@ import SF2 from "./SF2.jpg";
 // CSS to JavaScript component styling
 let styles = theme => ({
   pageMargins: {
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down("xl")]: {
       marginLeft: "10%",
       marginRight: "10%",
       marginTop: "5%",
@@ -84,48 +84,50 @@ class CityOverview extends Component {
   }
 
   // Used to change the main image in Carousel
-  handleClickImage = (index) => {
+  handleClickImage = index => {
     let newImages = this.state.images;
     let temp = newImages[0];
-    newImages[0] = newImages[index]
+    newImages[0] = newImages[index];
     newImages[index] = temp;
     this.setState({
       ...this.state,
       images: newImages
     });
-  }
+  };
 
   render() {
-    let { images } = this.state; 
+    let { images } = this.state;
     let { classes, city } = this.props;
 
     this.weatherIcon = () => {
       if (city.weatherData != null) {
         return (
-          <img 
+          <img
             className={classes.weatherIcon}
-            src={`http://openweathermap.org/img/w/${city.weatherData.weather[0].icon}.png`} 
-            alt="weather icon" 
+            src={`http://openweathermap.org/img/w/${
+              city.weatherData.weather[0].icon
+            }.png`}
+            alt="weather icon"
           />
         );
       } else {
         return "";
       }
-    }
+    };
 
     if (city.fetchingCity == false) {
       return (
         <div className={classes.pageMargins}>
           <Grid
             container
-            className={`${classes.rootContainer} border border-primary`}
+            className={classes.rootContainer}
             direction="row"
             spacing={8}
           >
-            <Grid item className="border" lg={9}>
+            <Grid item lg={9}>
               <Grid container direction="column" spacing={8}>
                 <Grid item lg={12}>
-                  <ImageCarousel 
+                  <ImageCarousel
                     images={images}
                     handleClickImage={this.handleClickImage}
                   />
@@ -133,7 +135,7 @@ class CityOverview extends Component {
                 {/* Descriptions, etc */}
               </Grid>
             </Grid>
-            <Grid item className="border" lg={3}>
+            <Grid item lg={3}>
               <Grid container direction="column">
                 <Grid item lg={12}>
                   <Typography variant="h6">Current weather: </Typography>

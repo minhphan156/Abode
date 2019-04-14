@@ -3,12 +3,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Material-UI imports
-import { Grid, GridList, GridListTile, withStyles, withWidth } from "@material-ui/core";
+import { Grid, Card, withStyles, Grow, withWidth } from "@material-ui/core";
 
 // CSS to JavaScript component styling
 let styles = theme => ({
   containerSize: {
-    [theme.breakpoints.only("lg")]: {
+    [theme.breakpoints.only("xl")]: {
       height: 500
     }
   },
@@ -21,25 +21,54 @@ let styles = theme => ({
   imgSize: {
     width: "100%",
     height: "100%",
-    objectFit: "contain"
+    objectFit: "cover",
+    borderRadius: 10
   }
 });
 
 // Child functional component for the image carousel used in <CityOverview />
-let ImageCarousel = (props) => {
+let ImageCarousel = props => {
   let { classes, images, handleClickImage } = props;
   return (
-    <Grid container className={classes.containerSize} direction="row" justify="center" alignItems="center">
-      <Grid item className={classes.itemMain} lg={8}>
-        <img className={classes.imgSize} src={images[0]} />
+    <Grid
+      container
+      className={classes.containerSize}
+      direction="row"
+      justify="center"
+      alignItems="center"
+      spacing={8}
+    >
+      <Grid item className={classes.itemMain} xs={8}>
+        <Card style={{ padding: 8 }}>
+          <img className={classes.imgSize} src={images[0]} />
+        </Card>
       </Grid>
-      <Grid item className={classes.itemMain} lg={4}>
-        <Grid container className={classes.itemMain} direction="row" justify="center" alignItems="center">
-          <Grid item className={classes.itemDetail} lg={12}>
-            <img className={classes.imgSize} src={images[1]} onClick={() => handleClickImage(1)}/>
+      <Grid item className={classes.itemMain} xs={4}>
+        <Grid
+          container
+          className={classes.itemMain}
+          direction="row"
+          justify="space-evenly"
+          alignItems="center"
+          spacing={8}
+        >
+          <Grid item className={classes.itemDetail} xs={12}>
+            <Card style={{ padding: 8 }}>
+              <img
+                className={classes.imgSize}
+                src={images[1]}
+                onClick={() => handleClickImage(1)}
+              />
+            </Card>
           </Grid>
-          <Grid item className={classes.itemDetail} lg={12}>
-            <img className={classes.imgSize} src={images[2]} onClick={() => handleClickImage(2)}/>
+          <Grid item className={classes.itemDetail} xs={12}>
+            <Card style={{ padding: 8 }}>
+              <img
+                className={classes.imgSize}
+                src={images[2]}
+                onClick={() => handleClickImage(2)}
+              />
+            </Card>
           </Grid>
         </Grid>
       </Grid>
