@@ -43,7 +43,8 @@ export let fetchCityById = cityId => dispatch => {
 };
 
 // Fetches weather data for the city using the provided city information
-let fetchCityWeather = cityName => dispatch => {
+// TODO: Remove export once backend is implemented
+export let fetchCityWeather = cityName => dispatch => {
   setCityWeatherLoading();
   axios
   .get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${weatherMapAPIKey}`)
