@@ -8,6 +8,7 @@ import { fetchCityById, fetchCityWeather } from "../../actions/cityActions";
 
 // Child component imports
 import ImageCarousel from "./ImageCarousel";
+import WeatherCard from "./WeatherCard";
 
 // Material-UI imports
 import {
@@ -99,22 +100,6 @@ class CityOverview extends Component {
     let { images } = this.state;
     let { classes, city } = this.props;
 
-    this.weatherIcon = () => {
-      if (city.weatherData != null) {
-        return (
-          <img
-            className={classes.weatherIcon}
-            src={`http://openweathermap.org/img/w/${
-              city.weatherData.weather[0].icon
-            }.png`}
-            alt="weather icon"
-          />
-        );
-      } else {
-        return "";
-      }
-    };
-
     if (city.fetchingCity == false) {
       return (
         <div className={classes.pageMargins}>
@@ -124,9 +109,9 @@ class CityOverview extends Component {
             direction="row"
             spacing={8}
           >
-            <Grid item lg={9}>
+            <Grid item xl={9}>
               <Grid container direction="column" spacing={8}>
-                <Grid item lg={12}>
+                <Grid item xl={12}>
                   <ImageCarousel
                     images={images}
                     handleClickImage={this.handleClickImage}
@@ -135,15 +120,8 @@ class CityOverview extends Component {
                 {/* Descriptions, etc */}
               </Grid>
             </Grid>
-            <Grid item lg={3}>
-              <Grid container direction="column">
-                <Grid item lg={12}>
-                  <Typography variant="h6">Current weather: </Typography>
-                </Grid>
-                <Grid item lg={2}>
-                  {this.weatherIcon()}
-                </Grid>
-              </Grid>
+            <Grid item xl={3}>
+              <WeatherCard city={city} />
             </Grid>
           </Grid>
         </div>

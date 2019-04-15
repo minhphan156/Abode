@@ -80,7 +80,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/indiv-hotel" component={IndivHotel} />
             <Route exact path="/not-found/:attempt" component={NotFound} />
-            <Route exact path="/city/:id" component={CityOverview} />
+            <Route exact path="/cities/:id" component={CityOverview} />
 
             <Switch>
               <PrivateRoute exact path="/history" component={HistoryOverview} />

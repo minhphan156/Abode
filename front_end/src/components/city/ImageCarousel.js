@@ -39,9 +39,7 @@ let ImageCarousel = props => {
       spacing={8}
     >
       <Grid item className={classes.itemMain} xs={8}>
-        <Card style={{ padding: 8 }}>
-          <img className={classes.imgSize} src={images[0]} />
-        </Card>
+        <img className={classes.imgSize} src={images[0]} />
       </Grid>
       <Grid item className={classes.itemMain} xs={4}>
         <Grid
@@ -53,22 +51,18 @@ let ImageCarousel = props => {
           spacing={8}
         >
           <Grid item className={classes.itemDetail} xs={12}>
-            <Card style={{ padding: 8 }}>
-              <img
-                className={classes.imgSize}
-                src={images[1]}
-                onClick={() => handleClickImage(1)}
-              />
-            </Card>
+            <img
+              className={classes.imgSize}
+              src={images[1]}
+              onClick={() => handleClickImage(1)}
+            />
           </Grid>
           <Grid item className={classes.itemDetail} xs={12}>
-            <Card style={{ padding: 8 }}>
-              <img
-                className={classes.imgSize}
-                src={images[2]}
-                onClick={() => handleClickImage(2)}
-              />
-            </Card>
+            <img
+              className={classes.imgSize}
+              src={images[2]}
+              onClick={() => handleClickImage(2)}
+            />
           </Grid>
         </Grid>
       </Grid>
