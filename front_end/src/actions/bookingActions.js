@@ -22,9 +22,6 @@ export const submitBooking = newBooking => dispatch => {
         type: SET_BOOKING,
         payload: res.data
       });
-      if (res.status === 200) {
-        window.location = "./confirmation";
-      }
     })
     .catch(err => console.log(err));
 };

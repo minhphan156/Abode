@@ -60,6 +60,7 @@ class BookingInfo extends Component {
     this.setState({ open: false });
   };
 
+  // handleChange deals with the user clicking on the checkbox next to Rewards Discount
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked }, () => {
       if (this.state.checkedA === true) {
@@ -80,6 +81,8 @@ class BookingInfo extends Component {
               taxesAndFees;
 
             var rewardsPointsEarned = 10 * total;
+
+            // we send actualRewardsDiscount and rewardsPointsEarned to the parent component 'PaymentPage.js'
             this.props.getDataFromBookingInfoPage(
               this.state.actualRewardsDiscount,
               Math.round(rewardsPointsEarned)
@@ -105,6 +108,7 @@ class BookingInfo extends Component {
 
             var rewardsPointsEarned = 10 * total;
 
+            // we send actualRewardsDiscount and rewardsPointsEarned to the parent component 'PaymentPage.js'
             this.props.getDataFromBookingInfoPage(
               this.state.actualRewardsDiscount,
               rewardsPointsEarned
@@ -311,7 +315,8 @@ class BookingInfo extends Component {
                     }}
                     className={classes.tableBlackBorder}
                   >
-                    Taxes and fees ({tempBookingData.taxRate * 100}%):
+                    Taxes and fees ({(tempBookingData.taxRate * 100).toFixed(1)}
+                    %):
                   </TableCell>
                   <TableCell
                     align="right"

@@ -1,25 +1,25 @@
 {
   "title": "taxrates",
   "name": [
-    { "label": "New York", "rate": 0.1475 },
+    { "label": "New York", "rate": 0.148 },
     { "label": "San Francisco", "rate": 0.155 },
     { "label": "Los Angeles", "rate": 0.155 },
     { "label": "San Diego", "rate": 0.125 },
     { "label": "Las Vegas", "rate": 0.13 },
-    { "label": "Chicago", "rate": 0.1639 },
+    { "label": "Chicago", "rate": 0.164 },
     { "label": "Honolulu", "rate": 0.138 },
     { "label": "Miami", "rate": 0.13 },
     { "label": "Orlando", "rate": 0.125 },
     { "label": "Seattle", "rate": 0.156 },
     { "label": "Portland", "rate": 0.115 },
-    { "label": "Boston", "rate": 0.1345 },
-    { "label": "Phoenix", "rate": 0.1327 },
+    { "label": "Boston", "rate": 0.135 },
+    { "label": "Phoenix", "rate": 0.133 },
     { "label": "New Orleans", "rate": 0.13 },
     { "label": "Washington", "rate": 0.145 },
     { "label": "Philadelphia", "rate": 0.142 },
     { "label": "Atlanta", "rate": 0.15 },
     { "label": "Houston", "rate": 0.17 },
     { "label": "San Jose", "rate": 0.14 },
-    { "label": "Denver", "rate": 0.1075 }
+    { "label": "Denver", "rate": 0.108 }
   ]
 }
