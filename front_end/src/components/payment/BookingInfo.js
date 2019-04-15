@@ -1,3 +1,5 @@
+// TODO: MAKE EVERYTHING LOOK NICE AND INTEGRATE ALL THE STUFF FROM BACKEND
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles, withWidth } from "@material-ui/core";
