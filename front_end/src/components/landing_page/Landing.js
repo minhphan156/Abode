@@ -161,7 +161,15 @@ class Landing extends Component {
       let topDealsMarkup = dealsArr.map(deal => {
         if (deal != null) {
           return (
-            <Grid item xs={12} sm={4} style={{ height: 630 }}>
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              // direction={width === "xs" ? "row" : "column"}
+              height="630"
+
+              // style={{ height: 630 }}>
+            >
               <Card className={classes.card}>
                 <CardHeader
                   className={classes.root}
