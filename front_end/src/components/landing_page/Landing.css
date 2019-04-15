@@ -188,8 +188,9 @@
   bottom: -30px;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.65);
-  color: white;
-  padding-top: 7px;
+  padding-bottom: 10px;
+  padding-top: 9px;
   padding-left: 20px;
   padding-right: 20px;
+  line-height: 1;
 }

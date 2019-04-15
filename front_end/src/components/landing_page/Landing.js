@@ -309,7 +309,7 @@ class Landing extends Component {
             </div>
             <div class="text-block-inspiration">
               <Link to="/cities" style={{ color: "white" }}>
-                <p>explore {this.props.landing.inspireCity}</p>
+                explore {this.props.landing.inspireCity}
               </Link>
             </div>
           </div>
