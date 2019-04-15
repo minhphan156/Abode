@@ -38,7 +38,7 @@ export let fetchCityById = cityId => dispatch => {
   dispatch({
     type: GET_CITY,
     payload: null
-  })
+  });
   /* End of prototype code */
 };
 
@@ -47,19 +47,21 @@ export let fetchCityById = cityId => dispatch => {
 export let fetchCityWeather = cityName => dispatch => {
   setCityWeatherLoading();
   axios
-  .get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${weatherMapAPIKey}`)
-  .then(res => {
-    dispatch({
-      type: GET_CITY_WEATHER,
-      payload: res.data
+    .get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${weatherMapAPIKey}&units=imperial`
+    )
+    .then(res => {
+      dispatch({
+        type: GET_CITY_WEATHER,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: CITY_ERRORS,
+        payload: err.data
+      });
     });
-  })
-  .catch(err => {
-    dispatch({
-      type: CITY_ERRORS,
-      payload: err.data
-    });
-  })
 };
 
 // Set city loading to be true while fetching city data

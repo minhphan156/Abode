@@ -8,21 +8,56 @@ import {
   withWidth,
   Grid,
   Card,
-  Typography
+  Typography,
+  CircularProgress
 } from "@material-ui/core";
 
 let styles = theme => ({
+  cardMargin: {
+    [theme.breakpoints.down("xl")]: {
+      paddingTop: "5%",
+      paddingBottom: "5%",
+      paddingLeft: "10%",
+      paddingRight: "10%"
+    },
+    [theme.breakpoints.only("xs")]: {
+      paddingTop: "2%",
+      paddingBottom: "2%",
+      paddingLeft: "5%",
+      paddingRight: "5%"
+    }
+  },
   pad8: {
     padding: 8
   },
   weatherIcon: {
-    width: 50,
-    height: 50
+    width: "100%"
+  },
+  greyText: {
+    color: "#808080"
   }
 });
 
 let WeatherCard = props => {
   let { classes, city } = props;
+
+  let loadingWeather = () => {
+    return (
+      <Card className={classes.cardMargin} style={{ height: "100%" }}>
+        <Grid
+          container
+          style={{ width: "100%", height: "100%" }}
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item>
+            <CircularProgress />
+          </Grid>
+        </Grid>
+      </Card>
+    );
+  };
 
   let weatherIcon = () => {
     if (city.weatherData != null) {
@@ -40,45 +75,64 @@ let WeatherCard = props => {
     }
   };
 
-  return (
-    <Card className={classes.pad8}>
-      <Grid container direction="column">
-        <Grid item xl={12}>
-          <Typography variant="h6">Current Weather Conditions:</Typography>
-        </Grid>
-        <Grid item xl={12}>
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="center"
-          >
-            <Grid item xl={6}>
-              <Typography variant="subtitle">Weather</Typography>
+  if (city.weatherData != null) {
+    return (
+      <Card className={classes.cardMargin}>
+        <Grid container direction="column" alignItems="center" justify="center">
+          <Grid item>
+            <Typography variant="h1">
+              {`${city.weatherData.main.temp}°F`}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} style={{ width: "100%" }}>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+              style={{ width: "100%" }}
+            >
+              <Grid item>
+                <Typography className={classes.greyText} variant="subtitle">
+                  Weather
+                </Typography>
+              </Grid>
+              <Grid item xs={2}>
+                {weatherIcon()}
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle">
+                  {city.weatherData.weather[0].main}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xl={6}>
-              <Grid
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="center"
-                spacing={8}
-              >
-                <Grid item>
-                  <Typography variant="subtitle">
-                    {city.weatherData != null
-                      ? city.weatherData.weather[0].main
-                      : ""}
-                  </Typography>
-                </Grid>
-                <Grid item>{weatherIcon()}</Grid>
+          </Grid>
+          <Grid item xs={12} style={{ width: "100%" }}>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+              style={{ width: "100%" }}
+            >
+              <Grid item>
+                <Typography className={classes.greyText} variant="subtitle">
+                  Humidity
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle">
+                  {city.weatherData.main.humidity}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Card>
-  );
+      </Card>
+    );
+  } else {
+    return loadingWeather();
+  }
 };
 
 // Expected props

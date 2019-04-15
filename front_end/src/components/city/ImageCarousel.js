@@ -38,26 +38,26 @@ let ImageCarousel = props => {
       alignItems="center"
       spacing={8}
     >
-      <Grid item className={classes.itemMain} xs={8}>
+      <Grid item className={classes.itemMain} xs={12} xl={8}>
         <img className={classes.imgSize} src={images[0]} />
       </Grid>
-      <Grid item className={classes.itemMain} xs={4}>
+      <Grid item className={classes.itemMain} xs={12} xl={4}>
         <Grid
           container
           className={classes.itemMain}
           direction="row"
-          justify="space-evenly"
+          justify="space-between"
           alignItems="center"
           spacing={8}
         >
-          <Grid item className={classes.itemDetail} xs={12}>
+          <Grid item className={classes.itemDetail} xs={6} xl={12}>
             <img
               className={classes.imgSize}
               src={images[1]}
               onClick={() => handleClickImage(1)}
             />
           </Grid>
-          <Grid item className={classes.itemDetail} xs={12}>
+          <Grid item className={classes.itemDetail} xs={6} xl={12}>
             <img
               className={classes.imgSize}
               src={images[2]}

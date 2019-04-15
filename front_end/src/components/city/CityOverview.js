@@ -120,7 +120,7 @@ class CityOverview extends Component {
                 {/* Descriptions, etc */}
               </Grid>
             </Grid>
-            <Grid item xl={3}>
+            <Grid item xs={12} xl={3}>
               <WeatherCard city={city} />
             </Grid>
           </Grid>
