@@ -1,4 +1,4 @@
-import { SET_BOOKING, SAVE_BOOKING } from "./types";
+import { SET_BOOKING, SAVE_BOOKING, CLEAR_BOOKING } from "./types";
 import axios from "axios";
 
 // submit booking to backend so it can be stored in DB and reused in history page
@@ -31,5 +31,12 @@ export const saveBooking = tempBookingInfo => {
   return {
     type: SAVE_BOOKING,
     payload: tempBookingInfo
+  };
+};
+
+// Clear booking data
+export const clearBooking = () => {
+  return {
+    type: CLEAR_BOOKING
   };
 };

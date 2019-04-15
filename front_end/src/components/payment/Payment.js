@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { clearBooking } from "../../actions/bookingActions";
 
 import { Grid } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { CardElement, injectStripe } from "react-stripe-elements";
 
 import TextFieldGroup from "../common/TextFieldGroup";
+import Snackbar from "@material-ui/core/Snackbar";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 class Payment extends Component {
   constructor() {
@@ -40,7 +44,9 @@ class Payment extends Component {
         zip: null,
         nameCC: null
       },
-      errorMessage: "* field required"
+      errorMessage: "* field required",
+      doubleBookingError: false,
+      unavailabilityError: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -56,9 +62,21 @@ class Payment extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  componentWillMount() {
+    this.props.clearBooking();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.bookingData.bookingConfirmationData.code === 200) {
       this.props.history.push("./confirmation");
+    }
+
+    if (nextProps.bookingData.bookingConfirmationData.code === 409) {
+      this.setState({ unavailabilityError: true });
+    }
+
+    if (nextProps.bookingData.bookingConfirmationData.code === 403) {
+      this.setState({ doubleBookingError: true });
     }
 
     if (nextProps.errors) {
@@ -252,6 +270,76 @@ class Payment extends Component {
   render() {
     const { tempBookingData } = this.props.bookingData;
     const { errors } = this.state;
+    let errorSnackBar = null;
+
+    // errorSnackBar is displayed in two cases: double booking on same email, or rooms are not available anymore
+    if (this.state.doubleBookingError === true) {
+      errorSnackBar = (
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
+          open={true}
+          autoHideDuration={60000}
+          onClose={this.handleClose}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={
+            <span id="message-id">
+              You have already booked a hotel under this email address on the
+              same date(s).
+            </span>
+          }
+          action={[
+            <Link to="/">
+              <Button
+                key="undo"
+                color="secondary"
+                size="small"
+                onClick={this.handleClose}
+              >
+                Back to Home
+              </Button>
+            </Link>
+          ]}
+        />
+      );
+    }
+    if (this.state.unavailabilityError === true) {
+      errorSnackBar = (
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
+          open={true}
+          autoHideDuration={60000}
+          onClose={this.handleClose}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={
+            <span id="message-id">
+              Unfortunately, the rooms are no longer available.
+            </span>
+          }
+          action={[
+            <Link to="/">
+              <Button
+                key="undo"
+                color="secondary"
+                size="small"
+                onClick={this.handleClose}
+              >
+                Back to Home
+              </Button>
+            </Link>
+          ]}
+        />
+      );
+    }
 
     var numberOfRooms = Array.from(
       { length: tempBookingData.numRooms - 1 },
@@ -289,6 +377,7 @@ class Payment extends Component {
 
     return (
       <React.Fragment>
+        {errorSnackBar}
         <form onSubmit={this.onSubmit}>
           <Grid
             container
@@ -437,7 +526,7 @@ export default withRouter(
   injectStripe(
     connect(
       mapStateToProps,
-      {}
+      { clearBooking }
     )(Payment)
   )
 );
