@@ -4,6 +4,7 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 // SEARCH WIDGET
 export const SET_QUERY = "SET_QUERY";
 export const SAVE_QUERY = "SAVE_QUERY";
+export const SEARCH_LOADING = "SEARCH_LOADING";
 
 // PROFILE TYPES
 export const GET_PROFILE = "GET_PROFILE";
