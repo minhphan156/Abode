@@ -33,7 +33,9 @@ let styles = {
     height: 90
   },
   card: {
-    maxWidth: 400
+    width: "100%",
+    height: "100%"
+    // maxHeight: 570
   },
   media: {
     height: 0,
@@ -46,11 +48,6 @@ let styles = {
   },
   centerFlexbox: {
     display: "flex"
-  },
-  inspirationBox: {
-    background: "rgba(0,0,0,1)",
-    padding: 5,
-    width: "25%"
   },
   searchWidgetBox: {
     alignSelf: "center",
@@ -70,15 +67,6 @@ let styles = {
     marginBottom: 10,
     paddingTop: 0,
     paddingBottom: 0
-  },
-  cardMedia: {
-    height: "25vh"
-  },
-  dealImageSmall: {
-    width: 500
-  },
-  dealImageSmaller: {
-    width: 200
   }
 };
 
@@ -173,7 +161,7 @@ class Landing extends Component {
       let topDealsMarkup = dealsArr.map(deal => {
         if (deal != null) {
           return (
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={4} style={{ height: 630 }}>
               <Card className={classes.card}>
                 <CardHeader
                   className={classes.root}
@@ -348,9 +336,9 @@ class Landing extends Component {
 
               <Grid
                 container
-                spacing={8}
+                spacing={24}
                 direction={width === "xs" ? "column" : "row"}
-                justify="center"
+                justify="space-between"
               >
                 {topDealsMarkup}
               </Grid>

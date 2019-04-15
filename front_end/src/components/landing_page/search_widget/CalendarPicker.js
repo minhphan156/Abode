@@ -44,16 +44,16 @@ class CalendarPicker extends Component {
           }
           showDefaultInputIcon={width == "xs" ? false : true}
           keepOpenOnDateSelect={true}
-          startDate={this.props.checkIn} // momentPropTypes.momentObj or null,
-          startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-          endDate={this.props.checkOut} // momentPropTypes.momentObj or null,
-          endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+          startDate={this.props.checkIn}
+          startDateId="your_unique_start_date_id"
+          endDate={this.props.checkOut}
+          endDateId="your_unique_end_date_id"
           onDatesChange={({ startDate, endDate }) => (
             this.setState({ startDate, endDate }),
             this.props.onHandleDate(startDate, endDate)
-          )} // PropTypes.func.isRequired,
-          focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-          onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+          )}
+          focusedInput={this.state.focusedInput}
+          onFocusChange={focusedInput => this.setState({ focusedInput })}
           noBorder={true}
         />
       </div>
@@ -63,7 +63,7 @@ class CalendarPicker extends Component {
 
 // Expected props
 CalendarPicker.propTypes = {
-  width: PropTypes.func.isRequied
+  width: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(withWidth()(CalendarPicker));

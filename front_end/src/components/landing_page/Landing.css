@@ -29,38 +29,6 @@
   animation-duration: 1.5s;
 }
 
-@keyframes moveUp {
-  from {
-    bottom: 0px;
-  }
-  to {
-    bottom: 7px;
-  }
-}
-
-@keyframes moveDown {
-  from {
-    bottom: 7px;
-  }
-  to {
-    bottom: 0px;
-  }
-}
-
-.mouseHover:hover {
-  position: relative;
-  animation: moveUp;
-  animation-duration: 0.25s;
-  animation-fill-mode: forwards;
-}
-
-.mouseHover {
-  position: relative;
-  animation: moveDown;
-  animation-duration: 0.25s;
-  animation-fill-mode: forwards;
-}
-
 .newPrice {
   font-size: 18px;
   color: green;
@@ -70,12 +38,19 @@
   margin-top: 8px;
 }
 
-.dealsSpacing2 {
-  margin-top: 12px;
+/* XX-Small Screen */
+@media screen and (max-width: 450px) {
+  .dealsSpacing {
+    margin-top: 12px;
+  }
+
+  .dealsSpacing2 {
+    margin-top: 24px;
+  }
 }
 
 /* X-Small Screen */
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 450px) and (max-width: 600px) {
   .text-block-cities {
     position: absolute;
     bottom: 5px;
@@ -135,6 +110,10 @@
 
   .dealImage {
     width: 90%;
+  }
+
+  .dealsSpacing2 {
+    margin-top: 12px;
   }
 }
 
@@ -198,6 +177,10 @@
   .dealImage {
     width: 60%;
   }
+
+  .dealsSpacing2 {
+    margin-top: 12px;
+  }
 }
 
 .text-block-inspiration {
@@ -209,17 +192,4 @@
   padding-top: 7px;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.buttonCheckAvailability {
-  border: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 400;
-  height: 38px;
-  border-radius: 12px;
-  background-color: #0c4b78;
-  color: white;
-  width: 150px;
 }
