@@ -219,7 +219,7 @@
     color: green;
   }
 
-  .MuiGrid-grid-sm-4-47 {
+  .dealContainer {
     max-width: 31.5% !important;
   }
 
@@ -324,9 +324,10 @@
     color: green;
   }
 
-  .MuiGrid-grid-sm-4-47 {
+  .dealContainer {
     max-width: 31.5% !important;
   }
+
   .dealContainerHeader {
     height: 90px;
   }
