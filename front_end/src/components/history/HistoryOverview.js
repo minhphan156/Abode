@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Spinner from "../common/Spinner";
 import { getCurrentProfile, getHistory } from "../../actions/profileActions";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
@@ -10,6 +9,7 @@ import DoneIcon from "@material-ui/icons/Done";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ExitIcon from "@material-ui/icons/ExitToApp";
+import { CircularProgress } from "@material-ui/core";
 
 import Button from "@material-ui/core/Button";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -20,6 +20,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+
+import HistoryExpansionTable from "./HistoryExpansionTable";
 
 import "./history.css";
 
@@ -79,11 +81,45 @@ class HistoryOverview extends Component {
     let dateOverview;
     let cancelAndChangeButtons;
 
+    if (profile.loading) {
+      bookings = (
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className={classes.msgHeight}
+        >
+          <Grid item>
+            <CircularProgress />
+          </Grid>
+        </Grid>
+      );
+    }
+
     bookings = this.props.profile.history.map(booking => {
       displayChangeChip = null;
       displayRegularChip = null;
       dateOverview = null;
       cancelAndChangeButtons = null;
+
+      let expansionData = {
+        bookingId: booking.bookingID,
+        Firstname: "Mr.",
+        Lastname: "Bean",
+        checkIn: booking.check_in_date,
+        checkOut: booking.check_out_date,
+        roomType: booking.typeOfRoom,
+        nightlyRate: 999,
+        numRooms: booking.numOfRoom,
+        numberOfNights: 999,
+        subtotal: booking.subtotal,
+        discounts: 999, // booking.discount,
+        rewardsDiscount: 999,
+        taxesAndFees: 999,
+        total: booking.total,
+        rewardPointsEarned: 999, //booking.rewardPointsEarned,
+        rewardPointsUsed: 999 //booking.rewardPointsUsed
+      };
 
       // if the booking was not changed, we display the regular CheckIn and Checkout Overview
       if (booking.changed === false) {
@@ -190,6 +226,10 @@ class HistoryOverview extends Component {
       }
 
       // here we determine which chip to display. There are four different statuses that each correspond to a chip
+      //0 = trip comin up
+      //1 = user has checked in
+      //2 = user has checked out
+      //3 = trip was canceled
       switch (booking.status) {
         case 0:
           displayRegularChip = (
@@ -239,7 +279,6 @@ class HistoryOverview extends Component {
           );
           break;
         default:
-        // code block
       }
 
       // these are the expansionpanels for all the different bookings
@@ -249,6 +288,7 @@ class HistoryOverview extends Component {
             expanded: classes.backgroundStyle
           }}
         >
+          {/* ExpansionPanelSummary is the part that is always visible */}
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Grid container spacing={0} direction="row" justify="space-evenly">
               <Grid item>
@@ -282,8 +322,7 @@ class HistoryOverview extends Component {
                   >
                     <Grid item>{displayRegularChip}</Grid>
                     <Grid item className="HistoryPageTotalSmall">
-                      Total: ${" "}
-                      {(booking.subtotal - booking.discount).toFixed(2)}
+                      Total: $ {(booking.total + 0).toFixed(2)}
                     </Grid>
                   </Grid>
 
@@ -291,90 +330,18 @@ class HistoryOverview extends Component {
                 </Grid>
               </Grid>
 
-              <Grid className="HistoryContainerDates">
-                <Grid item className="HistoryPageDates HistoryContainerDates">
-                  {dateOverview}
-                </Grid>
-              </Grid>
+              <Grid className="HistoryContainerDates">{/* ///some  */}</Grid>
               <Grid>
                 <Grid item className="HistoryPageTotal">
-                  Total: $ {(booking.subtotal - booking.discount).toFixed(2)}
+                  Total: $ {(booking.total + 0).toFixed(2)}
                 </Grid>
               </Grid>
             </Grid>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Grid
-              container
-              spacing={0}
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-            >
-              <Grid className="HistoryContainerExpand">
-                <Grid item className="HistoryPageText2 HistoryContainerExpand">
-                  <Table className={classes.table}>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Room type:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        {booking.typeOfRoom}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Number of Rooms:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        {booking.numOfRoom}
-                      </TableCell>
-                    </TableRow>
-                  </Table>
-                </Grid>
-              </Grid>
 
-              <Grid>
-                <Grid item className="HistoryPageText2">
-                  <Table className={classes.table}>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Subtotal:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        $ {booking.subtotal.toFixed(2)}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Discount:</TableCell>
-                      <TableCell align="right">
-                        ${/* {booking.discount.toFixed(2)} */}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className={classes.tableNoBorder}>
-                        Total:
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.tableNoBorder}
-                      >
-                        $ {(booking.subtotal - booking.discount).toFixed(2)}
-                      </TableCell>
-                    </TableRow>
-                  </Table>
-                </Grid>
-              </Grid>
-            </Grid>
+          {/* ExpansionPanelDetails is the part that can be expanded (not visible by default) */}
+          <ExpansionPanelDetails>
+            <HistoryExpansionTable expansionData={expansionData} />
             {cancelAndChangeButtons}
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -395,6 +362,7 @@ class HistoryOverview extends Component {
             Your Travel History
           </Grid>
         </Grid>
+        <div className="rewardsPointsBalance">Reward Points: 99,999</div>
         {bookings}
         <br /> <br />
       </div>
