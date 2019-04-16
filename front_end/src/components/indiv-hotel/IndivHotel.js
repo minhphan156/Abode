@@ -9,16 +9,40 @@ import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
-import { getIndividualHotelResult } from "../../actions/searchResultActions";
+import { getIndividualHotelResult, clearData } from "../../actions/searchResultActions";
 import moment from "moment";
 import Button from "@material-ui/core/Button";
+import {
+  Grid,
+  CircularProgress
+} from "@material-ui/core";import {
+  Typography,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Divider,
+} from "@material-ui/core";
+import {
+  Search,
+  ExpandMore,
+} from "@material-ui/icons";
 
 import "./indivHotel.css";
 
 class IndivHotel extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
+  componentWillUnmount(){
+    this.props.clearData();
+  }
+
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      dataHolding:"",
+    };
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
 
@@ -66,21 +90,34 @@ class IndivHotel extends Component {
       const { individualHotelData } = this.props.individualHotelData;
       return (  
           <div style={{ marginLeft: 40, marginRight: 40, minHeight:window.innerHeight-180}}>
-          {individualHotelData.hotelsRate === "" ? (
-            <div class="d-flex justify-content-center">
-            <div class="spinner-boarder text-primary" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-            </div>
+          { individualHotelData.img.length === 0 ? (
+          <div style={{marginLeft:'50%', marginTop:'10%'}}>
+              <Grid item>
+                <CircularProgress />
+              </Grid>
+          </div>
           ):(
             <div
             id="whole page"
             style={{ margin:'auto'}}
             >
-            <div className="d-flex justify-content-center mt-3">
-              <div className="col-12">
-                <SearchWidget />
+            <div style={{margin:'auto'}}>
+            <ExpansionPanel
+            square="false"
+            style={{ marginTop:'2%', width:'100%'}}
+            >
+            <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+              <Typography variant="subtitle2">
+                <Search /> Search
+              </Typography>
+            </ExpansionPanelSummary>
+            <Divider />
+            <ExpansionPanelDetails>
+              <div style={{ width: "100%" }}>
+                <SearchWidget/>
               </div>
+            </ExpansionPanelDetails>
+            </ExpansionPanel>
             </div>
             <div id="hotel info" className="row" style={{marginTop:'3%'}}>
             <div id="hotel Name Address" className="col-lg-10 col-sm-12 col-12 text-left">
@@ -464,7 +501,8 @@ class IndivHotel extends Component {
                       lng: individualHotelData.alt
                     }}
                   />
-
+                  {console.log(individualHotelData.lat)}
+                  {console.log(individualHotelData.alt)}
                   <InfoWindow onClose={this.onInfoWindowClose}>
                     <div>
                       <h1>{individualHotelData.name}</h1>
@@ -629,7 +667,7 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { saveBooking, getIndividualHotelResult }
+  { saveBooking, getIndividualHotelResult, clearData }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"

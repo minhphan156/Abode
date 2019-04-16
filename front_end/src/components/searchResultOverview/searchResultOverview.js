@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getIndividualHotelResult } from "../../actions/searchResultActions";
+import { getIndividualHotelResult} from "../../actions/searchResultActions";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { submitQuery, saveQuery } from "../../actions/searchActions";
