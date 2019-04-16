@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getCurrentProfile, getHistory } from "../../actions/profileActions";
+import { cancelReservation } from "../../actions/bookingActions";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
@@ -63,12 +64,20 @@ const styles = theme => ({
 });
 
 class HistoryOverview extends Component {
+  constructor() {
+    super();
+    this.onCancelClick = this.onCancelClick.bind(this);
+  }
   componentDidMount() {
     this.props.getCurrentProfile();
     this.props.getHistory();
   }
   componentWillMount() {
     this.props.getHistory();
+  }
+  onCancelClick() {
+    const cancelReservationData = { bookingID: "Enter a valid booking ID" };
+    this.props.cancelReservation(cancelReservationData);
   }
 
   render() {
@@ -269,6 +278,7 @@ class HistoryOverview extends Component {
                 <Grid item className="chipsAndTotal">
                   <br />
                   {displayRegularChip}
+                  <Button onClick={this.onCancelClick}>Test Cancel</Button>
                   {displayChangeChip}
                 </Grid>
                 {/* We display a different layout for small screens */}
@@ -409,10 +419,11 @@ HistoryOverview.propTypes = {
 };
 const mapStateToProps = state => ({
   profile: state.profile,
-  history: state.history
+  history: state.history,
+  bookingData: state.bookingData
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, getHistory }
+  { getCurrentProfile, getHistory, cancelReservation }
 )(withStyles(styles)(HistoryOverview));
