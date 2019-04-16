@@ -365,7 +365,7 @@ router.post('/changeReservation',(req,res)=>{
 // @desc cancel a reservation 
 // @access public
 router.post('/cancel', (req,res)=>{
-    Booking.findById(req.query.bookingID)
+    Booking.findById(req.body.bookingID)
     .then(booking => {
         if (booking.status == 0){
             booking.status = 3;
@@ -391,7 +391,7 @@ router.post('/cancel', (req,res)=>{
                 }
                 for(let i = 0;i<arr.length;i++){
                     for(let j = 0;j<arr[i].dates.length;j++){
-                        if(arr[i].dates[j].bookingID === req.query.bookingID){
+                        if(arr[i].dates[j].bookingID === req.body.bookingID){
                             arr[i].dates.splice(j,1)
                         }
                     }
