@@ -35,17 +35,12 @@ let styles = {
   card: {
     width: "100%",
     height: "100%"
-    // maxHeight: 570
   },
   media: {
     height: 0,
     paddingTop: "56.25%"
   },
-  avatar: {
-    backgroundColor: "#a0cdfd",
-    height: 48,
-    width: 48
-  },
+
   centerFlexbox: {
     display: "flex"
   },
@@ -59,7 +54,6 @@ let styles = {
     width: "100%"
   },
   collageImgSmall: {
-    width: "98%",
     height: "100%"
   },
   noYMarginTop: {
@@ -161,20 +155,12 @@ class Landing extends Component {
       let topDealsMarkup = dealsArr.map(deal => {
         if (deal != null) {
           return (
-            <Grid
-              item
-              xs={12}
-              sm={4}
-              // direction={width === "xs" ? "row" : "column"}
-              height="630"
-
-              // style={{ height: 630 }}>
-            >
+            <Grid className="dealContainer" container sm="4">
               <Card className={classes.card}>
                 <CardHeader
-                  className={classes.root}
+                  className="dealContainerHeader"
                   avatar={
-                    <Avatar aria-label="City" className={classes.avatar}>
+                    <Avatar aria-label="City" className="dealAvatar">
                       {deal.CityAbbr}
                     </Avatar>
                   }
@@ -189,7 +175,7 @@ class Landing extends Component {
                 <CardContent className="dealsSpacing">
                   <Grid container direction="row" justify="space-between">
                     <Grid>
-                      <h4>Get {deal.DiscountRate}% off!</h4>
+                      <h5>Get {deal.DiscountRate}% off!</h5>
                     </Grid>
                     <Grid className="newPrice">
                       Starting from ${" "}
@@ -216,7 +202,7 @@ class Landing extends Component {
                       />
                     </Grid>
                     <Grid className="dealsSpacing">
-                      <h5>Guest Rating: {deal.GuestRating}</h5>{" "}
+                      <h6>Guest Rating: {deal.GuestRating}</h6>
                     </Grid>
 
                     <Grid className="dealsSpacing2">
@@ -241,10 +227,18 @@ class Landing extends Component {
 
       // featureDestinationMarkup is the collection of images for feature cities
       let featureDestinationMarkup = landing.featCities.map(city => {
+        let landmark1 = null;
+        let landmark2 = null;
+
+        if (city.landmarkNames) {
+          landmark1 = city.landmarkNames[0];
+          landmark2 = city.landmarkNames[1];
+        }
+
         return (
           <Grid container direction="row" justify="center">
             <Grid xs={12} sm={8} md={8} lg={8}>
-              <div className="imageContainer">
+              <div className="imageContainerLarge">
                 <Link to="/cities">
                   <img src={city.imgMain} className={classes.collageImg} />
                   <div class="text-block-cities">
@@ -263,28 +257,30 @@ class Landing extends Component {
                 justify="center"
               >
                 <Grid xs={6} sm={12}>
-                  <div className="imageContainer">
+                  <div className="imageContainerSmall imageContainerSmall1">
                     <Link to="/cities">
                       <img
-                        src={city.imgMain}
+                        src={city.imgAlt[0]}
                         className={classes.collageImgSmall}
                       />
                       <div class="text-block-cities-small">
-                        <h4 className="imageTextAttraction">Attraction 1</h4>
+                        <h4 src={city.name} className="imageTextAttraction">
+                          {landmark1}
+                        </h4>
                         <p className="imageTextCity">{city.name}</p>
                       </div>
                     </Link>
                   </div>
                 </Grid>
                 <Grid xs={6} sm={12} md={12} lg={12}>
-                  <div className="imageContainer">
+                  <div className="imageContainerSmall imageContainerSmall2">
                     <Link to="/cities">
                       <img
-                        src={city.imgMain}
+                        src={city.imgAlt[1]}
                         className={classes.collageImgSmall}
                       />
                       <div class="text-block-cities-small">
-                        <h4 className="imageTextAttraction">Attraction 1</h4>
+                        <h4 className="imageTextAttraction">{landmark2}</h4>
                         <p className="imageTextCity">{city.name}</p>
                       </div>
                     </Link>
@@ -344,9 +340,9 @@ class Landing extends Component {
 
               <Grid
                 container
-                spacing={24}
                 direction={width === "xs" ? "column" : "row"}
-                justify="space-between"
+                justify="space-around"
+                alignItems="stretch"
               >
                 {topDealsMarkup}
               </Grid>
