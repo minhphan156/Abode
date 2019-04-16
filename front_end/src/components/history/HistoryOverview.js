@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getCurrentProfile, getHistory } from "../../actions/profileActions";
+import { changeReservation } from "../../actions/bookingActions";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
@@ -63,6 +64,13 @@ const styles = theme => ({
 });
 
 class HistoryOverview extends Component {
+  constructor() {
+    super();
+    this.state = {
+      newCheckIn: null,
+      newCheckOut: null
+    };
+  }
   componentDidMount() {
     this.props.getCurrentProfile();
     this.props.getHistory();
@@ -409,10 +417,11 @@ HistoryOverview.propTypes = {
 };
 const mapStateToProps = state => ({
   profile: state.profile,
-  history: state.history
+  history: state.history,
+  bookingData: state.bookingData
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, getHistory }
+  { getCurrentProfile, getHistory, changeReservation }
 )(withStyles(styles)(HistoryOverview));

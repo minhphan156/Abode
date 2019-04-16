@@ -1,4 +1,9 @@
-import { SET_BOOKING, SAVE_BOOKING, CLEAR_BOOKING } from "./types";
+import {
+  SET_BOOKING,
+  SAVE_BOOKING,
+  CLEAR_BOOKING,
+  CHANGE_RESERVATION
+} from "./types";
 import axios from "axios";
 
 // submit booking to backend so it can be stored in DB and reused in history page
@@ -39,4 +44,16 @@ export const clearBooking = () => {
   return {
     type: CLEAR_BOOKING
   };
+};
+
+export const changeReservation = booking => dispatch => {
+  axios
+    .post("/api/booking/changeReservation", { params: booking })
+    .then(res => {
+      dispatch({
+        type: CHANGE_RESERVATION,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
 };
