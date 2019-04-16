@@ -1,6 +1,3 @@
-// TO DO:
-//- add actual discounts, not dummy value '999'
-
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import ReactStars from "react-stars";
@@ -28,6 +25,7 @@ import {
 } from "@material-ui/icons";
 
 import "./indivHotel.css";
+import taxrates from "../payment/taxrates.json";
 
 class IndivHotel extends Component {
   componentDidMount() {
@@ -62,6 +60,27 @@ class IndivHotel extends Component {
     );
     var days = duration.asDays();
 
+    let taxRate = 12.22;
+
+    // get the city's tax rate and pass it on as part of tempBookingInfo
+    taxrates.name.filter(taxrate => {
+      if (
+        taxrate.label ===
+        this.props.individualHotelData.individualHotelData.city
+      ) {
+        taxRate = taxrate.rate;
+      }
+    });
+
+    // calculate the discount, as provided by backend
+    let calculateDiscount = 0;
+    if (this.props.individualHotelData.individualHotelData.discount > 0) {
+      calculateDiscount =
+        (1 - this.props.individualHotelData.individualHotelData.discount) *
+        (days * price * this.props.query.searchQuery.numberRooms);
+    }
+
+    // tempBookingInfo will be sent to saveBooking, which provides data to Payment page
     let tempBookingInfo = {
       name: this.props.individualHotelData.individualHotelData.name,
       address: this.props.individualHotelData.individualHotelData.address,
@@ -70,11 +89,12 @@ class IndivHotel extends Component {
       checkOut: this.props.query.searchQuery.checkOut,
       numRooms: this.props.query.searchQuery.numberRooms,
       pricePerNight: price,
-      // discounts: this.props.individualHotelData.individualHotelData.discount,
-      discounts: 50, // needs to be updated!!!
       hotelImage: this.props.individualHotelData.individualHotelData.img[0],
       numberOfNights: days,
-      subtotal: days * price * this.props.query.searchQuery.numberRooms
+      subtotal: days * price * this.props.query.searchQuery.numberRooms,
+      discounts: calculateDiscount,
+
+      taxRate: taxRate
     };
     this.props.saveBooking(tempBookingInfo);
   }
