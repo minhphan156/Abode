@@ -14,18 +14,10 @@ import {
 
 let styles = theme => ({
   cardMargin: {
-    [theme.breakpoints.down("xl")]: {
-      paddingTop: "5%",
-      paddingBottom: "5%",
-      paddingLeft: "10%",
-      paddingRight: "10%"
-    },
-    [theme.breakpoints.only("xs")]: {
-      paddingTop: "2%",
-      paddingBottom: "2%",
-      paddingLeft: "5%",
-      paddingRight: "5%"
-    }
+    paddingTop: "2%",
+    paddingBottom: "2%",
+    paddingLeft: "5%",
+    paddingRight: "5%"
   },
   pad8: {
     padding: 8
@@ -78,11 +70,27 @@ let WeatherCard = props => {
   if (city.weatherData != null) {
     return (
       <Card className={classes.cardMargin}>
-        <Grid container direction="column" alignItems="center" justify="center">
-          <Grid item>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item xs={12}>
             <Typography variant="h1">
               {`${city.weatherData.main.temp}°F`}
             </Typography>
+          </Grid>
+          <Grid item xs={12} style={{width: "100%"}}>
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+              style={{ width: "100%" }}
+            >
+              <Grid item>
+                <Typography variant="subtitle">{city.weatherData.weather[0].main}</Typography>
+              </Grid>
+              <Grid item lg={2}>
+                {weatherIcon()}
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12} style={{ width: "100%" }}>
             <Grid
@@ -93,16 +101,13 @@ let WeatherCard = props => {
               style={{ width: "100%" }}
             >
               <Grid item>
-                <Typography className={classes.greyText} variant="subtitle">
-                  Weather
+                <Typography variant="subtitle">
+                  <span className={classes.greyText}>Lo: </span>{`${city.weatherData.main.temp_min}°F`}
                 </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                {weatherIcon()}
               </Grid>
               <Grid item>
                 <Typography variant="subtitle">
-                  {city.weatherData.weather[0].main}
+                  <span className={classes.greyText}>Hi: </span>{`${city.weatherData.main.temp_max}°F`}
                 </Typography>
               </Grid>
             </Grid>
