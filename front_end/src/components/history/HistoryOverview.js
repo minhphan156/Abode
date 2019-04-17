@@ -22,6 +22,9 @@ import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+
 import "./history.css";
 
 const styles = theme => ({
@@ -66,8 +69,17 @@ const styles = theme => ({
 class HistoryOverview extends Component {
   constructor() {
     super();
+    this.state = {
+      open: false
+    }
     this.onCancelClick = this.onCancelClick.bind(this);
   }
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+  handleClose = () => {
+    this.setState({ open: false });
+  };
   componentDidMount() {
     this.props.getCurrentProfile();
     this.props.getHistory();
@@ -279,6 +291,12 @@ class HistoryOverview extends Component {
                   <br />
                   {displayRegularChip}
                   <Button onClick={this.onCancelClick}>Test Cancel</Button>
+                  <Button onClick={this.handleClickOpen}>Cancel Pop Up</Button>
+                  <Dialog open={this.state.open} onClose={this.handleClose}><DialogActions>
+                    <Button onClick={this.handleClose} color="primary">
+                      Got it
+            </Button>
+                  </DialogActions></Dialog>
                   {displayChangeChip}
                 </Grid>
                 {/* We display a different layout for small screens */}
