@@ -10,7 +10,7 @@ const Hotel = require("../../models/Hotel");
 router.get('/search',(req,res)=>{
     //Sorting
     var sortByObject = req.query.sortObject;
-    if (typeof sortByOject !== 'undefined'){
+    if (typeof sortByObject !== 'undefined'){
         switch (sortByObject){
             case "price":
                 sortByObject = {price: 1};
