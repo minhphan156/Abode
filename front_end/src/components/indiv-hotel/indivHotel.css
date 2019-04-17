@@ -60,11 +60,21 @@
 
     .otherRating{
       font-size: 20px;
-      font-weight: 200;
+      font-weight: 300;
     }
 
     .singleRate{
       display:none;
+    }
+
+    .tabName{
+      font-size: 16px;
+      font-weight: 400;
+    }
+  
+    .tabContent{
+      font-size: 14px;
+      font-weight: 200;
     }
 }
 
@@ -131,11 +141,21 @@
 
     .otherRating{
       font-size: 20px;
-      font-weight: 200;
+      font-weight: 300;
     }
 
     .singleRate{
       display: none;
+    }
+
+    .tabName{
+      font-size: 16px;
+      font-weight: 400;
+    }
+  
+    .tabContent{
+      font-size: 14px;
+      font-weight: 200;
     }
 }
 
@@ -201,11 +221,21 @@
 
   .otherRating{
     font-size: 20px;
-    font-weight: 200;
+    font-weight: 300;
   }
 
   .singleRate{
     display: none;
+  }
+
+  .tabName{
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .tabContent{
+    font-size: 14px;
+    font-weight: 200;
   }
 }
 
@@ -270,12 +300,23 @@
     }
 
     .otherRating{
-      font-size: 20px;
-      font-weight: 200;
+      font-size: 18px;
+      font-weight: 300;
     }
 
     .doubleRate{
       display: none;
+    }
+
+
+    .tabName{
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .tabContent{
+      font-size: 14px;
+      font-weight: 200;
     }
 }
 
@@ -341,11 +382,21 @@
 
     .otherRating{
       font-size: 21px;
-      font-weight: 200;
+      font-weight: 300;
     }
 
     .doubleRate{
       display: none;
+    }
+
+    .tabName{
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    .tabContent{
+      font-size: 16px;
+      font-weight: 200;
     }
 }
 
@@ -410,13 +461,24 @@
       }
 
       .otherRating{
-        font-size: 27px;
-        font-weight: 200;
+        font-size: 23px;
+        font-weight: 300;
       }
 
       .doubleRate{
         display: none;
       }
+
+
+    .tabName{
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    .tabContent{
+      font-size: 18px;
+      font-weight: 200;
+    }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1163px){
@@ -475,12 +537,22 @@
         color: #808080;
       }
 
-      .hotelStar{
+      .hotelStarShrt{
         display:none;
       }
 
       .otherRating{
-        font-size: 19px;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      .tabName{
+        font-size: 22px;
+        font-weight: 400;
+      }
+  
+      .tabContent{
+        font-size: 18px;
         font-weight: 200;
       }
 }
@@ -546,6 +618,16 @@
     }
 
     .otherRating{
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    .tabName{
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .tabContent{
       font-size: 20px;
       font-weight: 200;
     }

@@ -38,10 +38,7 @@ class IndivHotel extends Component {
 
   constructor() {
     super();
-    this.state = {
-      lat:"",
-      lng:"",
-    };
+    this.state = {};
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
 
@@ -120,7 +117,7 @@ class IndivHotel extends Component {
           ):(
             <div
             id="whole page"
-            style={{ margin:'auto'}}
+            style={{ marginLeft:'7.5%', marginRight:'7.5%'}}
             >
             <div style={{margin:'auto'}}>
             <ExpansionPanel
@@ -128,7 +125,9 @@ class IndivHotel extends Component {
             style={{ marginTop:'2%', width:'100%'}}
             >
             <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-              <Typography variant="subtitle2">
+              <Typography variant="subtitle2" 
+                          style={{fontWeight: "bold", color: "#808080"}}
+              >
                 <Search /> Search
               </Typography>
             </ExpansionPanelSummary>
@@ -153,7 +152,7 @@ class IndivHotel extends Component {
                 {individualHotelData.address}
               </p>
             </div>
-            <div id="hotel ratings" className="col-lg-2 col-sm-12 col-12">
+            <div id="hotel ratings" className="col-xl-2 col-lg-12 col-sm-12 col-12">
             <div class = "hotelStar">
               <div id="hotel star rating" className="row">
                 <div className="col-lg-11 col-sm-12 col-12">
@@ -167,12 +166,12 @@ class IndivHotel extends Component {
                 </div>
               </div>
               <div id="hotel stars" className="row">
-                <div className="col-lg-1 col-sm-12 col-12" />
-                <div className="col-lg-11 col-sm-12 col-12">
+                <div className="col-xl-1 col-lg-12 col-sm-12 col-12" />
+                <div className="col-xl-11 col-lg-12 col-sm-12 col-12">
                   <ReactStars
                     count={5}
                     value={individualHotelData.star_rating}
-                    size={28}
+                    size={26}
                     edit={false}
                     color2={"#FFD700"}
                     color1={"#dcdcdc"}
@@ -194,12 +193,11 @@ class IndivHotel extends Component {
                 </div>
               </div>
               <div id="hotel stars" className="row">
-                <div className="col-lg-1 col-sm-12 col-12" />
-                <div className="col-lg-11 col-sm-12 col-12">
+                <div className="col-lg-12 col-sm-12 col-12">
                   <ReactStars
                     count={5}
                     value={individualHotelData.star_rating}
-                    size={22}
+                    size={23}
                     edit={false}
                     color2={"#FFD700"}
                     color1={"#dcdcdc"}
@@ -312,7 +310,7 @@ class IndivHotel extends Component {
               <div
                 id="pics and amentities"
                 className="col-lg-8 col-sm-12 col-12"
-                style={{ marginLeft: "0", marginTop: "3%" }}
+                style={{ marginLeft: "0", marginTop: "1%" }}
               >
                 <div id="pics sliding show">
                   <div
@@ -392,59 +390,181 @@ class IndivHotel extends Component {
                 <div
                   id="amenities"
                   className="expandable-content overview-sections"
-                  style={{ marginTop: "10px", height: "auto" }}
+                  style={{ marginTop: "15px", height: "auto" }}
                 >
-                  <h5 style={{ fontWeight: "bold" }}>
-                    <i class="fas fa-concierge-bell" /> Main Amentities
-                  </h5>
-                  <div className="row">
-                    <div id="amentities row" className="col-lg-6 col-sm-12 col-12">
-                      {individualHotelData.amenities
-                        .slice(0, individualHotelData.amenities.length / 2)
-                        .map((item, key) => {
-                          return (
-                            <div
-                              id="amentities col"
-                              className="col"
-                              style={{ color: "#808080" }}
-                            >
-                              <i
-                                class="fas fa-check"
-                                style={{ color: "#3e6e00" }}
-                              />{" "}
-                              {item}
-                            </div>
-                          );
-                        })}
+
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <a class="tabName nav-item nav-link active" 
+                         id="amentities-tab" 
+                         data-toggle="tab" 
+                         href="#amentities" 
+                         role="tab" 
+                         aria-controls="amentities" 
+                         aria-selected="true"
+                        >
+                          <i class="fas fa-concierge-bell" /> Main Amentities
+                        </a>
+                      <a class="tabName nav-item nav-link" 
+                         id="airports-tab" 
+                         data-toggle="tab" 
+                         href="#airports" 
+                         role="tab" 
+                         aria-controls="airports" 
+                         aria-selected="false"
+                      >
+                        <i class="fas fa-plane" /> Nearby Airports
+                      </a>
+                      <a class="tabName nav-item nav-link" 
+                         id="top-spots-tab" 
+                         data-toggle="tab" 
+                         href="#top-spots" 
+                         role="tab" 
+                         aria-controls="top-spots" 
+                         aria-selected="false"
+                      >
+                        <i class="fas fa-fire" /> Top Spots
+                      </a>
                     </div>
-                    <div id="amentities row" className="col-lg-6 col-sm-12 col-12">
-                      {individualHotelData.amenities
-                        .slice(
-                          individualHotelData.amenities.length / 2,
-                          individualHotelData.amenities.length
-                        )
-                        .map((item, key) => {
-                          return (
-                            <div
-                              id="amentities col"
-                              className="col"
-                              style={{ color: "#808080" }}
-                            >
-                              <i
-                                class="fas fa-check"
-                                style={{ color: "#3e6e00" }}
-                              />{" "}
-                              {item}
-                            </div>
-                          );
-                        })}
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tabContent tab-pane fade show active" 
+                         id="amentities" 
+                         role="tabpanel" 
+                         aria-labelledby="amentities-tab"
+                    >
+                      <div className="row">
+                        <div id="amentities row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.amenities
+                            .slice(0, individualHotelData.amenities.length / 2)
+                            .map((item, key) => {
+                              return (
+                               <div class="tabContent">
+                               <div
+                                  id="amentities col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                               >
+                                  <i
+                                    class="fas fa-check"
+                                    style={{ color: "#3e6e00" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                        <div id="amentities row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.amenities
+                            .slice(
+                             individualHotelData.amenities.length / 2,
+                             individualHotelData.amenities.length
+                            )
+                            .map((item, key) => {
+                              return (
+                                <div class="tabContent">
+                                <div
+                                  id="amentities col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                                >
+                                 <i
+                                    class="fas fa-check"
+                                   style={{ color: "#3e6e00" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabContent tab-pane fade" 
+                         id="airports" 
+                         role="tabpanel" 
+                         aria-labelledby="airports-tab"
+                    >
+                      <div className="row">
+                        <div id="airports row" className="col-lg-12 col-sm-12 col-12">
+                          {individualHotelData.airports.map((item, key) => {
+                              return (
+                              <div class="tabContent">
+                              <div
+                                className = "col"
+                                style={{ color: "#808080" }}
+                              >
+                                <i class="fas fa-plane-departure"
+                                   style={{color:"#568cba"}} 
+                                />
+                                  {" "}{item}
+                              </div>
+                              </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" 
+                         id="top-spots" 
+                         role="tabpanel" 
+                         aria-labelledby="top-spots-tab"
+                    >
+                      <div className="row">
+                        <div id="amentities row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.top_spots
+                            .slice(0, individualHotelData.top_spots.length / 2)
+                            .map((item, key) => {
+                              return (
+                               <div class="tabContent">
+                               <div
+                                 id="top_spots col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                               >
+                                  <i
+                                    class="fas fa-map-marker-alt"
+                                    style={{ color: "#c90d1f" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                        <div id="top_spots row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.top_spots
+                            .slice(
+                             individualHotelData.top_spots.length / 2,
+                             individualHotelData.top_spots.length
+                            )
+                            .map((item, key) => {
+                              return (
+                                <div class="tabContent">
+                                <div
+                                 id="top_spots col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                                >
+                                 <i
+                                   class="fas fa-map-marker-alt"
+                                   style={{ color: "#c90d1f" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="col maps" 
-                   style={{ marginTop: "3%", overflow:'hidden'}}
+                   style={{ marginTop: "1%", overflow:'hidden'}}
               >
               <div class = "priceAndRate">
                 <h2
@@ -501,8 +621,6 @@ class IndivHotel extends Component {
                 </div>
                 </div>
                 <div className='row'>
-                {console.log(individualHotelData.lat)}
-                {console.log(individualHotelData.alt)}
                 <Map
                   google={this.props.google}
                   zoom={15}
@@ -524,8 +642,6 @@ class IndivHotel extends Component {
                       lng: individualHotelData.alt
                     }}
                   />
-                  {console.log(individualHotelData.lat)}
-                  {console.log(individualHotelData.alt)}
                   <InfoWindow onClose={this.onInfoWindowClose}>
                     <div>
                       <h1>{individualHotelData.name}</h1>
