@@ -39,7 +39,8 @@ class IndivHotel extends Component {
   constructor() {
     super();
     this.state = {
-      dataHolding:"",
+      lat:"",
+      lng:"",
     };
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
@@ -500,10 +501,12 @@ class IndivHotel extends Component {
                 </div>
                 </div>
                 <div className='row'>
+                {console.log(individualHotelData.lat)}
+                {console.log(individualHotelData.alt)}
                 <Map
                   google={this.props.google}
                   zoom={15}
-                  center={{
+                  initialCenter={{
                     lat: individualHotelData.lat,
                     lng: individualHotelData.alt
                   }}
