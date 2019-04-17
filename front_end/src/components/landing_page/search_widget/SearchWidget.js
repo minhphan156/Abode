@@ -98,48 +98,96 @@ class SearchWidget extends Component {
   render() {
     const { classes } = this.props;
 
-    return (
-      <div className={classes.root}>
-        <Grid container justify="center" alignItems="center" spacing={8}>
-          <Grid item xs={12} sm={10} md={6} lg={4}>
-            <Paper className={classes.paper}>
-              <Destination
-                destinationName={this.state.destinationName}
-                onHandleDestinationName={this.onHandleDestinationName}
-              />
-            </Paper>
+    // Search widget can be displayed regular (Destination, Calendar, Rooms)
+    // or it can be displayed as a pop up of the deals of the week (Calendar, Rooms)
+    if (this.props.dealPage) {
+      this.state.destinationName = this.props.dealDestination;
+
+      return (
+        <div>
+          <Grid
+            container
+            className="hotelDealCalendarContainer"
+            direction="row"
+            justify="center"
+            spacing={8}
+          >
+            <Grid item>
+              <Paper className={classes.paper}>
+                <CalendarPicker
+                  dealPage={this.props.dealPage}
+                  checkIn={this.state.checkIn}
+                  checkOut={this.state.checkOut}
+                  onHandleDate={this.onHandleDate}
+                />
+              </Paper>
+            </Grid>
+            <Grid item>
+              <Paper className={classes.paper}>
+                <RoomNumber
+                  numberRooms={this.state.numberRooms}
+                  testRoomFunction={this.testFunctionRoom}
+                />
+              </Paper>
+            </Grid>
+            <Grid item>
+              <Link to="/searchResultOverview">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.onSearchClick}
+                >
+                  Search
+                </Button>
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={10} md={6} lg={4}>
-            <Paper className={classes.paper}>
-              <CalendarPicker
-                checkIn={this.state.checkIn}
-                checkOut={this.state.checkOut}
-                onHandleDate={this.onHandleDate}
-              />
-            </Paper>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.root}>
+          <Grid container justify="center" alignItems="center" spacing={8}>
+            <Grid item xs={12} sm={10} md={6} lg={4}>
+              <Paper className={classes.paper}>
+                <Destination
+                  destinationName={this.state.destinationName}
+                  onHandleDestinationName={this.onHandleDestinationName}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={10} md={6} lg={4}>
+              <Paper className={classes.paper}>
+                <CalendarPicker
+                  checkIn={this.state.checkIn}
+                  checkOut={this.state.checkOut}
+                  onHandleDate={this.onHandleDate}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={4} sm={3} md={2} lg={1}>
+              <Paper className={classes.paper}>
+                <RoomNumber
+                  numberRooms={this.state.numberRooms}
+                  testRoomFunction={this.testFunctionRoom}
+                />
+              </Paper>
+            </Grid>
+            <Grid item>
+              <Link to="/searchResultOverview">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.onSearchClick}
+                >
+                  Search
+                </Button>
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item xs={4} sm={3} md={2} lg={1}>
-            <Paper className={classes.paper}>
-              <RoomNumber
-                numberRooms={this.state.numberRooms}
-                testRoomFunction={this.testFunctionRoom}
-              />
-            </Paper>
-          </Grid>
-          <Grid item>
-            <Link to="/searchResultOverview">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.onSearchClick}
-              >
-                Search
-              </Button>
-            </Link>
-          </Grid>
-        </Grid>
-      </div>
-    );
+        </div>
+      );
+    }
   }
 }
 
