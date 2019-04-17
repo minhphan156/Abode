@@ -29,7 +29,14 @@ router.get(
           errors.noprofile = "There is no profile for this user";
           return res.status(404).json(errors);
         }
-        res.json(profile);
+        User.findById(
+          profile.user
+        ).then(customer => {
+          res.json({
+            profile,
+            rewardPoints: customer.rewardPoints
+          })
+        })
       })
       .catch(err => res.status(404).json(err));
   }
