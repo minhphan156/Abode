@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles, withTheme, withWidth } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
@@ -24,8 +24,10 @@ import TableRow from "@material-ui/core/TableRow";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 import "./history.css";
+import { DialogContent } from "@material-ui/core";
 
 const styles = theme => ({
   table: {
@@ -93,7 +95,7 @@ class HistoryOverview extends Component {
   }
 
   render() {
-    const { classes, profile } = this.props;
+    const { classes, profile, width } = this.props;
     let bookings;
     let displayChangeChip;
     let displayRegularChip;
@@ -292,11 +294,31 @@ class HistoryOverview extends Component {
                   {displayRegularChip}
                   <Button onClick={this.onCancelClick}>Test Cancel</Button>
                   <Button onClick={this.handleClickOpen}>Cancel Pop Up</Button>
-                  <Dialog open={this.state.open} onClose={this.handleClose}><DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
-                      Got it
-            </Button>
-                  </DialogActions></Dialog>
+                  <Dialog
+                    fullWidth={
+                      width === "md" || width === "lg" || width === "sm" ? true : false
+                    }
+                    fullScreen={width === "xs" ? true : false}
+                    open={this.state.open}
+                    onClose={this.handleClose}>
+                    <DialogTitle>
+                      Are you sure you want to cancel?
+                    </DialogTitle>
+                    <p className="supportTextDialog">
+                      *Full refund only when cancellation is greater than 48 hours before check in time.
+                    </p>
+                    <DialogContent>
+                      Cancellation within 48 hours of check in time will not be refunded.
+                    </DialogContent>
+                    <DialogActions>
+                      <Button color="primary">
+                        Yes
+                      </Button>
+                      <Button onClick={this.handleClose} color="primary">
+                        No
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                   {displayChangeChip}
                 </Grid>
                 {/* We display a different layout for small screens */}
