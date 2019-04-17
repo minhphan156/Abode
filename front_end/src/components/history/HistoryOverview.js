@@ -73,7 +73,7 @@ class HistoryOverview extends Component {
     super();
     this.state = {
       open: false
-    }
+    };
     this.onCancelClick = this.onCancelClick.bind(this);
   }
   handleClickOpen = () => {
@@ -89,8 +89,8 @@ class HistoryOverview extends Component {
   componentWillMount() {
     this.props.getHistory();
   }
-  onCancelClick() {
-    const cancelReservationData = { bookingID: "5cb781ea21e7a70cc0b9c344" };
+  onCancelClick(bookingInfo) {
+    const cancelReservationData = { bookingID: bookingInfo };
     this.props.cancelReservation(cancelReservationData);
     this.setState({ open: false });
   }
@@ -226,9 +226,23 @@ class HistoryOverview extends Component {
           );
           cancelAndChangeButtons = (
             <Grid>
-              <Button>CHANGE</Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.button}
+              >
+                CHANGE
+              </Button>
               <br />
-              <Button>CANCEL</Button>
+              <br />
+              <Button
+                onClick={this.handleClickOpen}
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
+              >
+                CANCEL
+              </Button>
             </Grid>
           );
           break;
@@ -296,22 +310,28 @@ class HistoryOverview extends Component {
                   <Button onClick={this.handleClickOpen}>Cancel Pop Up</Button>
                   <Dialog
                     fullWidth={
-                      width === "md" || width === "lg" || width === "sm" ? true : false
+                      width === "md" || width === "lg" || width === "sm"
+                        ? true
+                        : false
                     }
                     fullScreen={width === "xs" ? true : false}
                     open={this.state.open}
-                    onClose={this.handleClose}>
-                    <DialogTitle>
-                      Are you sure you want to cancel?
-                    </DialogTitle>
+                    onClose={this.handleClose}
+                  >
+                    <DialogTitle>Are you sure you want to cancel?</DialogTitle>
                     <p className="supportTextDialog">
-                      *Full refund only when cancellation is greater than 48 hours before check in time.
+                      *Full refund only when cancellation is greater than 48
+                      hours before check in time.
                     </p>
                     <DialogContent>
-                      Cancellation within 48 hours of check in time will not be refunded.
+                      Cancellation within 48 hours of check in time will not be
+                      refunded.
                     </DialogContent>
                     <DialogActions>
-                      <Button onClick={this.onCancelClick} color="primary">
+                      <Button
+                        onClick={() => this.onCancelClick(booking.bookingID)}
+                        color="primary"
+                      >
                         Yes
                       </Button>
                       <Button onClick={this.handleClose} color="primary">
