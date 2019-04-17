@@ -90,8 +90,9 @@ class HistoryOverview extends Component {
     this.props.getHistory();
   }
   onCancelClick() {
-    const cancelReservationData = { bookingID: "Enter a valid booking ID" };
+    const cancelReservationData = { bookingID: "5cb781ea21e7a70cc0b9c344" };
     this.props.cancelReservation(cancelReservationData);
+    this.setState({ open: false });
   }
 
   render() {
@@ -292,7 +293,6 @@ class HistoryOverview extends Component {
                 <Grid item className="chipsAndTotal">
                   <br />
                   {displayRegularChip}
-                  <Button onClick={this.onCancelClick}>Test Cancel</Button>
                   <Button onClick={this.handleClickOpen}>Cancel Pop Up</Button>
                   <Dialog
                     fullWidth={
@@ -311,7 +311,7 @@ class HistoryOverview extends Component {
                       Cancellation within 48 hours of check in time will not be refunded.
                     </DialogContent>
                     <DialogActions>
-                      <Button color="primary">
+                      <Button onClick={this.onCancelClick} color="primary">
                         Yes
                       </Button>
                       <Button onClick={this.handleClose} color="primary">
