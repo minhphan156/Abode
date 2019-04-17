@@ -26,8 +26,8 @@ const initialState = {
       subtotal: 500.0,
       discount: 10,
       starReview: 0,
-      comment: ""
-
+      comment: "",
+      bookingID: "123456"
       // MISSING:
       // new_check_in_date: null,
       // new_check_out_date: null,
@@ -55,7 +55,8 @@ const initialState = {
       subtotal: 500.0,
       discount: 10,
       starReview: 0,
-      comment: ""
+      comment: "",
+      bookingID: "1234567"
 
       // MISSING:
       // new_check_in_date: null,
@@ -96,11 +97,17 @@ export default function(state = initialState, action) {
         profile: null
       };
     case PUBLISH_REVIEW:
-      return {
-        ...state,
-        starReview: action.payload.starReview,
-        comment: action.payload.comment
-      };
+      for (let i = 0; i < state.history.length; i++) {
+        if (action.payload.bookingID === state.history[i].bookingID) {
+          state.history[i].starReview = action.payload.starReview;
+          state.history[i].comment = action.payload.comment;
+          return {
+            ...state,
+            shoppingCart: state.history
+          };
+        }
+      }
+
     default:
       return state;
   }

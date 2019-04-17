@@ -10,23 +10,16 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails
 } from "@material-ui/core/";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from "@material-ui/core/";
+
 import { Table, TableCell, TableRow } from "@material-ui/core/";
-import { Check, RateReview } from "@material-ui/icons/";
 import { isWidthDown } from "@material-ui/core/withWidth";
-import ReactStars from "react-stars";
 import withWidth from "@material-ui/core/withWidth";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExitIcon from "@material-ui/icons/ExitToApp";
 import DoneIcon from "@material-ui/icons/Done";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import CancelIcon from "@material-ui/icons/Cancel";
+import ReviewRating from "./ReviewRating";
 
 import "./history.css";
 
@@ -121,26 +114,7 @@ const styles = {
 class HistoryOverview extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-      starReview: 0,
-      comment: ""
-    };
-    this.handleCloseReviewForm = this.handleCloseReviewForm.bind(this);
-    this.handleOpenReviewForm = this.handleOpenReviewForm.bind(this);
-    this.ratingChanged = this.ratingChanged.bind(this);
-    this.handleReviewInput = this.handleReviewInput.bind(this);
   }
-
-  // componentWillMount() {
-  //   const { review } = this.props.review;
-  //   if (review) {
-  //     this.setState({
-  //       starReview: review.starReview,
-  //       comment: review.comment
-  //     });
-  //   }
-  // }
 
   componentDidMount() {
     this.props.getCurrentProfile();
@@ -149,31 +123,6 @@ class HistoryOverview extends Component {
 
   componentWillMount() {
     this.props.getHistory();
-  }
-
-  handleOpenReviewForm() {
-    this.setState({ open: true });
-  }
-
-  handleCloseReviewForm() {
-    this.setState({ open: false });
-    const reviewData = {
-      starReview: this.state.starReview,
-      comment: this.state.comment
-    };
-    this.props.submitReview(reviewData);
-  }
-
-  ratingChanged(newRating) {
-    this.setState({
-      starReview: newRating
-    });
-  }
-
-  handleReviewInput(event) {
-    this.setState({
-      comment: event.target.value
-    });
   }
 
   render() {
@@ -185,7 +134,7 @@ class HistoryOverview extends Component {
     let dateOverview;
     let cancelAndChangeButtons;
 
-    bookings = this.props.profile.history.map(booking => {
+    bookings = profile.history.map(booking => {
       displayChangeChip = null;
       displayRegularChip = null;
       dateOverview = null;
@@ -323,31 +272,15 @@ class HistoryOverview extends Component {
                 className={classes.chipCheckin}
                 icon={<DoneIcon />}
               />
-              {isWidthDown("xs", width) ? ( // render this if it is opened on a phone
-                booking.comment === "" && booking.starReview === 0 ? (
-                  <Button
-                    variant="contained"
-                    size="small"
-                    className={classes.ReviewButtonForPhone}
-                    onClick={this.handleOpenReviewForm}
-                  >
-                    <RateReview style={{ fontSize: 16 }} />
-                    Review
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    size="small"
-                    className={classes.ReviewedButtonForPhone}
-                    onClick={this.handleOpenReviewForm}
-                  >
-                    <Check style={{ fontSize: 16 }} />
-                    Reviewed
-                  </Button>
-                )
-              ) : (
-                ""
-              )}
+              {isWidthDown("xs", width) ? (
+                booking.status ? (
+                  <ReviewRating
+                    ReviewButtonStyle={classes.ReviewButtonForPhone}
+                    ReviewedButtonStyle={classes.ReviewedButtonForPhone}
+                    booking={booking}
+                  />
+                ) : null
+              ) : null}
             </div>
           );
           break;
@@ -360,31 +293,15 @@ class HistoryOverview extends Component {
                 className={classes.chipCheckout}
                 icon={<ExitIcon />}
               />
-              {isWidthDown("xs", width) ? ( // render this if it is opened on a phone
-                booking.comment === "" && booking.starReview === 0 ? (
-                  <Button
-                    variant="contained"
-                    size="small"
-                    className={classes.ReviewButtonForPhone}
-                    onClick={this.handleOpenReviewForm}
-                  >
-                    <RateReview style={{ fontSize: 16 }} />
-                    Review
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    size="small"
-                    className={classes.ReviewedButtonForPhone}
-                    onClick={this.handleOpenReviewForm}
-                  >
-                    <Check style={{ fontSize: 16 }} />
-                    Reviewed
-                  </Button>
-                )
-              ) : (
-                ""
-              )}
+              {isWidthDown("xs", width) ? (
+                booking.status ? (
+                  <ReviewRating
+                    ReviewButtonStyle={classes.ReviewButtonForPhone}
+                    ReviewedButtonStyle={classes.ReviewedButtonForPhone}
+                    booking={booking}
+                  />
+                ) : null
+              ) : null}
             </div>
           );
           break;
@@ -405,62 +322,6 @@ class HistoryOverview extends Component {
       // these are the expansionpanels for all the different bookings
       return (
         <div>
-          <Dialog
-            open={this.state.open}
-            onClose={this.handleCloseReviewForm}
-            aria-labelledby="form-dialog-title"
-            maxWidth="sm"
-            fullWidth="true"
-          >
-            <DialogTitle
-              id="form-dialog-title"
-              style={{
-                background:
-                  "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
-              }}
-            >
-              <div style={{ color: "white" }}>Rate and Review</div>
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText style={{ marginBottom: 10, marginTop: 22 }}>
-                {isWidthDown("xs", width)
-                  ? "This is a public review" // render this if it is opened on a phone
-                  : "Your review will be posted publicly on the web"}
-              </DialogContentText>
-
-              <ReactStars
-                count={5}
-                size={24}
-                color2={"#ffd700"}
-                value={this.state.starReview}
-                onChange={this.ratingChanged}
-              />
-              <div>
-                <Input
-                  multiline
-                  placeholder={
-                    isWidthDown("xs", width)
-                      ? "" // render this if it is opened on a phone
-                      : "Share details of your own experience at this hotel"
-                  }
-                  style={{
-                    width: isWidthDown("xs", width) ? 232 : 450,
-                    marginTop: 13
-                  }}
-                  value={this.state.comment}
-                  onChange={this.handleReviewInput}
-                />
-              </div>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleCloseReviewForm} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={this.handleCloseReviewForm} color="primary">
-                Post
-              </Button>
-            </DialogActions>
-          </Dialog>
           <ExpansionPanel
             classes={{
               expanded: classes.backgroundStyle
@@ -550,30 +411,15 @@ class HistoryOverview extends Component {
                     >
                       Total: ${" "}
                       {(booking.subtotal - booking.discount).toFixed(2)}
-                      {booking.status ? ( // only render this if customer checked in
+                      {booking.status ? (
                         isWidthDown("xs", width) ? (
-                          "" // dont render here if it is opened on the phone
-                        ) : booking.comment === "" &&
-                          booking.starReview === 0 ? ( // if reviews were left, change to ReviewedButton
-                          <Button
-                            variant="contained"
-                            size="small"
-                            className={classes.ReviewButton}
-                            onClick={this.handleOpenReviewForm}
-                          >
-                            <RateReview style={{ fontSize: 16 }} />
-                            Review
-                          </Button>
+                          ""
                         ) : (
-                          <Button
-                            variant="contained"
-                            size="small"
-                            className={classes.ReviewedButton}
-                            onClick={this.handleOpenReviewForm}
-                          >
-                            <Check style={{ fontSize: 16 }} />
-                            Reviewed
-                          </Button>
+                          <ReviewRating
+                            ReviewButtonStyle={classes.ReviewButton}
+                            ReviewedButtonStyle={classes.ReviewedButton}
+                            booking={booking}
+                          />
                         )
                       ) : null}
                     </div>
