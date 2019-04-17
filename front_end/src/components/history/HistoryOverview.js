@@ -104,21 +104,21 @@ class HistoryOverview extends Component {
 
       let expansionData = {
         bookingId: booking.bookingID,
-        Firstname: "Mr.",
-        Lastname: "Bean",
+        Firstname: "MISSING",
+        Lastname: "MISSING",
         checkIn: booking.check_in_date,
         checkOut: booking.check_out_date,
         roomType: booking.typeOfRoom,
-        nightlyRate: 999,
+        nightlyRate: "MISSING",
         numRooms: booking.numOfRoom,
-        numberOfNights: 999,
+        numberOfNights: "MISSING",
         subtotal: booking.subtotal,
-        discounts: 999, // booking.discount,
-        rewardsDiscount: 999,
-        taxesAndFees: 999,
+        discounts: "MISSING", // booking.discount,
+        rewardsDiscount: "MISSING",
+        taxesAndFees: "MISSING",
         total: booking.total,
-        rewardPointsEarned: 999, //booking.rewardPointsEarned,
-        rewardPointsUsed: 999 //booking.rewardPointsUsed
+        rewardPointsEarned: "MISSING", //booking.rewardPointsEarned,
+        rewardPointsUsed: "MISSING" //booking.rewardPointsUsed
       };
 
       // if the booking was not changed, we display the regular CheckIn and Checkout Overview
@@ -241,7 +241,9 @@ class HistoryOverview extends Component {
             />
           );
           cancelAndChangeButtons = (
-            <Grid>
+            <Grid className="HistoryPageTotal">
+              <Button>REVIEW</Button>
+              <br />
               <Button>CHANGE</Button>
               <br />
               <Button>CANCEL</Button>
@@ -330,11 +332,13 @@ class HistoryOverview extends Component {
                 </Grid>
               </Grid>
 
-              <Grid className="HistoryContainerDates">{/* ///some  */}</Grid>
               <Grid>
-                <Grid item className="HistoryPageTotal">
+                <Grid item className="HistoryPageTotal HistoryContainerDates">
                   Total: $ {(booking.total + 0).toFixed(2)}
                 </Grid>
+              </Grid>
+              <Grid>
+                <Grid item>{cancelAndChangeButtons} </Grid>
               </Grid>
             </Grid>
           </ExpansionPanelSummary>
@@ -342,7 +346,6 @@ class HistoryOverview extends Component {
           {/* ExpansionPanelDetails is the part that can be expanded (not visible by default) */}
           <ExpansionPanelDetails>
             <HistoryExpansionTable expansionData={expansionData} />
-            {cancelAndChangeButtons}
           </ExpansionPanelDetails>
         </ExpansionPanel>
       );
