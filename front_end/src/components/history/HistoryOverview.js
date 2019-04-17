@@ -307,7 +307,6 @@ class HistoryOverview extends Component {
                 <Grid item className="chipsAndTotal">
                   <br />
                   {displayRegularChip}
-                  <Button onClick={this.handleClickOpen}>Cancel Pop Up</Button>
                   <Dialog
                     fullWidth={
                       width === "md" || width === "lg" || width === "sm"
