@@ -29,3 +29,4 @@ export const SET_BOOKING = "SET_BOOKING";
 export const SAVE_BOOKING = "SAVE_BOOKING";
 
 export const PUBLISH_REVIEW = "PUBLISH_REVIEW";
+export const CLEAR_BOOKING = "CLEAR_BOOKING";

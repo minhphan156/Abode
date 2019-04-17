@@ -178,7 +178,6 @@ class HistoryOverview extends Component {
 
   render() {
     const width = this.props.width;
-    // const { review } = this.props.review;
     const { classes, profile } = this.props;
     let bookings;
     let displayChangeChip;
@@ -298,7 +297,7 @@ class HistoryOverview extends Component {
 
       // here we determine which chip to display. There are four different statuses that each correspond to a chip
       switch (booking.status) {
-        case 1:
+        case 0:
           displayRegularChip = (
             <Chip
               label="Coming Up"
@@ -315,7 +314,7 @@ class HistoryOverview extends Component {
             </Grid>
           );
           break;
-        case 2:
+        case 1:
           displayRegularChip = (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <Chip
@@ -352,7 +351,7 @@ class HistoryOverview extends Component {
             </div>
           );
           break;
-        case 3:
+        case 2:
           displayRegularChip = (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <Chip
@@ -389,7 +388,7 @@ class HistoryOverview extends Component {
             </div>
           );
           break;
-        case 4:
+        case 3:
           displayRegularChip = (
             <Chip
               label="Canceled"
@@ -639,7 +638,7 @@ class HistoryOverview extends Component {
                       <TableRow>
                         <TableCell>Discount:</TableCell>
                         <TableCell align="right">
-                          $ {booking.discount.toFixed(2)}
+                          {/* $ {booking.discount.toFixed(2)} */}
                         </TableCell>
                       </TableRow>
                       <TableRow>
@@ -695,7 +694,6 @@ HistoryOverview.propTypes = {
 const mapStateToProps = state => ({
   profile: state.profile,
   history: state.history
-  // review: state.review
 });
 
 export default connect(
