@@ -22,14 +22,13 @@ const styles = theme => ({
   },
   paper: {
     textAlign: "center",
-    height: 70,
-    margin: 10
+    height: 70
   }
 });
 
 class SearchWidget extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       destinationName: "",
       checkIn: "",
@@ -64,9 +63,24 @@ class SearchWidget extends Component {
       checkOut: this.state.checkOut,
       numberRooms: this.state.numberRooms,
       lastIndex: 0,
-      numResults: 5
+      numResults: 10,
+      pageNumber: 1,
+      free_wifi: 0,
+      free_parking: 0,
+      free_breakfast: 0,
+      pool: 0,
+      pet_friendly: 0,
+      price_low: null,
+      price_high: null,
+      review_score: 0,
+      star_rating: 0
     };
-    this.props.submitQuery(newQuery);
+
+    // Reset the <searchResultOverview/> component if the user is in /searchResultOverview page
+    if (this.props.handleResetSearchOverview != null) {
+      this.props.handleResetSearchOverview();
+    }
+
     this.props.saveQuery(newQuery);
 
     //Check if the destination is given or not.
@@ -76,6 +90,8 @@ class SearchWidget extends Component {
       this.setState({ showAlert: false });
       this.props.history.push("/searchResultOverview");
     }
+
+    this.props.submitQuery(newQuery);
   }
 
   onHandleDate(startingDate, endingDate) {
@@ -93,6 +109,7 @@ class SearchWidget extends Component {
 
   render() {
     const { classes } = this.props;
+
     const { query } = this.props.query;
     const handleHide = () => this.setState({ showAlert: false });
 
@@ -108,6 +125,7 @@ class SearchWidget extends Component {
             Close
           </Button>
         </Alert>
+
         <Grid container justify={"center"} spacing={8}>
           <Grid item xs={12} sm={10} md={6} lg={4}>
             <Paper className={classes.paper}>

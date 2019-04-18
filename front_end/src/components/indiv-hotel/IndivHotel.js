@@ -1,6 +1,3 @@
-// TO DO:
-//- add actual discounts, not dummy value '999'
-
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import ReactStars from "react-stars";
@@ -9,6 +6,9 @@ import { connect } from "react-redux";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import { Link } from "react-router-dom";
 import { saveBooking } from "../../actions/bookingActions";
+import { getIndividualHotelResult } from "../../actions/searchResultActions";
+import moment from "moment";
+import taxrates from "../payment/taxrates.json";
 
 class IndivHotel extends Component {
   constructor() {
@@ -17,20 +17,57 @@ class IndivHotel extends Component {
     this.saveBookingInfo = this.saveBookingInfo.bind(this);
   }
 
+  /*  TODO: Make backend API that searches for an individual hotel using its ID
+  componentDidMount = () => {
+    this.props.getIndividualHotelResult(this.props.match.params.hotelID);
+  };
+  */
+
   saveBookingInfo(roomTypeSelected, price) {
     // IN HERE WE SAVE ALL THE INFO WE NEED FOR THE PAYMENT PAGE
 
+    var duration = moment.duration(
+      this.props.query.searchQuery.checkOut.diff(
+        this.props.query.searchQuery.checkIn
+      )
+    );
+    var days = duration.asDays();
+
+    let taxRate = 12.22;
+
+    // get the city's tax rate and pass it on as part of tempBookingInfo
+    taxrates.name.filter(taxrate => {
+      if (
+        taxrate.label ===
+        this.props.individualHotelData.individualHotelData.city
+      ) {
+        taxRate = taxrate.rate;
+      }
+    });
+
+    // calculate the discount, as provided by backend
+    let calculateDiscount = 0;
+    if (this.props.individualHotelData.individualHotelData.discount > 0) {
+      calculateDiscount =
+        (1 - this.props.individualHotelData.individualHotelData.discount) *
+        (days * price * this.props.query.searchQuery.numberRooms);
+    }
+
+    // tempBookingInfo will be sent to saveBooking, which provides data to Payment page
     let tempBookingInfo = {
       name: this.props.individualHotelData.individualHotelData.name,
-      street: this.props.individualHotelData.individualHotelData.address,
-      //city: this.props.individualHotelData.individualHotelData.city,
+      address: this.props.individualHotelData.individualHotelData.address,
       roomType: roomTypeSelected,
       checkIn: this.props.query.searchQuery.checkIn,
       checkOut: this.props.query.searchQuery.checkOut,
       numRooms: this.props.query.searchQuery.numberRooms,
       pricePerNight: price,
-      discounts: 999, // needs to be updated!!!
-      hotelImage: this.props.individualHotelData.individualHotelData.img[0]
+      hotelImage: this.props.individualHotelData.individualHotelData.img[0],
+      numberOfNights: days,
+      subtotal: days * price * this.props.query.searchQuery.numberRooms,
+      discounts: calculateDiscount,
+
+      taxRate: taxRate
     };
     this.props.saveBooking(tempBookingInfo);
   }
@@ -414,7 +451,7 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { saveBooking }
+  { saveBooking, getIndividualHotelResult }
 )(
   GoogleApiWrapper({
     apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"
