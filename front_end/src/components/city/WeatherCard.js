@@ -36,7 +36,11 @@ let WeatherCard = props => {
 
   let loadingWeather = () => {
     return (
-      <Card className={classes.cardMargin} style={{ height: "100%" }}>
+      <Card
+        className={classes.cardMargin}
+        square="false"
+        style={{ height: "100%" }}
+      >
         <Grid
           container
           style={{ width: "100%", height: "100%" }}
@@ -70,7 +74,11 @@ let WeatherCard = props => {
 
   if (city.weatherData != null) {
     return (
-      <Card className={classes.cardMargin} square={true}>
+      <Card
+        className={classes.cardMargin}
+        square={true}
+        style={{ height: "100%" }}
+      >
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item xs={12}>
             <Typography
@@ -135,7 +143,7 @@ let WeatherCard = props => {
               </Grid>
               <Grid item>
                 <Typography variant="subtitle">
-                  {`${city.weatherData.main.humidity}g/m3`}
+                  {`${city.weatherData.main.humidity} g/m3`}
                 </Typography>
               </Grid>
             </Grid>

@@ -9,6 +9,7 @@ import { fetchCityById, fetchCityWeather } from "../../actions/cityActions";
 // Child component imports
 import ImageCarousel from "./ImageCarousel";
 import CityDescription from "./CityDescription";
+import WeatherCard from "./WeatherCard";
 
 // Material-UI imports
 import {
@@ -16,8 +17,11 @@ import {
   withStyles,
   withWidth,
   CircularProgress,
-  Divider
+  Hidden,
+  Divider,
+  Typography
 } from "@material-ui/core";
+import { isWidthDown } from "@material-ui/core/withWidth";
 
 // Prototype Imports
 import SF0 from "./SF0.jpg";
@@ -62,7 +66,7 @@ class CityOverview extends Component {
   // Fetches needed city data upon mounting
   componentDidMount = () => {
     this.props.fetchCityById(this.props.match.params.cityId);
-    this.props.fetchCityWeather("London");
+    this.props.fetchCityWeather("San+Francisco");
     // TODO: Update the following code once backend is completed
     if (this.props.city.cityData != null) {
       this.setState({
@@ -106,6 +110,24 @@ class CityOverview extends Component {
           >
             <Grid item xs={12}>
               <Grid container direction="column" spacing={16}>
+                <Grid item xs={12}>
+                  <Grid
+                    container
+                    direction="row"
+                    alignItems="center"
+                    spacing={16}
+                  >
+                    <Grid item xs>
+                      <Divider />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="h3">San Francisco</Typography>
+                    </Grid>
+                    <Grid item xs>
+                      <Divider />
+                    </Grid>
+                  </Grid>
+                </Grid>
                 <Grid item md={12}>
                   <ImageCarousel
                     images={images}
@@ -113,6 +135,11 @@ class CityOverview extends Component {
                     city={city}
                   />
                 </Grid>
+                <Hidden mdUp>
+                  <Grid item xs={12}>
+                    <WeatherCard city={city} />
+                  </Grid>
+                </Hidden>
                 <Grid item md={12}>
                   <CityDescription city={city} />
                 </Grid>
@@ -141,6 +168,7 @@ class CityOverview extends Component {
   }
 }
 
+// Expected props
 CityOverview.PropTypes = {
   auth: PropTypes.object.isRequired,
   city: PropTypes.object.isRequired,
