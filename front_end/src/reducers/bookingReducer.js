@@ -25,8 +25,7 @@ export default function(state = initialState, action) {
     case CLEAR_BOOKING:
       return { ...state, bookingConfirmationData: {} };
     case CANCEL_RESERVATION:
-      console.log("Cancelled");
-      console.log(action.payload);
+      
     default:
       return state;
   }
