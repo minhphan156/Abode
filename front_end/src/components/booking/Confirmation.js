@@ -26,7 +26,7 @@ function Confirmation(props) {
     const width = props.width;
 
     const ReservationRows = [
-      createData("Confirmation Number", bookingData.bookingId),
+      createData("Confirmation Number", bookingData.bookingID),
       createData(
         "Guest Name",
         bookingData.Firstname + " " + bookingData.Lastname
@@ -46,10 +46,20 @@ function Confirmation(props) {
     ];
 
     const BillRows = [
-      createData("Nightly Rate", "$" + bookingData.nightlyRate.toFixed(2)),
+      createData(
+        "Nightly Rate",
+        bookingData.nightlyRate
+          ? "$" + bookingData.nightlyRate.toFixed(2)
+          : bookingData.nightlyRate
+      ),
       createData("Number of Rooms", bookingData.numRooms),
       createData("Number of Nights", bookingData.numberOfNights),
-      createData("Subtotal", "$" + bookingData.subtotal.toFixed(2)),
+      createData(
+        "Subtotal",
+        bookingData.subtotal
+          ? "$" + bookingData.subtotal.toFixed(2)
+          : bookingData.subtotal
+      ),
       createData(
         "Discounts",
         bookingData.discounts
@@ -58,14 +68,13 @@ function Confirmation(props) {
       ),
       createData(
         "Rewards Discount",
-        bookingData.rewardsDiscount
-          ? "$" + bookingData.rewardsDiscount.toFixed(2)
-          : bookingData.rewardsDiscount
+        bookingData.rewardDiscount
+          ? "$" + bookingData.rewardDiscount.toFixed(2)
+          : bookingData.rewardDiscount
       ),
       createData("Taxes and Fees", "$" + bookingData.taxesAndFees.toFixed(2)),
       createData("Total", "$" + bookingData.total.toFixed(2)),
-            createData("Reward Points Earned", bookingData.rewardPointsEarned)
-
+      createData("Reward Points Earned", bookingData.rewardPointsEarned)
     ];
     return (
       <Grid
@@ -92,7 +101,7 @@ function Confirmation(props) {
         <Grid item xs={isWidthDown("xs", width) ? 11 : 5}>
           <CardMedia
             style={{ width: "100%", height: 200 }}
-            image={require("../landing_page/SF.jpg")} // *********need to be updated with real PICTURES
+            image={bookingData.destinationImg} // *********need to be updated with real PICTURES
           />
         </Grid>
 
@@ -103,7 +112,7 @@ function Confirmation(props) {
                 ? { width: "100%", height: 200, marginTop: 20 }
                 : { width: "100%", height: 200 }
             }
-            image={require("../landing_page/SD.jpg")} // *********need to be updated with real PICTURES
+            image={bookingData.hotelImg} // *********need to be updated with real PICTURES
           />
         </Grid>
         <Grid item xs={10}>
