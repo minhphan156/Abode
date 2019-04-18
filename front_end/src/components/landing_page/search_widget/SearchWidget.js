@@ -85,10 +85,14 @@ class SearchWidget extends Component {
     //Check if the destination is given or not.
     if (this.state.destinationName === "") {
       this.setState({ showDesAlert: true });
+    } else {
+      this.setState({ showDesAlert: false });
     }
     //Check if the checkIn and checkOut date are given or not.
     if (this.state.checkIn === "" || this.state.checkOut === "") {
       this.setState({ showDateAlert: true });
+    } else {
+      this.setState({ showDateAlert: false });
     }
 
     if (
@@ -118,8 +122,8 @@ class SearchWidget extends Component {
 
   render() {
     const { classes } = this.props;
-    const handleDesAlertHide = () => this.setState({ showDesAlert: false });
-    const handleDateAlertHide = () => this.setState({ showDateAlert: false });
+    //const handleDesAlertHide = () => this.setState({ showDesAlert: false });
+    // const handleDateAlertHide = () => this.setState({ showDateAlert: false });
 
     // Search widget can be displayed regular (Destination, Calendar, Rooms)
     // or it can be displayed as a pop up of the deals of the week (Calendar, Rooms)
@@ -171,24 +175,18 @@ class SearchWidget extends Component {
       return (
         <div className={classes.root}>
           <Alert
-            style={{ marginLeft: "10%", marginTop: "1%" }}
+            style={{ marginLeft: "17%" }}
             variant="danger"
             show={this.state.showDesAlert}
           >
             Please provide a destination
-            <Button onClick={handleDesAlertHide} color="secondary">
-              Close
-            </Button>
           </Alert>
           <Alert
-            style={{ marginLeft: "11%", marginTop: "1%" }}
+            style={{ marginLeft: "18%" }}
             variant="danger"
             show={this.state.showDateAlert}
           >
             Please provide dates
-            <Button onClick={handleDateAlertHide} color="secondary">
-              Close
-            </Button>
           </Alert>
           <Grid container justify="center" alignItems="center" spacing={8}>
             <Grid item xs={12} sm={10} md={6} lg={4}>
