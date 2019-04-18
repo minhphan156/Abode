@@ -88,6 +88,10 @@ const HotelSchema = new Schema({
     bookingStats:{
         type:Number,
         default:0
+    },
+    discount:{
+        type:Number,
+        default:0
     }
 },{ usePushEach: true });
 

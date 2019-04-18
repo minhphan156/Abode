@@ -37,7 +37,7 @@ export default (class aboutUs extends Component {
               justify="space-evenly"
               alignItems="baseline"
             >
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/in/ssallenbach/"
@@ -46,10 +46,8 @@ export default (class aboutUs extends Component {
                   <br /> <div id="AboutPageNames">Sandro Sallenbach</div>
                 </a>
                 <div id="AboutPageRoles">Project Manager</div>
-                <br />
-                <br />
               </Grid>
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/in/lance-ngo-a1892a5/"
@@ -57,8 +55,7 @@ export default (class aboutUs extends Component {
                   <img className="aboutPage-images" src={Lance} alt="" />
                   <br /> <div id="AboutPageNames">Lance Ngo</div>{" "}
                 </a>
-                <div id="AboutPageRoles">Product Owner</div> <br />
-                <br />
+                <div id="AboutPageRoles">Product Owner</div>
               </Grid>
             </Grid>
             <Grid
@@ -68,7 +65,7 @@ export default (class aboutUs extends Component {
               justify="space-evenly"
               alignItems="baseline"
             >
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/in/minhphan156/"
@@ -79,7 +76,7 @@ export default (class aboutUs extends Component {
                 <div id="AboutPageRoles">Front-End Lead</div>
               </Grid>
 
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/in/hongbin-zheng-27456317a/"
@@ -90,11 +87,10 @@ export default (class aboutUs extends Component {
                 <div id="AboutPageRoles">Back-End Lead</div>
               </Grid>
 
-              <Grid item>
+              <Grid item className="teamMemberContainer teamMemberSwitch1">
                 <img className="aboutPage-images" src={Dale} alt="" />
-                <br /> <div id="AboutPageNames">Dale Seen</div>{" "}
-                <div id="AboutPageRoles">Front-End Developer</div> <br />
-                <br />
+                <br /> <div id="AboutPageNames">Dale Seen</div>
+                <div id="AboutPageRoles">Front-End Developer</div>
               </Grid>
             </Grid>
 
@@ -105,7 +101,12 @@ export default (class aboutUs extends Component {
               justify="space-evenly"
               alignItems="baseline"
             >
-              <Grid item>
+              <Grid item className="teamMemberContainer teamMemberSwitch2">
+                <img className="aboutPage-images" src={Dale} alt="" />
+                <br /> <div id="AboutPageNames">Dale Seen</div>
+                <div id="AboutPageRoles">Front-End Developer</div>
+              </Grid>
+              <Grid item className="teamMemberContainer">
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/in/jinshan-jiang-alex/"
@@ -113,22 +114,19 @@ export default (class aboutUs extends Component {
                   <img className="aboutPage-images" src={Alex} alt="" />
                   <br /> <div id="AboutPageNames">Alex Jiang</div>{" "}
                 </a>
-                <div id="AboutPageRoles">Front-End Developer</div> <br />
-                <br />
+                <div id="AboutPageRoles">Front-End Developer</div>
               </Grid>
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/in/yu-ning-hee-379453180/"
                 >
                   <img className="aboutPage-images" src={Yu} alt="" />
-                  <br /> <div id="AboutPageNames">Yu Ning Hee</div>{" "}
+                  <br /> <div id="AboutPageNames">Yu Ning Hee</div>
                 </a>
                 <div id="AboutPageRoles">Front-End Developer</div>
-                <br />
-                <br />
               </Grid>
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <img className="aboutPage-images" src={Yuta} alt="" />
                 <br /> <div id="AboutPageNames">Yuta Sugiura</div>{" "}
                 <div id="AboutPageRoles">Front-End Developer</div>
@@ -142,19 +140,19 @@ export default (class aboutUs extends Component {
               justify="space-evenly"
               alignItems="baseline"
             >
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/in/vinnysenthil/"
                 >
                   <img className="aboutPage-images" src={Vinny} alt="" />
-                  <br /> <div id="AboutPageNames">Vinny Senthil</div>{" "}
+                  <br /> <div id="AboutPageNames">Vinny Senthil</div>
                 </a>
                 <div id="AboutPageRoles">Back-End Developer</div>
               </Grid>
-              <Grid item>
+              <Grid item className="teamMemberContainer">
                 <img className="aboutPage-images" src={Tien} alt="" />
-                <br /> <div id="AboutPageNames">Tien Nguyen</div>{" "}
+                <br /> <div id="AboutPageNames">Tien Nguyen</div>
                 <div id="AboutPageRoles">Back-End Developer</div>
               </Grid>
             </Grid>

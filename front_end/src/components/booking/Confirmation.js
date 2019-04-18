@@ -1,50 +1,238 @@
-import React, { Component } from "react";
-import { PropTypes } from "prop-types";
+import React from "react";
 import { connect } from "react-redux";
+import CardMedia from "@material-ui/core/CardMedia";
+import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import withWidth from "@material-ui/core/withWidth";
+import { isWidthDown } from "@material-ui/core/withWidth";
 
-import styled, { keyframes } from "styled-components";
-import { bounce } from "react-animations";
+let id = 0;
+function createData(firstCol, secondCol) {
+  id += firstCol + 1;
+  return { id, firstCol, secondCol };
+}
 
-import BookingBreakdownTable from "./BookingBreakdownTable";
-import BookingDetailsCard from "./BookingDetailsCard";
+function Confirmation(props) {
+  const bookingData = props.bookingData.bookingConfirmationData;
 
-const Bounce = styled.div`
-  animation: 2s ${keyframes`${bounce}`} infinite;
-`;
+  if (bookingData.bookingId === "") {
+    props.history.push("/");
+    return null;
+  } else {
+    const width = props.width;
 
-class Confirmation extends Component {
-  render() {
+    const ReservationRows = [
+      createData("Confirmation Number", bookingData.bookingId),
+      createData(
+        "Guest Name",
+        bookingData.Firstname + " " + bookingData.Lastname
+      ),
+      createData("Arrival Date", bookingData.checkIn),
+      createData("Departure Date", bookingData.checkOut),
+      createData("Room Type", bookingData.roomType)
+    ];
+
+    const PoliciesRows = [
+      createData("Check-In Time", "3:00 PM"),
+      createData("Check-Out Time", "12:00 noon"),
+      createData(
+        "Cancellation Policy",
+        "Cancellations must be received 48 hours before check-in date for full refund"
+      )
+    ];
+
+    const BillRows = [
+      createData("Nightly Rate", "$" + bookingData.nightlyRate.toFixed(2)),
+      createData("Number of Rooms", bookingData.numRooms),
+      createData("Number of Nights", bookingData.numberOfNights),
+      createData("Subtotal", "$" + bookingData.subtotal.toFixed(2)),
+      createData(
+        "Discounts",
+        bookingData.discounts
+          ? "$" + bookingData.discounts.toFixed(2)
+          : bookingData.discounts
+      ),
+      createData(
+        "Rewards Discount",
+        bookingData.rewardsDiscount
+          ? "$" + bookingData.rewardsDiscount.toFixed(2)
+          : bookingData.rewardsDiscount
+      ),
+      createData("Taxes and Fees", "$" + bookingData.taxesAndFees.toFixed(2)),
+      createData("Total", "$" + bookingData.total.toFixed(2)),
+            createData("Reward Points Earned", bookingData.rewardPointsEarned)
+
+    ];
     return (
-      <div className="confirmation">
-        <div className="landing-inner">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 ">
-                <p class="float-left">
-                  <Bounce>
-                    <h1>You're All Set!</h1>
-                  </Bounce>
-                  <BookingDetailsCard />
-                </p>
-                <p class="float-right">
-                  <BookingBreakdownTable />
-                </p>
-                <hr />
-              </div>
-            </div>
+      <Grid
+        xs={isWidthDown("xs", width) ? 11 : 12}
+        container
+        spacing={isWidthDown("xs", width) ? 0 : 8}
+        justify="center"
+        style={{ margin: isWidthDown("xs", width) ? 10 : -8 }}
+      >
+        <Grid item xs={10}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            align="center"
+            style={{ marginTop: 40 }}
+          >
+            {bookingData.hotelName}
+          </Typography>
+          <Typography variant="h6" gutterBottom align="center">
+            {bookingData.hotelAddress}
+          </Typography>
+        </Grid>
+
+        <Grid item xs={isWidthDown("xs", width) ? 11 : 5}>
+          <CardMedia
+            style={{ width: "100%", height: 200 }}
+            image={require("../landing_page/SF.jpg")} // *********need to be updated with real PICTURES
+          />
+        </Grid>
+
+        <Grid item xs={isWidthDown("xs", width) ? 11 : 5}>
+          <CardMedia
+            style={
+              isWidthDown("xs", width)
+                ? { width: "100%", height: 200, marginTop: 20 }
+                : { width: "100%", height: 200 }
+            }
+            image={require("../landing_page/SD.jpg")} // *********need to be updated with real PICTURES
+          />
+        </Grid>
+        <Grid item xs={10}>
+          <Typography
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: 20
+            }}
+          >
+            <br />
+            Dear Mr/Ms. {bookingData.Lastname},
+            <br />
+            Thank you for choosing {bookingData.hotelName}. It is our pleasure
+            to confirm the following reservation.
+          </Typography>
+        </Grid>
+        <Grid item xs={isWidthDown("xs", width) ? 11 : 4}>
+          <div
+            style={{
+              color: "white",
+              paddingLeft: 10,
+              background: "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
+            }}
+          >
+            RESERVATION DETAILS
           </div>
-        </div>
-      </div>
+          <Table>
+            <TableBody>
+              {ReservationRows.map(row => (
+                <TableRow
+                  key={row.id}
+                  style={{
+                    padding: 0
+                  }}
+                >
+                  <TableCell
+                    align="left"
+                    style={{ paddingLeft: 5, paddingRight: 5, width: 150 }}
+                  >
+                    {row.firstCol}
+                  </TableCell>
+                  <TableCell align="left" style={{ padding: 0 }}>
+                    {row.secondCol}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div
+            style={{
+              color: "white",
+              paddingLeft: 10,
+
+              background: "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
+            }}
+          >
+            POLICIES
+          </div>
+          <Table>
+            <TableBody>
+              {PoliciesRows.map(row => (
+                <TableRow key={row.id} style={{ padding: 0 }}>
+                  <TableCell
+                    align="left"
+                    style={{ paddingLeft: 5, paddingRight: 5, width: 150 }}
+                  >
+                    {row.firstCol}
+                  </TableCell>
+                  <TableCell align="left" style={{ padding: 0 }}>
+                    {row.secondCol}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Grid>
+
+        <Grid item xs={isWidthDown("xs", width) ? 11 : 4}>
+          <div
+            style={{
+              color: "white",
+              paddingLeft: 10,
+
+              background: "linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9)"
+            }}
+          >
+            FINAL BILL
+          </div>
+          <Table>
+            <TableBody>
+              {BillRows.map(row => {
+                if (row.secondCol === null) {
+                  // if no discounts, dont render the row
+                  return;
+                } else {
+                  return (
+                    <TableRow key={row.id} style={{ padding: 0 }}>
+                      <TableCell
+                        align="left"
+                        style={{ paddingLeft: 5, paddingRight: 5, width: 150 }}
+                      >
+                        {row.firstCol}
+                      </TableCell>
+                      <TableCell align="right">{row.secondCol}</TableCell>
+                    </TableRow>
+                  );
+                }
+              })}
+            </TableBody>
+          </Table>
+        </Grid>
+        <Grid item xs={10}>
+          <Typography
+            align="center"
+            variant="h5"
+            style={{ marginBottom: 40, marginTop: 20 }}
+          >
+            We Look Forward To Seeing You Soon
+          </Typography>
+        </Grid>
+      </Grid>
     );
   }
 }
 
-Confirmation.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => ({
-  auth: state.auth
+  bookingData: state.bookingData,
+  query: state.query
 });
 
-export default connect(mapStateToProps)(Confirmation);
+export default connect(mapStateToProps)(withWidth()(Confirmation));
