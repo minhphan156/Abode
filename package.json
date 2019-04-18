@@ -36,6 +36,7 @@
     "react-dates": "^19.0.3",
     "react-dom": "^16.8.3",
     "react-geocode": "^0.1.2",
+    "react-number-format": "^4.0.7",
     "react-stripe-elements": "^2.0.1",
     "react-with-direction": "^1.3.0",
     "reactstrap": "^7.1.0",

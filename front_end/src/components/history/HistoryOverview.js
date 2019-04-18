@@ -191,7 +191,7 @@ class HistoryOverview extends Component {
 
       // here we determine which chip to display. There are four different statuses that each correspond to a chip
       switch (booking.status) {
-        case 1:
+        case 0:
           displayRegularChip = (
             <Chip
               label="Coming Up"
@@ -208,7 +208,7 @@ class HistoryOverview extends Component {
             </Grid>
           );
           break;
-        case 2:
+        case 1:
           displayRegularChip = (
             <Chip
               label="Checked In"
@@ -218,7 +218,7 @@ class HistoryOverview extends Component {
             />
           );
           break;
-        case 3:
+        case 2:
           displayRegularChip = (
             <Chip
               label="Checked Out"
@@ -228,7 +228,7 @@ class HistoryOverview extends Component {
             />
           );
           break;
-        case 4:
+        case 3:
           displayRegularChip = (
             <Chip
               label="Canceled"
@@ -264,7 +264,7 @@ class HistoryOverview extends Component {
                   {booking.hotelName}
                 </Grid>
                 <Grid item className="HistoryPageDestinationName">
-                  {booking.destination}
+                  {booking.city}
                 </Grid>
                 <Grid item className="chipsAndTotal">
                   <br />
@@ -357,7 +357,7 @@ class HistoryOverview extends Component {
                     <TableRow>
                       <TableCell>Discount:</TableCell>
                       <TableCell align="right">
-                        $ {booking.discount.toFixed(2)}
+                        ${/* {booking.discount.toFixed(2)} */}
                       </TableCell>
                     </TableRow>
                     <TableRow>

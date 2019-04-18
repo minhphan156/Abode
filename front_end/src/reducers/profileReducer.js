@@ -5,7 +5,6 @@ import {
   GET_HISTORY
 } from "../actions/types";
 
-
 const initialState = {
   profile: null,
   loading: false,
@@ -25,9 +24,20 @@ const initialState = {
       new_check_out_date: null,
       subtotal: 500.0,
       discount: 10
-    }  
+
+      // MISSING:
+      // new_check_in_date: null,
+      // new_check_out_date: null,
+
+      // EXTRA:
+      // bookingID
+      // total
+      // rewardPointsUsed
+      // rewardPointsEarned
+      // reservedDate
+    }
   ]
-  };
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
