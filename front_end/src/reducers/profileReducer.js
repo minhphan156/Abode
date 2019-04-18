@@ -8,19 +8,7 @@ import {
 const initialState = {
   profile: null,
   loading: false,
-  history: [
-    {
-      // MISSING:
-      // new_check_in_date: null,
-      // new_check_out_date: null,
-      // EXTRA:
-      // bookingID
-      // total
-      // rewardPointsUsed
-      // rewardPointsEarned
-      // reservedDate
-    }
-  ]
+  history: [{}]
 };
 
 export default function(state = initialState, action) {

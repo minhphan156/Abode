@@ -1,3 +1,8 @@
+// TODO: - BACKEND INTEGRATION WITH ALL MISSING INFO
+// - REWARDS POINTS OVERVIEW
+// - IF CHANGE, SHOW OLD/NEW DATES
+// - SPINNER AT BEGINNING
+
 import React, { Component } from "react";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -16,10 +21,6 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
-import Table from "@material-ui/core/Table";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
 
 import HistoryExpansionTable from "./HistoryExpansionTable";
 
@@ -65,12 +66,13 @@ const styles = theme => ({
 });
 
 class HistoryOverview extends Component {
-  componentDidMount() {
-    this.props.getCurrentProfile();
-    this.props.getHistory();
-  }
+  // componentDidMount() {
+  //   this.props.getCurrentProfile();
+  //   this.props.getHistory();
+  // }
   componentWillMount() {
     this.props.getHistory();
+    this.props.getCurrentProfile();
   }
 
   render() {
@@ -78,8 +80,7 @@ class HistoryOverview extends Component {
     let bookings;
     let displayChangeChip;
     let displayRegularChip;
-    let dateOverview;
-    let cancelAndChangeButtons;
+    let arrayOfButtons;
 
     if (profile.loading) {
       bookings = (
@@ -94,262 +95,187 @@ class HistoryOverview extends Component {
           </Grid>
         </Grid>
       );
-    }
-
-    bookings = this.props.profile.history.map(booking => {
-      displayChangeChip = null;
-      displayRegularChip = null;
-      dateOverview = null;
-      cancelAndChangeButtons = null;
-
-      let expansionData = {
-        bookingId: booking.bookingID,
-        Firstname: "MISSING",
-        Lastname: "MISSING",
-        checkIn: booking.check_in_date,
-        checkOut: booking.check_out_date,
-        roomType: booking.typeOfRoom,
-        nightlyRate: "MISSING",
-        numRooms: booking.numOfRoom,
-        numberOfNights: "MISSING",
-        subtotal: booking.subtotal,
-        discounts: "MISSING", // booking.discount,
-        rewardsDiscount: "MISSING",
-        taxesAndFees: "MISSING",
-        total: booking.total,
-        rewardPointsEarned: "MISSING", //booking.rewardPointsEarned,
-        rewardPointsUsed: "MISSING" //booking.rewardPointsUsed
-      };
-
-      // if the booking was not changed, we display the regular CheckIn and Checkout Overview
-      if (booking.changed === false) {
+    } else {
+      bookings = this.props.profile.history.map(booking => {
         displayChangeChip = null;
-        dateOverview = (
-          <Table className="HistoryContainerDates">
-            <TableRow>
-              <TableCell
-                classes={{
-                  paddingDense: classes.paddingDense
-                }}
-                padding="dense"
-                className={classes.tableNoBorder}
-              >
-                Check In:
-              </TableCell>
-              <TableCell
-                padding="dense"
-                align="right"
-                className={classes.tableNoBorder}
-              >
-                {booking.check_in_date}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell padding="dense" className={classes.tableNoBorder}>
-                Check Out:
-              </TableCell>
-              <TableCell
-                padding="dense"
-                align="right"
-                className={classes.tableNoBorder}
-              >
-                {booking.check_out_date}
-              </TableCell>
-            </TableRow>
-          </Table>
-        );
-      } else {
-        // if the booking was changed, we display a different CheckIn and Checkout Overview, with all 4 dates
-        // we also display the "Changed" chip
-        displayChangeChip = (
-          <Chip
-            label="Changed"
-            color="primary"
-            className={classes.chipChange}
-            icon={<SwapHorizIcon />}
-          />
-        );
-        dateOverview = (
-          <Table className="HistoryContainerDates">
-            <TableRow>
-              <TableCell className={classes.tableNoBorder}>Check In:</TableCell>
-              <TableCell
-                align="right"
-                classes={{
-                  root: classes.dateChangedFrom
-                }}
-                className={classes.tableNoBorder}
-              >
-                {booking.check_in_date}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="right" className={classes.tableNoBorder} />
-              <TableCell
-                align="right"
-                classes={{
-                  root: classes.dateChangedTo
-                }}
-                className={classes.tableNoBorder}
-              >
-                {booking.new_check_in_date}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={classes.tableNoBorder}>
-                Check Out:
-              </TableCell>
-              <TableCell
-                align="right"
-                classes={{
-                  root: classes.dateChangedFrom
-                }}
-                className={classes.tableNoBorder}
-              >
-                {booking.check_out_date}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="right" className={classes.tableNoBorder} />
-              <TableCell
-                align="right"
-                classes={{
-                  root: classes.dateChangedTo
-                }}
-                className={classes.tableNoBorder}
-              >
-                {booking.new_check_out_date}
-              </TableCell>
-            </TableRow>
-          </Table>
-        );
-      }
+        displayRegularChip = null;
+        arrayOfButtons = null;
 
-      // here we determine which chip to display. There are four different statuses that each correspond to a chip
-      //0 = trip comin up
-      //1 = user has checked in
-      //2 = user has checked out
-      //3 = trip was canceled
-      switch (booking.status) {
-        case 0:
-          displayRegularChip = (
-            <Chip
-              label="Coming Up"
-              color="secondary"
-              className={classes.chip}
-              icon={<DoneIcon />}
-            />
-          );
-          cancelAndChangeButtons = (
-            <Grid className="HistoryPageTotal">
-              <Button>REVIEW</Button>
-              <br />
-              <Button>CHANGE</Button>
-              <br />
-              <Button>CANCEL</Button>
-            </Grid>
-          );
-          break;
-        case 1:
-          displayRegularChip = (
-            <Chip
-              label="Checked In"
-              color="primary"
-              className={classes.chipCheckin}
-              icon={<DoneIcon />}
-            />
-          );
-          break;
-        case 2:
-          displayRegularChip = (
-            <Chip
-              label="Checked Out"
-              color="primary"
-              className={classes.chipCheckout}
-              icon={<ExitIcon />}
-            />
-          );
-          break;
-        case 3:
-          displayRegularChip = (
-            <Chip
-              label="Canceled"
-              color="primary"
-              className={classes.chipCancel}
-              icon={<CancelIcon />}
-            />
-          );
-          break;
-        default:
-      }
+        let expansionData = {
+          bookingId: booking.bookingID,
+          Firstname: "MISSING",
+          Lastname: "MISSING",
+          checkIn: booking.check_in_date,
+          checkOut: booking.check_out_date,
+          roomType: booking.typeOfRoom,
+          nightlyRate: "MISSING",
+          numRooms: booking.numOfRoom,
+          numberOfNights: "MISSING",
+          subtotal: booking.subtotal,
+          discounts: "MISSING", // booking.discount,
+          rewardsDiscount: "MISSING",
+          taxesAndFees: "MISSING",
+          total: booking.total,
+          rewardPointsEarned: "MISSING", //booking.rewardPointsEarned,
+          rewardPointsUsed: "MISSING" //booking.rewardPointsUsed
+        };
 
-      // these are the expansionpanels for all the different bookings
-      return (
-        <ExpansionPanel
-          classes={{
-            expanded: classes.backgroundStyle
-          }}
-        >
-          {/* ExpansionPanelSummary is the part that is always visible */}
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Grid container spacing={0} direction="row" justify="space-evenly">
-              <Grid item>
-                <img
-                  className="historyHotelImage"
-                  src={booking.img}
-                  alt="hotel img"
-                />
+        // if the booking was changed, we  display the "Changed" chip
+        if (booking.changed === true) {
+          displayChangeChip = (
+            <Chip
+              label="Changed"
+              color="primary"
+              className={classes.chipChange}
+              icon={<SwapHorizIcon />}
+            />
+          );
+        }
+
+        // here we determine which chip to display. There are four different statuses that each correspond to a chip
+        //0 = trip comin up
+        //1 = user has checked in
+        //2 = user has checked out
+        //3 = trip was canceled
+        switch (booking.status) {
+          case 0:
+            displayRegularChip = (
+              <Chip
+                label="Coming Up"
+                color="secondary"
+                className={classes.chip}
+                icon={<DoneIcon />}
+              />
+            );
+            arrayOfButtons = (
+              <Grid className="buttonContainer">
+                <Button>CHANGE</Button>
+                <br />
+                <Button>CANCEL</Button>
               </Grid>
+            );
+            break;
+          case 1:
+            displayRegularChip = (
+              <Chip
+                label="Checked In"
+                color="primary"
+                className={classes.chipCheckin}
+                icon={<DoneIcon />}
+              />
+            );
+            arrayOfButtons = (
+              <Grid className="buttonContainer">
+                <Button>REVIEW</Button>
+              </Grid>
+            );
+            break;
+          case 2:
+            displayRegularChip = (
+              <Chip
+                label="Checked Out"
+                color="primary"
+                className={classes.chipCheckout}
+                icon={<ExitIcon />}
+              />
+            );
+            arrayOfButtons = (
+              <Grid className="buttonContainer">
+                <Button>REVIEW</Button>
+              </Grid>
+            );
+            break;
+          case 3:
+            displayRegularChip = (
+              <Chip
+                label="Canceled"
+                color="primary"
+                className={classes.chipCancel}
+                icon={<CancelIcon />}
+              />
+            );
+            arrayOfButtons = <Grid className="buttonContainer" />;
+            break;
+          default:
+        }
 
-              <Grid className="HistoryContainerHotelName">
-                <Grid item className="HistoryPageHotelName">
-                  {booking.hotelName}
+        // these are the expansionpanels for all the different bookings
+        return (
+          <ExpansionPanel
+            classes={{
+              expanded: classes.backgroundStyle
+            }}
+          >
+            {/* ExpansionPanelSummary is the part that is always visible */}
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Grid
+                container
+                spacing={0}
+                direction="row"
+                justify="space-evenly"
+              >
+                <Grid item>
+                  <img
+                    className="historyHotelImage"
+                    src={booking.img}
+                    alt="hotel img"
+                  />
                 </Grid>
-                <Grid item className="HistoryPageDestinationName">
-                  {booking.city}
-                </Grid>
-                <Grid item className="chipsAndTotal">
-                  <br />
-                  {displayRegularChip}
-                  {displayChangeChip}
-                </Grid>
-                {/* We display a different layout for small screens */}
-                <Grid item className="chipsAndTotalSmall">
-                  <br />
-                  <Grid
-                    container
-                    spacing={0}
-                    direction="row"
-                    justify="space-between"
-                  >
-                    <Grid item>{displayRegularChip}</Grid>
-                    <Grid item className="HistoryPageTotalSmall">
-                      Total: $ {(booking.total + 0).toFixed(2)}
-                    </Grid>
+
+                <Grid className="HistoryContainerHotelName">
+                  <Grid item className="HistoryPageHotelName">
+                    {booking.hotelName}
                   </Grid>
+                  <Grid item className="HistoryPageDestinationName">
+                    {booking.city}
+                  </Grid>
+                  <Grid item className="chipsAndTotal">
+                    <br />
+                    {displayRegularChip}
+                    {displayChangeChip}
+                  </Grid>
+                  {/* We display a different layout for small screens */}
+                  <Grid item className="chipsAndTotalSmall">
+                    <br />
+                    <Grid
+                      container
+                      spacing={0}
+                      direction="row"
+                      justify="space-between"
+                    >
+                      <Grid item>{displayRegularChip}</Grid>
+                      <Grid item className="HistoryPageTotalSmall">
+                        Total: $ {(booking.total + 0).toFixed(2)}
+                      </Grid>
+                    </Grid>
 
-                  {displayChangeChip}
+                    {displayChangeChip}
+                  </Grid>
+                </Grid>
+
+                <Grid>
+                  <Grid item className="HistoryPageTotal HistoryContainerDates">
+                    Total: $ {(booking.total + 0).toFixed(2)}
+                  </Grid>
+                  <br />
+                  <Grid item className="HistoryPageTotal HistoryContainerDates">
+                    May 2019
+                  </Grid>
+                </Grid>
+                <Grid>
+                  <Grid item>{arrayOfButtons} </Grid>
                 </Grid>
               </Grid>
+            </ExpansionPanelSummary>
 
-              <Grid>
-                <Grid item className="HistoryPageTotal HistoryContainerDates">
-                  Total: $ {(booking.total + 0).toFixed(2)}
-                </Grid>
-              </Grid>
-              <Grid>
-                <Grid item>{cancelAndChangeButtons} </Grid>
-              </Grid>
-            </Grid>
-          </ExpansionPanelSummary>
-
-          {/* ExpansionPanelDetails is the part that can be expanded (not visible by default) */}
-          <ExpansionPanelDetails>
-            <HistoryExpansionTable expansionData={expansionData} />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      );
-    });
+            {/* ExpansionPanelDetails is the part that can be expanded (not visible by default) */}
+            <ExpansionPanelDetails>
+              <HistoryExpansionTable expansionData={expansionData} />
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        );
+      });
+    }
 
     return (
       <div>

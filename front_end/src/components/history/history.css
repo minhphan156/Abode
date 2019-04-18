@@ -223,6 +223,10 @@
   .HistoryContainerDates {
     width: 340px;
   }
+
+  .buttonContainer {
+    width: 150px;
+  }
 }
 
 .HistoryBoxes {
