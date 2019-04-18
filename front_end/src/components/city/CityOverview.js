@@ -57,7 +57,8 @@ class CityOverview extends Component {
   constructor() {
     super();
     this.state = {
-      images: [SF0, SF1, SF2]
+      images: [SF0, SF1, SF2],
+      openDialog: false
     };
 
     this.handleClickImage = this.handleClickImage.bind(this);
@@ -94,6 +95,14 @@ class CityOverview extends Component {
       images: newImages
     });
   };
+
+  // Used to toggle the dialog on and off
+  handleCloseDialog = event => {
+    event.preventDefault();
+    this.setState({
+      openDialog = !this.state.openDialog
+    })
+  }
 
   render() {
     let { images } = this.state;
@@ -135,17 +144,53 @@ class CityOverview extends Component {
                     city={city}
                   />
                 </Grid>
-                <Hidden mdUp>
-                  <Grid item xs={12}>
+                <Grid item xs={12}>
                     <WeatherCard city={city} />
                   </Grid>
-                </Hidden>
                 <Grid item md={12}>
                   <CityDescription city={city} />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
+          <Dialog
+            maxWidth={"md"}
+            scroll={"body"}
+            fullScreen={width === "xs" ? true : false}
+            open={this.state.openDialog}
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle className="BookingInfoTitle">
+              <div className="BookingInfoTitle">
+                Please choose your travel dates and number of rooms:
+              </div>
+            </DialogTitle>
+
+            <DialogContent>
+              <SearchWidget
+                dealPage={true}
+                dealDestination={this.state.chosenDealHotel}
+              />
+              <Grid
+                container
+                className="dealPopUpTitle"
+                direction="column"
+                justify="space-between"
+                alignItems="center"
+              >
+                <br />
+                {this.state.chosenDealHotel} <br />
+                <img src={this.state.chosenDealImage} className="dealImage" />
+              </Grid>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       );
     } else {

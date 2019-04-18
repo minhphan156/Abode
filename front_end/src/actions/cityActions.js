@@ -48,7 +48,7 @@ export let fetchCityWeather = cityName => dispatch => {
   setCityWeatherLoading();
   axios
     .get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${weatherMapAPIKey}&units=imperial`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&APPID=${weatherMapAPIKey}&units=imperial`
     )
     .then(res => {
       dispatch({

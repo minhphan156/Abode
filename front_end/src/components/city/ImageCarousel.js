@@ -59,25 +59,20 @@ let ImageCarousel = props => {
       <Grid item className={classes.itemMain} xs={12}>
         <img className={classes.imgSize} src={images[0]} />
       </Grid>
-      <Grid item className={classes.itemDetail} xs={6} md={4}>
+      <Grid item className={classes.itemDetail} xs={6}>
         <img
           className={classes.imgSize}
           src={images[1]}
           onClick={() => handleClickImage(1)}
         />
       </Grid>
-      <Grid item className={classes.itemDetail} xs={6} md={4}>
+      <Grid item className={classes.itemDetail} xs={6}>
         <img
           className={classes.imgSize}
           src={images[2]}
           onClick={() => handleClickImage(2)}
         />
       </Grid>
-      <Hidden smDown>
-        <Grid item className={classes.itemDetail} xs={6} md={4}>
-          <WeatherCard city={city} />
-        </Grid>
-      </Hidden>
     </Grid>
   );
 };

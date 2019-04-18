@@ -56,101 +56,95 @@ let WeatherCard = props => {
     );
   };
 
-  let weatherIcon = () => {
-    if (city.weatherData != null) {
+
+  if (city.weatherData != null) {
+    let weatherIcon = (day) => {
       return (
         <img
           className={classes.weatherIcon}
           src={`http://openweathermap.org/img/w/${
-            city.weatherData.weather[0].icon
+            day.weather[0].icon
           }.png`}
           alt="weather icon"
         />
       );
-    } else {
-      return "";
-    }
-  };
+    };
 
-  if (city.weatherData != null) {
-    return (
-      <Card
-        className={classes.cardMargin}
-        square={true}
-        style={{ height: "100%" }}
-      >
-        <Grid container direction="column" justify="center" alignItems="center">
-          <Grid item xs={12}>
-            <Typography
-              variant={isWidthDown("lg", width) ? "h2" : "h1"}
-              style={{ fontWeight: "bold" }}
-            >
-              {`${city.weatherData.main.temp}°F`}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} style={{ width: "100%" }}>
-            <Grid
-              container
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-              style={{ width: "100%" }}
-            >
-              <Grid item>
-                <Typography variant="subtitle">
-                  {city.weatherData.weather[0].main}
-                </Typography>
+    let forecastArray = [];
+    for (let i = 0; i < city.weatherData.cnt; i+= (city.weatherData.cnt / 5)) {
+      forecastArray.push(city.weatherData.list[i]);
+    }
+
+    let currentDayOfWeek = new Date().getDay();
+
+    let fiveDayForecastMarkup = forecastArray.map((forecastDay) => {
+      let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+      if (currentDayOfWeek == 7) {
+        currentDayOfWeek = 0;
+      }
+
+      return (
+        <Grid item xs={6} md>
+          <Card style={{padding: 8}}>
+            <Grid container direction="column" alignItems="flex-start">
+              <Grid item xs={12}>
+                <Typography className={classes.greyText} variant={isWidthDown("sm", width) ? "subtitle" : "h6"} >{days[currentDayOfWeek++]}</Typography>
               </Grid>
-              <Grid item lg={2}>
-                {weatherIcon()}
+              <Grid item xs={12} style={{width: "100%"}}>
+                <Grid container direction="row" justify="center">
+                  <Grid item>
+                    <Typography variant={isWidthDown("sm", width) ? "subtitle" : "h3"}>
+                      {`${forecastDay.main.temp}°F`}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} style={{ width: "100%" }}>
-            <Grid
-              container
-              direction="row"
-              justify="space-between"
-              alignItems="center"
-              style={{ width: "100%" }}
-            >
-              <Grid item>
-                <Typography variant="subtitle">
-                  <span className={classes.greyText}>Lo: </span>
-                  {`${city.weatherData.main.temp_min}°F`}
-                </Typography>
+              <Grid item xs={12} style={{ width: "100%"}}>
+                <Grid container direction="row" justify="space-evenly" alignItems="center">
+                  <Grid item>
+                    <Typography variant="subtitle">
+                      {`${forecastDay.weather[0].main}`}
+                    </Typography>
+                  </Grid>
+                  <Grid item> 
+                    {weatherIcon(forecastDay)}
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography variant="subtitle">
-                  <span className={classes.greyText}>Hi: </span>
-                  {`${city.weatherData.main.temp_max}°F`}
-                </Typography>
+              <Grid item xs={12} style={{width: "100%"}}>
+                <Grid container direction="row" justify="space-between" alignItems="center">
+                  <Grid item>
+                    <span className={classes.greyText}>Lo:</span> {`${forecastDay.main.temp_min}°F`}
+                  </Grid>
+                  <Grid item>
+                    <span className={classes.greyText}>Hi:</span> {`${forecastDay.main.temp_max}°F`}
+                  </Grid>
+                </Grid>
               </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} style={{ width: "100%" }}>
-            <Grid
-              container
-              direction="row"
-              justify="space-between"
-              alignItems="center"
-              style={{ width: "100%" }}
-            >
-              <Grid item>
-                <Typography className={classes.greyText} variant="subtitle">
-                  Humidity
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="subtitle">
-                  {`${city.weatherData.main.humidity} g/m3`}
-                </Typography>
+              <Grid item xs={12} style={{width: "100%"}}>
+                <Grid container direction="row" justify="space-between" alignItems="center">
+                  <Grid item>
+                    <Typography className={classes.greyText} variant="subtitle">
+                      Humidity
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subtitle">
+                      {`${forecastDay.main.humidity} g/m3`}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} style={{ width: "100%" }} />
+          </Card>
         </Grid>
-      </Card>
+      );
+    });
+
+    return (
+      <Grid container direction="row" justify="space-between" alignItems="center" spacing={8}>
+        {fiveDayForecastMarkup}
+      </Grid>
     );
   } else {
     return loadingWeather();
