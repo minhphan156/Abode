@@ -8,6 +8,8 @@ const Customer = require("../../models/customer");
 const City = require("../../models/city")
 const User = require("../../models/User");
 
+const confirmEmail = require('../../email/confirmationEmail')
+
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
@@ -241,6 +243,9 @@ router.post("/confirm",(req,res)=>{
                                 }else{
                                     destinationImg = city[0].imgMain
                                 }
+                                console.log("a")
+                                confirmEmail(firstname,lastname.doc._id,hotelName,doc.typeOfRoom,date,email)
+                                console.log("b")
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
@@ -274,7 +279,7 @@ router.post("/confirm",(req,res)=>{
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
                         res.send({message:"doubleBooking",
-                                code:409})
+                                code:403})
                     }
                 })
             }
