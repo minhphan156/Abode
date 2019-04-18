@@ -8,7 +8,7 @@ import { fetchCityById, fetchCityWeather } from "../../actions/cityActions";
 
 // Child component imports
 import ImageCarousel from "./ImageCarousel";
-import WeatherCard from "./WeatherCard";
+import CityDescription from "./CityDescription";
 
 // Material-UI imports
 import {
@@ -16,7 +16,7 @@ import {
   withStyles,
   withWidth,
   CircularProgress,
-  Typography
+  Divider
 } from "@material-ui/core";
 
 // Prototype Imports
@@ -27,18 +27,10 @@ import SF2 from "./SF2.jpg";
 // CSS to JavaScript component styling
 let styles = theme => ({
   pageMargins: {
-    [theme.breakpoints.down("xl")]: {
-      marginLeft: "10%",
-      marginRight: "10%",
-      marginTop: "5%",
-      marginBottom: "5%"
-    },
-    [theme.breakpoints.down("md")]: {
-      marginLeft: "5%",
-      marginRight: "5%",
-      marginTop: "2%",
-      marginBottom: "2%"
-    }
+    marginLeft: "5%",
+    marginRight: "5%",
+    marginTop: "2%",
+    marginBottom: "2%"
   },
   loadingSpinner: {
     height: "82vh",
@@ -50,6 +42,9 @@ let styles = theme => ({
   },
   weatherIcon: {
     width: "100%"
+  },
+  dividerMargin: {
+    marginTop: 5
   }
 });
 
@@ -109,19 +104,19 @@ class CityOverview extends Component {
             direction="row"
             spacing={8}
           >
-            <Grid item xl={9}>
-              <Grid container direction="column" spacing={8}>
-                <Grid item xl={12}>
+            <Grid item xs={12}>
+              <Grid container direction="column" spacing={16}>
+                <Grid item md={12}>
                   <ImageCarousel
                     images={images}
                     handleClickImage={this.handleClickImage}
+                    city={city}
                   />
                 </Grid>
-                {/* Descriptions, etc */}
+                <Grid item md={12}>
+                  <CityDescription city={city} />
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={12} xl={3}>
-              <WeatherCard city={city} />
             </Grid>
           </Grid>
         </div>

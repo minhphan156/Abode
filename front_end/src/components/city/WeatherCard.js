@@ -11,6 +11,7 @@ import {
   Typography,
   CircularProgress
 } from "@material-ui/core";
+import { isWidthDown } from "@material-ui/core/withWidth";
 
 let styles = theme => ({
   cardMargin: {
@@ -31,7 +32,7 @@ let styles = theme => ({
 });
 
 let WeatherCard = props => {
-  let { classes, city } = props;
+  let { classes, city, width } = props;
 
   let loadingWeather = () => {
     return (
@@ -69,14 +70,17 @@ let WeatherCard = props => {
 
   if (city.weatherData != null) {
     return (
-      <Card className={classes.cardMargin}>
+      <Card className={classes.cardMargin} square={true}>
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item xs={12}>
-            <Typography variant="h1">
+            <Typography
+              variant={isWidthDown("lg", width) ? "h2" : "h1"}
+              style={{ fontWeight: "bold" }}
+            >
               {`${city.weatherData.main.temp}°F`}
             </Typography>
           </Grid>
-          <Grid item xs={12} style={{width: "100%"}}>
+          <Grid item xs={12} style={{ width: "100%" }}>
             <Grid
               container
               direction="row"
@@ -85,7 +89,9 @@ let WeatherCard = props => {
               style={{ width: "100%" }}
             >
               <Grid item>
-                <Typography variant="subtitle">{city.weatherData.weather[0].main}</Typography>
+                <Typography variant="subtitle">
+                  {city.weatherData.weather[0].main}
+                </Typography>
               </Grid>
               <Grid item lg={2}>
                 {weatherIcon()}
@@ -102,12 +108,14 @@ let WeatherCard = props => {
             >
               <Grid item>
                 <Typography variant="subtitle">
-                  <span className={classes.greyText}>Lo: </span>{`${city.weatherData.main.temp_min}°F`}
+                  <span className={classes.greyText}>Lo: </span>
+                  {`${city.weatherData.main.temp_min}°F`}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography variant="subtitle">
-                  <span className={classes.greyText}>Hi: </span>{`${city.weatherData.main.temp_max}°F`}
+                  <span className={classes.greyText}>Hi: </span>
+                  {`${city.weatherData.main.temp_max}°F`}
                 </Typography>
               </Grid>
             </Grid>
@@ -127,11 +135,12 @@ let WeatherCard = props => {
               </Grid>
               <Grid item>
                 <Typography variant="subtitle">
-                  {city.weatherData.main.humidity}
+                  {`${city.weatherData.main.humidity}g/m3`}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
+          <Grid item xs={12} style={{ width: "100%" }} />
         </Grid>
       </Card>
     );
