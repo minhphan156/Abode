@@ -17,13 +17,14 @@ export default (class disclaimer extends Component {
   render() {
     return (
       <div>
-        <Grid container id="DisclaimerContainer">
-          <img className="SJSU-icon" src={SJSU} alt="" />
-          <Grid id="DisclaimerContainerTitle" item xs={12} lg={12}>
+        <Grid container>
+          <Grid id="DisclaimerContainerTitle" item xs={12}>
             Disclaimer
           </Grid>
-          <Grid item id="DisclaimerContainerText" item xs={12} spacing={16}>
-            <Paper spacing={16}>
+          <img className="SJSU-icon" src={SJSU} alt="" />
+
+          <Grid item id="DisclaimerContainerText" item xs={12}>
+            <Paper>
               <Typography component="h5" variant="display1">
                 Paper can be used to build surface or other elements for your
                 application. jvnberij vrvuierhvu erhvuhrv uhreuhv uerhvu
