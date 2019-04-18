@@ -34,7 +34,8 @@ class SearchWidget extends Component {
       checkIn: "",
       checkOut: "",
       numberRooms: "1",
-      showAlert: false
+      showDesAlert: false,
+      showDateAlert: false
     };
     this.onSearchClick = this.onSearchClick.bind(this);
     this.onHandleDate = this.onHandleDate.bind(this);
@@ -85,9 +86,18 @@ class SearchWidget extends Component {
 
     //Check if the destination is given or not.
     if (this.state.destinationName === "") {
-      this.setState({ showAlert: true });
-    } else {
-      this.setState({ showAlert: false });
+      this.setState({ showDesAlert: true });
+    }
+    //Check if the checkIn and checkOut date are given or not.
+    if (this.state.checkIn === "" || this.state.checkOut === "") {
+      this.setState({ showDateAlert: true });
+    }
+
+    if (
+      this.state.destinationName !== "" &&
+      this.state.checkIn !== "" &&
+      this.state.checkOut !== ""
+    ) {
       this.props.history.push("/searchResultOverview");
     }
 
@@ -111,17 +121,28 @@ class SearchWidget extends Component {
     const { classes } = this.props;
 
     const { query } = this.props.query;
-    const handleHide = () => this.setState({ showAlert: false });
+    const handleDesAlertHide = () => this.setState({ showDesAlert: false });
+    const handleDateAlertHide = () => this.setState({ showDateAlert: false });
 
     return (
       <div className={classes.root}>
         <Alert
-          style={{ marginLeft: "9%", marginTop: "1%" }}
+          style={{ marginLeft: "8%", marginTop: "1%" }}
           variant="danger"
-          show={this.state.showAlert}
+          show={this.state.showDesAlert}
         >
           Please provide a destination
-          <Button onClick={handleHide} color="secondary">
+          <Button onClick={handleDesAlertHide} color="secondary">
+            Close
+          </Button>
+        </Alert>
+        <Alert
+          style={{ marginLeft: "11%", marginTop: "1%" }}
+          variant="danger"
+          show={this.state.showDateAlert}
+        >
+          Please provide dates
+          <Button onClick={handleDateAlertHide} color="secondary">
             Close
           </Button>
         </Alert>
