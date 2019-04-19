@@ -28,7 +28,7 @@ class HistoryExpansionTable extends Component {
     let BillRows;
 
     if (bookingData.checkIn) {
-      console.log(bookingData);
+      // console.log(bookingData);
       ReservationRows = [
         createData("Confirmation Number", bookingData.bookingId),
         createData(

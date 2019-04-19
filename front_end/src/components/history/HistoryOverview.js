@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getCurrentProfile, getHistory } from "../../actions/profileActions";
+import { getProfileInfo, getHistory } from "../../actions/profileActions";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
@@ -72,7 +72,7 @@ class HistoryOverview extends Component {
   // }
   componentWillMount() {
     this.props.getHistory();
-    this.props.getCurrentProfile();
+    this.props.getProfileInfo();
   }
 
   render() {
@@ -81,6 +81,7 @@ class HistoryOverview extends Component {
     let displayChangeChip;
     let displayRegularChip;
     let arrayOfButtons;
+    let rewardsPointsContainer;
 
     if (profile.loading) {
       bookings = (
@@ -95,7 +96,15 @@ class HistoryOverview extends Component {
           </Grid>
         </Grid>
       );
+      rewardsPointsContainer = null;
     } else {
+      // console.log(profile.profile_info);
+      // rewardsPointsContainer = (
+      //   <div className="rewardsPointsBalance">
+      //     Reward Points: {profile.profile_info.rewardPoints}
+      //   </div>
+      // );
+
       bookings = this.props.profile.history.map(booking => {
         displayChangeChip = null;
         displayRegularChip = null;
@@ -291,7 +300,10 @@ class HistoryOverview extends Component {
             Your Travel History
           </Grid>
         </Grid>
-        <div className="rewardsPointsBalance">Reward Points: 99,999</div>
+        <div className="rewardsPointsBalance">
+          Reward Points: {profile.profile_info.rewardPoints}
+          {/* //profile_info.firstName} */}
+        </div>
         {bookings}
         <br /> <br />
       </div>
@@ -299,7 +311,7 @@ class HistoryOverview extends Component {
   }
 }
 HistoryOverview.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
+  getProfileInfo: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
@@ -311,5 +323,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, getHistory }
+  { getHistory, getProfileInfo }
 )(withStyles(styles)(HistoryOverview));
