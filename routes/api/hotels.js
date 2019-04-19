@@ -111,6 +111,7 @@ router.get('/search',(req,res)=>{
                     address:arr.address,
                     city:arr.city,
                     price:arr.price.singlePrice,
+                    discount:arr.discount,
                     star_rates:arr.star,
                     guest_rate:arr.hdc_rating,
                     img:arr.images[0],
@@ -121,6 +122,7 @@ router.get('/search',(req,res)=>{
         }
         resultPack = {
             "lastIndex": startIndex,
+            "pageNumber": req.query.pageNumber,
             "nextExists": (doc[startIndex] !== undefined) ? true : false,
             "results": result
         }
@@ -171,6 +173,7 @@ router.get('/individual', (req,res) =>{
             airports: hotel.airports,
             review:hotel.reviews,
             top_spots:hotel.top_spots,
+            discount: hotel.discount
         })
     })
     .catch(err => res.status(404));

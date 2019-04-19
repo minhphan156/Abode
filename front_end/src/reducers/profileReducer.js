@@ -1,13 +1,14 @@
 import {
   GET_PROFILE,
+  GET_PROFILE_INFO,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_HISTORY
 } from "../actions/types";
 
-
 const initialState = {
   profile: null,
+  profile_info: null,
   loading: false,
   history: [
     {
@@ -25,9 +26,20 @@ const initialState = {
       new_check_out_date: null,
       subtotal: 500.0,
       discount: 10
-    }  
+
+      // MISSING:
+      // new_check_in_date: null,
+      // new_check_out_date: null,
+
+      // EXTRA:
+      // bookingID
+      // total
+      // rewardPointsUsed
+      // rewardPointsEarned
+      // reservedDate
+    }
   ]
-  };
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -40,6 +52,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: action.payload,
+        loading: false
+      };
+    case GET_PROFILE_INFO:
+      return {
+        ...state,
+        profile_info: action.payload,
         loading: false
       };
     case GET_HISTORY:

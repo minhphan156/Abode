@@ -30,7 +30,6 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_INDIVIDUAL_HOTEL:
-      console.log(action.payload);
       return {
         ...state,
         individualHotelData: action.payload

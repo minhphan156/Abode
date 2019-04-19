@@ -145,12 +145,17 @@ router.get(
     session: false
   }), // not using session
   (req, res) => {
-    res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email,
-      rewardPoints:req.user.rewardPoints
-    });
+    Customer.findById(req.user.customerID)
+    .then( customer => {
+      res.json({
+        id: req.user.id,
+        firstName: customer.Firstname,
+        lastName: customer.Lastname,
+        email: req.user.email,
+        rewardPoints:req.user.rewardPoints
+      });
+    })
+    
   }
 );
 // export so server.js can use this

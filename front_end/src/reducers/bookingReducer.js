@@ -1,8 +1,8 @@
-import { SAVE_BOOKING, SET_BOOKING } from "../actions/types";
+import { SAVE_BOOKING, SET_BOOKING, CLEAR_BOOKING } from "../actions/types";
 
 const initialState = {
   tempBookingData: null,
-  bookingConfirmationData: null
+  bookingConfirmationData: {}
 };
 
 export default function(state = initialState, action) {
@@ -17,6 +17,9 @@ export default function(state = initialState, action) {
         ...state,
         tempBookingData: action.payload
       };
+    case CLEAR_BOOKING:
+      return { ...state, bookingConfirmationData: {} };
+
     default:
       return state;
   }
