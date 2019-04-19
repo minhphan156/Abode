@@ -8,6 +8,8 @@ const Customer = require("../../models/customer");
 const City = require("../../models/city")
 const User = require("../../models/User");
 
+const confirmEmail = require('../../email/confirmationEmail')
+
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
@@ -247,6 +249,10 @@ router.post("/confirm",(req,res)=>{
                             discount:discount,
                             rewardPointsUsed:rewardPointsUsed,
                             rewardPointsEarned:rewardPointsEarned,
+                            taxesAndFees:req.body.taxesAndFees,
+                            numOfNights:req.body.numberOfNights,
+                            rewardDiscount:req.body.rewardDiscount,
+                            nightlyRate: roomPrice
                         })
                         // reward points for logged user
                         // save new booking
@@ -267,6 +273,7 @@ router.post("/confirm",(req,res)=>{
                                 }else{
                                     destinationImg = city[0].imgMain
                                 }
+                                confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
@@ -291,16 +298,15 @@ router.post("/confirm",(req,res)=>{
                                     numberOfNights:req.body.numberOfNights,
                                     total:req.body.total,
                                     taxesAndFees:req.body.taxesAndFees,
-                                    rewardDiscount:req.body.rewardPointsUsed,
                                     code:200
                                 })
-                            }).catch(err=>res.send({message:"cannot find city",code:404}))
+                            })
                         })
                     }
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
                         res.send({message:"doubleBooking",
-                                code:409})
+                                code:403})
                     }
                 })
             }
@@ -362,7 +368,7 @@ router.post('/changeReservation',(req,res)=>{
                     reservations.new_check_in_date = date.checkin;
                     reservations.new_check_out_date = date.checkout;
                     if(newPrice){
-                        reservations.new_price = newPrice
+                        reservations.price = newPrice
                     }
                     hotel.save().catch(err=>res.status(400).json(err));
                     reservations.save().catch(err=>res.status(400).json({
