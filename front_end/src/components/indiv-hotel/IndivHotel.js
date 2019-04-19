@@ -564,7 +564,7 @@ class IndivHotel extends Component {
               </div>
 
               <div className="col maps" 
-                   style={{ marginTop: "1%", overflow:'hidden'}}
+                   style={{ marginTop: "1%"}}
               >
               <div class = "priceAndRate">
                 <h2
@@ -620,6 +620,7 @@ class IndivHotel extends Component {
                   </div>
                 </div>
                 </div>
+                <div class="shrtMap">
                 <div className='row'>
                 <Map
                   google={this.props.google}
@@ -629,9 +630,9 @@ class IndivHotel extends Component {
                     lng: individualHotelData.alt
                   }}
                   style={{
-                    height: "100%",
-                    width: "100%",
-                    marginTop: "1%"
+                    width:'100%',
+                    height:'70%',
+                    marginTop:'1%'
                   }}
                 >
                   <Marker
@@ -649,10 +650,43 @@ class IndivHotel extends Component {
                   </InfoWindow>
                 </Map>
                 </div>
+                </div>
+
+                <div class="longMap">
+                <div className='row'>
+                <Map
+                  google={this.props.google}
+                  zoom={15}
+                  initialCenter={{
+                    lat: individualHotelData.lat,
+                    lng: individualHotelData.alt
+                  }}
+                  style={{
+                    width:'100%',
+                    height:'100%',
+                    marginTop:'1%'
+                  }}
+                >
+                  <Marker
+                    onClick={this.onMarkerClick}
+                    name={"Current location"}
+                    position={{
+                      lat: individualHotelData.lat,
+                      lng: individualHotelData.alt
+                    }}
+                  />
+                  <InfoWindow onClose={this.onInfoWindowClose}>
+                    <div>
+                      <h1>{individualHotelData.name}</h1>
+                    </div>
+                  </InfoWindow>
+                </Map>
+                </div>
+                </div>
               </div>
             </div>
 
-            <div className="row-12">
+            <div className="row-xl-12 row-lg-12 row-sm-12 row-12" style={{margin:'auto'}}>
             <section id="table1">
               <table
                 class="table table-bordered"

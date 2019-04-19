@@ -39,6 +39,10 @@
         display:none;
     }
 
+    .shrtMap{
+      display:none;
+    }
+    
     .maps{
         height:400px;
       }
@@ -118,6 +122,10 @@
 
       .priceAndRate{
         display:none;
+    }
+
+    .shrtMap{
+      display:none;
     }
 
     .maps{
@@ -200,6 +208,10 @@
       display:none;
   }
 
+  .shrtMap{
+    display:none;
+  }
+
   .maps{
       height:400px;
     }
@@ -278,6 +290,10 @@
 
       .priceAndRate{
         display:none;
+    }
+
+    .shrtMap{
+      display:none;
     }
 
     .maps{
@@ -361,6 +377,10 @@
         display:none;
     }
 
+    .shrtMap{
+      display:none;
+    }
+
     .maps{
         height:400px;
     }
@@ -438,6 +458,10 @@
       }
 
       .priceAndRate{
+        display:none;
+      }
+
+      .shrtMap{
         display:none;
       }
 
@@ -522,6 +546,10 @@
           display:none;
       }
 
+      .longMap{
+        display:none;
+      }
+
       .maps{
         height:660px;
       }
@@ -598,6 +626,10 @@
         display:none;
     }
 
+    .longMap{
+      display:none;
+    }
+
     .maps{
       height:660px;
     }
@@ -623,7 +655,7 @@
     }
 
     .tabName{
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 400;
     }
 
