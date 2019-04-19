@@ -38,7 +38,7 @@ let WeatherCard = props => {
     return (
       <Card
         className={classes.cardMargin}
-        square="false"
+        square={true}
         style={{ height: "100%" }}
       >
         <Grid
@@ -85,7 +85,7 @@ let WeatherCard = props => {
 
       return (
         <Grid item xs={6} md>
-          <Card style={{padding: 8}}>
+          <Card style={{padding: 8}} square={true}>
             <Grid container direction="column" alignItems="flex-start">
               <Grid item xs={12}>
                 <Typography className={classes.greyText} variant={isWidthDown("sm", width) ? "subtitle" : "h6"} >{days[currentDayOfWeek++]}</Typography>
@@ -142,7 +142,7 @@ let WeatherCard = props => {
     });
 
     return (
-      <Grid container direction="row" justify="space-between" alignItems="center" spacing={8}>
+      <Grid container direction="row" justify="center" alignItems="center" spacing={8}>
         {fiveDayForecastMarkup}
       </Grid>
     );

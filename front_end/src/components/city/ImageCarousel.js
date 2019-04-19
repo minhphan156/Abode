@@ -2,11 +2,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// Child component imports
-import WeatherCard from "./WeatherCard";
-
 // Material-UI imports
-import { Grid, withStyles, withWidth, Hidden } from "@material-ui/core";
+import { Grid, withStyles, withWidth} from "@material-ui/core";
 
 // CSS to JavaScript component styling
 let styles = theme => ({

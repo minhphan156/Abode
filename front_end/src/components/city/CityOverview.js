@@ -10,6 +10,7 @@ import { fetchCityById, fetchCityWeather } from "../../actions/cityActions";
 import ImageCarousel from "./ImageCarousel";
 import CityDescription from "./CityDescription";
 import WeatherCard from "./WeatherCard";
+import SearchWidget from "../landing_page/search_widget/SearchWidget";
 
 // Material-UI imports
 import {
@@ -17,11 +18,16 @@ import {
   withStyles,
   withWidth,
   CircularProgress,
-  Hidden,
   Divider,
-  Typography
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
+import { Search } from "@material-ui/icons";
 
 // Prototype Imports
 import SF0 from "./SF0.jpg";
@@ -62,13 +68,14 @@ class CityOverview extends Component {
     };
 
     this.handleClickImage = this.handleClickImage.bind(this);
+    this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
 
   // Fetches needed city data upon mounting
   componentDidMount = () => {
     this.props.fetchCityById(this.props.match.params.cityId);
-    this.props.fetchCityWeather("San+Francisco");
     // TODO: Update the following code once backend is completed
+    this.props.fetchCityWeather("San Francisco".replace(/ /g,"+"));
     if (this.props.city.cityData != null) {
       this.setState({
         images: this.props.city.images
@@ -100,13 +107,13 @@ class CityOverview extends Component {
   handleCloseDialog = event => {
     event.preventDefault();
     this.setState({
-      openDialog = !this.state.openDialog
+      openDialog: !this.state.openDialog
     })
   }
 
   render() {
-    let { images } = this.state;
-    let { classes, city } = this.props;
+    let { images, openDialog } = this.state;
+    let { classes, city, width } = this.props;
 
     if (city.fetchingCity == false) {
       return (
@@ -115,6 +122,7 @@ class CityOverview extends Component {
             container
             className={classes.rootContainer}
             direction="row"
+            justify={isWidthDown("sm", width) ? "center" : "flex-start"}
             spacing={8}
           >
             <Grid item xs={12}>
@@ -130,6 +138,7 @@ class CityOverview extends Component {
                       <Divider />
                     </Grid>
                     <Grid item>
+                      {/* TODO: Update placeholder once backend is connected */}
                       <Typography variant="h3">San Francisco</Typography>
                     </Grid>
                     <Grid item xs>
@@ -137,7 +146,7 @@ class CityOverview extends Component {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                   <ImageCarousel
                     images={images}
                     handleClickImage={this.handleClickImage}
@@ -145,48 +154,69 @@ class CityOverview extends Component {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                    <WeatherCard city={city} />
-                  </Grid>
-                <Grid item md={12}>
+                  <WeatherCard city={city} />
+                </Grid>
+                <Grid item xs="auto" md={12}>
+                  <Button variant="contained" color="primary" onClick={this.handleCloseDialog}>
+                    <Search /> Search for hotels in this city
+                  </Button>
+                </Grid>
+                <Grid item xs={12}>
                   <CityDescription city={city} />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
           <Dialog
-            maxWidth={"md"}
+            maxWidth={width}
             scroll={"body"}
-            fullScreen={width === "xs" ? true : false}
-            open={this.state.openDialog}
-            onClose={this.handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+            fullScreen={width == "xs" ? true : false}
+            open={openDialog}
+            onClose={this.handleCloseDialog}
           >
-            <DialogTitle className="BookingInfoTitle">
-              <div className="BookingInfoTitle">
-                Please choose your travel dates and number of rooms:
-              </div>
+            <DialogTitle>
+              <Typography color="primary" variant="body">
+                Choose your travel dates and desired number of rooms:
+              </Typography>
             </DialogTitle>
-
             <DialogContent>
-              <SearchWidget
-                dealPage={true}
-                dealDestination={this.state.chosenDealHotel}
-              />
-              <Grid
-                container
-                className="dealPopUpTitle"
-                direction="column"
-                justify="space-between"
-                alignItems="center"
-              >
-                <br />
-                {this.state.chosenDealHotel} <br />
-                <img src={this.state.chosenDealImage} className="dealImage" />
+              <Grid container direction="column" justify="center" alignItems="center" spacing={8} >
+                <Grid item xs={12} style={{width: "100%"}}>
+                  <Grid
+                    container
+                    direction="row"
+                    alignItems="center"
+                    spacing={16}
+                  >
+                    <Grid item xs>
+                      <Divider />
+                    </Grid>
+                    <Grid item>
+                      {/* TODO: Update placeholder once backend is connected */}
+                      <Typography variant={isWidthDown("sm") ? "h4" : "h3"}>San Francisco</Typography>
+                    </Grid>
+                    <Grid item xs>
+                      <Divider />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <img src={images[0]} style={{objectFit: "cover", width: "100%"}} />
+                </Grid>
+                <Grid item xs={12} style={{width: "100%"}}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  {/* TODO: Update placedholder once backend is connected  */}
+                  <SearchWidget
+                    dealPage={true}
+                    dealDestination={"San Francisco"}
+                  />
+                </Grid>
               </Grid>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
+              <Button onClick={this.handleCloseDialog} color="primary">
                 Close
               </Button>
             </DialogActions>
