@@ -1,5 +1,6 @@
 import {
   GET_PROFILE,
+  GET_PROFILE_INFO,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_HISTORY
@@ -7,6 +8,7 @@ import {
 
 const initialState = {
   profile: null,
+  profile_info: null,
   loading: false,
   history: [{}]
 };
@@ -22,6 +24,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: action.payload,
+        loading: false
+      };
+    case GET_PROFILE_INFO:
+      return {
+        ...state,
+        profile_info: action.payload,
         loading: false
       };
     case GET_HISTORY:

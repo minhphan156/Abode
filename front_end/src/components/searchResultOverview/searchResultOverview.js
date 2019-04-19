@@ -56,7 +56,10 @@ let styles = theme => ({
   },
   pad25: { padding: 25 },
   msgHeight: { height: "25vh" },
-  subtitles: { fontWeight: "bold", color: "#808080" }
+  subtitles: { fontWeight: "bold", color: "#808080" },
+  root: {
+    color: "#228B22"
+  }
 });
 
 class searchResultOverview extends Component {
@@ -374,6 +377,34 @@ class searchResultOverview extends Component {
       } else if (hotelQuery.results.length > 0) {
         if (hotelQuery.results.length > 0) {
           hotels = hotelQuery.results.map(hotel => {
+            // Markup for price container
+            let displayPriceContainer = null;
+
+            if (hotel.discount > 0) {
+              displayPriceContainer = (
+                <div>
+                  <Grid item xs="auto">
+                    <Typography className={classes.root} variant="h5">
+                      {((1 - hotel.discount) * 100).toFixed(0)}% OFF!
+                    </Typography>
+                  </Grid>
+                  <Grid item xs="auto">
+                    <Typography className={classes.root} variant="h5">
+                      ${(hotel.price * hotel.discount).toFixed(0)}
+                    </Typography>
+                  </Grid>
+                </div>
+              );
+            } else {
+              displayPriceContainer = (
+                <div>
+                  <Grid item xs="auto">
+                    <Typography variant="h5">${hotel.price}</Typography>
+                  </Grid>
+                </div>
+              );
+            }
+
             return (
               <Grid item xs={12}>
                 <Card className={classes.pad25} square="false">
@@ -467,9 +498,8 @@ class searchResultOverview extends Component {
                         justify="space-between"
                         alignItems="center"
                       >
-                        <Grid item xs="auto">
-                          <Typography variant="h5">${hotel.price}</Typography>
-                        </Grid>
+                        {displayPriceContainer}
+
                         <Grid item xs="auto">
                           <Button
                             variant="contained"

@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles, withWidth } from "@material-ui/core";
+import { getProfileInfo } from "../../actions/profileActions";
 
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
@@ -52,6 +53,10 @@ class BookingInfo extends Component {
       rewardsPoints: this.props.auth.user.rewardPoints,
       possibleRewardsDiscount: 0
     };
+  }
+
+  componentDidMount() {
+    this.props.getProfileInfo();
   }
 
   handleClickOpen = () => {
@@ -473,6 +478,7 @@ class BookingInfo extends Component {
 }
 
 BookingInfo.PropTypes = {
+  getProfileInfo: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -483,5 +489,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { getProfileInfo }
 )(withStyles(styles)(withWidth()(BookingInfo)));
