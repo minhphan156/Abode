@@ -14,6 +14,28 @@ const confirmEmail = require('../../email/confirmationEmail')
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
 
+// @route POST api/booking/review
+// @desc Add a review and comment for a specific hotel
+router.post("/review", (req,res) => {
+    /*
+    REQUEST SCHEMA
+
+    {
+        comment: String,
+        starRating: int, // between 1 and 5 inclusive
+        bookingID: String
+    }
+    */
+
+    Booking.findByIdAndUpdate(req.body.bookingID, {review: req.body.comment, starReview: req.body.starRating}, (err, booking) =>  {
+        if(err) return res.status(400).json(err);
+
+        // Sending the new Booking object with review and starReview added
+        return res.status(200).send(booking);
+    })
+
+});
+
 // @route GET /api/booking/history
 // @desc History page
 // @access private
@@ -144,6 +166,7 @@ router.get("/guest-history", (req, res) => {
         });
 
     });
+
 });
 
 // @route POST /api/booking/confirm
