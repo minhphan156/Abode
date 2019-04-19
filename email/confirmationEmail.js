@@ -23,7 +23,7 @@ module.exports = function confirmEmail(firstname,lastname,id,hotelName,typeOfRoo
   html += `<div>Thank you for booking at Abode</div>`;
   html += `<div>You booking ID is ${id}</div>`;
   html += `<div>You reservation was made in ${hotelName} with ${numOfRoom} ${typeOfRoom} room(s)</div>`;
-  html += `<div>Please Check in at ${date.checkin}</div>`;
+  html += `<div>Please Check in before ${date.checkin}</div>`;
   html += `<div>You can view your booking detail in www.abode.city/history-search </div>`
   var mailOptions = {
     from: '"Abode Customer Service" <no-reply@abode.com>',
