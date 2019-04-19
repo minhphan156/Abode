@@ -26,6 +26,10 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
             Booking.find({customerID: req.user.customerID}, (err, bookings) => {
                 if(err) return res.status(400).json(err);
 
+                Customer.findById(req.user.customerID, (custErr, customerInfo) => {
+                    if(custErr) return res.status(400).json(custErr);
+                
+
                     // Get the Hotel info of each of their Bookings
                     bookings.map((element, i) => { 
 
@@ -35,32 +39,47 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                             // Add the hotel details and relevant booking details as a history object
                             historyPack.push(
                             {
-                                bookingID: element._id,
+                                name: customerInfo.Firstname + " " + customerInfo.Lastname,
+                                price: hotelDoc.price[element.typeOfRoom + "Price"],
                                 hotelName: hotelDoc.name,
                                 img: hotelDoc.images[0],
                                 city: hotelDoc.city,
+
+                                bookingID: element._id,
                                 check_in_date: element.check_in_date,
                                 check_out_date: element.check_out_date,
                                 typeOfRoom: element.typeOfRoom,
                                 numOfRoom: element.numOfRoom,
+                                numOfNights: element.numOfNights,
                                 status: element.status,
                                 changed: element.changed,
                                 new_check_in_date: element.new_check_in_date,
                                 new_check_out_date: element.new_check_out_date,
+
+                                // Payment Info
                                 subtotal: element.subtotal,
                                 total: element.total,
                                 discount: element.discount,
+                                taxesAndFees: element.taxesAndFees,
                                 rewardPointsUsed:element.rewardPointsUsed,
                                 rewardPointsEarned:element.rewardPointsEarned,
-                                reservedDate:element.reservedDate
+                                rewardDiscount: element.rewardDiscount,
+                                reservedDate:element.reservedDate,
+                                nightlyRate: element.numOfNights,
+
+                                // Info for Review
+                                starReview: element.starReview,
+                                comment: element.review
                             });
 
-                            // Check if we've finished packing all the history objects
-                            if (i === (bookings.length - 1)) return res.status(200).send(historyPack);
+                            // Check if we've finished packing ALL the history objects
+                            if (historyPack.length === bookings.length) return res.status(200).send(historyPack);
 
                         });
 
                     }); // end map()
+                
+                }); // end Customer.findById
 
             }); // end Booking.find
         
@@ -99,6 +118,13 @@ router.get("/guest-history", (req, res) => {
             historyPack.new_check_out_date = book.new_check_out_date;
             historyPack.subtotal = book.subtotal;
             historyPack.discount = book.discount;
+            historyPack.taxesAndFees = book.taxesAndFees;
+            historyPack.numOfNights = book.numOfNights;
+            
+            // Info for Review
+            historyPack.starReview = book.starReview;
+            historyPack.comment = book.review;
+
             historyPack.err = false;
 
             Hotel.findById(book.hotelID).then(hotelDoc => {

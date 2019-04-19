@@ -26,7 +26,7 @@ class PaymentPage extends Component {
         rewardDiscount: 0,
         taxesAndFees: null,
         total: null,
-        rewardPointsUsed: null,
+        rewardPointsUsed: 0,
         rewardPointsEarned: null
       }
     };
@@ -60,11 +60,15 @@ class PaymentPage extends Component {
       this.props.bookingData.tempBookingData.taxRate;
     this.state.combinedPaymentData.taxesAndFees = taxesAndFees;
 
-    this.state.combinedPaymentData.total =
+    var total =
       paymentData.subtotal -
       paymentData.discount -
       this.state.combinedPaymentData.rewardDiscount +
       taxesAndFees;
+
+    this.state.combinedPaymentData.total = total;
+
+    this.state.combinedPaymentData.rewardPointsEarned = total * 10;
 
     // after all data from 'BookingInfo.js' and 'Payment.js' is gathered, we can call submitBooking and send data to backend
     this.props.submitBooking(this.state.combinedPaymentData);
@@ -75,7 +79,7 @@ class PaymentPage extends Component {
 
     this.state.combinedPaymentData.rewardPointsUsed =
       rewardsPointsDiscount * 100;
-    this.state.combinedPaymentData.rewardPointsEarned = rewardsPointsEarned;
+    // this.state.combinedPaymentData.rewardPointsEarned = rewardsPointsEarned;
   }
 
   render() {
