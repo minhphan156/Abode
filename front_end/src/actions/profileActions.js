@@ -2,6 +2,7 @@ import axios from "axios";
 
 import {
   GET_PROFILE,
+  GET_PROFILE_INFO,
   GET_ERRORS,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
@@ -20,7 +21,12 @@ export const getCurrentProfile = () => dispatch => {
         payload: res.data
       })
     )
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: {}
+      })
+    );
 };
 
 // Create Profile
@@ -47,7 +53,31 @@ export const getHistory = () => dispatch => {
         payload: res.data
       })
     )
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Get User's Rewards Points
+export const getProfileInfo = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get("/api/users/current")
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE_INFO,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
 
 // Delete Account and Profile
