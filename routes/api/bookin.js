@@ -48,6 +48,7 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                                 check_out_date: element.check_out_date,
                                 typeOfRoom: element.typeOfRoom,
                                 numOfRoom: element.numOfRoom,
+                                numOfNights: element.numOfNights,
                                 status: element.status,
                                 changed: element.changed,
                                 new_check_in_date: element.new_check_in_date,
