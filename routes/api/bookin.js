@@ -273,9 +273,7 @@ router.post("/confirm",(req,res)=>{
                                 }else{
                                     destinationImg = city[0].imgMain
                                 }
-                                console.log("a")
                                 confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
-                                console.log("b")
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,

@@ -11,13 +11,6 @@ module.exports = function confirmEmail(firstname,lastname,id,hotelName,typeOfRoo
     }
   });
 
-  console.log(firstname)
-  console.log(hotelName)
-  console.log(lastname)
-  console.log(id)
-  console.log(typeOfRoom)
-  console.log(date)
-  console.log(email)
   var html = "<div></div>";
   html += `<div>Dear ${firstname} ${lastname}</div>`;
   html += `<div>Thank you for booking at Abode</div>`;
