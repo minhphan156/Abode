@@ -12,7 +12,7 @@ const User = require("../../models/User");
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
 
-// @route POST api/hotel/review
+// @route POST api/booking/review
 // @desc Add a review and comment for a specific hotel
 router.post("/review", (req,res) => {
     /*
