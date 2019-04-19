@@ -26,6 +26,14 @@ const BookingSchema = new Schema({
         type:Number,
         required:true
     },
+    numOfNights:{
+        type:Number,
+        required:true
+    },
+    nightlyRate:{
+        type:Number,
+        required:true
+    },
     reservedDate:{
         type:Date,
         default: Date.now
@@ -55,6 +63,10 @@ const BookingSchema = new Schema({
         type:Number,
         default:0
     },
+    taxesAndFees:{
+        type:Number,
+        required:true
+    },
     total:{
         type:Number,
         required:true
@@ -67,8 +79,17 @@ const BookingSchema = new Schema({
         type:Number,
         default:0
     },
+    rewardDiscount:{
+        type:Number,
+        default:0
+    },
     review:{
-        type:String
+        type:String,
+        default:""
+    },
+    starReview:{
+        type:Number,
+        default:0
     }
 })
 
