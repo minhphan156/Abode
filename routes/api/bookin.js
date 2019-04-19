@@ -223,6 +223,9 @@ router.post("/confirm",(req,res)=>{
                             discount:discount,
                             rewardPointsUsed:rewardPointsUsed,
                             rewardPointsEarned:rewardPointsEarned,
+                            taxesAndFees:req.body.taxesAndFees,
+                            numberOfNights:req.body.numberOfNights,
+                            rewardDiscount:req.body.rewardDiscount
                         })
                         // reward points for logged user
                         // save new booking
@@ -244,7 +247,7 @@ router.post("/confirm",(req,res)=>{
                                     destinationImg = city[0].imgMain
                                 }
                                 console.log("a")
-                                confirmEmail(firstname,lastname.doc._id,hotelName,doc.typeOfRoom,date,email)
+                                confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
                                 console.log("b")
                                 res.status(200).send({
                                     bookingID:doc._id,
@@ -270,10 +273,9 @@ router.post("/confirm",(req,res)=>{
                                     numberOfNights:req.body.numberOfNights,
                                     total:req.body.total,
                                     taxesAndFees:req.body.taxesAndFees,
-                                    rewardDiscount:req.body.rewardPointsUsed,
                                     code:200
                                 })
-                            }).catch(err=>res.send({message:"cannot find city",code:404}))
+                            })
                         })
                     }
                     // if the customer already have one reservation for the same checkin date, return error message  
