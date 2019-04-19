@@ -1,12 +1,13 @@
 const nodemailer = require("nodemailer");
+const keys = require('../config/keys')
 
 module.exports = function confirmEmail(firstname,lastname,id,hotelName,typeOfRoom,date,email,numOfRoom) {
   // email
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "AbodeDevelopmentTeam@gmail.com",
-      pass: "(P&7,EQzH^h4?#^R"
+      user: keys.email,
+      pass: keys.password
     }
   });
 
@@ -35,7 +36,7 @@ module.exports = function confirmEmail(firstname,lastname,id,hotelName,typeOfRoo
     if (error) {
       console.log(error);
     } else {
-      console.log("Email sent: " + info.response);
+      console.log("Email sent: " + JSON.stringify(info));
     }
   });
 };

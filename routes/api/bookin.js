@@ -250,8 +250,9 @@ router.post("/confirm",(req,res)=>{
                             rewardPointsUsed:rewardPointsUsed,
                             rewardPointsEarned:rewardPointsEarned,
                             taxesAndFees:req.body.taxesAndFees,
-                            numberOfNights:req.body.numberOfNights,
-                            rewardDiscount:req.body.rewardDiscount
+                            numOfNights:req.body.numberOfNights,
+                            rewardDiscount:req.body.rewardDiscount,
+                            nightlyRate: roomPrice
                         })
                         // reward points for logged user
                         // save new booking
@@ -369,7 +370,7 @@ router.post('/changeReservation',(req,res)=>{
                     reservations.new_check_in_date = date.checkin;
                     reservations.new_check_out_date = date.checkout;
                     if(newPrice){
-                        reservations.new_price = newPrice
+                        reservations.price = newPrice
                     }
                     hotel.save().catch(err=>res.status(400).json(err));
                     reservations.save().catch(err=>res.status(400).json({
