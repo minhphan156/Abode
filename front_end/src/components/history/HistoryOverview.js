@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles, withTheme, withWidth } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
@@ -22,7 +22,19 @@ import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 import "./history.css";
+
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
+import CalendarPicker from "../landing_page/search_widget/CalendarPicker";
 
 const styles = theme => ({
   table: {
@@ -60,17 +72,38 @@ const styles = theme => ({
   },
   backgroundStyle: {
     background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
+  },
+  appBar: {
+    position: "relative"
+  },
+  flex: {
+    flex: 1
   }
 });
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class HistoryOverview extends Component {
   constructor() {
     super();
     this.state = {
+      openChangeDialog: false,
       newCheckIn: null,
-      newCheckOut: null
+      newCheckOut: null,
+      newPrice: null
     };
+    this.onChangeClick = this.onChangeClick.bind(this);
+    this.onHandleDate = this.onHandleDate.bind(this);
   }
+  handleChangeClickOpen = () => {
+    console.log("OPEN");
+    this.setState({ openChangeDialog: true });
+  };
+  handleChangeClose = () => {
+    this.setState({ openChangeDialog: false });
+  };
   componentDidMount() {
     this.props.getCurrentProfile();
     this.props.getHistory();
@@ -78,9 +111,25 @@ class HistoryOverview extends Component {
   componentWillMount() {
     this.props.getHistory();
   }
+  onChangeClick(bookingID) {
+    const changeReservationData = {
+      bookingID: bookingID,
+      newCheckIn: this.state.newCheckIn,
+      newCheckOut: this.state.newCheckOut
+    };
+    //this.props.changeReservation(changeReservationData);
+    console.log(bookingID);
+    console.log(this.state.newCheckIn);
+    console.log(this.state.newCheckOut);
+    this.setState({ openChangeDialog: false });
+  }
+  onHandleDate(startingDate, endingDate) {
+    this.setState({ newCheckIn: startingDate });
+    this.setState({ newCheckOut: endingDate });
+  }
 
   render() {
-    const { classes, profile } = this.props;
+    const { classes, profile, width } = this.props;
     let bookings;
     let displayChangeChip;
     let displayRegularChip;
@@ -210,9 +259,23 @@ class HistoryOverview extends Component {
           );
           cancelAndChangeButtons = (
             <Grid>
-              <Button>CHANGE</Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.button}
+                onClick={this.handleChangeClickOpen}
+              >
+                CHANGE
+              </Button>
               <br />
-              <Button>CANCEL</Button>
+              <br />
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
+              >
+                CANCEL
+              </Button>
             </Grid>
           );
           break;
@@ -277,6 +340,80 @@ class HistoryOverview extends Component {
                 <Grid item className="chipsAndTotal">
                   <br />
                   {displayRegularChip}
+                  <Dialog
+                    fullScreen
+                    open={this.state.openChangeDialog}
+                    onClose={this.handleChangeClose}
+                    TransitionComponent={Transition}
+                  >
+                    <AppBar className={classes.appBar}>
+                      <Toolbar>
+                        <IconButton
+                          color="inherit"
+                          onClick={this.handleChangeClose}
+                          aria-label="Close"
+                        >
+                          <CloseIcon />
+                        </IconButton>
+
+                        <Typography
+                          variant="h6"
+                          color="inherit"
+                          className={classes.flex}
+                        >
+                          Change Reservation
+                        </Typography>
+                        <Button
+                          color="inherit"
+                          onClick={this.handleChangeClose}
+                        >
+                          save
+                        </Button>
+                      </Toolbar>
+                    </AppBar>
+
+                    <div class="center">
+                      <DialogTitle>
+                        Select dates to change your reservation.
+                      </DialogTitle>
+                      <p>
+                        Select the new start and end dates for changing your
+                        reservation.
+                      </p>
+                      <CalendarPicker
+                        class="center"
+                        checkIn={this.state.newCheckIn}
+                        checkOut={this.state.newCheckOut}
+                        onHandleDate={this.onHandleDate}
+                      />
+                      <DialogActions>
+                        {this.state.newCheckIn == null ||
+                        this.state.newCheckOut == null ? null : (
+                          <Button
+                            onClick={() =>
+                              this.onChangeClick(booking.bookingID)
+                            }
+                            variant="outlined"
+                            color="primary"
+                            className={classes.button}
+                          >
+                            Confirm Change
+                          </Button>
+                        )}
+
+                        <Button
+                          onClick={this.handleChangeClose}
+                          color="primary"
+                          variant="outlined"
+                          color="secondary"
+                          className={classes.button}
+                        >
+                          Cancel Change
+                        </Button>
+                      </DialogActions>
+                    </div>
+                    <div class="center" />
+                  </Dialog>
                   {displayChangeChip}
                 </Grid>
                 {/* We display a different layout for small screens */}
