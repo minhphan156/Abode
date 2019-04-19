@@ -58,7 +58,7 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                                 subtotal: element.subtotal,
                                 total: element.total,
                                 discount: element.discount,
-                                taxesAndFees: element.total - element.subtotal,
+                                taxesAndFees: element.taxesAndFees,
                                 rewardPointsUsed:element.rewardPointsUsed,
                                 rewardPointsEarned:element.rewardPointsEarned,
                                 rewardDiscount: element.rewardDiscount,
@@ -116,6 +116,13 @@ router.get("/guest-history", (req, res) => {
             historyPack.new_check_out_date = book.new_check_out_date;
             historyPack.subtotal = book.subtotal;
             historyPack.discount = book.discount;
+            historyPack.taxesAndFees = book.taxesAndFees;
+            historyPack.numOfNights = book.numOfNights;
+            
+            // Info for Review
+            historyPack.starReview = book.starReview;
+            historyPack.comment = book.review;
+
             historyPack.err = false;
 
             Hotel.findById(book.hotelID).then(hotelDoc => {
