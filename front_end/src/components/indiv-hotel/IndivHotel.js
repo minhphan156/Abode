@@ -107,7 +107,7 @@ class IndivHotel extends Component {
     } else {
       const { individualHotelData } = this.props.individualHotelData;
       return (  
-          <div style={{ marginLeft: 40, marginRight: 40, minHeight:window.innerHeight-180}}>
+          <div class="wholePage" style={{minHeight:window.innerHeight-180}}>
           { individualHotelData.img.length === 0 ? (
           <div style={{marginLeft:'50%', marginTop:'10%'}}>
               <Grid item>
@@ -117,7 +117,6 @@ class IndivHotel extends Component {
           ):(
             <div
             id="whole page"
-            style={{ marginLeft:'7.5%', marginRight:'7.5%'}}
             >
             <div style={{margin:'auto'}}>
             <ExpansionPanel
@@ -133,8 +132,8 @@ class IndivHotel extends Component {
             </ExpansionPanelSummary>
             <Divider />
             <ExpansionPanelDetails>
-              <div style={{ width: "100%" }}>
-                <SearchWidget/>
+              <div style={{ width: "100%", height:"100%" }}>
+                <SearchWidget tyle={{ width: "100%", height:"100%" }}/>
               </div>
             </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -230,7 +229,7 @@ class IndivHotel extends Component {
                   <div className="col">
                     <div class="otherRating">
                       <img
-                        style={{ width: "20%", height: "18%" }}
+                        style={{ width: "16%", height: "25%" }}
                         src="https://cdn-b.william-reed.com/var/wrbm_gb_hospitality/storage/images/7/8/9/3/673987-1-eng-GB/TripAdvisor-being-used-to-blackmail-hoteliers.jpg"
                       />{" "}
                       Trip Advisor
@@ -248,7 +247,7 @@ class IndivHotel extends Component {
                   <div className="col">
                     <div class="otherRating">
                       <img
-                        style={{ width: "14%", height: "5%" }}
+                        style={{ width: "10%", height: "4%" }}
                         src="https://a.cdn-hotels.com/da/assets/s/63.0/images/brands/hcom/logos/logo-social.jpg"
                       />{" "}
                       Hotels.com
@@ -267,10 +266,10 @@ class IndivHotel extends Component {
 
                 <div class="doubleRate">
                   <div className="container" style={{marginTop:'0'}}>
-                  <div className="row">
-                    <div class="otherRating">
+                  <div className="row justify-content-center">
+                    <div class="otherRating text-center">
                       <img
-                        style={{ width: "13%", height: "65%" }}
+                        style={{ width: "10%", height: "95%" }}
                         src="https://cdn-b.william-reed.com/var/wrbm_gb_hospitality/storage/images/7/8/9/3/673987-1-eng-GB/TripAdvisor-being-used-to-blackmail-hoteliers.jpg"
                       />{" "}
                       Trip Advisor
@@ -285,10 +284,10 @@ class IndivHotel extends Component {
                       color1={"#dcdcdc"}
                     />
                   </div>
-                  <div className="row">
-                    <div class="otherRating">
+                  <div className="row justify-content-center">
+                    <div class="otherRating text-center">
                       <img
-                        style={{ width: "11%", height: "60%" }}
+                        style={{ width: "10%", height: "85%" }}
                         src="https://a.cdn-hotels.com/da/assets/s/63.0/images/brands/hcom/logos/logo-social.jpg"
                       />{" "}
                       Hotels.com

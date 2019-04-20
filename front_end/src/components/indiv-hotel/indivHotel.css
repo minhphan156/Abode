@@ -1,4 +1,9 @@
 @media screen and (max-width: 330px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
     .seeRoomBtn {
       width: 100%;
       /* variant="contained" */
@@ -84,6 +89,11 @@
 
 
 @media screen and (min-width: 330px) and (max-width: 372px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
     .seeRoomBtn {
         width: 100%;
         /* variant="contained" */
@@ -168,6 +178,11 @@
 }
 
 @media screen and (min-width: 372px) and (max-width: 393px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
   .seeRoomBtn {
       width: 100%;
       /* variant="contained" */
@@ -252,6 +267,11 @@
 }
 
 @media screen and (min-width: 393px) and (max-width: 440px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
     .seeRoomBtn {
         width: 100%;
         /* variant="contained" */
@@ -337,6 +357,11 @@
 }
 
 @media screen and (min-width: 440px) and (max-width: 482px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  
     .seeRoomBtn {
         width: 100%;
         /* variant="contained" */
@@ -421,6 +446,11 @@
 }
 
 @media screen and (min-width: 482px) and (max-width: 991px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
     .seeRoomBtn {
         width: 100%;
         /* variant="contained" */
@@ -495,17 +525,22 @@
 
 
     .tabName{
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 400;
     }
 
     .tabContent{
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 200;
     }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1163px){
+  .wholePage{
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+  }
+
     .seeRoomBtn {
         width: 100%;
         /* variant="contained" */
@@ -575,17 +610,22 @@
       }
 
       .tabName{
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 400;
       }
   
       .tabContent{
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 200;
       }
 }
 
 @media screen and (min-width: 1163px){
+  .wholePage{
+    margin-left: 7.5%;
+    margin-right:7.5%;
+  }
+
   .seeRoomBtn {
       width: 100%;
       /* variant="contained" */
@@ -655,12 +695,12 @@
     }
 
     .tabName{
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 400;
     }
 
     .tabContent{
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 200;
     }
 }
