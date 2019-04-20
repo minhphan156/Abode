@@ -76,6 +76,10 @@
       display:none;
     }
 
+    .bigTab{
+      display: none;
+    }
+
     .tabName{
       font-size: 16px;
       font-weight: 400;
@@ -84,6 +88,10 @@
     .tabContent{
       font-size: 14px;
       font-weight: 200;
+    }
+
+    .mobileTabs{
+      font-size: 5px;
     }
 }
 
@@ -163,6 +171,10 @@
     }
 
     .singleRate{
+      display: none;
+    }
+
+    .bigTab{
       display: none;
     }
 
@@ -255,6 +267,10 @@
     display: none;
   }
 
+  .bigTab{
+    display: none;
+  }
+
   .tabName{
     font-size: 16px;
     font-weight: 400;
@@ -344,6 +360,9 @@
       display: none;
     }
 
+    .bigTab{
+      display: none;
+    }
 
     .tabName{
       font-size: 16px;
@@ -431,6 +450,10 @@
     }
 
     .doubleRate{
+      display: none;
+    }
+
+    .bigTab{
       display: none;
     }
 
@@ -524,6 +547,10 @@
       }
 
 
+    .bigTab{
+       display: none;
+    }
+
     .tabName{
       font-size: 18px;
       font-weight: 400;
@@ -609,6 +636,10 @@
         font-weight: 300;
       }
 
+      .mobileTab{
+        display: none;
+      }
+
       .tabName{
         font-size: 18px;
         font-weight: 400;
@@ -692,6 +723,10 @@
     .otherRating{
       font-size: 20px;
       font-weight: 300;
+    }
+
+    .mobileTab{
+      display: none;
     }
 
     .tabName{

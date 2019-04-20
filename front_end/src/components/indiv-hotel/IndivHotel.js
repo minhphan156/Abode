@@ -386,10 +386,11 @@ class IndivHotel extends Component {
                     </a>
                   </div>
                 </div>
+                <div class="bigTab">
                 <div
                   id="amenities"
                   className="expandable-content overview-sections"
-                  style={{ marginTop: "15px", height: "auto" }}
+                  style={{ marginTop: "15px", minHeight:"180px" }}
                 >
 
                   <nav>
@@ -559,6 +560,185 @@ class IndivHotel extends Component {
                       </div>
                     </div>
                   </div>
+                </div>
+                </div>
+
+                <div class="mobileTab">           
+                <div
+                  id="amenitiesMobile"
+                  className="expandable-content overview-sections"
+                  style={{ marginTop: "15px", minHeight:"180px" }}
+                >
+
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <a class="tabName nav-item nav-link active" 
+                         id="amentitiesM-tab" 
+                         data-toggle="tab" 
+                         href="#amentitiesM" 
+                         role="tab" 
+                         aria-controls="amentitiesM" 
+                         aria-selected="true"
+                        >
+                          <i class="fas fa-concierge-bell" /> Amentities
+                        </a>
+                      <a class="tabName nav-item nav-link" 
+                         id="airportsM-tab" 
+                         data-toggle="tab" 
+                         href="#airportsM" 
+                         role="tab" 
+                         aria-controls="airportsM" 
+                         aria-selected="false"
+                      >
+                        <i class="fas fa-plane" /> Airports
+                      </a>
+                      <a class="tabName nav-item nav-link" 
+                         id="top-spotsM-tab" 
+                         data-toggle="tab" 
+                         href="#top-spotsM" 
+                         role="tab" 
+                         aria-controls="top-spotsM" 
+                         aria-selected="false"
+                      >
+                        <i class="fas fa-fire" /> Spots
+                      </a>
+                    </div>
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tabContent tab-pane fade show active" 
+                         id="amentitiesM" 
+                         role="tabpanel" 
+                         aria-labelledby="amentitiesM-tab"
+                    >
+                      <div className="row">
+                        <div id="amentitiesM row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.amenities
+                            .slice(0, individualHotelData.amenities.length / 2)
+                            .map((item, key) => {
+                              return (
+                               <div class="tabContent">
+                               <div
+                                  id="amentitiesM col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                               >
+                                  <i
+                                    class="fas fa-check"
+                                    style={{ color: "#3e6e00" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                        <div id="amentitiesM row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.amenities
+                            .slice(
+                             individualHotelData.amenities.length / 2,
+                             individualHotelData.amenities.length
+                            )
+                            .map((item, key) => {
+                              return (
+                                <div class="tabContent">
+                                <div
+                                  id="amentitiesM col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                                >
+                                 <i
+                                    class="fas fa-check"
+                                   style={{ color: "#3e6e00" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabContent tab-pane fade" 
+                         id="airportsM" 
+                         role="tabpanel" 
+                         aria-labelledby="airportsM-tab"
+                    >
+                      <div className="row">
+                        <div id="airportsM row" className="col-lg-12 col-sm-12 col-12">
+                          {individualHotelData.airports.map((item, key) => {
+                              return (
+                              <div class="tabContent">
+                              {console.log("airports")}
+                              <div
+                                className = "col"
+                                style={{ color: "#808080" }}
+                              >
+                                <i class="fas fa-plane-departure"
+                                   style={{color:"#568cba"}} 
+                                />
+                                  {" "}{item}
+                              </div>
+                              </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" 
+                         id="top-spotsM" 
+                         role="tabpanel" 
+                         aria-labelledby="top-spotsM-tab"
+                    >
+                      <div className="row">
+                        <div id="amentitiesM row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.top_spots
+                            .slice(0, individualHotelData.top_spots.length / 2)
+                            .map((item, key) => {
+                              return (
+                               <div class="tabContent">
+                               <div
+                                 id="top_spotsM col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                               >
+                                  <i
+                                    class="fas fa-map-marker-alt"
+                                    style={{ color: "#c90d1f" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                        <div id="top_spotsM row" className="col-lg-6 col-sm-12 col-12">
+                          {individualHotelData.top_spots
+                            .slice(
+                             individualHotelData.top_spots.length / 2,
+                             individualHotelData.top_spots.length
+                            )
+                            .map((item, key) => {
+                              return (
+                                <div class="tabContent">
+                                <div
+                                 id="top_spotsM col"
+                                 className="col"
+                                 style={{ color: "#808080" }}
+                                >
+                                 <i
+                                   class="fas fa-map-marker-alt"
+                                   style={{ color: "#c90d1f" }}
+                                  />{" "}
+                                  {item}
+                                </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 </div>
               </div>
 
