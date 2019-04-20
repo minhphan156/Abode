@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
+import { logoutUser,setCurrentUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 import "./navbar.css";
 
@@ -24,8 +26,29 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
+  componentWillMount(){
+    if (localStorage.jwtToken) {
+      const decode = jwt_decode(localStorage.jwtToken);
+      axios.get("api/users/current").then(res =>{
+        console.log(res.data)
+        const decoded = {
+          id: decode.id,
+          iat: decode.iat,
+          exp:decode.exp,
+          firstname:res.data.firstName,
+          lastname:res.data.lastName,
+          email:res.data.email,
+          rewardPoints:res.data.rewardPoints
+        }
+        this.props.setCurrentUser(decoded)
+      })
+    }
+  }
+
+
   render() {
     // Markup shown on the right hand side of Navbar when user is GUEST.
+    console.log(this.props)
     let guestMarkUp = (
       <Grid
         container
@@ -159,5 +182,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile }
+  { logoutUser, clearCurrentProfile,setCurrentUser }
 )(Navbar);
