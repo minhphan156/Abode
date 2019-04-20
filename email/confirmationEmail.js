@@ -17,7 +17,7 @@ module.exports = function confirmEmail(firstname,lastname,id,hotelName,typeOfRoo
   <img src="cid:logo" alt="Smiley face" height="100" width="100" style="display: block;margin-left: auto;margin-right: auto;" />
   </div>
   <div style="margin: auto;  width: 50%;  width:500px">
-  <h1>Your Reservation is confirm</h1>
+  <h1>Your Reservation is Confirmed</h1>
   <h4>Dear ${firstname} ${lastname}</h4>
   <p>Thank you for booking at Abode</p>
   <p>You Reservation ID is ${id}</p>
