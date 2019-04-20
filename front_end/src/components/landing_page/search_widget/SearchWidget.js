@@ -122,8 +122,6 @@ class SearchWidget extends Component {
 
   render() {
     const { classes } = this.props;
-    //const handleDesAlertHide = () => this.setState({ showDesAlert: false });
-    // const handleDateAlertHide = () => this.setState({ showDateAlert: false });
 
     // Search widget can be displayed regular (Destination, Calendar, Rooms)
     // or it can be displayed as a pop up of the deals of the week (Calendar, Rooms)
