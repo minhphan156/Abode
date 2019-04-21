@@ -367,12 +367,12 @@ router.post("/confirm",(req,res)=>{
 // @desc change Reservation
 // @access public
 router.post('/changeReservation',(req,res)=>{
-    bookingID = req.query.bookingID;
+    bookingID = req.body.bookingID;
     date = {
-        checkin:new Date(req.query.newCheckIn.replace('"','').replace('"','')),
-        checkout:new Date(req.query.newCheckOut.replace('"','').replace('"',''))
+        checkin:new Date(req.body.newCheckIn.replace('"','').replace('"','')),
+        checkout:new Date(req.body.newCheckOut.replace('"','').replace('"',''))
     };
-    newPrice = req.query.newPrice ? req.query.newPrice : null;
+    newPrice = req.body.newPrice ? req.body.newPrice : null;
     Booking.findById(bookingID).then((reservations,err)=>{
         if(err) res.status(400).json(err);
         if(reservations){
