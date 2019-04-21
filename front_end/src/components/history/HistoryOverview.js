@@ -118,6 +118,7 @@ class HistoryOverview extends Component {
     };
     this.props.changeReservation(changeReservationData);
     this.setState({ openChangeDialog: false });
+    window.location.reload();
   }
   onHandleDate(startingDate, endingDate) {
     this.setState({ newCheckIn: startingDate });
