@@ -98,7 +98,6 @@ class HistoryOverview extends Component {
     this.onHandleDate = this.onHandleDate.bind(this);
   }
   handleChangeClickOpen = () => {
-    console.log("OPEN");
     this.setState({ openChangeDialog: true });
   };
   handleChangeClose = () => {

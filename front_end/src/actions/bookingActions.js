@@ -48,7 +48,7 @@ export const clearBooking = () => {
 
 export const changeReservation = booking => dispatch => {
   axios
-    .post("/api/booking/changeReservation", { params: booking })
+    .post("/api/booking/changeReservation", booking)
     .then(res => {
       dispatch({
         type: CHANGE_RESERVATION,
