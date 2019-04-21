@@ -27,6 +27,7 @@
     "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.24.0",
     "mongoose": "^5.3.10",
+    "nodemailer": "^6.1.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "react": "^16.8.3",

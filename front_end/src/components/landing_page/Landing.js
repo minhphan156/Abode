@@ -129,7 +129,7 @@ class Landing extends Component {
         PromoText:
           "The ABC is a beautiful hotel at the pacific coast. Offers great food. LA is cool too. just book it already!",
 
-        DiscountRate: 10,
+        DiscountRate: 15,
         NumStars: 4,
         GuestRating: 8,
         LowPrice: 367
