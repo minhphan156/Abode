@@ -362,12 +362,6 @@ class HistoryOverview extends Component {
                         >
                           Change Reservation
                         </Typography>
-                        <Button
-                          color="inherit"
-                          onClick={this.handleChangeClose}
-                        >
-                          save
-                        </Button>
                       </Toolbar>
                     </AppBar>
 
@@ -402,7 +396,6 @@ class HistoryOverview extends Component {
 
                         <Button
                           onClick={this.handleChangeClose}
-                          color="primary"
                           variant="outlined"
                           color="secondary"
                           className={classes.button}
