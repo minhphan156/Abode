@@ -117,9 +117,6 @@ class HistoryOverview extends Component {
       newCheckOut: this.state.newCheckOut
     };
     this.props.changeReservation(changeReservationData);
-    console.log(bookingID);
-    console.log(this.state.newCheckIn);
-    console.log(this.state.newCheckOut);
     this.setState({ openChangeDialog: false });
   }
   onHandleDate(startingDate, endingDate) {
