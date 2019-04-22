@@ -93,6 +93,7 @@ class HistoryOverview extends Component {
     const cancelReservationData = { bookingID: bookingInfo };
     this.props.cancelReservation(cancelReservationData);
     this.setState({ open: false });
+    window.location.reload();
   }
 
   render() {
