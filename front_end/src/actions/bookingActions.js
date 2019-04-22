@@ -47,7 +47,6 @@ export const clearBooking = () => {
 };
 
 export const cancelReservation = booking => dispatch => {
-  console.log(booking);
   axios
     .post("/api/booking/cancel", booking)
     .then(res => {
