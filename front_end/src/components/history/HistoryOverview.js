@@ -72,11 +72,16 @@ class HistoryOverview extends Component {
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
+      checkInTime: null
     };
     this.onCancelClick = this.onCancelClick.bind(this);
   }
-  handleClickOpen = () => {
+  handleClickOpen = checkIn => {
+    this.setState({ checkInTime: checkIn });
+    console.log(this.state.checkInTime);
+
+    console.log("AAAAAAAA");
     this.setState({ open: true });
   };
   handleClose = () => {
@@ -103,16 +108,19 @@ class HistoryOverview extends Component {
     let displayRegularChip;
     let dateOverview;
     let cancelAndChangeButtons;
+    let checkInDateAndTime;
 
     bookings = this.props.profile.history.map(booking => {
       displayChangeChip = null;
       displayRegularChip = null;
       dateOverview = null;
       cancelAndChangeButtons = null;
+      checkInDateAndTime = null;
 
       // if the booking was not changed, we display the regular CheckIn and Checkout Overview
       if (booking.changed === false) {
         displayChangeChip = null;
+        checkInDateAndTime = <p>{booking.check_in_date}HALP</p>;
         dateOverview = (
           <Table className="HistoryContainerDates">
             <TableRow>
@@ -150,6 +158,7 @@ class HistoryOverview extends Component {
       } else {
         // if the booking was changed, we display a different CheckIn and Checkout Overview, with all 4 dates
         // we also display the "Changed" chip
+        checkInDateAndTime = <p>{booking.check_in_date}HELPP</p>;
         displayChangeChip = (
           <Chip
             label="Changed"
@@ -237,7 +246,7 @@ class HistoryOverview extends Component {
               <br />
               <br />
               <Button
-                onClick={this.handleClickOpen}
+                onClick={() => this.handleClickOpen(booking.check_in_date)}
                 variant="outlined"
                 color="secondary"
                 className={classes.button}
@@ -319,14 +328,23 @@ class HistoryOverview extends Component {
                     onClose={this.handleClose}
                   >
                     <DialogTitle>Are you sure you want to cancel?</DialogTitle>
-                    <p className="supportTextDialog">
-                      *Full refund only when cancellation is greater than 48
-                      hours before check in time.
-                    </p>
+                    {checkInDateAndTime}
                     <DialogContent>
-                      Cancellation within 48 hours of check in time will not be
-                      refunded.
+                      Your cancellation will be {booking.check_in_date}
+                      {(
+                        (new Date(booking.check_in_date).getTime() -
+                          new Date().getTime()) /
+                        1000 /
+                        60 /
+                        60
+                      ).toFixed(1)}{" "}
+                      hours to check in and will NOT be refunded.
                     </DialogContent>
+                    <p className="supportTextDialog">
+                      * Cancellation within 48 hours of check in time will not
+                      be refunded.
+                    </p>
+
                     <DialogActions>
                       <Button
                         onClick={() => this.onCancelClick(booking.bookingID)}
@@ -360,10 +378,9 @@ class HistoryOverview extends Component {
                   {displayChangeChip}
                 </Grid>
               </Grid>
-
               <Grid className="HistoryContainerDates">
                 <Grid item className="HistoryPageDates HistoryContainerDates">
-                  {dateOverview}
+                  {dateOverview} {checkInDateAndTime}
                 </Grid>
               </Grid>
               <Grid>
