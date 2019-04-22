@@ -8,9 +8,33 @@ const Customer = require("../../models/customer");
 const City = require("../../models/city")
 const User = require("../../models/User");
 
+const confirmEmail = require('../../email/confirmationEmail')
+
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
+
+// @route POST api/booking/review
+// @desc Add a review and comment for a specific hotel
+router.post("/review", (req,res) => {
+    /*
+    REQUEST SCHEMA
+
+    {
+        comment: String,
+        starRating: int, // between 1 and 5 inclusive
+        bookingID: String
+    }
+    */
+
+    Booking.findByIdAndUpdate(req.body.bookingID, {review: req.body.comment, starReview: req.body.starRating}, (err, booking) =>  {
+        if(err) return res.status(400).json(err);
+
+        // Sending the new Booking object with review and starReview added
+        return res.status(200).send(booking);
+    })
+
+});
 
 // @route GET /api/booking/history
 // @desc History page
@@ -24,6 +48,10 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
             Booking.find({customerID: req.user.customerID}, (err, bookings) => {
                 if(err) return res.status(400).json(err);
 
+                Customer.findById(req.user.customerID, (custErr, customerInfo) => {
+                    if(custErr) return res.status(400).json(custErr);
+                
+
                     // Get the Hotel info of each of their Bookings
                     bookings.map((element, i) => { 
 
@@ -33,32 +61,66 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                             // Add the hotel details and relevant booking details as a history object
                             historyPack.push(
                             {
-                                bookingID: element._id,
+                                name: customerInfo.Firstname + " " + customerInfo.Lastname,
+                                price: hotelDoc.price[element.typeOfRoom + "Price"],
                                 hotelName: hotelDoc.name,
                                 img: hotelDoc.images[0],
                                 city: hotelDoc.city,
+
+                                bookingID: element._id,
                                 check_in_date: element.check_in_date,
                                 check_out_date: element.check_out_date,
                                 typeOfRoom: element.typeOfRoom,
                                 numOfRoom: element.numOfRoom,
+                                numOfNights: element.numOfNights,
                                 status: element.status,
                                 changed: element.changed,
                                 new_check_in_date: element.new_check_in_date,
                                 new_check_out_date: element.new_check_out_date,
+
+                                // Payment Info
                                 subtotal: element.subtotal,
                                 total: element.total,
                                 discount: element.discount,
+                                taxesAndFees: element.taxesAndFees,
                                 rewardPointsUsed:element.rewardPointsUsed,
                                 rewardPointsEarned:element.rewardPointsEarned,
-                                reservedDate:element.reservedDate
+                                rewardDiscount: element.rewardDiscount,
+                                reservedDate:element.reservedDate,
+                                nightlyRate: element.numOfNights,
+
+                                // Info for Review
+                                starReview: element.starReview,
+                                comment: element.review
                             });
 
-                            // Check if we've finished packing all the history objects
-                            if (i === (bookings.length - 1)) return res.status(200).send(historyPack);
+                            // Check if we've finished packing ALL the history objects
+                            if (historyPack.length === bookings.length) {
+
+                                historyPack.sort((a, b) => {
+                                    if (b.new_check_in_date && a.new_check_in_date) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date && a.new_check_in_date === undefined) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date === undefined && a.new_check_in_date) {
+                                        return (new Date(a.check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    return (new Date(a.check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                })
+
+                                return res.status(200).send(historyPack);
+                            }
 
                         });
 
                     }); // end map()
+                
+                }); // end Customer.findById
 
             }); // end Booking.find
         
@@ -97,6 +159,13 @@ router.get("/guest-history", (req, res) => {
             historyPack.new_check_out_date = book.new_check_out_date;
             historyPack.subtotal = book.subtotal;
             historyPack.discount = book.discount;
+            historyPack.taxesAndFees = book.taxesAndFees;
+            historyPack.numOfNights = book.numOfNights;
+            
+            // Info for Review
+            historyPack.starReview = book.starReview;
+            historyPack.comment = book.review;
+
             historyPack.err = false;
 
             Hotel.findById(book.hotelID).then(hotelDoc => {
@@ -116,6 +185,7 @@ router.get("/guest-history", (req, res) => {
         });
 
     });
+
 });
 
 // @route POST /api/booking/confirm
@@ -221,6 +291,10 @@ router.post("/confirm",(req,res)=>{
                             discount:discount,
                             rewardPointsUsed:rewardPointsUsed,
                             rewardPointsEarned:rewardPointsEarned,
+                            taxesAndFees:req.body.taxesAndFees,
+                            numOfNights:req.body.numberOfNights,
+                            rewardDiscount:req.body.rewardDiscount,
+                            nightlyRate: roomPrice
                         })
                         // reward points for logged user
                         // save new booking
@@ -241,6 +315,7 @@ router.post("/confirm",(req,res)=>{
                                 }else{
                                     destinationImg = city[0].imgMain
                                 }
+                                confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
@@ -265,16 +340,15 @@ router.post("/confirm",(req,res)=>{
                                     numberOfNights:req.body.numberOfNights,
                                     total:req.body.total,
                                     taxesAndFees:req.body.taxesAndFees,
-                                    rewardDiscount:req.body.rewardPointsUsed,
                                     code:200
                                 })
-                            }).catch(err=>res.send({message:"cannot find city",code:404}))
+                            })
                         })
                     }
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
                         res.send({message:"doubleBooking",
-                                code:409})
+                                code:403})
                     }
                 })
             }
@@ -336,7 +410,7 @@ router.post('/changeReservation',(req,res)=>{
                     reservations.new_check_in_date = date.checkin;
                     reservations.new_check_out_date = date.checkout;
                     if(newPrice){
-                        reservations.new_price = newPrice
+                        reservations.price = newPrice
                     }
                     hotel.save().catch(err=>res.status(400).json(err));
                     reservations.save().catch(err=>res.status(400).json({
