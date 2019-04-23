@@ -56,73 +56,100 @@ let WeatherCard = props => {
     );
   };
 
-
   if (city.weatherData != null) {
-    let weatherIcon = (day) => {
+    let weatherIcon = day => {
       return (
         <img
           className={classes.weatherIcon}
-          src={`http://openweathermap.org/img/w/${
-            day.weather[0].icon
-          }.png`}
+          src={`http://openweathermap.org/img/w/${day.weather[0].icon}.png`}
           alt="weather icon"
         />
       );
     };
 
     let forecastArray = [];
-    for (let i = 0; i < city.weatherData.cnt; i+= (city.weatherData.cnt / 5)) {
+    for (let i = 0; i < city.weatherData.cnt; i += city.weatherData.cnt / 5) {
       forecastArray.push(city.weatherData.list[i]);
     }
 
     let currentDayOfWeek = new Date().getDay();
 
-    let fiveDayForecastMarkup = forecastArray.map((forecastDay) => {
-      let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    let fiveDayForecastMarkup = forecastArray.map(forecastDay => {
+      let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ];
       if (currentDayOfWeek == 7) {
         currentDayOfWeek = 0;
       }
 
       return (
         <Grid item xs={6} md>
-          <Card style={{padding: 8}} square={true}>
+          <Card style={{ padding: 8 }} square={true}>
             <Grid container direction="column" alignItems="flex-start">
               <Grid item xs={12}>
-                <Typography className={classes.greyText} variant={isWidthDown("sm", width) ? "subtitle" : "h6"} >{days[currentDayOfWeek++]}</Typography>
+                <Typography
+                  className={classes.greyText}
+                  variant={isWidthDown("sm", width) ? "subtitle" : "h6"}
+                >
+                  {days[currentDayOfWeek++]}
+                </Typography>
               </Grid>
-              <Grid item xs={12} style={{width: "100%"}}>
+              <Grid item xs={12} style={{ width: "100%" }}>
                 <Grid container direction="row" justify="center">
                   <Grid item>
-                    <Typography variant={isWidthDown("sm", width) ? "subtitle" : "h3"}>
+                    <Typography
+                      variant={isWidthDown("sm", width) ? "subtitle" : "h3"}
+                    >
                       {`${forecastDay.main.temp}°F`}
                     </Typography>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} style={{ width: "100%"}}>
-                <Grid container direction="row" justify="space-evenly" alignItems="center">
+              <Grid item xs={12} style={{ width: "100%" }}>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
                   <Grid item>
                     <Typography variant="subtitle">
                       {`${forecastDay.weather[0].main}`}
                     </Typography>
                   </Grid>
-                  <Grid item> 
-                    {weatherIcon(forecastDay)}
+                  <Grid item>{weatherIcon(forecastDay)}</Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} style={{ width: "100%" }}>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <span className={classes.greyText}>Lo:</span>{" "}
+                    {`${forecastDay.main.temp_min}°F`}
+                  </Grid>
+                  <Grid item>
+                    <span className={classes.greyText}>Hi:</span>{" "}
+                    {`${forecastDay.main.temp_max}°F`}
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} style={{width: "100%"}}>
-                <Grid container direction="row" justify="space-between" alignItems="center">
-                  <Grid item>
-                    <span className={classes.greyText}>Lo:</span> {`${forecastDay.main.temp_min}°F`}
-                  </Grid>
-                  <Grid item>
-                    <span className={classes.greyText}>Hi:</span> {`${forecastDay.main.temp_max}°F`}
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} style={{width: "100%"}}>
-                <Grid container direction="row" justify="space-between" alignItems="center">
+              <Grid item xs={12} style={{ width: "100%" }}>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                >
                   <Grid item>
                     <Typography className={classes.greyText} variant="subtitle">
                       Humidity
@@ -142,7 +169,13 @@ let WeatherCard = props => {
     });
 
     return (
-      <Grid container direction="row" justify="center" alignItems="center" spacing={8}>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        spacing={8}
+      >
         {fiveDayForecastMarkup}
       </Grid>
     );

@@ -75,7 +75,7 @@ class CityOverview extends Component {
   componentDidMount = () => {
     this.props.fetchCityById(this.props.match.params.cityId);
     // TODO: Update the following code once backend is completed
-    this.props.fetchCityWeather("San Francisco".replace(/ /g,"+"));
+    this.props.fetchCityWeather("San Francisco".replace(/ /g, "+"));
     if (this.props.city.cityData != null) {
       this.setState({
         images: this.props.city.images
@@ -108,8 +108,8 @@ class CityOverview extends Component {
     event.preventDefault();
     this.setState({
       openDialog: !this.state.openDialog
-    })
-  }
+    });
+  };
 
   render() {
     let { images, openDialog } = this.state;
@@ -126,7 +126,7 @@ class CityOverview extends Component {
             spacing={8}
           >
             <Grid item xs={12}>
-              <Grid container direction="column" spacing={16}>
+              <Grid container direction="column" spacing={40}>
                 <Grid item xs={12}>
                   <Grid
                     container
@@ -157,7 +157,11 @@ class CityOverview extends Component {
                   <WeatherCard city={city} />
                 </Grid>
                 <Grid item xs="auto" md={12}>
-                  <Button variant="contained" color="primary" onClick={this.handleCloseDialog}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleCloseDialog}
+                  >
                     <Search /> Search for hotels in this city
                   </Button>
                 </Grid>
@@ -180,8 +184,14 @@ class CityOverview extends Component {
               </Typography>
             </DialogTitle>
             <DialogContent>
-              <Grid container direction="column" justify="center" alignItems="center" spacing={8} >
-                <Grid item xs={12} style={{width: "100%"}}>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+                spacing={8}
+              >
+                <Grid item xs={12} style={{ width: "100%" }}>
                   <Grid
                     container
                     direction="row"
@@ -193,7 +203,9 @@ class CityOverview extends Component {
                     </Grid>
                     <Grid item>
                       {/* TODO: Update placeholder once backend is connected */}
-                      <Typography variant={isWidthDown("sm") ? "h4" : "h3"}>San Francisco</Typography>
+                      <Typography variant={isWidthDown("sm") ? "h4" : "h3"}>
+                        San Francisco
+                      </Typography>
                     </Grid>
                     <Grid item xs>
                       <Divider />
@@ -201,9 +213,12 @@ class CityOverview extends Component {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} md={8}>
-                  <img src={images[0]} style={{objectFit: "cover", width: "100%"}} />
+                  <img
+                    src={images[0]}
+                    style={{ objectFit: "cover", width: "100%" }}
+                  />
                 </Grid>
-                <Grid item xs={12} style={{width: "100%"}}>
+                <Grid item xs={12} style={{ width: "100%" }}>
                   <Divider />
                 </Grid>
                 <Grid item xs={12}>
