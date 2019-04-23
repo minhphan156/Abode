@@ -219,14 +219,7 @@ class HistoryOverview extends Component {
               </Button>
               <br />
               <br />
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.button}
-              >
-                CANCEL
-              </Button>
-              <CancellationPrompt booking={checkInDateAndTime} />
+              <CancellationPrompt checkInTime={checkInDateAndTime} />
             </Grid>
           );
           break;

@@ -34,7 +34,7 @@ class CancellationPrompt extends Component {
     window.location.reload();
   }
   render() {
-    const { classes, width, booking } = this.props;
+    const { classes, width, checkInTime } = this.props;
     return (
       <div>
         <Button
@@ -55,7 +55,8 @@ class CancellationPrompt extends Component {
           onClose={this.handleClose}
         >
           <DialogTitle>Are you sure you want to cancel?</DialogTitle>
-          {new Date(booking).getTime() - new Date().getTime() > 172800000 ? (
+          {new Date(checkInTime).getTime() - new Date().getTime() >
+          172800000 ? (
             <DialogContent>
               <DialogContent>
                 Full refund provided for this cancellation.
@@ -70,7 +71,7 @@ class CancellationPrompt extends Component {
               <DialogContent>
                 Your cancellation will be{" "}
                 {(
-                  (new Date(booking).getTime() - new Date().getTime()) /
+                  (new Date(checkInTime).getTime() - new Date().getTime()) /
                   1000 /
                   60 /
                   60
