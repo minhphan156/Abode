@@ -139,6 +139,7 @@ class BookingInfo extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { classes, profile, width } = this.props;
     const { tempBookingData } = this.props.bookingData;
 
