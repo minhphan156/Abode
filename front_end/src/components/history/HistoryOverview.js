@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getCurrentProfile, getHistory } from "../../actions/profileActions";
-import { cancelReservation } from "../../actions/bookingActions";
+
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
@@ -22,12 +22,8 @@ import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogTitle from "@material-ui/core/DialogTitle";
-
 import "./history.css";
-import { DialogContent } from "@material-ui/core";
+import CancellationPrompt from "./CancellationPrompt";
 
 const styles = theme => ({
   table: {
@@ -69,36 +65,12 @@ const styles = theme => ({
 });
 
 class HistoryOverview extends Component {
-  constructor() {
-    super();
-    this.state = {
-      open: false,
-      checkInTime: null
-    };
-    this.onCancelClick = this.onCancelClick.bind(this);
-  }
-  handleClickOpen = checkIn => {
-    this.setState({ checkInTime: checkIn });
-    console.log(this.state.checkInTime);
-
-    console.log("AAAAAAAA");
-    this.setState({ open: true });
-  };
-  handleClose = () => {
-    this.setState({ open: false });
-  };
   componentDidMount() {
     this.props.getCurrentProfile();
     this.props.getHistory();
   }
   componentWillMount() {
     this.props.getHistory();
-  }
-  onCancelClick(bookingInfo) {
-    const cancelReservationData = { bookingID: bookingInfo };
-    this.props.cancelReservation(cancelReservationData);
-    this.setState({ open: false });
-    window.location.reload();
   }
 
   render() {
@@ -108,19 +80,17 @@ class HistoryOverview extends Component {
     let displayRegularChip;
     let dateOverview;
     let cancelAndChangeButtons;
-    let checkInDateAndTime;
 
     bookings = this.props.profile.history.map(booking => {
       displayChangeChip = null;
       displayRegularChip = null;
       dateOverview = null;
       cancelAndChangeButtons = null;
-      checkInDateAndTime = null;
 
       // if the booking was not changed, we display the regular CheckIn and Checkout Overview
       if (booking.changed === false) {
         displayChangeChip = null;
-        checkInDateAndTime = <p>{booking.check_in_date}HALP</p>;
+
         dateOverview = (
           <Table className="HistoryContainerDates">
             <TableRow>
@@ -158,7 +128,7 @@ class HistoryOverview extends Component {
       } else {
         // if the booking was changed, we display a different CheckIn and Checkout Overview, with all 4 dates
         // we also display the "Changed" chip
-        checkInDateAndTime = <p>{booking.check_in_date}HELPP</p>;
+
         displayChangeChip = (
           <Chip
             label="Changed"
@@ -234,6 +204,10 @@ class HistoryOverview extends Component {
               icon={<DoneIcon />}
             />
           );
+          let checkInDateAndTime = null;
+          if (booking.changed === false)
+            checkInDateAndTime = booking.check_in_date;
+          else checkInDateAndTime = booking.new_check_in_date;
           cancelAndChangeButtons = (
             <Grid>
               <Button
@@ -246,13 +220,13 @@ class HistoryOverview extends Component {
               <br />
               <br />
               <Button
-                onClick={() => this.handleClickOpen(booking.check_in_date)}
                 variant="outlined"
                 color="secondary"
                 className={classes.button}
               >
                 CANCEL
               </Button>
+              <CancellationPrompt booking={checkInDateAndTime} />
             </Grid>
           );
           break;
@@ -317,46 +291,7 @@ class HistoryOverview extends Component {
                 <Grid item className="chipsAndTotal">
                   <br />
                   {displayRegularChip}
-                  <Dialog
-                    fullWidth={
-                      width === "md" || width === "lg" || width === "sm"
-                        ? true
-                        : false
-                    }
-                    fullScreen={width === "xs" ? true : false}
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                  >
-                    <DialogTitle>Are you sure you want to cancel?</DialogTitle>
-                    {checkInDateAndTime}
-                    <DialogContent>
-                      Your cancellation will be {booking.check_in_date}
-                      {(
-                        (new Date(booking.check_in_date).getTime() -
-                          new Date().getTime()) /
-                        1000 /
-                        60 /
-                        60
-                      ).toFixed(1)}{" "}
-                      hours to check in and will NOT be refunded.
-                    </DialogContent>
-                    <p className="supportTextDialog">
-                      * Cancellation within 48 hours of check in time will not
-                      be refunded.
-                    </p>
 
-                    <DialogActions>
-                      <Button
-                        onClick={() => this.onCancelClick(booking.bookingID)}
-                        color="primary"
-                      >
-                        Yes
-                      </Button>
-                      <Button onClick={this.handleClose} color="primary">
-                        No
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
                   {displayChangeChip}
                 </Grid>
                 {/* We display a different layout for small screens */}
@@ -380,7 +315,7 @@ class HistoryOverview extends Component {
               </Grid>
               <Grid className="HistoryContainerDates">
                 <Grid item className="HistoryPageDates HistoryContainerDates">
-                  {dateOverview} {checkInDateAndTime}
+                  {dateOverview}
                 </Grid>
               </Grid>
               <Grid>
@@ -502,5 +437,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, getHistory, cancelReservation }
+  { getCurrentProfile, getHistory }
 )(withStyles(styles)(HistoryOverview));
