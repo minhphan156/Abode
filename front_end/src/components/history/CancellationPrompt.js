@@ -32,7 +32,7 @@ class CancellationPrompt extends Component {
     window.location.reload();
   }
   render() {
-    const { classes, width, checkInTime, id } = this.props;
+    const { classes, width, checkInTime, checkOutTime, id, hotel } = this.props;
     return (
       <div>
         <Button
@@ -53,36 +53,44 @@ class CancellationPrompt extends Component {
           onClose={this.handleClose}
         >
           <DialogTitle>Are you sure you want to cancel?</DialogTitle>
-          {new Date(checkInTime).getTime() - new Date().getTime() >
-          172800000 ? (
+          <DialogContent>
             <DialogContent>
-              <DialogContent>
-                Full refund provided for this cancellation.
-              </DialogContent>
-              <p className="supportTextDialog">
-                *Full refund only when cancellation is greater than 48 hours
-                before check in.
-              </p>
+              {hotel}
+              <br /> <br />
+              Check In: {checkInTime} <br /> <br />
+              Check Out: {checkOutTime} <br /> <br />
             </DialogContent>
-          ) : (
-            <DialogContent>
-              <DialogContent>
-                Your cancellation will be{" "}
-                {(
-                  (new Date(checkInTime).getTime() - new Date().getTime()) /
-                  1000 /
-                  60 /
-                  60
-                ).toFixed(1)}{" "}
-                hours to check in and will NOT be refunded.
-              </DialogContent>
-              <p className="supportTextDialog">
-                * Cancellation within 48 hours of check in time will not be
-                refunded.
-              </p>
-            </DialogContent>
-          )}
 
+            {new Date(checkInTime).getTime() - new Date().getTime() >
+            172800000 ? (
+              <div>
+                <DialogContent>
+                  This booking qualifies for a full refund if cancelled today.
+                </DialogContent>
+                <p className="supportTextDialog">
+                  *Full refund only when cancellation is greater than 48 hours
+                  before check in.
+                </p>
+              </div>
+            ) : (
+              <div>
+                <DialogContent>
+                  Your cancellation will be{" "}
+                  {(
+                    (new Date(checkInTime).getTime() - new Date().getTime()) /
+                    1000 /
+                    60 /
+                    60
+                  ).toFixed(1)}{" "}
+                  hours to check in and will NOT be refunded.
+                </DialogContent>
+                <p className="supportTextDialog">
+                  * Cancellation within 48 hours of check in time will not be
+                  refunded.
+                </p>
+              </div>
+            )}
+          </DialogContent>
           <DialogActions>
             <Button onClick={() => this.onCancelClick(id)} color="primary">
               Yes

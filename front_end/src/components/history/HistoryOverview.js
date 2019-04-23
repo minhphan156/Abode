@@ -205,9 +205,14 @@ class HistoryOverview extends Component {
             />
           );
           let checkInDateAndTime = null;
-          if (booking.changed === false)
+          let checkOutDateAndTime = null;
+          if (booking.changed === false) {
             checkInDateAndTime = booking.check_in_date;
-          else checkInDateAndTime = booking.new_check_in_date;
+            checkOutDateAndTime = booking.check_out_date;
+          } else {
+            checkInDateAndTime = booking.new_check_in_date;
+            checkOutDateAndTime = booking.new_check_out_date;
+          }
           cancelAndChangeButtons = (
             <Grid>
               <Button
@@ -221,7 +226,9 @@ class HistoryOverview extends Component {
               <br />
               <CancellationPrompt
                 checkInTime={checkInDateAndTime}
+                checkOutTime={checkOutDateAndTime}
                 id={booking.bookingID}
+                hotel={booking.hotelName}
               />
             </Grid>
           );
