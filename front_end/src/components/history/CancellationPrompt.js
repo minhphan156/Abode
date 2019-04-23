@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { cancelReservation } from "../../actions/bookingActions";
@@ -20,7 +19,6 @@ class CancellationPrompt extends Component {
     this.onCancelClick = this.onCancelClick.bind(this);
   }
   handleClickOpen = () => {
-    console.log("OPEN");
     this.setState({ open: true });
   };
   handleClose = () => {
@@ -34,7 +32,7 @@ class CancellationPrompt extends Component {
     window.location.reload();
   }
   render() {
-    const { classes, width, checkInTime } = this.props;
+    const { classes, width, checkInTime, id } = this.props;
     return (
       <div>
         <Button
@@ -86,10 +84,7 @@ class CancellationPrompt extends Component {
           )}
 
           <DialogActions>
-            <Button
-              //   onClick={() => this.onCancelClick(booking.bookingID)}
-              color="primary"
-            >
+            <Button onClick={() => this.onCancelClick(id)} color="primary">
               Yes
             </Button>
             <Button onClick={this.handleClose} color="primary">
@@ -102,9 +97,7 @@ class CancellationPrompt extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  bookingData: state.bookingData
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,

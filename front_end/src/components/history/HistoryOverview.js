@@ -219,7 +219,10 @@ class HistoryOverview extends Component {
               </Button>
               <br />
               <br />
-              <CancellationPrompt checkInTime={checkInDateAndTime} />
+              <CancellationPrompt
+                checkInTime={checkInDateAndTime}
+                id={booking.bookingID}
+              />
             </Grid>
           );
           break;
