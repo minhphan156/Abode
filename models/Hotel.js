@@ -6,7 +6,10 @@ const HotelSchema = new Schema({
         type:String,
         required:true
     },
-    street: {
+    link:{
+        type:String
+    },
+    address: {
         type:String,
         required:true
     },
@@ -14,7 +17,7 @@ const HotelSchema = new Schema({
         type:String,
         required:true
     },
-    img:{   //display in search result page
+    images:{   //display in search result page
         type:Array
     },
     price:{         
@@ -27,18 +30,18 @@ const HotelSchema = new Schema({
         kingPrice:{
             type:Number
         },
-        studioPrice:{
+        suitePrice:{
             type:Number
         }
     },
-    star_rating:{
+    star:{
         type:Number,
     },
-    guest_rating:{
+    ta_rating:{
         type:Number,
     },
-    guest_review:{
-        type:String
+    hdc_rating:{
+        type:Number,
     },
     roomTypeAndNumber:{    //types of rooms and how many rooms are avaliable
         single: [{
@@ -70,13 +73,23 @@ const HotelSchema = new Schema({
             }]
         }]
     },
+    top_spots:{
+        type:Array
+    },
     amenities: {
         type:Array
     },
     airports:{
         type:Array
     },
+    reviews:{
+        type:Array
+    },
     bookingStats:{
+        type:Number,
+        default:0
+    },
+    discount:{
         type:Number,
         default:0
     }

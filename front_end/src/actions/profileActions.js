@@ -1,10 +1,13 @@
 import axios from "axios";
+
 import {
   GET_PROFILE,
+  GET_PROFILE_INFO,
   GET_ERRORS,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  GET_HISTORY
 } from "./types";
 
 // Get current profile
@@ -39,10 +42,36 @@ export const createProfile = (profileData, history) => dispatch => {
     );
 };
 
-export const createDelivery = (profileData, history) => dispatch => {
+// Get User's Travel/Booking History
+export const getHistory = () => dispatch => {
+  dispatch(setProfileLoading());
   axios
-    .post("/api/profile", profileData)
-    .then(res => history.push("/receipt"))
+    .get("/api/booking/history")
+    .then(res =>
+      dispatch({
+        type: GET_HISTORY,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Get User's Rewards Points
+export const getProfileInfo = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get("/api/users/current")
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE_INFO,
+        payload: res.data
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

@@ -26,6 +26,14 @@ const BookingSchema = new Schema({
         type:Number,
         required:true
     },
+    numOfNights:{
+        type:Number,
+        required:true
+    },
+    nightlyRate:{
+        type:Number,
+        required:true
+    },
     reservedDate:{
         type:Date,
         default: Date.now
@@ -34,11 +42,49 @@ const BookingSchema = new Schema({
         type:Number,
         default:0
     },
+    changed:{
+        type:Boolean,
+        default:false
+    },
+    new_check_in_date: {
+        type:Date,
+    },
+    new_check_out_date: {
+        type:Date,
+    },
     subtotal:{
         type:Number,
         required:true
     },
     discount:{
+        type:Number,
+        default:0
+    },
+    taxesAndFees:{
+        type:Number,
+        required:true
+    },
+    total:{
+        type:Number,
+        required:true
+    },
+    rewardPointsUsed:{
+        type:Number,
+        default:0
+    },
+    rewardPointsEarned:{
+        type:Number,
+        default:0
+    },
+    rewardDiscount:{
+        type:Number,
+        default:0
+    },
+    review:{
+        type:String,
+        default:""
+    },
+    starReview:{
         type:Number,
         default:0
     }

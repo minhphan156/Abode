@@ -1,0 +1,266 @@
+@media screen and (max-width: 395px) {
+  .smallText {
+    font-size: 12px;
+  }
+}
+
+/* X-Small Screen */
+@media screen and (max-width: 600px) {
+  .PaymentTitle {
+    color: #0c4b78;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .PaymentSmallTitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: #808080;
+  }
+
+  .BookingInfoTitle {
+    color: #0c4b78;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .paymentContainers {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+  .paymentHeaderContainers {
+    margin-left: 5%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+
+  .bookingInfoContainer {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 4%;
+  }
+
+  .infoButton {
+    position: relative;
+    left: -10px;
+    bottom: 1px;
+  }
+
+  .payment-btn {
+    background-color: #0c4b78;
+    color: white;
+    margin: 4px 2px;
+    border: none;
+    width: 140px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 400;
+    height: 44px;
+  }
+
+  .smallTextDialog {
+    font-size: 13px;
+  }
+}
+
+/* Small Screen */
+@media screen and (min-width: 600px) and (max-width: 960px) {
+  .PaymentTitle {
+    color: #0c4b78;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .PaymentSmallTitle {
+    font-size: 23px;
+    font-weight: 500;
+    color: #808080;
+  }
+
+  .BookingInfoTitle {
+    color: #0c4b78;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .paymentContainers {
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+  .paymentHeaderContainers {
+    margin-left: 7%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+  .bookingInfoContainer {
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-top: 4%;
+  }
+  .infoButton {
+    position: relative;
+    left: -10px;
+    bottom: 1px;
+  }
+
+  .payment-btn {
+    background-color: #0c4b78;
+    color: white;
+    margin: 4px 2px;
+    border: none;
+    width: 140px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 400;
+    height: 44px;
+  }
+}
+
+/* Medium Screen (Landscape Phones, Tablets) */
+@media screen and (min-width: 960px) and (max-width: 1200px) {
+  .PaymentTitle {
+    color: #0c4b78;
+    font-size: 31px;
+    font-weight: 800;
+  }
+
+  .PaymentSmallTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #808080;
+  }
+
+  .BookingInfoTitle {
+    color: #0c4b78;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .infoButton {
+    position: relative;
+    left: -12px;
+    bottom: 1px;
+  }
+  .rewardsCheckbox {
+    position: relative;
+    left: -5px;
+    bottom: 1px;
+  }
+  .paymentContainers {
+    width: 91%;
+    margin-left: 40px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+  .paymentHeaderContainers {
+    margin-left: 40px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+
+  .bookingInfoContainer {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 4%;
+  }
+
+  .payment-btn {
+    background-color: #0c4b78;
+    color: white;
+    margin: 4px 2px;
+    border: none;
+    width: 140px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 400;
+    height: 44px;
+    position: relative;
+    top: 16px;
+  }
+}
+
+/* Large Screen (Laptops, Desktop monitors) */
+@media screen and (min-width: 1200px) {
+  .PaymentTitle {
+    color: #0c4b78;
+    font-size: 34px;
+    font-weight: 900;
+  }
+
+  .PaymentSmallTitle {
+    font-size: 26px;
+    font-weight: 600;
+    color: #808080;
+  }
+
+  .BookingInfoTitle {
+    color: #0c4b78;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .infoButton {
+    position: relative;
+    left: -10px;
+    bottom: 1px;
+  }
+  .rewardsCheckbox {
+    position: relative;
+    left: -5px;
+    bottom: 1px;
+  }
+  .paymentContainers {
+    width: 91%;
+    margin-left: 50px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+  .paymentHeaderContainers {
+    margin-left: 50px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
+
+  .bookingInfoContainer {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 4%;
+  }
+
+  .payment-btn {
+    background-color: #0c4b78;
+    color: white;
+    margin: 4px 2px;
+    border: none;
+    width: 140px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 400;
+    height: 44px;
+    position: relative;
+    top: 23px;
+  }
+}
+
+/* Payment Page */
+.payment-row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin-left: 16%;
+}
+
+.payment-btn:hover {
+  background-color: #2c76a9;
+}
+
+.supportTextDialog {
+  margin-left: 24px;
+  font-size: 12px;
+}
