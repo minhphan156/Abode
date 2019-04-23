@@ -52,7 +52,9 @@ class CancellationPrompt extends Component {
           open={this.state.open}
           onClose={this.handleClose}
         >
-          <DialogTitle>Are you sure you want to cancel?</DialogTitle>
+          <DialogTitle>
+            Are you sure you want to cancel the following reservation?
+          </DialogTitle>
           <DialogContent>
             <DialogContent>
               {hotel}
