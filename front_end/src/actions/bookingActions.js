@@ -2,7 +2,8 @@ import {
   SET_BOOKING,
   SAVE_BOOKING,
   CLEAR_BOOKING,
-  CHANGE_RESERVATION
+  CHANGE_RESERVATION,
+  CANCEL_RESERVATION
 } from "./types";
 import axios from "axios";
 
@@ -52,6 +53,18 @@ export const changeReservation = booking => dispatch => {
     .then(res => {
       dispatch({
         type: CHANGE_RESERVATION,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+export const cancelReservation = booking => dispatch => {
+  axios
+    .post("/api/booking/cancel", booking)
+    .then(res => {
+      dispatch({
+        type: CANCEL_RESERVATION,
         payload: res.data
       });
     })

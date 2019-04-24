@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getCurrentProfile, getHistory } from "../../actions/profileActions";
 import { changeReservation } from "../../actions/bookingActions";
+
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
@@ -27,6 +28,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import "./history.css";
+import CancellationPrompt from "./CancellationPrompt";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -142,6 +144,7 @@ class HistoryOverview extends Component {
       // if the booking was not changed, we display the regular CheckIn and Checkout Overview
       if (booking.changed === false) {
         displayChangeChip = null;
+
         dateOverview = (
           <Table className="HistoryContainerDates">
             <TableRow>
@@ -179,6 +182,7 @@ class HistoryOverview extends Component {
       } else {
         // if the booking was changed, we display a different CheckIn and Checkout Overview, with all 4 dates
         // we also display the "Changed" chip
+
         displayChangeChip = (
           <Chip
             label="Changed"
@@ -254,6 +258,15 @@ class HistoryOverview extends Component {
               icon={<DoneIcon />}
             />
           );
+          let checkInDateAndTime = null;
+          let checkOutDateAndTime = null;
+          if (booking.changed === false) {
+            checkInDateAndTime = booking.check_in_date;
+            checkOutDateAndTime = booking.check_out_date;
+          } else {
+            checkInDateAndTime = booking.new_check_in_date;
+            checkOutDateAndTime = booking.new_check_out_date;
+          }
           cancelAndChangeButtons = (
             <Grid>
               <Button
@@ -266,13 +279,12 @@ class HistoryOverview extends Component {
               </Button>
               <br />
               <br />
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.button}
-              >
-                CANCEL
-              </Button>
+              <CancellationPrompt
+                checkInTime={checkInDateAndTime}
+                checkOutTime={checkOutDateAndTime}
+                id={booking.bookingID}
+                hotel={booking.hotelName}
+              />
             </Grid>
           );
           break;
@@ -404,6 +416,7 @@ class HistoryOverview extends Component {
                     </div>
                     <div class="center" />
                   </Dialog>
+
                   {displayChangeChip}
                 </Grid>
                 {/* We display a different layout for small screens */}
@@ -425,7 +438,6 @@ class HistoryOverview extends Component {
                   {displayChangeChip}
                 </Grid>
               </Grid>
-
               <Grid className="HistoryContainerDates">
                 <Grid item className="HistoryPageDates HistoryContainerDates">
                   {dateOverview}
