@@ -1,7 +1,5 @@
-// TODO: - BACKEND INTEGRATION WITH ALL MISSING INFO
-// - REWARDS POINTS OVERVIEW
+// TODO:
 // - IF CHANGE, SHOW OLD/NEW DATES
-// - SPINNER AT BEGINNING
 
 import React, { Component } from "react";
 import { withStyles, withTheme, withWidth } from "@material-ui/core/styles";
@@ -67,22 +65,21 @@ const styles = theme => ({
 });
 
 class HistoryOverview extends Component {
-  // componentDidMount() {
-  //   this.props.getCurrentProfile();
-  //   this.props.getHistory();
-  // }
   componentWillMount() {
     this.props.getHistory();
     this.props.getProfileInfo();
   }
 
   render() {
+    const { history, profile_info } = this.props.profile;
+
     const { classes, profile, width } = this.props;
     let bookings;
     let displayChangeChip;
     let displayRegularChip;
     let arrayOfButtons;
-    let rewardsPointsContainer;
+    let rewardsPointsContainer = null;
+    let expansionData;
 
     if (profile.loading) {
       bookings = (
@@ -97,39 +94,42 @@ class HistoryOverview extends Component {
           </Grid>
         </Grid>
       );
-      rewardsPointsContainer = null;
     } else {
       // console.log(profile.profile_info);
-      // rewardsPointsContainer = (
-      //   <div className="rewardsPointsBalance">
-      //     Reward Points: {profile.profile_info.rewardPoints}
-      //   </div>
-      // );
-
-      bookings = this.props.profile.history.map(booking => {
+      if (profile_info != null) {
+        rewardsPointsContainer = (
+          <div>
+            <div className="rewardsPointsBalance">Reward Points Balance:</div>
+            <div className="rewardsPointsBalance">
+              {profile_info.rewardPoints ? profile_info.rewardPoints : 0}
+            </div>
+            <br />
+          </div>
+        );
+      }
+      bookings = history.map(booking => {
         displayChangeChip = null;
-
         displayRegularChip = null;
         arrayOfButtons = null;
+        expansionData = null;
 
-        let expansionData = {
-          bookingId: booking.bookingID,
-          Firstname: "MISSING",
-          Lastname: "MISSING",
-          checkIn: booking.check_in_date,
-          checkOut: booking.check_out_date,
-          roomType: booking.typeOfRoom,
-          nightlyRate: "MISSING",
-          numRooms: booking.numOfRoom,
-          numberOfNights: "MISSING",
-          subtotal: booking.subtotal,
-          discounts: "MISSING", // booking.discount,
-          rewardsDiscount: "MISSING",
-          taxesAndFees: "MISSING",
-          total: booking.total,
-          rewardPointsEarned: "MISSING", //booking.rewardPointsEarned,
-          rewardPointsUsed: "MISSING" //booking.rewardPointsUsed
-        };
+        var checkInDateAndTime = new Date(booking.check_in_date);
+        var checkOutDateAndTime = new Date(booking.check_out_date);
+        var checkInDateAndTimeNEW = new Date(booking.new_check_in_date);
+        var checkOutDateAndTimeNEW = new Date(booking.new_check_out_date);
+        var month = new Array(12);
+        month[0] = "January";
+        month[1] = "February";
+        month[2] = "March";
+        month[3] = "April";
+        month[4] = "May";
+        month[5] = "June";
+        month[6] = "July";
+        month[7] = "August";
+        month[8] = "September";
+        month[9] = "October";
+        month[10] = "November";
+        month[11] = "December";
 
         // if the booking was changed, we  display the "Changed" chip
         if (booking.changed === true) {
@@ -141,16 +141,34 @@ class HistoryOverview extends Component {
               icon={<SwapHorizIcon />}
             />
           );
+          checkInDateAndTime = checkInDateAndTimeNEW;
+          checkOutDateAndTime = checkOutDateAndTimeNEW;
         }
 
-        let checkInDateAndTime = null;
-        let checkOutDateAndTime = null;
-        if (booking.changed === false) {
-          checkInDateAndTime = booking.check_in_date;
-          checkOutDateAndTime = booking.check_out_date;
-        } else {
-          checkInDateAndTime = booking.new_check_in_date;
-          checkOutDateAndTime = booking.new_check_out_date;
+        var discountToPass = booking.discount;
+        var rewardsDiscountToPass = booking.rewardDiscount;
+        if (booking.price != undefined) {
+          expansionData = {
+            bookingId: booking.bookingID,
+            name: booking.name,
+            checkIn: checkInDateAndTime,
+            checkOut: checkOutDateAndTime,
+            roomType: booking.typeOfRoom,
+            nightlyRate: (booking.price + 0).toFixed(2),
+            numRooms: booking.numOfRoom,
+            numberOfNights: booking.numOfNights,
+            subtotal: (booking.subtotal + 0).toFixed(2),
+            discounts: discountToPass
+              ? discountToPass.toFixed(2)
+              : discountToPass,
+            rewardsDiscount: rewardsDiscountToPass
+              ? rewardsDiscountToPass.toFixed(2)
+              : rewardsDiscountToPass,
+            taxesAndFees: (booking.taxesAndFees + 0).toFixed(2),
+            total: (booking.total + 0).toFixed(2),
+            rewardPointsEarned: booking.rewardPointsEarned,
+            rewardPointsUsed: booking.rewardPointsUsed
+          };
         }
 
         // here we determine which chip to display. There are four different statuses that each correspond to a chip
@@ -299,7 +317,8 @@ class HistoryOverview extends Component {
                   </Grid>
                   <br />
                   <Grid item className="HistoryPageTotal HistoryContainerDates">
-                    May 2019
+                    {month[checkInDateAndTime.getUTCMonth()]}{" "}
+                    {checkInDateAndTime.getUTCFullYear()}
                   </Grid>
                 </Grid>
                 <Grid>
@@ -318,7 +337,7 @@ class HistoryOverview extends Component {
     }
 
     return (
-      <div>
+      <div className="HistoryContainer">
         <Grid
           container
           className="HistoryBoxes"
@@ -331,10 +350,7 @@ class HistoryOverview extends Component {
             Your Travel History
           </Grid>
         </Grid>
-        <div className="rewardsPointsBalance">
-          Reward Points: {profile.profile_info.rewardPoints}
-          {/* //profile_info.firstName} */}
-        </div>
+        <div className="rewardsPointsBalance">{rewardsPointsContainer}</div>
         {bookings}
         <br /> <br />
       </div>

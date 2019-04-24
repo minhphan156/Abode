@@ -27,20 +27,14 @@ class HistoryExpansionTable extends Component {
     let PoliciesRows;
     let BillRows;
 
-    if (bookingData.checkIn) {
-      // console.log(bookingData);
+    if (bookingData) {
       ReservationRows = [
         createData("Confirmation Number", bookingData.bookingId),
-        createData(
-          "Guest Name",
-          bookingData.Firstname + " " + bookingData.Lastname
-        ),
-        createData("Arrival Date", bookingData.checkIn),
-        createData("Departure Date", bookingData.checkOut),
+        createData("Guest Name", bookingData.name),
+        createData("Arrival Date", bookingData.checkIn.toDateString()),
+        createData("Departure Date", bookingData.checkOut.toDateString()),
         createData("Room Type", bookingData.roomType)
       ];
-
-      // {tempBookingData.checkIn.format("dddd, MMMM Do YYYY")}
 
       PoliciesRows = [
         createData("Check-In Time", "3:00 PM"),
@@ -52,25 +46,26 @@ class HistoryExpansionTable extends Component {
       ];
 
       BillRows = [
-        createData("Nightly Rate", "$" + bookingData.nightlyRate), //.toFixed(2)),
+        createData("Nightly Rate", "$" + bookingData.nightlyRate),
         createData("Number of Rooms", bookingData.numRooms),
         createData("Number of Nights", bookingData.numberOfNights),
-        createData("Subtotal", "$" + bookingData.subtotal), //.toFixed(2)),
+        createData("Subtotal", "$" + bookingData.subtotal),
         createData(
           "Discounts",
           bookingData.discounts
-            ? "$" + bookingData.discounts //.toFixed(2)
+            ? "$" + bookingData.discounts
             : bookingData.discounts
         ),
         createData(
           "Rewards Discount",
-          bookingData.rewardsDiscount
-            ? "$" + bookingData.rewardsDiscount //.toFixed(2)
-            : bookingData.rewardsDiscount
+          bookingData.rewardsDiscount ? "$" + bookingData.rewardsDiscount : null
         ),
-        createData("Taxes and Fees", "$" + bookingData.taxesAndFees), //.toFixed(2)),
-        createData("Total", "$" + bookingData.total), //.toFixed(2)),
-        createData("Reward Points Earned", bookingData.rewardPointsEarned)
+        createData("Taxes and Fees", "$" + bookingData.taxesAndFees),
+        createData("Total", "$" + bookingData.total),
+        createData(
+          "Reward Points Earned (*added after check-in)",
+          bookingData.rewardPointsEarned
+        )
       ];
 
       return (

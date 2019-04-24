@@ -59,12 +59,11 @@ class CancellationPrompt extends Component {
             <DialogContent>
               {hotel}
               <br /> <br />
-              Check In: {checkInTime} <br /> <br />
-              Check Out: {checkOutTime} <br /> <br />
+              Check In: {checkInTime.toDateString()} <br /> <br />
+              Check Out: {checkOutTime.toDateString()} <br /> <br />
             </DialogContent>
 
-            {new Date(checkInTime).getTime() - new Date().getTime() >
-            172800000 ? (
+            {checkInTime.getTime() - new Date().getTime() > 172800000 ? (
               <div>
                 <DialogContent>
                   This booking qualifies for a full refund if cancelled today.
@@ -79,7 +78,7 @@ class CancellationPrompt extends Component {
                 <DialogContent>
                   Your cancellation will be{" "}
                   {(
-                    (new Date(checkInTime).getTime() - new Date().getTime()) /
+                    (checkInTime.getTime() - new Date().getTime()) /
                     1000 /
                     60 /
                     60
