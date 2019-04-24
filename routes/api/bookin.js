@@ -8,9 +8,33 @@ const Customer = require("../../models/customer");
 const City = require("../../models/city")
 const User = require("../../models/User");
 
+const confirmEmail = require('../../email/confirmationEmail')
+
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
 const checkAvalibity = require("../../validation/checkAvailableHotels");
+
+// @route POST api/booking/review
+// @desc Add a review and comment for a specific hotel
+router.post("/review", (req,res) => {
+    /*
+    REQUEST SCHEMA
+
+    {
+        comment: String,
+        starRating: int, // between 1 and 5 inclusive
+        bookingID: String
+    }
+    */
+
+    Booking.findByIdAndUpdate(req.body.bookingID, {review: req.body.comment, starReview: req.body.starRating}, (err, booking) =>  {
+        if(err) return res.status(400).json(err);
+
+        // Sending the new Booking object with review and starReview added
+        return res.status(200).send(booking);
+    })
+
+});
 
 // @route GET /api/booking/history
 // @desc History page
@@ -71,7 +95,26 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                             });
 
                             // Check if we've finished packing ALL the history objects
-                            if (historyPack.length === bookings.length) return res.status(200).send(historyPack);
+                            if (historyPack.length === bookings.length) {
+
+                                historyPack.sort((a, b) => {
+                                    if (b.new_check_in_date && a.new_check_in_date) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date && a.new_check_in_date === undefined) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date === undefined && a.new_check_in_date) {
+                                        return (new Date(a.check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    return (new Date(a.check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                })
+
+                                return res.status(200).send(historyPack);
+                            }
 
                         });
 
@@ -142,6 +185,7 @@ router.get("/guest-history", (req, res) => {
         });
 
     });
+
 });
 
 // @route POST /api/booking/confirm
@@ -247,6 +291,10 @@ router.post("/confirm",(req,res)=>{
                             discount:discount,
                             rewardPointsUsed:rewardPointsUsed,
                             rewardPointsEarned:rewardPointsEarned,
+                            taxesAndFees:req.body.taxesAndFees,
+                            numOfNights:req.body.numberOfNights,
+                            rewardDiscount:req.body.rewardDiscount,
+                            nightlyRate: roomPrice
                         })
                         // reward points for logged user
                         // save new booking
@@ -267,6 +315,7 @@ router.post("/confirm",(req,res)=>{
                                 }else{
                                     destinationImg = city[0].imgMain
                                 }
+                                confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
@@ -291,16 +340,15 @@ router.post("/confirm",(req,res)=>{
                                     numberOfNights:req.body.numberOfNights,
                                     total:req.body.total,
                                     taxesAndFees:req.body.taxesAndFees,
-                                    rewardDiscount:req.body.rewardPointsUsed,
                                     code:200
                                 })
-                            }).catch(err=>res.send({message:"cannot find city",code:404}))
+                            })
                         })
                     }
                     // if the customer already have one reservation for the same checkin date, return error message  
                     else{
                         res.send({message:"doubleBooking",
-                                code:409})
+                                code:403})
                     }
                 })
             }
@@ -362,7 +410,7 @@ router.post('/changeReservation',(req,res)=>{
                     reservations.new_check_in_date = date.checkin;
                     reservations.new_check_out_date = date.checkout;
                     if(newPrice){
-                        reservations.new_price = newPrice
+                        reservations.price = newPrice
                     }
                     hotel.save().catch(err=>res.status(400).json(err));
                     reservations.save().catch(err=>res.status(400).json({
@@ -391,7 +439,7 @@ router.post('/changeReservation',(req,res)=>{
 // @desc cancel a reservation 
 // @access public
 router.post('/cancel', (req,res)=>{
-    Booking.findById(req.query.bookingID)
+    Booking.findById(req.body.bookingID)
     .then(booking => {
         if (booking.status == 0){
             booking.status = 3;
@@ -417,7 +465,7 @@ router.post('/cancel', (req,res)=>{
                 }
                 for(let i = 0;i<arr.length;i++){
                     for(let j = 0;j<arr[i].dates.length;j++){
-                        if(arr[i].dates[j].bookingID === req.query.bookingID){
+                        if(arr[i].dates[j].bookingID === req.body.bookingID){
                             arr[i].dates.splice(j,1)
                         }
                     }

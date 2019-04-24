@@ -4,7 +4,7 @@
 // - SPINNER AT BEGINNING
 
 import React, { Component } from "react";
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles, withTheme, withWidth } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getProfileInfo, getHistory } from "../../actions/profileActions";
@@ -25,6 +25,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import HistoryExpansionTable from "./HistoryExpansionTable";
 
 import "./history.css";
+import CancellationPrompt from "./CancellationPrompt";
 
 const styles = theme => ({
   table: {
@@ -76,7 +77,7 @@ class HistoryOverview extends Component {
   }
 
   render() {
-    const { classes, profile } = this.props;
+    const { classes, profile, width } = this.props;
     let bookings;
     let displayChangeChip;
     let displayRegularChip;
@@ -107,6 +108,7 @@ class HistoryOverview extends Component {
 
       bookings = this.props.profile.history.map(booking => {
         displayChangeChip = null;
+
         displayRegularChip = null;
         arrayOfButtons = null;
 
@@ -141,6 +143,16 @@ class HistoryOverview extends Component {
           );
         }
 
+        let checkInDateAndTime = null;
+        let checkOutDateAndTime = null;
+        if (booking.changed === false) {
+          checkInDateAndTime = booking.check_in_date;
+          checkOutDateAndTime = booking.check_out_date;
+        } else {
+          checkInDateAndTime = booking.new_check_in_date;
+          checkOutDateAndTime = booking.new_check_out_date;
+        }
+
         // here we determine which chip to display. There are four different statuses that each correspond to a chip
         //0 = trip comin up
         //1 = user has checked in
@@ -158,9 +170,28 @@ class HistoryOverview extends Component {
             );
             arrayOfButtons = (
               <Grid className="buttonContainer">
-                <Button>CHANGE</Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                >
+                  REVIEW
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                >
+                  CHANGE
+                </Button>
                 <br />
-                <Button>CANCEL</Button>
+                <br />
+                <CancellationPrompt
+                  checkInTime={checkInDateAndTime}
+                  checkOutTime={checkOutDateAndTime}
+                  id={booking.bookingID}
+                  hotel={booking.hotelName}
+                />
               </Grid>
             );
             break;
@@ -318,7 +349,8 @@ HistoryOverview.propTypes = {
 };
 const mapStateToProps = state => ({
   profile: state.profile,
-  history: state.history
+  history: state.history,
+  bookingData: state.bookingData
 });
 
 export default connect(
