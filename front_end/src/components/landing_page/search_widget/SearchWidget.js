@@ -83,24 +83,25 @@ class SearchWidget extends Component {
     }
 
     //Check if the destination is given or not.
-    if (this.state.destinationName === "") {
+    if (!this.state.destinationName) {
       this.setState({ showDesAlert: true });
     } else {
       this.setState({ showDesAlert: false });
     }
     //Check if the checkIn and checkOut date are given or not.
-    if (this.state.checkIn === "" || this.state.checkOut === "") {
+    if (!this.state.checkIn || !this.state.checkOut) {
       this.setState({ showDateAlert: true });
     } else {
       this.setState({ showDateAlert: false });
     }
 
     if (
-      this.state.destinationName !== "" &&
-      this.state.checkIn !== "" &&
-      this.state.checkOut !== ""
+      this.state.destinationName &&
+      (this.state.checkIn && this.state.checkOut)
     ) {
       this.props.history.push("/searchResultOverview");
+      this.props.saveQuery(newQuery);
+      this.props.submitQuery(newQuery);
     }
 
     this.props.saveQuery(newQuery);
@@ -130,6 +131,13 @@ class SearchWidget extends Component {
 
       return (
         <div>
+          <Alert
+            style={{ marginLeft: "25%", marginRight: "45%" }}
+            variant="danger"
+            show={this.state.showDateAlert}
+          >
+            Please provide dates
+          </Alert>
           <Grid
             container
             className="hotelDealCalendarContainer"
@@ -156,15 +164,13 @@ class SearchWidget extends Component {
               </Paper>
             </Grid>
             <Grid item>
-              <Link to="/searchResultOverview">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.onSearchClick}
-                >
-                  Search
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.onSearchClick}
+              >
+                Search
+              </Button>
             </Grid>
           </Grid>
         </div>
