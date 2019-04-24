@@ -95,7 +95,7 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                             });
 
                             // Check if we've finished packing ALL the history objects
-                            if (historyPack.length === bookings.length) {
+                            if (historyPack.length === bookings.length) return res.status(200).send(historyPack);
 
                                 historyPack.sort((a, b) => {
                                     if (b.new_check_in_date && a.new_check_in_date) {
