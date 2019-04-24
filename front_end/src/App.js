@@ -25,8 +25,6 @@ import Confirmation from "./components/booking/Confirmation";
 
 import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
-//import HistorySingleOrder from "./components/history/HistorySingleOrder";
-import HistorySearch from "./components/history-search/HistorySeach";
 import AboutUs from "./components/about_page/AboutUs";
 import PaymentPage from "./components/payment/PaymentPage";
 import { Elements, StripeProvider } from "react-stripe-elements";
@@ -76,7 +74,6 @@ class App extends Component {
             </StripeProvider>
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
-            <Route exact path="/history-search" component={HistorySearch}/>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             {/*<Route exact path="/indiv-hotel/:hotelID" component={IndivHotel} />*/}
