@@ -865,7 +865,7 @@ class IndivHotel extends Component {
               </div>
             </div>
 
-            <div className="row-xl-12 row-lg-12 row-sm-12 row-12" style={{margin:'auto'}}>
+            <div className="row-xl-12 row-lg-12 row-sm-12 row-12" style={{margin:'auto', zIndex: 10}}>
             <section id="table1">
               <table
                 class="table table-bordered"
