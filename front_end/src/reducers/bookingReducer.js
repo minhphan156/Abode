@@ -1,4 +1,9 @@
-import { SAVE_BOOKING, SET_BOOKING, CLEAR_BOOKING } from "../actions/types";
+import {
+  SAVE_BOOKING,
+  SET_BOOKING,
+  CLEAR_BOOKING,
+  CANCEL_RESERVATION
+} from "../actions/types";
 
 const initialState = {
   tempBookingData: null,
@@ -19,7 +24,8 @@ export default function(state = initialState, action) {
       };
     case CLEAR_BOOKING:
       return { ...state, bookingConfirmationData: {} };
-
+    case CANCEL_RESERVATION:
+      
     default:
       return state;
   }
