@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getIndividualHotelResult} from "../../actions/searchResultActions";
+import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { submitQuery, saveQuery } from "../../actions/searchActions";
-
+import { clearData } from "../../actions/searchResultActions";
 // Additional libraries
 import ReactStars from "react-stars";
 
@@ -107,6 +107,10 @@ class searchResultOverview extends Component {
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };
+
+  componentWillUnmount() {
+    this.props.clearData();
+  }
 
   // Used to reset <FiltersWindow /> upon pressing 'Search'
   handleResetSearchOverview = () => {
@@ -656,5 +660,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getIndividualHotelResult, submitQuery, saveQuery }
+  { getIndividualHotelResult, submitQuery, saveQuery, clearData }
 )(withStyles(styles)(withWidth()(searchResultOverview)));
