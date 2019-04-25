@@ -41,6 +41,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 const checkout = require('./email/checkout');
+const http = require("http")
 
 setInterval(function(){
   http.get("http://tranquil-gorge-27669.herokuapp.com/");
@@ -54,9 +55,9 @@ function automation(){
         if(booking[i].status === 0){
           welcomeEmail(booking[i]);
         }
-        // if(booking[i].status === 1){
-        //   checkout(booking[i])
-        // }
+        if(booking[i].status === 1){
+          checkout(booking[i])
+        }
       }
     }).catch(err=>console.log(err))
 }
