@@ -13,6 +13,7 @@ const profile = require("./routes/api/profile");
 const hotel = require("./routes/api/hotels");
 const book = require("./routes/api/bookin");
 const landing = require("./routes/api/landing");
+const cityView = require("./routes/api/cityView");
 // get some functionalities from express library like get() function
 const app = express();
 
@@ -48,6 +49,8 @@ app.use("/api/profile", profile);
 app.use("/api/hotel", hotel);
 // landing page w/ random cities
 app.use("/api/landing", landing);
+// city overview page
+app.use("/api/cityView", cityView);
 
 // this will append to home route 'localHost:5000/api/booking/{what ever book.js dictate}'
 app.use("/api/booking", book);
