@@ -7,6 +7,7 @@ import { Button } from "@material-ui/core/";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { DialogContent } from "@material-ui/core";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -65,7 +66,7 @@ class ChangeReservation extends Component {
     this.setState({ newCheckOut: endingDate });
   }
   render() {
-    const { classes, width, id } = this.props;
+    const { classes, width, checkInTime, checkOutTime, id, hotel } = this.props;
     return (
       <div>
         <Button
@@ -100,6 +101,12 @@ class ChangeReservation extends Component {
 
           <div class="centerChangeReservation">
             <DialogTitle>Select dates to change your reservation.</DialogTitle>
+            <DialogContent>
+              {hotel}
+              <br /> <br />
+              Current Check In: {checkInTime.toDateString()} <br /> <br />
+              Current Check Out: {checkOutTime.toDateString()} <br /> <br />
+            </DialogContent>
             <p>
               Select the new start and end dates for changing your reservation.
             </p>

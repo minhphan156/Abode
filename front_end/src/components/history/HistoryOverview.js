@@ -199,7 +199,12 @@ class HistoryOverview extends Component {
                 </Button>
                 <br />
                 <br />
-                <ChangeReservation id={booking.bookingID} />
+                <ChangeReservation
+                  checkInTime={checkInDateAndTime}
+                  checkOutTime={checkOutDateAndTime}
+                  id={booking.bookingID}
+                  hotel={booking.hotelName}
+                />
                 <br />
                 <CancellationPrompt
                   checkInTime={checkInDateAndTime}
