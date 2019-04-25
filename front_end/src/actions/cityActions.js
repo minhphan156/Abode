@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { weatherMapAPIKey } from "./apiKeys/keys";
+
 // Type imports
 import {
   GET_CITY,
@@ -9,16 +11,11 @@ import {
   CITY_ERRORS
 } from "./types";
 
-// API key imports
-import { weatherMapAPIKey } from "../apiKeys/keys";
 
 // Fetches city data using the provided city id
 export let fetchCityById = cityId => dispatch => {
   setLoadingCity();
-
-  // TODO: Uncomment and fill in missing code below once backend API is implemented then remove prototype code
-  /*
-  axios.get(BACKEND API CODE)
+  axios.get(`/api/city/${cityId}`)
   .then(res => {
     dispatch({
       type: GET_CITY,
@@ -32,14 +29,6 @@ export let fetchCityById = cityId => dispatch => {
       payload: err.data
     });
   })
-  */
-
-  /* Beginning of prototype code */
-  dispatch({
-    type: GET_CITY,
-    payload: null
-  });
-  /* End of prototype code */
 };
 
 // Fetches weather data for the city using the provided city information
