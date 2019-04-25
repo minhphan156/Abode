@@ -44,7 +44,7 @@ const checkout = require('./email/checkout');
 const http = require("http")
 
 setInterval(function(){
-  http.get("http://tranquil-gorge-27669.herokuapp.com/");
+  http.get("http://www.abode.city/");
 },300000)
 
 const Booking = require('./models/booking')
