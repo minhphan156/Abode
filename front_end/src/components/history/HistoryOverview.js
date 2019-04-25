@@ -6,7 +6,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getProfileInfo, getHistory } from "../../actions/profileActions";
-import { changeReservation } from "../../actions/bookingActions";
 
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
@@ -24,20 +23,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import HistoryExpansionTable from "./HistoryExpansionTable";
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogTitle from "@material-ui/core/DialogTitle";
-
 import "./history.css";
 import CancellationPrompt from "./CancellationPrompt";
-
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
-import CalendarPicker from "../landing_page/search_widget/CalendarPicker";
+import ChangeReservation from "./ChangeReservation";
 
 const styles = theme => ({
   table: {
@@ -75,55 +63,13 @@ const styles = theme => ({
   },
   backgroundStyle: {
     background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
-  },
-  appBar: {
-    position: "relative"
-  },
-  flex: {
-    flex: 1
   }
 });
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
-
 class HistoryOverview extends Component {
-  constructor() {
-    super();
-    this.state = {
-      openChangeDialog: false,
-      newCheckIn: null,
-      newCheckOut: null,
-      newPrice: null
-    };
-    this.onChangeClick = this.onChangeClick.bind(this);
-    this.onHandleDate = this.onHandleDate.bind(this);
-  }
-  handleChangeClickOpen = () => {
-    this.setState({ openChangeDialog: true });
-  };
-  handleChangeClose = () => {
-    this.setState({ openChangeDialog: false });
-  };
-
   componentWillMount() {
     this.props.getHistory();
     this.props.getProfileInfo();
-  }
-  onChangeClick(bookingID) {
-    const changeReservationData = {
-      bookingID: bookingID,
-      newCheckIn: this.state.newCheckIn,
-      newCheckOut: this.state.newCheckOut
-    };
-    this.props.changeReservation(changeReservationData);
-    this.setState({ openChangeDialog: false });
-    window.location.reload();
-  }
-  onHandleDate(startingDate, endingDate) {
-    this.setState({ newCheckIn: startingDate });
-    this.setState({ newCheckOut: endingDate });
   }
 
   render() {
@@ -251,14 +197,7 @@ class HistoryOverview extends Component {
                 >
                   REVIEW
                 </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.handleChangeClickOpen}
-                >
-                  CHANGE
-                </Button>
+                <ChangeReservation id={booking.bookingID} />
                 <br />
                 <br />
                 <CancellationPrompt
@@ -359,73 +298,6 @@ class HistoryOverview extends Component {
                       justify="space-between"
                     >
                       <Grid item>{displayRegularChip}</Grid>
-                      <Dialog
-                        fullScreen
-                        open={this.state.openChangeDialog}
-                        onClose={this.handleChangeClose}
-                        TransitionComponent={Transition}
-                      >
-                        <AppBar className={classes.appBar}>
-                          <Toolbar>
-                            <IconButton
-                              color="inherit"
-                              onClick={this.handleChangeClose}
-                              aria-label="Close"
-                            >
-                              <CloseIcon />
-                            </IconButton>
-
-                            <Typography
-                              variant="h6"
-                              color="inherit"
-                              className={classes.flex}
-                            >
-                              Change Reservation
-                            </Typography>
-                          </Toolbar>
-                        </AppBar>
-
-                        <div class="center">
-                          <DialogTitle>
-                            Select dates to change your reservation.
-                          </DialogTitle>
-                          <p>
-                            Select the new start and end dates for changing your
-                            reservation.
-                          </p>
-                          <CalendarPicker
-                            class="center"
-                            checkIn={this.state.newCheckIn}
-                            checkOut={this.state.newCheckOut}
-                            onHandleDate={this.onHandleDate}
-                          />
-                          <DialogActions>
-                            {this.state.newCheckIn == null ||
-                            this.state.newCheckOut == null ? null : (
-                              <Button
-                                onClick={() =>
-                                  this.onChangeClick(booking.bookingID)
-                                }
-                                variant="outlined"
-                                color="primary"
-                                className={classes.button}
-                              >
-                                Confirm Change
-                              </Button>
-                            )}
-
-                            <Button
-                              onClick={this.handleChangeClose}
-                              variant="outlined"
-                              color="secondary"
-                              className={classes.button}
-                            >
-                              Cancel Change
-                            </Button>
-                          </DialogActions>
-                        </div>
-                        <div class="center" />
-                      </Dialog>
                       <Grid item className="HistoryPageTotalSmall">
                         Total: $ {(booking.total + 0).toFixed(2)}
                       </Grid>
@@ -495,5 +367,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getHistory, getProfileInfo, changeReservation }
+  { getHistory, getProfileInfo }
 )(withStyles(styles)(HistoryOverview));
