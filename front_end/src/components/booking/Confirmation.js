@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import withWidth from "@material-ui/core/withWidth";
 import { isWidthDown } from "@material-ui/core/withWidth";
+import moment from "moment";
 
 let id = 0;
 function createData(firstCol, secondCol) {
@@ -18,6 +19,9 @@ function createData(firstCol, secondCol) {
 
 function Confirmation(props) {
   const bookingData = props.bookingData.bookingConfirmationData;
+
+  const checkInDate = moment(bookingData.checkIn).format("L");
+  const checkOutDate = moment(bookingData.checkOut).format("L");
 
   if (bookingData.bookingId === "") {
     props.history.push("/");
@@ -31,8 +35,8 @@ function Confirmation(props) {
         "Guest Name",
         bookingData.Firstname + " " + bookingData.Lastname
       ),
-      createData("Arrival Date", bookingData.checkIn),
-      createData("Departure Date", bookingData.checkOut),
+      createData("Arrival Date", checkInDate),
+      createData("Departure Date", checkOutDate),
       createData("Room Type", bookingData.roomType)
     ];
 
