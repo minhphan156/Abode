@@ -48,7 +48,7 @@ setInterval(function(){
 },300000)
 
 const Booking = require('./models/booking')
-const welcomeEmail = require('./email/welcomEmail')
+const welcomeEmail = require('./email/welcomeEmail')
 function automation(){
     Booking.find({$or:[{status:0},{status:1},{status:2}]}).populate("customerID").populate("hotelID").then(booking => {
       for(let i = 0; i< booking.length;i++){

@@ -13,6 +13,7 @@ const cities = require('./cities.json')
     }
   });
 module.exports = function welcomeEmail(booking){
+  console.log(booking)
   let arr = cities.name
   let des = null
   var city = new RegExp(booking.hotelID.city,'i')
