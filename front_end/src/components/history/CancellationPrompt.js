@@ -18,10 +18,14 @@ class CancellationPrompt extends Component {
     };
     this.onCancelClick = this.onCancelClick.bind(this);
   }
-  handleClickOpen = () => {
+  handleClickOpen = event => {
+    event.stopPropagation();
+
     this.setState({ open: true });
   };
-  handleClose = () => {
+  handleClose = event => {
+    event.stopPropagation();
+
     this.setState({ open: false });
   };
 

@@ -2,7 +2,7 @@
 // - IF CHANGE, SHOW OLD/NEW DATES
 
 import React, { Component } from "react";
-import { withStyles, withTheme, withWidth } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getProfileInfo, getHistory } from "../../actions/profileActions";
