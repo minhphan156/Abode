@@ -3,14 +3,15 @@ import {
   GET_PROFILE_INFO,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  GET_HISTORY
+  GET_HISTORY,
+  PUBLISH_REVIEW
 } from "../actions/types";
 
 const initialState = {
   profile: null,
   profile_info: null,
   loading: false,
-  history: [{}]
+  history: []
 };
 
 export default function(state = initialState, action) {
@@ -43,6 +44,18 @@ export default function(state = initialState, action) {
         ...state,
         profile: null
       };
+    case PUBLISH_REVIEW:
+      for (let i = 0; i < state.history.length; i++) {
+        if (action.payload.bookingID === state.history[i].bookingID) {
+          state.history[i].starReview = action.payload.starReview;
+          state.history[i].comment = action.payload.comment;
+          return {
+            ...state,
+            shoppingCart: state.history
+          };
+        }
+      }
+
     default:
       return state;
   }
