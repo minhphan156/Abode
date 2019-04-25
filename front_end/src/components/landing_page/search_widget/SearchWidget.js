@@ -11,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import Alert from "react-bootstrap/Alert";
 import { withRouter } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import { submitQuery, saveQuery } from "../../../actions/searchActions";
 
 const styles = theme => ({
@@ -22,7 +21,14 @@ const styles = theme => ({
   },
   paper: {
     textAlign: "center",
-    height: 70
+    height: 70,
+    position: "relative"
+  },
+  alert: {
+    textAlign: "center",
+    padding: ".1rem .1rem ",
+    width: "60%",
+    margin: 10
   }
 });
 
@@ -132,12 +138,14 @@ class SearchWidget extends Component {
       return (
         <div>
           <Alert
-            style={{ marginLeft: "25%", marginRight: "45%" }}
+            className={classes.alert}
             variant="danger"
             show={this.state.showDateAlert}
+            style={{ marginLeft: "auto", marginRight: "auto", width: "55%" }}
           >
             Please provide dates
           </Alert>
+
           <Grid
             container
             className="hotelDealCalendarContainer"
@@ -178,22 +186,27 @@ class SearchWidget extends Component {
     } else {
       return (
         <div className={classes.root}>
-          <Alert
-            style={{ marginLeft: "17%" }}
-            variant="danger"
-            show={this.state.showDesAlert}
-          >
-            Please provide a destination
-          </Alert>
-          <Alert
-            style={{ marginLeft: "18%" }}
-            variant="danger"
-            show={this.state.showDateAlert}
-          >
-            Please provide dates
-          </Alert>
           <Grid container justify="center" alignItems="center" spacing={8}>
             <Grid item xs={12} sm={10} md={6} lg={4}>
+              <Alert
+                className={classes.alert}
+                variant="danger"
+                show={this.state.showDesAlert}
+              >
+                Please provide a destination
+              </Alert>
+            </Grid>
+            <Grid item xs={12} sm={10} md={6} lg={4}>
+              <Alert
+                className={classes.alert}
+                variant="danger"
+                show={this.state.showDateAlert}
+              >
+                Please provide dates
+              </Alert>
+            </Grid>
+
+            <Grid item xs={12} sm={10} md={6} lg={4} style={{ margin: 1 }}>
               <Paper className={classes.paper}>
                 <Destination
                   destinationName={this.state.destinationName}
@@ -201,7 +214,7 @@ class SearchWidget extends Component {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={10} md={6} lg={4}>
+            <Grid item xs={12} sm={10} md={6} lg={4} style={{ margin: 1 }}>
               <Paper className={classes.paper}>
                 <CalendarPicker
                   checkIn={this.state.checkIn}
