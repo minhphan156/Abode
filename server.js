@@ -6,6 +6,7 @@ const logger = require("winston");
 
 // use to connect with mongoDB
 const mongoose = require("mongoose");
+const City = require("./models/city")
 
 // api routes
 const users = require("./routes/api/users");
@@ -71,3 +72,10 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
 // NOTE: At this point , go to terminal and do $ npm run server
+
+//Clearing Booking count every week
+
+setInterval(function (){
+  City.updateMany({},
+    {$set: {'bookings': 0}})
+}, 604800000)

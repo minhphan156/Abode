@@ -309,10 +309,6 @@ router.post("/confirm",(req,res)=>{
                             newDoc.save().catch(err=>res.send(err))
                             // find the related city for hotel
                             var city = new RegExp(destinationName,'i')
-                            // City.findOneAndUpdate(
-                            //     {'name': city},
-                            //     {$inc: {'bookings': 1}}
-                            // )
                             City.find({name:city}).then(city=>{
                                 if(city.length === 0) {
                                     destinationImg = null
