@@ -1,14 +1,16 @@
 const nodemailer = require('nodemailer');
 const moment = require('moment-timezone');
 const User = require('../models/User')
+const keys = require('../config/keys');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user:"AbodeDevelopmentTeam@gmail.com",
-    pass:"(P&7,EQzH^h4?#^R"
-  }
-});
+  // email
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: keys.email,
+      pass: keys.password
+    }
+  });
 
 
 module.exports = function checkout(booking){
@@ -20,7 +22,7 @@ module.exports = function checkout(booking){
         var html = `<body>
         <div>
         <div class="topBar" style="background-image:linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9);;overflow: hidden; height:100px;"> 
-        <img src="./logo.png" alt="Smiley face" height="100" width="100" style="display: block;margin-left: auto;margin-right: auto;" />
+        <img src="cid:logo" alt="Smiley face" height="100" width="100" style="display: block;margin-left: auto;margin-right: auto;" />
         </div>
         <div style="  margin: auto;  width: 50%;  width:500px">
         <h1>Thank you for staying at${booking.hotelID.name}</h1>
