@@ -105,7 +105,7 @@ function Confirmation(props) {
         <Grid item xs={isWidthDown("xs", width) ? 11 : 5}>
           <CardMedia
             style={{ width: "100%", height: 200 }}
-            image={bookingData.destinationImg} // *********need to be updated with real PICTURES
+            image={bookingData.destinationImg}
           />
         </Grid>
 
@@ -116,7 +116,7 @@ function Confirmation(props) {
                 ? { width: "100%", height: 200, marginTop: 20 }
                 : { width: "100%", height: 200 }
             }
-            image={bookingData.hotelImg} // *********need to be updated with real PICTURES
+            image={bookingData.hotelImg}
           />
         </Grid>
         <Grid item xs={10}>
