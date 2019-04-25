@@ -31,14 +31,6 @@
     display: none;
   }
 
-  .HistoryPageDates {
-    top: 17px;
-    position: relative;
-    font-size: 14px;
-    font-weight: 300;
-    color: black;
-  }
-
   .HistoryPageText2 {
     font-size: 12px;
     font-weight: 300;
@@ -60,10 +52,6 @@
     align-content: center;
     align-items: center;
     align-self: center;
-  }
-
-  .HistoryContainerExpand {
-    margin-bottom: 40px;
   }
 }
 
@@ -90,14 +78,6 @@
     color: black;
   }
 
-  .HistoryPageDates {
-    top: 17px;
-    position: relative;
-    font-size: 12px;
-    font-weight: 300;
-    color: black;
-  }
-
   .chipsAndTotal {
     display: none;
   }
@@ -116,6 +96,10 @@
 
   .HistoryContainerDates {
     width: 230px;
+  }
+
+  .HistoryContainer {
+    min-height: 600px;
   }
 }
 
@@ -136,16 +120,9 @@
   .HistoryPageTotal {
     top: 27px;
     position: relative;
+    text-align: right;
     font-size: 16px;
     font-weight: 600;
-    color: black;
-  }
-
-  .HistoryPageDates {
-    top: 17px;
-    position: relative;
-    font-size: 16px;
-    font-weight: 300;
     color: black;
   }
 
@@ -169,6 +146,10 @@
   .HistoryContainerDates {
     width: 280px;
   }
+
+  .HistoryContainer {
+    min-height: 600px;
+  }
 }
 
 /* Large Screen (Laptops, Desktop monitors) */
@@ -188,16 +169,9 @@
   .HistoryPageTotal {
     top: 27px;
     position: relative;
+    text-align: right;
     font-size: 18px;
     font-weight: 600;
-    color: black;
-  }
-
-  .HistoryPageDates {
-    top: 17px;
-    position: relative;
-    font-size: 18px;
-    font-weight: 300;
     color: black;
   }
 
@@ -221,6 +195,14 @@
   .HistoryContainerDates {
     width: 340px;
   }
+
+  .buttonContainer {
+    width: 150px;
+  }
+
+  .HistoryContainer {
+    min-height: 600px;
+  }
 }
 
 .HistoryBoxes {
@@ -241,4 +223,13 @@
   margin: auto;
   width: 60%;
   padding: 10px;
+}
+
+.rewardsPointsBalance {
+  color: #3d4e96;
+  text-align: right;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  margin-right: 25px;
 }
