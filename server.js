@@ -74,7 +74,6 @@ app.listen(port, () => console.log(`Server running on port ${port}`));
 // NOTE: At this point , go to terminal and do $ npm run server
 
 //Clearing Booking count every week
-
 setInterval(function (){
   City.updateMany({},
     {$set: {'bookings': 0}})
