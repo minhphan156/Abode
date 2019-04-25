@@ -71,7 +71,7 @@ class ChangeReservation extends Component {
         <Button
           onClick={this.handleChangeClickOpen}
           variant="outlined"
-          color="primary"
+          color="secondary"
           className={classes.button}
         >
           CHANGE
