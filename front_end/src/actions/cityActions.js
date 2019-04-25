@@ -11,17 +11,37 @@ import {
   CITY_ERRORS
 } from "./types";
 
-
 // Fetches city data using the provided city id
 export let fetchCityById = cityId => dispatch => {
   setLoadingCity();
-  axios.get(`/api/city/${cityId}`)
+  axios.get(`/api/cityView/city/${cityId}`)
   .then(res => {
     dispatch({
       type: GET_CITY,
       payload: res.data
     });
-    fetchCityWeather(res.data.name);
+    let cityName = res.data.name.slice(0, res.data.name.indexOf(',')).toLowerCase().trim();
+    return (cityName => dispatch => {
+      dispatch({
+        type: LOADING_CITY_WEATHER
+      });
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&APPID=${weatherMapAPIKey}&units=imperial`
+        )
+        .then(res => {
+          dispatch({
+            type: GET_CITY_WEATHER,
+            payload: res.data
+          });
+        })
+        .catch(err => {
+          dispatch({
+            type: CITY_ERRORS,
+            payload: err.data
+          });
+        });
+    });
   })
   .catch(err => {
     dispatch({
@@ -32,8 +52,8 @@ export let fetchCityById = cityId => dispatch => {
 };
 
 // Fetches weather data for the city using the provided city information
-// TODO: Remove export once backend is implemented
-export let fetchCityWeather = cityName => dispatch => {
+let fetchCityWeather = cityName => dispatch => {
+  console.log("Fetch city weather is called");
   setCityWeatherLoading();
   axios
     .get(

@@ -14,7 +14,16 @@ import {
 let styles = theme => {};
 
 let CityDescription = props => {
-  let { classes, city } = props;
+  let { city } = props;
+
+  let attractionsMarkup = city.cityData.landmarkNames.map(landmark => {
+    return (
+      <li>
+        <Typography variant="body">{landmark}</Typography>
+      </li>
+    );
+  });
+
   return (
     <Grid container direction="row" justify="center" spacing={16}>
       <Grid item xs={12} md={6} style={{ width: "100%" }}>
@@ -60,23 +69,8 @@ let CityDescription = props => {
             <Divider />
           </Grid>
           <Grid item xs={12}>
-            {/* TODO: Update placeholder once backend is connected */}
             <ul>
-              <li>
-                <Typography variant="body">Golden Gate Bridge</Typography>
-              </li>
-              <li>
-                <Typography variant="body">Alcatraz Island</Typography>
-              </li>
-              <li>
-                <Typography variant="body">Fisherman's Wharf</Typography>
-              </li>
-              <li>
-                <Typography variant="body">Golden Gate Park</Typography>
-              </li>
-              <li>
-                <Typography variant="body">Pier 39</Typography>
-              </li>
+              {attractionsMarkup}
             </ul>
           </Grid>
         </Grid>

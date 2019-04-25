@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 // Redux-Action workflow imports
 import { connect } from "react-redux";
-import { fetchCityById, fetchCityWeather } from "../../actions/cityActions";
+import { fetchCityById } from "../../actions/cityActions";
 
 // Child component imports
 import ImageCarousel from "./ImageCarousel";
@@ -74,8 +74,6 @@ class CityOverview extends Component {
   // Fetches needed city data upon mounting
   componentDidMount = () => {
     this.props.fetchCityById(this.props.match.params.cityId);
-    // TODO: Update the following code once backend is completed
-    this.props.fetchCityWeather("San Francisco".replace(/ /g, "+"));
     if (this.props.city.cityData != null) {
       this.setState({
         images: this.props.city.images
@@ -115,7 +113,7 @@ class CityOverview extends Component {
     let { images, openDialog } = this.state;
     let { classes, city, width } = this.props;
 
-    if (city.fetchingCity == false) {
+    if (city.fetchingCity == false && city.cityData != null) {
       return (
         <div className={classes.pageMargins}>
           <Grid
@@ -138,8 +136,7 @@ class CityOverview extends Component {
                       <Divider />
                     </Grid>
                     <Grid item>
-                      {/* TODO: Update placeholder once backend is connected */}
-                      <Typography variant="h3">San Francisco</Typography>
+                      <Typography variant="h3">{city.cityData.name}</Typography>
                     </Grid>
                     <Grid item xs>
                       <Divider />
@@ -202,9 +199,8 @@ class CityOverview extends Component {
                       <Divider />
                     </Grid>
                     <Grid item>
-                      {/* TODO: Update placeholder once backend is connected */}
                       <Typography variant={isWidthDown("sm") ? "h4" : "h3"}>
-                        San Francisco
+                        {city.cityData.name}
                       </Typography>
                     </Grid>
                     <Grid item xs>
@@ -225,7 +221,7 @@ class CityOverview extends Component {
                   {/* TODO: Update placedholder once backend is connected  */}
                   <SearchWidget
                     dealPage={true}
-                    dealDestination={"San Francisco"}
+                    dealDestination={city.cityData.name}
                   />
                 </Grid>
               </Grid>
@@ -274,5 +270,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchCityById, fetchCityWeather }
+  { fetchCityById }
 )(withWidth()(withStyles(styles)(CityOverview)));
