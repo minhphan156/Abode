@@ -95,7 +95,26 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                             });
 
                             // Check if we've finished packing ALL the history objects
-                            if (historyPack.length === bookings.length) return res.status(200).send(historyPack);
+                            if (historyPack.length === bookings.length) {
+
+                                historyPack.sort((a, b) => {
+                                    if (b.new_check_in_date && a.new_check_in_date) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date && a.new_check_in_date === undefined) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date === undefined && a.new_check_in_date) {
+                                        return (new Date(a.check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    return (new Date(a.check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                })
+
+                                return res.status(200).send(historyPack);
+                            }
 
                         });
 
@@ -420,7 +439,7 @@ router.post('/changeReservation',(req,res)=>{
 // @desc cancel a reservation 
 // @access public
 router.post('/cancel', (req,res)=>{
-    Booking.findById(req.query.bookingID)
+    Booking.findById(req.body.bookingID)
     .then(booking => {
         if (booking.status == 0){
             booking.status = 3;
@@ -446,7 +465,7 @@ router.post('/cancel', (req,res)=>{
                 }
                 for(let i = 0;i<arr.length;i++){
                     for(let j = 0;j<arr[i].dates.length;j++){
-                        if(arr[i].dates[j].bookingID === req.query.bookingID){
+                        if(arr[i].dates[j].bookingID === req.body.bookingID){
                             arr[i].dates.splice(j,1)
                         }
                     }

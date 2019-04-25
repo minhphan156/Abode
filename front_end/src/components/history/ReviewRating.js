@@ -32,20 +32,31 @@ class ReviewRating extends Component {
     this.handleReviewInput = this.handleReviewInput.bind(this);
     this.handleCancelReview = this.handleCancelReview.bind(this);
   }
+  componentWillMount() {
+    this.setState({
+      starReview: this.props.booking.starReview,
+      comment: this.props.booking.comment
+    });
+  }
+  handleCancelReview(event) {
+    event.stopPropagation();
 
-  handleCancelReview() {
     this.setState({ open: false });
   }
 
-  handleOpenReviewForm() {
+  handleOpenReviewForm(event) {
+    event.stopPropagation();
+
     this.setState({ open: true });
   }
 
-  handleCloseReviewForm(bookingID) {
+  handleCloseReviewForm(event, bookingID) {
+    event.stopPropagation();
+
     this.setState({ open: false });
     const reviewData = {
       bookingID: bookingID,
-      starReview: this.state.starReview,
+      starRating: this.state.starReview,
       comment: this.state.comment
     };
     this.props.submitReview(reviewData);
@@ -120,7 +131,9 @@ class ReviewRating extends Component {
               Cancel
             </Button>
             <Button
-              onClick={() => this.handleCloseReviewForm(booking.bookingID)}
+              onClick={event =>
+                this.handleCloseReviewForm(event, booking.bookingID)
+              }
               color="primary"
             >
               Post
