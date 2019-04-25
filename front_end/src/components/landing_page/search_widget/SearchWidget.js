@@ -28,7 +28,8 @@ const styles = theme => ({
     textAlign: "center",
     padding: ".1rem .1rem ",
     width: "60%",
-    margin: 10
+    margin: 10,
+    right: 15
   }
 });
 
@@ -138,10 +139,16 @@ class SearchWidget extends Component {
       return (
         <div>
           <Alert
-            className={classes.alert}
             variant="danger"
             show={this.state.showDateAlert}
-            style={{ marginLeft: "auto", marginRight: "auto", width: "55%" }}
+            style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "55%",
+              marginBottom: "10px",
+              textAlign: "center",
+              padding: ".1rem .1rem "
+            }}
           >
             Please provide dates
           </Alert>
