@@ -6,6 +6,7 @@ const logger = require("winston");
 
 // use to connect with mongoDB
 const mongoose = require("mongoose");
+const City = require("./models/city")
 
 // api routes
 const users = require("./routes/api/users");
@@ -40,6 +41,29 @@ app.use(passport.initialize());
 // bring passport library to config/passport.js
 require("./config/passport")(passport);
 
+const checkout = require('./email/checkout');
+const http = require("http")
+
+setInterval(function(){
+  http.get("http://www.abode.city/");
+},300000)
+
+const Booking = require('./models/booking')
+const welcomeEmail = require('./email/welcomeEmail')
+function automation(){
+    Booking.find({$or:[{status:0},{status:1},{status:2}]}).populate("customerID").populate("hotelID").then(booking => {
+      for(let i = 0; i< booking.length;i++){
+        if(booking[i].status === 0){
+          welcomeEmail(booking[i]);
+        }
+        if(booking[i].status === 1){
+          checkout(booking[i])
+        }
+      }
+    }).catch(err=>console.log(err))
+}
+setInterval(automation, 43200000);
+
 // Use Routes
 // this will append to home route 'localHost:5000/api/users/{what ever users.js dictate}'
 app.use("/api/users", users);
@@ -54,6 +78,12 @@ app.use("/api/cityView", cityView);
 
 // this will append to home route 'localHost:5000/api/booking/{what ever book.js dictate}'
 app.use("/api/booking", book);
+
+//Clearing Booking count every week
+setInterval(function (){
+  City.updateMany({},
+    {$set: {'bookings': 0}})
+}, 604800000)
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {

@@ -1,5 +1,3 @@
-// TODO: MAKE EVERYTHING LOOK NICE AND INTEGRATE ALL THE STUFF FROM BACKEND
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles, withWidth } from "@material-ui/core";
@@ -50,7 +48,6 @@ class BookingInfo extends Component {
       open: false,
       checkedA: false,
       actualRewardsDiscount: 0,
-      rewardsPoints: this.props.auth.user.rewardPoints,
       possibleRewardsDiscount: 0
     };
   }
@@ -139,15 +136,21 @@ class BookingInfo extends Component {
   }
 
   render() {
-    const { classes, profile, width } = this.props;
+    const { classes, width } = this.props;
     const { tempBookingData } = this.props.bookingData;
+    const { profile_info } = this.props.profile;
 
     let rewardsContainer = null;
     let discountContainer = null;
-
+    let rewardsPointsBalance = null;
+    if (profile_info != null) {
+      rewardsPointsBalance = profile_info.rewardPoints
+        ? profile_info.rewardPoints.toFixed(0)
+        : 0;
+    }
     /// The following is all about rewards calculations and rewards container
     this.state.possibleRewardsDiscount = this.calculatePossibleRewardsDiscountInDollar(
-      this.state.rewardsPoints,
+      rewardsPointsBalance,
       tempBookingData.subtotal,
       tempBookingData.discounts
     );
@@ -410,7 +413,7 @@ class BookingInfo extends Component {
                     }}
                     className={classes.tableNoBorder}
                   >
-                    {this.state.rewardsPoints} pts.
+                    {rewardsPointsBalance} pts.
                   </TableCell>
                 </TableRow>
 
@@ -484,7 +487,8 @@ BookingInfo.PropTypes = {
 
 const mapStateToProps = state => ({
   bookingData: state.bookingData,
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
 export default connect(
