@@ -110,9 +110,6 @@ class SearchWidget extends Component {
       this.props.saveQuery(newQuery);
       this.props.submitQuery(newQuery);
     }
-
-    this.props.saveQuery(newQuery);
-    this.props.submitQuery(newQuery);
   }
 
   onHandleDate(startingDate, endingDate) {
