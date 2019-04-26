@@ -271,6 +271,7 @@ class Payment extends Component {
     const { tempBookingData } = this.props.bookingData;
     const { errors } = this.state;
     let errorSnackBar = null;
+    const { profile_info } = this.props.profile;
 
     // errorSnackBar is displayed in two cases: double booking on same email, or rooms are not available anymore
     if (this.state.doubleBookingError === true) {
@@ -375,6 +376,21 @@ class Payment extends Component {
       return <div>{roomContainer}</div>;
     });
 
+    let emailField = null;
+    if (this.props.auth.isAuthenticated) {
+      this.state.email = profile_info.email;
+    } else {
+      emailField = (
+        <TextFieldGroup
+          placeholder="Email"
+          name="email"
+          value={this.state.email}
+          onChange={this.onChange}
+          error={this.state.inputErrors.email}
+        />
+      );
+    }
+
     return (
       <React.Fragment>
         {errorSnackBar}
@@ -415,13 +431,7 @@ class Payment extends Component {
                   <h4 style={{ marginTop: "1%" }}>Booking Information:</h4>
                   <hr />
 
-                  <TextFieldGroup
-                    placeholder="Email"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    error={this.state.inputErrors.email}
-                  />
+                  {emailField}
                   <TextFieldGroup
                     placeholder="Address"
                     name="address1"
@@ -519,7 +529,8 @@ const mapStateToProps = state => ({
   bookingData: state.bookingData,
   individualHotelData: state.individualHotelData,
   errors: state.errors,
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
 export default withRouter(
