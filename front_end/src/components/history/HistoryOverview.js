@@ -24,7 +24,7 @@ import HistoryExpansionTable from "./HistoryExpansionTable";
 import "./history.css";
 import CancellationPrompt from "./CancellationPrompt";
 import ChangeReservation from "./ChangeReservation";
-
+import { Elements, StripeProvider } from "react-stripe-elements";
 const styles = {
   table: {
     maxWidth: 330,
@@ -246,13 +246,17 @@ class HistoryOverview extends Component {
                 </Button>
                 <br />
                 <br />
-                <ChangeReservation
-                  checkInTime={checkInDateAndTime}
-                  checkOutTime={checkOutDateAndTime}
-                  id={booking.bookingID}
-                  hotel={booking.hotelName}
-                  expansionData={expansionData}
-                />
+                <StripeProvider apiKey="pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx">
+                  <Elements>
+                    <ChangeReservation
+                      checkInTime={checkInDateAndTime}
+                      checkOutTime={checkOutDateAndTime}
+                      id={booking.bookingID}
+                      hotel={booking.hotelName}
+                      expansionData={expansionData}
+                    />
+                  </Elements>
+                </StripeProvider>
                 <br />
                 <CancellationPrompt
                   checkInTime={checkInDateAndTime}

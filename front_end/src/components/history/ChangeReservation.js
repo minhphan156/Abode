@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { changeReservation } from "../../actions/bookingActions";
 import { Button } from "@material-ui/core/";
 import { CardElement, injectStripe } from "react-stripe-elements";
-import { Elements, StripeProvider } from "react-stripe-elements";
+
 import CardContent from "@material-ui/core/CardContent";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { withRouter } from "react-router-dom";
@@ -105,110 +105,99 @@ class ChangeReservation extends Component {
       expansionData
     } = this.props;
     return (
-      <StripeProvider apiKey="pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx">
-        <Elements>
-          <div>
-            <Button
-              onClick={this.handleChangeClickOpen}
-              variant="outlined"
-              color="secondary"
-              className={classes.button}
-            >
-              CHANGE
-            </Button>
-            <Dialog
-              fullScreen
-              open={this.state.openChangeDialog}
-              onClose={this.handleChangeClose}
-              TransitionComponent={Transition}
-            >
-              <AppBar className={classes.appBar}>
-                <Toolbar>
-                  <IconButton
-                    color="inherit"
-                    onClick={this.handleChangeClose}
-                    aria-label="Close"
-                  >
-                    <CloseIcon />
-                  </IconButton>
+      <div>
+        <Button
+          onClick={this.handleChangeClickOpen}
+          variant="outlined"
+          color="secondary"
+          className={classes.button}
+        >
+          CHANGE
+        </Button>
+        <Dialog
+          fullScreen
+          open={this.state.openChangeDialog}
+          onClose={this.handleChangeClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                onClick={this.handleChangeClose}
+                aria-label="Close"
+              >
+                <CloseIcon />
+              </IconButton>
 
-                  <Typography
-                    variant="h6"
-                    color="inherit"
-                    className={classes.flex}
-                  >
-                    Change Reservation
-                  </Typography>
-                </Toolbar>
-              </AppBar>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
+                Change Reservation
+              </Typography>
+            </Toolbar>
+          </AppBar>
 
-              <div class="centerChangeReservation">
-                <DialogTitle>
-                  Select dates to change your reservation.
-                </DialogTitle>
-                <DialogContent>
-                  {hotel}
-                  <br /> <br />
-                  Current Check In: {checkInTime.toDateString()} <br /> <br />
-                  Current Check Out: {checkOutTime.toDateString()} <br /> <br />
-                </DialogContent>
-                <p>
-                  Select the new start and end dates for changing your
-                  reservation.
-                </p>
-                <CalendarPicker
-                  class="centerChangeReservation"
-                  checkIn={this.state.newCheckIn}
-                  checkOut={this.state.newCheckOut}
-                  onHandleDate={this.onHandleDate}
-                />
+          <div class="centerChangeReservation">
+            <DialogTitle>Select dates to change your reservation.</DialogTitle>
+            <DialogContent>
+              {hotel}
+              <br /> <br />
+              Current Check In: {checkInTime.toDateString()} <br /> <br />
+              Current Check Out: {checkOutTime.toDateString()} <br /> <br />
+            </DialogContent>
+            <p>
+              Select the new start and end dates for changing your reservation.
+            </p>
+            <CalendarPicker
+              class="centerChangeReservation"
+              checkIn={this.state.newCheckIn}
+              checkOut={this.state.newCheckOut}
+              onHandleDate={this.onHandleDate}
+            />
 
-                <CardContent>
-                  <h4 style={{ marginTop: "1%" }}>Credit Card Details</h4>
-                  <hr />
-                  <TextFieldGroup
-                    placeholder="Name on Card"
-                    name="nameOnCard"
-                    // value={this.state.nameOnCard}
-                    // onChange={this.onChange}
-                    // error={this.state.inputErrors.nameCC}
-                  />
+            <CardContent>
+              <h4 style={{ marginTop: "1%" }}>Credit Card Details</h4>
+              <hr />
+              <TextFieldGroup
+                placeholder="Name on Card"
+                name="nameOnCard"
+                // value={this.state.nameOnCard}
+                // onChange={this.onChange}
+                // error={this.state.inputErrors.nameCC}
+              />
 
-                  <CardElement
-                    name="paymentField"
-                    onChange={this.stripeValidate}
-                    id="sample-input"
-                  />
-                </CardContent>
+              <CardElement
+                name="paymentField"
+                onChange={this.stripeValidate}
+                id="sample-input"
+              />
+            </CardContent>
 
-                <DialogActions>
-                  {this.state.newCheckIn == null ||
-                  this.state.newCheckOut == null ? null : (
-                    <Button
-                      onClick={() => this.onChangeClick(id, expansionData)}
-                      variant="outlined"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Confirm Change
-                    </Button>
-                  )}
+            <DialogActions>
+              {this.state.newCheckIn == null ||
+              this.state.newCheckOut == null ? null : (
+                <Button
+                  onClick={() => this.onChangeClick(id, expansionData)}
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Confirm Change
+                </Button>
+              )}
 
-                  <Button
-                    onClick={this.handleChangeClose}
-                    variant="outlined"
-                    color="secondary"
-                    className={classes.button}
-                  >
-                    Cancel Change
-                  </Button>
-                </DialogActions>
-              </div>
-              <div class="centerChangeReservation" />
-            </Dialog>
+              <Button
+                onClick={this.handleChangeClose}
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
+              >
+                Cancel Change
+              </Button>
+            </DialogActions>
           </div>
-        </Elements>
-      </StripeProvider>
+          <div class="centerChangeReservation" />
+        </Dialog>
+      </div>
     );
   }
 }
