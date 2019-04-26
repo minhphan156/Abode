@@ -140,40 +140,6 @@ router.get('/individual', async (req,res) => {
     let doubleRoomAvailability = true;
     let kingRoomAvailablity = true;
     let studioRoomAvailability = true;
-    Hotel.findById(req.query.id)
-    .then(hotel => {
-        if ((typeof date.checkin !== 'undefined') && (typeof date.checkout !== 'undefined')){
-            if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0 || hotel.star >= 4) 
-                singleRoomAvailability = false;
-            if(checkAvailability(hotel.roomTypeAndNumber.double, date, numberOfRooms, "PlaceHolder").length == 0)
-                doubleRoomAvailability = false;
-            if(checkAvailability(hotel.roomTypeAndNumber.king, date, numberOfRooms, "PlaceHolder").length == 0)
-                kingRoomAvailablity = false;
-            if(checkAvailability(hotel.roomTypeAndNumber.studio, date, numberOfRooms, "PlaceHolder").length == 0 || hotel.star <= 3)
-                studioRoomAvailability = false;
-        }
-        res.json({
-            singleAvailability: singleRoomAvailability, 
-            doubleAvailability: doubleRoomAvailability, 
-            kingAvailability: kingRoomAvailablity, 
-            studioAvailability: studioRoomAvailability, 
-            name: hotel.name, 
-            hotelID: hotel._id, 
-            address: hotel.address, 
-            city: hotel.city, 
-            img: hotel.images, 
-            price: hotel.price,
-            star_rating: hotel.star, 
-            ta_rating: hotel.ta_rating,
-            hdc_rating: hotel.hdc_rating, 
-            amenities: hotel.amenities, 
-            airports: hotel.airports,
-            review:hotel.reviews,
-            top_spots:hotel.top_spots,
-            discount: hotel.discount
-        })
-    })
-    .catch(err => res.status(404));
     let reviewPack = false
 
     Hotel.findById(req.query.id).then( hotel => {
@@ -230,13 +196,13 @@ router.get('/individual', async (req,res) => {
             getReviews().then(async () => {
 
             if ((typeof date.checkin !== 'undefined') && (typeof date.checkout !== 'undefined')){
-                if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0)
+                if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0 || hotel.star >= 4)
                     singleRoomAvailability = false;
                 if(checkAvailability(hotel.roomTypeAndNumber.double, date, numberOfRooms, "PlaceHolder").length == 0)
                     doubleRoomAvailability = false;
                 if(checkAvailability(hotel.roomTypeAndNumber.king, date, numberOfRooms, "PlaceHolder").length == 0)
                     kingRoomAvailablity = false;
-                if(checkAvailability(hotel.roomTypeAndNumber.studio, date, numberOfRooms, "PlaceHolder").length == 0)
+                if(checkAvailability(hotel.roomTypeAndNumber.studio, date, numberOfRooms, "PlaceHolder").length == 0 || hotel.star <= 3)
                     studioRoomAvailability = false;
             }
 
