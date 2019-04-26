@@ -316,14 +316,15 @@ router.post("/confirm",(req,res)=>{
                                     destinationImg = null
                                 }else{
                                     destinationImg = city[0].imgMain
+                                    let x = city[0];
+                                    x.bookings += 1;                               
+                                    x.save().catch(err=>res.send(err))   
                                 }
-                                let x = city[0];
-                                x.bookings += 1;                               
-                                x.save().catch(err=>res.send(err))   
                                 confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
                                 doc.hotelID.name = hotelName;
                                 doc.customerID.email = email;
-                                doc.customerID.Lastname = lastname
+                                doc.customerID.Lastname = lastname;
+                                doc.hotelID.city = destinationName;
                                 welcomeEmail(doc)
                                 res.status(200).send({
                                     bookingID:doc._id,
@@ -467,52 +468,60 @@ router.post('/changeReservation',(req,res)=>{
 router.post('/cancel', (req,res)=>{
     Booking.findById(req.body.bookingID)
     .then(booking => {
-        if (booking.status == 0){
-            booking.status = 3;
-            if (booking.rewardPointsUsed !== 0){
-                User.findOneAndUpdate(
-                    {'customerID': booking.customerID},
-                    {$inc: { "rewardPoints" : booking.rewardPointsUsed }
-                })
-            }
-            Hotel.findById(booking.hotelID)
-            .then(hotel => {
-                if(booking.typeOfRoom === 'single'){
-                    arr = hotel.roomTypeAndNumber.single;
+        if (booking.check_in_date - new Date() > 172800000){
+            if (booking.status == 0){
+                booking.status = 3;
+                if (booking.rewardPointsUsed !== 0){
+                    User.findOneAndUpdate(
+                        {'customerID': booking.customerID},
+                        {$inc: { "rewardPoints" : booking.rewardPointsUsed }
+                    })
                 }
-                if(booking.typeOfRoom === 'double'){
-                    arr = hotel.roomTypeAndNumber.double;
-                }
-                if(booking.typeOfRoom === 'king'){
-                    arr = hotel.roomTypeAndNumber.king;
-                }
-                if(booking.typeOfRoom === 'studio'){
-                    arr = hotel.roomTypeAndNumber.studio;
-                }
-                for(let i = 0;i<arr.length;i++){
-                    for(let j = 0;j<arr[i].dates.length;j++){
-                        if(arr[i].dates[j].bookingID === req.body.bookingID){
-                            arr[i].dates.splice(j,1)
+                Hotel.findById(booking.hotelID)
+                .then(hotel => {
+                    if(booking.typeOfRoom === 'single'){
+                        arr = hotel.roomTypeAndNumber.single;
+                    }
+                    if(booking.typeOfRoom === 'double'){
+                        arr = hotel.roomTypeAndNumber.double;
+                    }
+                    if(booking.typeOfRoom === 'king'){
+                        arr = hotel.roomTypeAndNumber.king;
+                    }
+                    if(booking.typeOfRoom === 'studio'){
+                        arr = hotel.roomTypeAndNumber.studio;
+                    }
+                    for(let i = 0;i<arr.length;i++){
+                        for(let j = 0;j<arr[i].dates.length;j++){
+                            if(arr[i].dates[j].bookingID === req.body.bookingID){
+                                arr[i].dates.splice(j,1)
+                            }
                         }
                     }
-                }
-                hotel.save().catch(err=>res.status(400).json(err));
-                booking.save().catch( err => res.status(400).json({
-                    message: "not able to cancel",
-                    code: 400
-                }))
-                res.status(200).json({
-                    message: "successfully canceled",
-                    code: 200
+                    hotel.save().catch(err=>res.status(400).json(err));
+                    booking.save().catch( err => res.status(400).json({
+                        message: "not able to cancel",
+                        code: 400
+                    }))
+                    res.status(200).json({
+                        message: "successfully canceled",
+                        code: 200
+                    })
                 })
-            })
+            }
+            else{
+                res.status(400).json({
+                    message: "booking status is not 0.",
+                    code: 400
+                })
+            }
         }
-        else{
-            res.status(400).json({
-                message: "booking status is not 0.",
-                code: 400
-            })
-        }
+    else {
+        res.status(400).json({
+            message: "within 48 hours, cannot refund",
+            code: 400
+        })
+    }
     })
 })
 
