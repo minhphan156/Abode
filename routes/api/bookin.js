@@ -427,6 +427,7 @@ router.post('/changeReservation',(req,res)=>{
                         reservations.discount = req.body.newDiscount?req.body.newDiscount:reservations.discount
                         reservations.rewardDiscount = req.body.newRewardsDiscount?req.body.newRewardsDiscount:reservations.rewardDiscount
                         reservations.taxesAndFees = req.body.newTaxesAndFees?req.body.newTaxesAndFees:reservations.taxesAndFees
+                        reservations.numOfNights = req.body.numberOfNights
                         hotel.save().catch(err=>res.status(400).json(err));
                         reservations.save().catch(err=>res.status(400).json({
                             message:"Fail to change",
