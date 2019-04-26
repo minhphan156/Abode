@@ -17,6 +17,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import CalendarPicker from "../landing_page/search_widget/CalendarPicker";
 import "./history.css";
+import moment from "moment";
 
 const styles = theme => ({
   appBar: {
@@ -37,9 +38,9 @@ class ChangeReservation extends Component {
     this.state = {
       openChangeDialog: false,
       newCheckIn: null,
-      newCheckOut: null,
-      newPrice: null
+      newCheckOut: null
     };
+
     this.onChangeClick = this.onChangeClick.bind(this);
     this.onHandleDate = this.onHandleDate.bind(this);
   }
@@ -52,11 +53,18 @@ class ChangeReservation extends Component {
     this.setState({ openChangeDialog: false });
   };
   onChangeClick(bookingID) {
+    var duration = moment.duration(
+      this.state.newCheckOut.diff(this.state.newCheckIn)
+    );
+    var days = duration.asDays();
+
     const changeReservationData = {
       bookingID: bookingID,
       newCheckIn: this.state.newCheckIn,
-      newCheckOut: this.state.newCheckOut
+      newCheckOut: this.state.newCheckOut,
+      numberOfNights: days
     };
+
     this.props.changeReservation(changeReservationData);
     this.setState({ openChangeDialog: false });
     window.location.reload();
