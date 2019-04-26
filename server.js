@@ -6,6 +6,7 @@ const logger = require("winston");
 
 // use to connect with mongoDB
 const mongoose = require("mongoose");
+const City = require("./models/city")
 
 // api routes
 const users = require("./routes/api/users");
@@ -54,6 +55,12 @@ app.use("/api/cityView", cityView);
 
 // this will append to home route 'localHost:5000/api/booking/{what ever book.js dictate}'
 app.use("/api/booking", book);
+
+//Clearing Booking count every week
+setInterval(function (){
+  City.updateMany({},
+    {$set: {'bookings': 0}})
+}, 604800000)
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {

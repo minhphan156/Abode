@@ -43,11 +43,11 @@ router.get('/search',(req,res)=>{
     //End Sorting
 
     //Filter
-    var free_wifi;
-    var pool;
-    var free_parking;
-    var pet_friendly;
-    var free_breakfast;
+    var free_wifi = new RegExp(' ', "ig");
+    var pool = new RegExp(' ', "ig");
+    var free_parking = new RegExp(' ', "ig");
+    var multilingual = new RegExp(' ', "ig");
+    var free_breakfast = new RegExp(' ', "ig");
     var star_rating = req.query.star_rating;
     var review_score = req.query.review_score;
     var price_low = req.query.price_low;
@@ -60,26 +60,21 @@ router.get('/search',(req,res)=>{
         price_low = 0
     if (typeof price_high == 'undefined' || price_high == '')
         price_high = Number.POSITIVE_INFINITY
-    if (req.query.free_wifi == 1){
+
+    if (req.query.free_wifi === '1'){
         free_wifi = new RegExp('free(.*)wifi',"ig");}
-    else
-        free_wifi = new RegExp(' ',"ig");
-    if (req.query.pool == 1) 
+
+    if (req.query.pool === '1') 
         pool = new RegExp('pool',"ig");
-    else
-        pool = new RegExp(' ',"ig");
-    if (req.query.free_parking == 1)
-        free_parking = new RegExp('free(.*)parking',"ig");
-    else
-        free_parking = new RegExp(' ', "ig");
-    if (req.query.pet_friendly == 1)
-        pet_friendly = new RegExp('pet(.*)friendly',"ig");
-    else
-        pet_friendly = new RegExp(' ', "ig");
-    if (req.query.free_breakfast == 1)
+
+    if (req.query.free_parking === '1')
+        free_parking = new RegExp('valet parking',"ig");
+    if (req.query.pet_friendly === '1')
+        multilingual = new RegExp('Multilingual',"ig");
+        
+    if (req.query.free_breakfast === '1')
         free_breakfast = new RegExp('free(.*)breakfast',"ig");
-    else
-        free_breakfast = new RegExp(' ', "ig");
+
     //End Filter
     var searchKey = req.query.destinationName;
     var date = {
@@ -91,7 +86,7 @@ router.get('/search',(req,res)=>{
     const NUM_RESULTS = req.query.numResults;
     const regex = new RegExp(searchKey,"ig");
     Hotel.find({
-        amenities: { $all: [free_wifi, pool, free_parking, pet_friendly, free_breakfast]},
+        amenities: { $all: [free_wifi, pool, free_parking, multilingual, free_breakfast]},
         $and:[{'price.singlePrice': {$gte: price_low}}, {'price.singlePrice': {$lte: price_high}}],
         star: {$gte: star_rating},
         hdc_rating: {$gte: review_score},
@@ -201,13 +196,13 @@ router.get('/individual', async (req,res) => {
             getReviews().then(async () => {
 
             if ((typeof date.checkin !== 'undefined') && (typeof date.checkout !== 'undefined')){
-                if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0)
+                if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0 || hotel.star >= 4)
                     singleRoomAvailability = false;
                 if(checkAvailability(hotel.roomTypeAndNumber.double, date, numberOfRooms, "PlaceHolder").length == 0)
                     doubleRoomAvailability = false;
                 if(checkAvailability(hotel.roomTypeAndNumber.king, date, numberOfRooms, "PlaceHolder").length == 0)
                     kingRoomAvailablity = false;
-                if(checkAvailability(hotel.roomTypeAndNumber.studio, date, numberOfRooms, "PlaceHolder").length == 0)
+                if(checkAvailability(hotel.roomTypeAndNumber.studio, date, numberOfRooms, "PlaceHolder").length == 0 || hotel.star <= 3)
                     studioRoomAvailability = false;
             }
 
