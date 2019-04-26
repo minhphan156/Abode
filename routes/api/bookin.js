@@ -315,6 +315,9 @@ router.post("/confirm",(req,res)=>{
                                 }else{
                                     destinationImg = city[0].imgMain
                                 }
+                                let x = city[0];
+                                x.bookings += 1;                               
+                                x.save().catch(err=>res.send(err))   
                                 confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
                                 res.status(200).send({
                                     bookingID:doc._id,
