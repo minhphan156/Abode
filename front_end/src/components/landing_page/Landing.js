@@ -239,8 +239,8 @@ class Landing extends Component {
           <Grid container direction="row" justify="center">
             <Grid xs={12} sm={8} md={8} lg={8}>
               <div className="imageContainerLarge">
-                {/* TODO: Update Link to={} to each cards respective cities after city backend is implemented */}
-                <Link to="/cities/0">
+                
+                <Link to={`/cities/${city._id}`}>
                   <img src={city.imgMain} className={classes.collageImg} />
                   <div class="text-block-cities">
                     <h4 className="imageTextCityTitle">{city.name}</h4>
@@ -259,8 +259,8 @@ class Landing extends Component {
               >
                 <Grid xs={6} sm={12}>
                   <div className="imageContainerSmall imageContainerSmall1">
-                    {/* TODO: Update Link to={} to each cards respective cities after city backend is implemented */}
-                    <Link to="/cities/0">
+                    
+                    <Link to={`/cities/${city._id}`}>
                       <img
                         src={city.imgAlt[0]}
                         className={classes.collageImgSmall}
@@ -276,8 +276,8 @@ class Landing extends Component {
                 </Grid>
                 <Grid xs={6} sm={12} md={12} lg={12}>
                   <div className="imageContainerSmall imageContainerSmall2">
-                    {/* TODO: Update Link to={} to each cards respective cities after city backend is implemented */}
-                    <Link to="/cities/0">
+                    
+                    <Link to={`/cities/${city._id}`}>
                       <img
                         src={city.imgAlt[1]}
                         className={classes.collageImgSmall}

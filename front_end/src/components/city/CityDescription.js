@@ -45,8 +45,7 @@ let CityDescription = props => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body">
-              {/* TODO: Update placeholder once backend is connected */}
-              San Francisco is often called "Everybody’s Favorite City," a title earned by its scenic beauty, cultural attractions, diverse communities, and world-class cuisine. Measuring 49 square miles, this very walk-able city is dotted with landmarks like the Golden Gate Bridge, cable cars, Alcatraz and the largest Chinatown in the United States. A stroll of the City’s streets can lead from Union Square to North Beach to Fisherman’s Wharf, with intriguing neighborhoods to explore at every turn. Views of the Pacific Ocean and San Francisco Bay are often laced with fog, creating a romantic mood in this most European of American cities.
+              {city.cityData.name} is often called "Everybody’s Favorite City," a title earned by its scenic beauty, cultural attractions, diverse communities, and world-class cuisine. Measuring 49 square miles, this very walk-able city is dotted with landmarks like the Golden Gate Bridge, cable cars, Alcatraz and the largest Chinatown in the United States. A stroll of the City’s streets can lead from Union Square to North Beach to Fisherman’s Wharf, with intriguing neighborhoods to explore at every turn. Views of the Pacific Ocean and {city.cityData.name} Bay are often laced with fog, creating a romantic mood in this most European of American cities.
             </Typography>
           </Grid>
         </Grid>
