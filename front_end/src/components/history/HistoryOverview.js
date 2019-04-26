@@ -251,6 +251,7 @@ class HistoryOverview extends Component {
                   checkOutTime={checkOutDateAndTime}
                   id={booking.bookingID}
                   hotel={booking.hotelName}
+                  expansionData={expansionData}
                 />
                 <br />
                 <CancellationPrompt

@@ -52,7 +52,7 @@ class ChangeReservation extends Component {
     event.stopPropagation();
     this.setState({ openChangeDialog: false });
   };
-  onChangeClick(bookingID) {
+  onChangeClick(bookingID, expansionData) {
     var duration = moment.duration(
       this.state.newCheckOut.diff(this.state.newCheckIn)
     );
@@ -62,7 +62,21 @@ class ChangeReservation extends Component {
       bookingID: bookingID,
       newCheckIn: this.state.newCheckIn,
       newCheckOut: this.state.newCheckOut,
-      numberOfNights: days
+      numberOfNights: days,
+      newSubtotal:
+        (expansionData.subtotal / expansionData.numberOfNights) * days,
+      newDiscount:
+        (expansionData.discounts / expansionData.numberOfNights) * days,
+      newTaxesAndFees:
+        (expansionData.taxesAndFees / expansionData.numberOfNights) * days,
+      newRewardsDiscount:
+        (expansionData.rewardsDiscount / expansionData.numberOfNights) * days,
+      newTotal: (expansionData.total / expansionData.numberOfNights) * days,
+      newPointsEarned:
+        (expansionData.rewardPointsEarned / expansionData.numberOfNights) *
+        days,
+      newPointsUsed:
+        (expansionData.rewardPointsUsed / expansionData.numberOfNights) * days
     };
 
     this.props.changeReservation(changeReservationData);
@@ -74,7 +88,15 @@ class ChangeReservation extends Component {
     this.setState({ newCheckOut: endingDate });
   }
   render() {
-    const { classes, width, checkInTime, checkOutTime, id, hotel } = this.props;
+    const {
+      classes,
+      width,
+      checkInTime,
+      checkOutTime,
+      id,
+      hotel,
+      expansionData
+    } = this.props;
     return (
       <div>
         <Button
@@ -128,7 +150,7 @@ class ChangeReservation extends Component {
               {this.state.newCheckIn == null ||
               this.state.newCheckOut == null ? null : (
                 <Button
-                  onClick={() => this.onChangeClick(id)}
+                  onClick={() => this.onChangeClick(id, expansionData)}
                   variant="outlined"
                   color="primary"
                   className={classes.button}
