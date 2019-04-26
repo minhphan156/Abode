@@ -9,6 +9,7 @@ const City = require("../../models/city")
 const User = require("../../models/User");
 
 const confirmEmail = require('../../email/confirmationEmail')
+const welcomeEmail = require('../../email/welcomeEmail')
 
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
@@ -213,8 +214,9 @@ router.post("/confirm",(req,res)=>{
     var customerID;
     var bookingID = "tempBookingID"
     var rewardPointsUsed = req.body.rewardPointsUsed ? req.body.rewardPointsUsed : null;
-    var rewardPointsEarned = req.body.rewardPointsEarned ? req.body.rewardPointsEarned : null;
+    var rewardPointsEarned = req.body.rewardPointsEarned ? parseInt(req.body.rewardPointsEarned) : null;
     var rewardDiscount = req.body.rewardDiscount ? req.body.rewardDiscount : null;
+    console.log(rewardPointsEarned)
     //check this user visit our website before and get customerID
     Customer.find({email:email},function(err,doc){
         if(err) res.status(400).json(err);
@@ -319,6 +321,10 @@ router.post("/confirm",(req,res)=>{
                                 x.bookings += 1;                               
                                 x.save().catch(err=>res.send(err))   
                                 confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
+                                doc.hotelID.name = hotelName;
+                                doc.customerID.email = email;
+                                doc.customerID.Lastname = lastname
+                                welcomeEmail(doc)
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
