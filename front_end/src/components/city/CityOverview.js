@@ -74,7 +74,7 @@ class CityOverview extends Component {
     }
   };
 
-  componentDidUnmount = () => {
+  componentWillUnmount = () => {
     this.props.clearCityReducer();
   }
 
