@@ -100,7 +100,7 @@ class IndivHotel extends Component {
       return (
         <div class="wholePage" style={{ minHeight: window.innerHeight - 180 }}>
           {individualHotelData.img.length === 0 ? (
-            <div style={{ marginLeft: "50%", marginTop: "10%" }}>
+            <div style={{ marginLeft: "46%", marginTop: "10%" }}>
               <Grid item>
                 <CircularProgress />
               </Grid>
@@ -1030,31 +1030,45 @@ class IndivHotel extends Component {
                   </table>
                 </section>
               </div>
-              <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small>3 days ago</small>
-                  </div>
-                  <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  <small>Donec id elit non mi porta.</small>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-muted">3 days ago</small>
-                  </div>
-                  <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  <small class="text-muted">Donec id elit non mi porta.</small>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-muted">3 days ago</small>
-                  </div>
-                  <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                  <small class="text-muted">Donec id elit non mi porta.</small>
-                </a>
+              {console.log(individualHotelData)}
+              <p class="reviewSection"> 
+                <i class="fas fa-poll" style={{color: "#0c4b78"}} />
+                {" "}Reviews ({individualHotelData.review.length})
+              </p>
+              <div class="list-group" style={{ marginBottom:'2%' }}>
+                {individualHotelData.review.map((item, index) => {
+                  return (
+                    <a class="list-group-item list-group-item-action">
+                      <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"
+                            style={{
+                              fontSize: 20,
+                              fontWeight: "bold",
+                              color: "#0c4b78"
+                            }}
+                        >{ individualHotelData.review[index].reviewName }</p>
+                        <small>
+                          { individualHotelData.review[index].reviewDate.split('T')[0] }
+                        </small> 
+                      </div>
+                      <small>
+                          <ReactStars
+                            count={5}
+                            value={ individualHotelData.review[index].reviewStar }
+                            size={16}
+                            edit={false}
+                            color2={"#0c4b78"}
+                            color1={"#dcdcdc"}
+                          />
+                      </small>
+                      <p class="mb-1"
+                            style={{
+                              fontSize: 20,
+                            }}
+                      >{ individualHotelData.review[index].reviewText }</p>  
+                    </a>
+                  );
+                  })}
               </div>
             </div>
           )}

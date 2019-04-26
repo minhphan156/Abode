@@ -14,5 +14,5 @@ export default combineReducers({
   profile: profileReducer,
   landing: landingReducer,
   individualHotelData: individualHotelReducer,
-  bookingData: bookingReducer,
+  bookingData: bookingReducer
 });
