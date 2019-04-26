@@ -13,19 +13,17 @@ import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ExitIcon from "@material-ui/icons/ExitToApp";
 import { CircularProgress } from "@material-ui/core";
-
 import Button from "@material-ui/core/Button";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import ReviewRating from "./ReviewRating";
 import HistoryExpansionTable from "./HistoryExpansionTable";
-
 import "./history.css";
 import CancellationPrompt from "./CancellationPrompt";
 
-const styles = theme => ({
+const styles = {
   table: {
     maxWidth: 330,
     minWidth: 300,
@@ -61,8 +59,57 @@ const styles = theme => ({
   },
   backgroundStyle: {
     background: "linear-gradient(45deg, #ffffff 30%, #cfe6fe 90%)"
+  },
+  ReviewButton: {
+    "&:focus": { outline: "none" },
+    borderRadius: 17,
+    textTransform: "none",
+    marginTop: 24,
+    marginRight: 10,
+    marginLeft: 10,
+    paddingTop: 1,
+    paddingBottom: 1
+  },
+  ReviewedButton: {
+    "&:focus": { outline: "none" },
+    borderRadius: 17,
+    textTransform: "none",
+    color: "white",
+    marginTop: 24,
+    marginRight: 10,
+    marginLeft: 10,
+    paddingTop: 1,
+    paddingBottom: 1,
+    backgroundColor: "#3ba711"
+  },
+  reviewFormHeaderText: {
+    color: "white"
+  },
+  ReviewButtonForPhone: {
+    "&:focus": { outline: "none" },
+    borderRadius: 17,
+    textTransform: "none",
+    marginLeft: 28,
+    paddingLeft: 25.5,
+    paddingRight: 25.5
+  },
+  ReviewedButtonForPhone: {
+    "&:focus": { outline: "none" },
+    borderRadius: 17,
+    textTransform: "none",
+    color: "white",
+    marginLeft: 28,
+    paddingLeft: 18,
+    paddingRight: 18,
+    backgroundColor: "#3ba711"
+  },
+  historyHotelImageForPhone: {
+    width: "112%"
+  },
+  HistoryPageTotalSmallForPhone: {
+    paddingBottom: 0
   }
-});
+};
 
 class HistoryOverview extends Component {
   componentWillMount() {
@@ -95,13 +142,14 @@ class HistoryOverview extends Component {
         </Grid>
       );
     } else {
-      // console.log(profile.profile_info);
       if (profile_info != null) {
         rewardsPointsContainer = (
           <div>
             <div className="rewardsPointsBalance">Reward Points Balance:</div>
             <div className="rewardsPointsBalance">
-              {profile_info.rewardPoints ? profile_info.rewardPoints : 0}
+              {profile_info.rewardPoints
+                ? profile_info.rewardPoints.toFixed(0)
+                : 0}
             </div>
             <br />
           </div>
@@ -112,7 +160,6 @@ class HistoryOverview extends Component {
         displayRegularChip = null;
         arrayOfButtons = null;
         expansionData = null;
-
         var checkInDateAndTime = new Date(booking.check_in_date);
         var checkOutDateAndTime = new Date(booking.check_out_date);
         var checkInDateAndTimeNEW = new Date(booking.new_check_in_date);
@@ -193,13 +240,6 @@ class HistoryOverview extends Component {
                   color="primary"
                   className={classes.button}
                 >
-                  REVIEW
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                >
                   CHANGE
                 </Button>
                 <br />
@@ -224,7 +264,11 @@ class HistoryOverview extends Component {
             );
             arrayOfButtons = (
               <Grid className="buttonContainer">
-                <Button>REVIEW</Button>
+                <ReviewRating
+                  ReviewButtonStyle={classes.ReviewButton}
+                  ReviewedButtonStyle={classes.ReviewedButton}
+                  booking={booking}
+                />{" "}
               </Grid>
             );
             break;
@@ -239,7 +283,11 @@ class HistoryOverview extends Component {
             );
             arrayOfButtons = (
               <Grid className="buttonContainer">
-                <Button>REVIEW</Button>
+                <ReviewRating
+                  ReviewButtonStyle={classes.ReviewButton}
+                  ReviewedButtonStyle={classes.ReviewedButton}
+                  booking={booking}
+                />{" "}
               </Grid>
             );
             break;
@@ -310,7 +358,6 @@ class HistoryOverview extends Component {
                     {displayChangeChip}
                   </Grid>
                 </Grid>
-
                 <Grid>
                   <Grid item className="HistoryPageTotal HistoryContainerDates">
                     Total: $ {(booking.total + 0).toFixed(2)}
@@ -357,12 +404,14 @@ class HistoryOverview extends Component {
     );
   }
 }
+
 HistoryOverview.propTypes = {
   getProfileInfo: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
 };
+
 const mapStateToProps = state => ({
   profile: state.profile,
   history: state.history,

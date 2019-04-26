@@ -8,8 +8,9 @@ import RoomNumber from "./RoomNumber";
 import CalendarPicker from "./CalendarPicker";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import Alert from "react-bootstrap/Alert";
+import { withRouter } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import { submitQuery, saveQuery } from "../../../actions/searchActions";
 
 const styles = theme => ({
@@ -20,7 +21,15 @@ const styles = theme => ({
   },
   paper: {
     textAlign: "center",
-    height: 70
+    height: 70,
+    position: "relative"
+  },
+  alert: {
+    textAlign: "center",
+    padding: ".1rem .1rem ",
+    width: "60%",
+    margin: 10,
+    right: 15
   }
 });
 
@@ -31,7 +40,9 @@ class SearchWidget extends Component {
       destinationName: "",
       checkIn: "",
       checkOut: "",
-      numberRooms: "1"
+      numberRooms: "1",
+      showDesAlert: false,
+      showDateAlert: false
     };
     this.onSearchClick = this.onSearchClick.bind(this);
     this.onHandleDate = this.onHandleDate.bind(this);
@@ -78,6 +89,28 @@ class SearchWidget extends Component {
       this.props.handleResetSearchOverview();
     }
 
+    //Check if the destination is given or not.
+    if (!this.state.destinationName) {
+      this.setState({ showDesAlert: true });
+    } else {
+      this.setState({ showDesAlert: false });
+    }
+    //Check if the checkIn and checkOut date are given or not.
+    if (!this.state.checkIn || !this.state.checkOut) {
+      this.setState({ showDateAlert: true });
+    } else {
+      this.setState({ showDateAlert: false });
+    }
+
+    if (
+      this.state.destinationName &&
+      (this.state.checkIn && this.state.checkOut)
+    ) {
+      this.props.history.push("/searchResultOverview");
+      this.props.saveQuery(newQuery);
+      this.props.submitQuery(newQuery);
+    }
+
     this.props.saveQuery(newQuery);
     this.props.submitQuery(newQuery);
   }
@@ -105,6 +138,21 @@ class SearchWidget extends Component {
 
       return (
         <div>
+          <Alert
+            variant="danger"
+            show={this.state.showDateAlert}
+            style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "55%",
+              marginBottom: "10px",
+              textAlign: "center",
+              padding: ".1rem .1rem "
+            }}
+          >
+            Please provide dates
+          </Alert>
+
           <Grid
             container
             className="hotelDealCalendarContainer"
@@ -131,15 +179,13 @@ class SearchWidget extends Component {
               </Paper>
             </Grid>
             <Grid item>
-              <Link to="/searchResultOverview">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.onSearchClick}
-                >
-                  Search
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.onSearchClick}
+              >
+                Search
+              </Button>
             </Grid>
           </Grid>
         </div>
@@ -149,6 +195,25 @@ class SearchWidget extends Component {
         <div className={classes.root}>
           <Grid container justify="center" alignItems="center" spacing={8}>
             <Grid item xs={12} sm={10} md={6} lg={4}>
+              <Alert
+                className={classes.alert}
+                variant="danger"
+                show={this.state.showDesAlert}
+              >
+                Please provide a destination
+              </Alert>
+            </Grid>
+            <Grid item xs={12} sm={10} md={6} lg={4}>
+              <Alert
+                className={classes.alert}
+                variant="danger"
+                show={this.state.showDateAlert}
+              >
+                Please provide dates
+              </Alert>
+            </Grid>
+
+            <Grid item xs={12} sm={10} md={6} lg={4} style={{ margin: 1 }}>
               <Paper className={classes.paper}>
                 <Destination
                   destinationName={this.state.destinationName}
@@ -156,7 +221,7 @@ class SearchWidget extends Component {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={10} md={6} lg={4}>
+            <Grid item xs={12} sm={10} md={6} lg={4} style={{ margin: 1 }}>
               <Paper className={classes.paper}>
                 <CalendarPicker
                   checkIn={this.state.checkIn}
@@ -174,15 +239,13 @@ class SearchWidget extends Component {
               </Paper>
             </Grid>
             <Grid item>
-              <Link to="/searchResultOverview">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.onSearchClick}
-                >
-                  Search
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.onSearchClick}
+              >
+                Search
+              </Button>
             </Grid>
           </Grid>
         </div>
@@ -198,4 +261,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { submitQuery, saveQuery }
-)(withStyles(styles)(SearchWidget));
+)(withStyles(styles)(withRouter(SearchWidget)));
