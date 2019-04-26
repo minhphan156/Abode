@@ -56,6 +56,12 @@ app.use("/api/cityView", cityView);
 // this will append to home route 'localHost:5000/api/booking/{what ever book.js dictate}'
 app.use("/api/booking", book);
 
+//Clearing Booking count every week
+setInterval(function (){
+  City.updateMany({},
+    {$set: {'bookings': 0}})
+}, 604800000)
+
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
   // Set static folder
@@ -72,9 +78,3 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
 // NOTE: At this point , go to terminal and do $ npm run server
-
-//Clearing Booking count every week
-setInterval(function (){
-  City.updateMany({},
-    {$set: {'bookings': 0}})
-}, 604800000)
