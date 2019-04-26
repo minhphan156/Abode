@@ -35,6 +35,7 @@ export const GET_CITY = "GET_CITY";
 export const GET_CITY_WEATHER = "GET_CITY_WEATHER";
 export const LOADING_CITY_WEATHER = "LOADING_CITY_WEATHER";
 export const LOADING_CITY = "LOADING_CITY";
+export const CLEAR_CITY = "CLEAR_CITY";
 export const CITY_ERRORS = "CITY_ERRORS";
 
 export const CANCEL_RESERVATION = "CANCEL_RESERVATION";

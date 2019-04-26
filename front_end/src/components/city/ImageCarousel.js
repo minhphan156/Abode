@@ -7,24 +7,8 @@ import { Grid, withStyles, withWidth} from "@material-ui/core";
 
 // CSS to JavaScript component styling
 let styles = theme => ({
-  containerSize: {
-    [theme.breakpoints.only("md")]: {
-      height: 500
-    },
-    [theme.breakpoints.only("lg")]: {
-      height: 600
-    },
-    [theme.breakpoints.only("xl")]: {
-      height: 700
-    }
-  },
   itemMain: {
-    [theme.breakpoints.up("md")]: {
-      height: "60%"
-    },
-    [theme.breakpoints.down("sm")]: {
-      height: "50%"
-    }
+    width: "100%"
   },
   itemDetail: {
     [theme.breakpoints.up("md")]: {
@@ -37,38 +21,27 @@ let styles = theme => ({
   imgSize: {
     width: "100%",
     height: "100%",
-    objectFit: "cover"
+    objectFit: "cover",
+    margin: 0
   }
 });
 
 // Child functional component for the image carousel used in <CityOverview />
 let ImageCarousel = props => {
-  let { classes, images, handleClickImage, city } = props;
+  let { classes, images } = props;
   return (
     <Grid
       container
-      className={classes.containerSize}
       direction="row"
       justify="center"
       alignItems="center"
       spacing={8}
     >
-      <Grid item className={classes.itemMain} xs={12}>
-        <img className={classes.imgSize} src={images[0]} />
+      <Grid item className={classes.itemMain} xs={6} >
+        <img className={classes.imgSize} src={images[0]}/>
       </Grid>
-      <Grid item className={classes.itemDetail} xs={6}>
-        <img
-          className={classes.imgSize}
-          src={images[1]}
-          onClick={() => handleClickImage(1)}
-        />
-      </Grid>
-      <Grid item className={classes.itemDetail} xs={6}>
-        <img
-          className={classes.imgSize}
-          src={images[2]}
-          onClick={() => handleClickImage(2)}
-        />
+      <Grid item className={classes.itemMain} xs={6}>
+        <img className={classes.imgSize} src={images[1]} />
       </Grid>
     </Grid>
   );

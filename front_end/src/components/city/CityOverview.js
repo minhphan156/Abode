@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 // Redux-Action workflow imports
 import { connect } from "react-redux";
-import { fetchCityById } from "../../actions/cityActions";
+import { fetchCityById, clearCityReducer } from "../../actions/cityActions";
 
 // Child component imports
 import ImageCarousel from "./ImageCarousel";
@@ -28,11 +28,6 @@ import {
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
 import { Search } from "@material-ui/icons";
-
-// Prototype Imports
-import SF0 from "./SF0.jpg";
-import SF1 from "./SF1.jpg";
-import SF2 from "./SF2.jpg";
 
 // CSS to JavaScript component styling
 let styles = theme => ({
@@ -63,11 +58,9 @@ class CityOverview extends Component {
   constructor() {
     super();
     this.state = {
-      images: [SF0, SF1, SF2],
       openDialog: false
     };
-
-    this.handleClickImage = this.handleClickImage.bind(this);
+    
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
 
@@ -81,25 +74,9 @@ class CityOverview extends Component {
     }
   };
 
-  // Used to disable 2nd re-rendering after initial data fetch upon mounting this component
-  shouldComponentUpdate(prevProps, nextProps) {
-    if (this.state.images.length == 0) {
-      return false;
-    }
-    return true;
+  componentDidUnmount = () => {
+    this.props.clearCityReducer();
   }
-
-  // Used to change the main image in Carousel
-  handleClickImage = index => {
-    let newImages = this.state.images;
-    let temp = newImages[0];
-    newImages[0] = newImages[index];
-    newImages[index] = temp;
-    this.setState({
-      ...this.state,
-      images: newImages
-    });
-  };
 
   // Used to toggle the dialog on and off
   handleCloseDialog = event => {
@@ -110,7 +87,7 @@ class CityOverview extends Component {
   };
 
   render() {
-    let { images, openDialog } = this.state;
+    let { openDialog } = this.state;
     let { classes, city, width } = this.props;
 
     if (city.fetchingCity == false && city.cityData != null) {
@@ -124,7 +101,7 @@ class CityOverview extends Component {
             spacing={8}
           >
             <Grid item xs={12}>
-              <Grid container direction="column" spacing={40}>
+              <Grid container direction="column" spacing={8}>
                 <Grid item xs={12}>
                   <Grid
                     container
@@ -145,8 +122,7 @@ class CityOverview extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <ImageCarousel
-                    images={images}
-                    handleClickImage={this.handleClickImage}
+                    images={this.props.city.cityData.imgAlt}
                     city={city}
                   />
                 </Grid>
@@ -210,7 +186,7 @@ class CityOverview extends Component {
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <img
-                    src={images[0]}
+                    src={this.props.city.cityData.imgAlt[0]}
                     style={{ objectFit: "cover", width: "100%" }}
                   />
                 </Grid>
@@ -270,5 +246,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchCityById }
+  { fetchCityById, clearCityReducer }
 )(withWidth()(withStyles(styles)(CityOverview)));

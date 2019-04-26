@@ -4,6 +4,7 @@ import {
   GET_CITY_WEATHER,
   LOADING_CITY,
   LOADING_CITY_WEATHER,
+  CLEAR_CITY,
   CITY_ERRORS
 } from "../actions/types";
 
@@ -48,6 +49,15 @@ export default function(state = initialState, action) {
         fetchingCity: false,
         errors: null
       };
+    case CLEAR_CITY:
+      return {
+        ...state,
+        cityData: null,
+        weatherData: null,
+        fetchingCity: false,
+        fetchingWeather: false,
+        errors: null,
+      }
     default:
       return state;
   }
