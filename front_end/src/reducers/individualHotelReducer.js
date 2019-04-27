@@ -1,8 +1,9 @@
-import { GET_INDIVIDUAL_HOTEL } from "../actions/types";
+import { GET_INDIVIDUAL_HOTEL, CLEAR_DATA} from "../actions/types";
 
-//const roomOptions = ['single', 'double', 'Queen', 'King']
 const amenities = [];
 const images = [];
+const airports = [];
+const top_spots = [];
 
 const initialState = {
   individualHotelData: {
@@ -20,6 +21,8 @@ const initialState = {
     hotelsRate: "",
     img: images,
     amenities: amenities,
+    airports: airports,
+    top_spots: top_spots,
     singleAvailability: false,
     doubleAvailability: false,
     kingAvailability: false,
@@ -29,6 +32,10 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case CLEAR_DATA:
+      return {...state,
+        individualHotelData:action.payload
+      };
     case GET_INDIVIDUAL_HOTEL:
       return {
         ...state,

@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { submitQuery, saveQuery } from "../../actions/searchActions";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
+import { clearData } from "../../actions/searchResultActions";
 // Additional libraries
 import ReactStars from "react-stars";
 
@@ -108,6 +109,10 @@ class searchResultOverview extends Component {
   componentDidMount = () => {
     window.scrollTo(0, 0);
   };
+
+  componentWillUnmount() {
+    this.props.clearData();
+  }
 
   // Used to reset <FiltersWindow /> upon pressing 'Search'
   handleResetSearchOverview = () => {
@@ -705,9 +710,14 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
+<<<<<<< HEAD
   { getIndividualHotelResult, submitQuery, saveQuery }
 )(withStyles(styles)(withWidth()(
   GoogleApiWrapper({
     apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"
   })(searchResultOverview)
 )));
+=======
+  { getIndividualHotelResult, submitQuery, saveQuery, clearData }
+)(withStyles(styles)(withWidth()(searchResultOverview)));
+>>>>>>> dev-general

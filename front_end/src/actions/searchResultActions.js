@@ -1,4 +1,4 @@
-import { GET_INDIVIDUAL_HOTEL } from "./types";
+import { GET_INDIVIDUAL_HOTEL, CLEAR_DATA } from "./types";
 import axios from "axios";
 import Geocode from "react-geocode";
 
@@ -26,3 +26,32 @@ export const getIndividualHotelResult = hotel => dispatch => {
     })
     .catch(err => console.log(err));
 };
+
+export function clearData(){
+  const amenities = [];
+  const images = [];
+  const initialState = {
+      name: "",
+      hotelID: "",
+      street: "",
+      city: "",
+      zip: "",
+      country: "",
+      price: "",
+      star_rates: "",
+      lat: "",
+      alt: "",
+      tripAdvisorRate: "",
+      hotelsRate: "",
+      img: images,
+      amenities: amenities,
+      singleAvailability: false,
+      doubleAvailability: false,
+      kingAvailability: false,
+      studioAvailability: false
+    };
+  return{
+    type: CLEAR_DATA,
+    payload:initialState
+  }
+}
