@@ -1063,7 +1063,7 @@ class IndivHotel extends Component {
                       </small>
                       <p class="mb-1"
                             style={{
-                              fontSize: 20,
+                              fontSize: 15,
                             }}
                       >{ individualHotelData.review[index].reviewText }</p>  
                     </a>
