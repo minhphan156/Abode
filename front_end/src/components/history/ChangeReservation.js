@@ -12,7 +12,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { DialogContent } from "@material-ui/core";
-
+import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -42,11 +42,23 @@ class ChangeReservation extends Component {
     this.state = {
       openChangeDialog: false,
       newCheckIn: null,
-      newCheckOut: null
+      newCheckOut: null,
+      days: null,
+      showChange: false
     };
     this.stripeValidate = this.stripeValidate.bind(this);
     this.onChangeClick = this.onChangeClick.bind(this);
     this.onHandleDate = this.onHandleDate.bind(this);
+    this.showChangeClick = this.showChangeClick.bind(this);
+  }
+  showChangeClick() {
+    if (this.state.newCheckIn != null && this.state.newCheckOut != null) {
+      var duration = moment.duration(
+        this.state.newCheckOut.diff(this.state.newCheckIn)
+      );
+      this.setState({ days: duration.asDays() });
+      this.setState({ showChange: true });
+    }
   }
   stripeValidate(e) {
     this.setState({ paymentField: e.complete });
@@ -79,9 +91,11 @@ class ChangeReservation extends Component {
       newRewardsDiscount:
         (expansionData.rewardsDiscount / expansionData.numberOfNights) * days,
       newTotal: (expansionData.total / expansionData.numberOfNights) * days,
-      newPointsEarned:
-        (expansionData.rewardPointsEarned / expansionData.numberOfNights) *
-        days,
+      newPointsEarned: (
+        (expansionData.total / expansionData.numberOfNights) *
+        days *
+        10
+      ).toFixed(0),
       newPointsUsed:
         (expansionData.rewardPointsUsed / expansionData.numberOfNights) * days
     };
@@ -91,6 +105,7 @@ class ChangeReservation extends Component {
     window.location.reload();
   }
   onHandleDate(startingDate, endingDate) {
+    this.setState({ showChange: false });
     this.setState({ newCheckIn: startingDate });
     this.setState({ newCheckOut: endingDate });
   }
@@ -135,46 +150,120 @@ class ChangeReservation extends Component {
               </Typography>
             </Toolbar>
           </AppBar>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid container spacing={0} direction="row" justify="space-evenly">
+              <Grid item>
+                <DialogTitle>Current Reservation</DialogTitle>
+                <DialogContent>
+                  {hotel}
+                  <br /> <br />
+                  Check In: {checkInTime.toDateString()} <br /> <br />
+                  Check Out: {checkOutTime.toDateString()} <br /> <br />
+                  Number of Nights: {expansionData.numberOfNights}
+                </DialogContent>
+                {this.state.newCheckIn != null &&
+                this.state.newCheckOut != null &&
+                this.state.showChange === true ? (
+                  <div>
+                    <DialogTitle>New Reservation</DialogTitle>
+                    <DialogContent>
+                      Check In: {new Date(this.state.newCheckIn).toDateString()}{" "}
+                      <br /> <br />
+                      Check Out:{" "}
+                      {new Date(
+                        this.state.newCheckOut
+                      ).toDateString()} <br /> <br />
+                      Number of Nights: {this.state.days}
+                    </DialogContent>
+                  </div>
+                ) : null}
+              </Grid>
+              <Grid item>
+                <DialogTitle>
+                  Select dates to change your reservation.
+                </DialogTitle>
+                <DialogContent>
+                  Select the new start and end dates for changing your
+                  reservation.
+                </DialogContent>
+                <CalendarPicker
+                  class="centerChangeReservation"
+                  checkIn={this.state.newCheckIn}
+                  checkOut={this.state.newCheckOut}
+                  onHandleDate={this.onHandleDate}
+                />
+                <DialogActions>
+                  {this.state.newCheckIn == null ||
+                  this.state.newCheckOut == null ? null : (
+                    <Button
+                      onClick={this.showChangeClick}
+                      variant="outlined"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Select Dates
+                    </Button>
+                  )}
+                </DialogActions>
+                {this.state.showChange === true &&
+                (expansionData.total / expansionData.numberOfNights) *
+                  this.state.days -
+                  expansionData.total >
+                  0 ? (
+                  <div>
+                    <CardContent>
+                      <h4 style={{ marginTop: "1%" }}>
+                        Payment for Extra{" "}
+                        {this.state.days - expansionData.numberOfNights}{" "}
+                        Night(s) : $
+                        {(
+                          (expansionData.total / expansionData.numberOfNights) *
+                            this.state.days -
+                          expansionData.total
+                        ).toFixed(2)}
+                      </h4>
+                      <hr />
+                      <TextFieldGroup
+                        placeholder="Name on Card"
+                        name="nameOnCard"
+                      />
 
-          <div class="centerChangeReservation">
-            <DialogTitle>Select dates to change your reservation.</DialogTitle>
-            <DialogContent>
-              {hotel}
-              <br /> <br />
-              Current Check In: {checkInTime.toDateString()} <br /> <br />
-              Current Check Out: {checkOutTime.toDateString()} <br /> <br />
-            </DialogContent>
-            <p>
-              Select the new start and end dates for changing your reservation.
-            </p>
-            <CalendarPicker
-              class="centerChangeReservation"
-              checkIn={this.state.newCheckIn}
-              checkOut={this.state.newCheckOut}
-              onHandleDate={this.onHandleDate}
-            />
-
-            <CardContent>
-              <h4 style={{ marginTop: "1%" }}>Credit Card Details</h4>
-              <hr />
-              <TextFieldGroup
-                placeholder="Name on Card"
-                name="nameOnCard"
-                // value={this.state.nameOnCard}
-                // onChange={this.onChange}
-                // error={this.state.inputErrors.nameCC}
-              />
-
-              <CardElement
-                name="paymentField"
-                onChange={this.stripeValidate}
-                id="sample-input"
-              />
-            </CardContent>
-
+                      <CardElement
+                        name="paymentField"
+                        onChange={this.stripeValidate}
+                        id="sample-input"
+                      />
+                    </CardContent>
+                  </div>
+                ) : null}
+                {this.state.showChange === true &&
+                (expansionData.total / expansionData.numberOfNights) *
+                  this.state.days -
+                  expansionData.total <
+                  0 ? (
+                  <DialogTitle>
+                    <br /> <br />
+                    You will be automatically refunded $
+                    {(-(
+                      (expansionData.total / expansionData.numberOfNights) *
+                        this.state.days -
+                      expansionData.total
+                    )).toFixed(2)}
+                    .
+                  </DialogTitle>
+                ) : null}
+              </Grid>
+            </Grid>
             <DialogActions>
               {this.state.newCheckIn == null ||
-              this.state.newCheckOut == null ? null : (
+              this.state.newCheckOut == null ||
+              this.state.showChange == false ? null : (
                 <Button
                   onClick={() => this.onChangeClick(id, expansionData)}
                   variant="outlined"
@@ -194,8 +283,7 @@ class ChangeReservation extends Component {
                 Cancel Change
               </Button>
             </DialogActions>
-          </div>
-          <div class="centerChangeReservation" />
+          </Grid>
         </Dialog>
       </div>
     );
