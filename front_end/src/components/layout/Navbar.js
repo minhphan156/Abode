@@ -31,13 +31,11 @@ class Navbar extends Component {
   componentWillMount(){
     if (localStorage.jwtToken) {
        this.props.getProfileInfo();
-      console.log(this.props)
     }
   }
 
 
 render() { 
-    console.log(this.props)
     // Markup shown on the right hand side of Navbar when user is GUEST.
     let guestMarkUp = (
       <Grid

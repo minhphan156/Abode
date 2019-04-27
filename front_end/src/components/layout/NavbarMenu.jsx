@@ -27,7 +27,6 @@ export default (class NavbarMenu extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     return (
