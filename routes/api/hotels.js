@@ -1,15 +1,26 @@
 const express = require("express");
 const router = express.Router();
-
+const NodeGeocoder = require('node-geocoder');
 const checkAvailable = require("../../validation/checkAvailableHotels");
 var checkAvailability = require('../../validation/checkAvailibility.js')
 const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 const Customer = require("../../models/customer");
 
+var options = {
+    provider: 'google',
+   
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    apiKey: 'AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8', // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+  };
+
+  var geocoder = NodeGeocoder(options);
+
 // @route GET api/hotel/search
 // @desc Search Overview with Sorting and Filtering
-router.get('/search',(req,res)=>{
+router.get('/search', (req,res)=>{
     //Sorting
     var sortByObject = req.query.sortObject;
     if (typeof sortByObject !== 'undefined'){
@@ -91,7 +102,7 @@ router.get('/search',(req,res)=>{
         star: {$gte: star_rating},
         hdc_rating: {$gte: review_score},
         $or:[{name:regex}, {city:regex},{airports:regex}]
-    }).sort(sortByObject).then((doc,err)=>{
+    }).sort(sortByObject).then(async (doc,err)=>{
         if(err) res.status(400).json(err);
         var result = [];
         let bookingID = "bookid"
@@ -102,6 +113,10 @@ router.get('/search',(req,res)=>{
             let kingAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
             let studioAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
             if (singleAvailable || doubleAvailable || kingAvailable || studioAvailable){
+                await geocoder.geocode(arr.address, function(err,res){
+                        arr.lat = res[0].latitude;
+                        arr.lng = res[0].longitude;
+                    });
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
@@ -112,6 +127,8 @@ router.get('/search',(req,res)=>{
                     star_rates:arr.star,
                     guest_rate:arr.hdc_rating,
                     img:arr.images[0],
+                    lat:arr.lat,
+                    lng:arr.lng
                 }
                 result.push(item);
             }
@@ -124,6 +141,7 @@ router.get('/search',(req,res)=>{
             "results": result
         }
         res.status(200).json(resultPack);
+
     })
 })
 
