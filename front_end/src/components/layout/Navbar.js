@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser,getCurrentUser } from "../../actions/authActions";
+import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile,getProfileInfo  } from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
@@ -171,5 +171,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile,getCurrentUser,getProfileInfo  }
+  { logoutUser, clearCurrentProfile,getProfileInfo  }
 )(Navbar);
