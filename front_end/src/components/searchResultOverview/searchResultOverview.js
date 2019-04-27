@@ -4,6 +4,7 @@ import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { submitQuery, saveQuery } from "../../actions/searchActions";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 // Additional libraries
 import ReactStars from "react-stars";
@@ -613,6 +614,54 @@ class searchResultOverview extends Component {
               pool={pool}
               pet_friendly={pet_friendly}
             />
+            
+            <Grid container direction="flow" spacing={8}>
+              <ExpansionPanel
+                defaultExpanded={width == "xs" ? false : true}
+                square="false"
+                style={{ marginBottom: 8 }}
+              >
+              <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+                <Typography className={classes.subtitles} variant="subtitle2">
+                  <i class="fas fa-map-marked-alt"></i> {" "}Map View
+                </Typography>
+              </ExpansionPanelSummary>
+              <Divider />
+              <ExpansionPanelDetails>
+                <div style={{ width: "100%" }}>
+                  <Map
+                    google={this.props.google}
+                    zoom={15}
+                    initialCenter={{
+                      lat: 37.8199,
+                      lng: 122.4783
+                    }}
+                  >
+
+                  {hotelQuery.results.map((item, index) => {
+                    return (
+                      <Marker
+                      onClick={this.onMarkerClick}
+                      name={"Current location"}
+                      position={{
+                        lat: hotelQuery.results[index].lat,
+                        lng: hotelQuery.results[index].lng
+                      }}
+                    />
+                    );
+                  })}
+
+                  <InfoWindow onClose={this.onInfoWindowClose}>
+                    <div>
+                      <h1></h1>
+                    </div>
+                  </InfoWindow>
+                </Map>
+                </div>
+              </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </Grid>
+
             <Grid item xs={12} sm={8} md={9} lg={9}>
               <Grid container direction="flow" justify="center" spacing={8}>
                 <Grid item xs={12}>
@@ -657,4 +706,8 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getIndividualHotelResult, submitQuery, saveQuery }
-)(withStyles(styles)(withWidth()(searchResultOverview)));
+)(withStyles(styles)(withWidth()(
+  GoogleApiWrapper({
+    apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"
+  })(searchResultOverview)
+)));
