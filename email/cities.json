@@ -1,0 +1,25 @@
+{
+    "name":[
+        { "label": "New York, NY" },
+        { "label": "San Francisco, CA" },
+        { "label": "Los Angeles, CA" },
+        { "label": "San Diego, CA" },
+        { "label": "Las Vegas, NV"  },
+        { "label": "Chicago,IL"  },
+        { "label": "Honolulu,Hawaii"  },
+        { "label": "Miami,Florida"  },
+        { "label": "Orlando,Florida"  },
+        { "label": "Seattle,Washington"  },
+        { "label": "Portland,Oregon"  },
+        { "label": "Boston,Massachusetts"  },
+        { "label": "Phoenix,Arizona"  },
+        { "label": "New Orleans,Louisiana"  },
+        { "label": "Washington,Washington"  },
+        { "label": "Philadelphia,Pennsylvania"  },
+        { "label": "Atlanta,Georgia"  },
+        { "label": "Houston,Texas"  },
+        { "label": "San Jose,CA"  },
+        { "label": "Denver,Colorado"  }
+    ]
+}
+

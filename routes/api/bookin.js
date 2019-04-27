@@ -9,6 +9,7 @@ const City = require("../../models/city")
 const User = require("../../models/User");
 
 const confirmEmail = require('../../email/confirmationEmail')
+const welcomeEmail = require('../../email/welcomeEmail')
 
 
 const checkAvailability = require('../../validation/checkAvailibility.js');
@@ -95,7 +96,26 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
                             });
 
                             // Check if we've finished packing ALL the history objects
-                            if (historyPack.length === bookings.length) return res.status(200).send(historyPack);
+                            if (historyPack.length === bookings.length) {
+
+                                historyPack.sort((a, b) => {
+                                    if (b.new_check_in_date && a.new_check_in_date) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date && a.new_check_in_date === undefined) {
+                                        return (new Date(a.new_check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                    }
+
+                                    else if (b.new_check_in_date === undefined && a.new_check_in_date) {
+                                        return (new Date(a.check_in_date)).getTime() - (new Date(b.new_check_in_date)).getTime()
+                                    }
+
+                                    return (new Date(a.check_in_date)).getTime() - (new Date(b.check_in_date)).getTime()
+                                })
+
+                                return res.status(200).send(historyPack);
+                            }
 
                         });
 
@@ -194,8 +214,9 @@ router.post("/confirm",(req,res)=>{
     var customerID;
     var bookingID = "tempBookingID"
     var rewardPointsUsed = req.body.rewardPointsUsed ? req.body.rewardPointsUsed : null;
-    var rewardPointsEarned = req.body.rewardPointsEarned ? req.body.rewardPointsEarned : null;
+    var rewardPointsEarned = req.body.rewardPointsEarned ? parseInt(req.body.rewardPointsEarned) : null;
     var rewardDiscount = req.body.rewardDiscount ? req.body.rewardDiscount : null;
+    console.log(rewardPointsEarned)
     //check this user visit our website before and get customerID
     Customer.find({email:email},function(err,doc){
         if(err) res.status(400).json(err);
@@ -295,8 +316,16 @@ router.post("/confirm",(req,res)=>{
                                     destinationImg = null
                                 }else{
                                     destinationImg = city[0].imgMain
+                                    let x = city[0];
+                                    x.bookings += 1;                               
+                                    x.save().catch(err=>res.send(err))   
                                 }
                                 confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
+                                doc.hotelID.name = hotelName;
+                                doc.customerID.email = email;
+                                doc.customerID.Lastname = lastname;
+                                doc.hotelID.city = destinationName;
+                                welcomeEmail(doc)
                                 res.status(200).send({
                                     bookingID:doc._id,
                                     hotelName: hotelName,
@@ -348,126 +377,151 @@ router.post("/confirm",(req,res)=>{
 // @desc change Reservation
 // @access public
 router.post('/changeReservation',(req,res)=>{
-    bookingID = req.query.bookingID;
-    date = {
-        checkin:new Date(req.query.newCheckIn.replace('"','').replace('"','')),
-        checkout:new Date(req.query.newCheckOut.replace('"','').replace('"',''))
-    };
-    newPrice = req.query.newPrice ? req.query.newPrice : null;
-    Booking.findById(bookingID).then((reservations,err)=>{
-        if(err) res.status(400).json(err);
-        if(reservations){
-            if(reservations.check_in_date.getTime() === date.checkin.getTime() && reservations.check_out_date.getTime() === date.checkout.getTime()){
-                res.status(409).json({message:"cannot change to same dates"})
-                return;
-            }
-            if(reservations.changed){
-            if(reservations.new_check_in_date.getTime() === date.checkin.getTime() && reservations.new_check_out_date.getTime() === date.checkout.getTime()){
-                res.status(409).json({message:"cannot change to same dates"})
-                return;
-            }}
-            Hotel.findById(reservations.hotelID).then(hotel=>{
-                if(reservations.typeOfRoom === 'single'){
-                    arr = hotel.roomTypeAndNumber.single;
+    passport.authenticate("jwt",function(err, user, info){
+        var isLogged = false
+        if(user){
+            isLogged = true
+        }
+        bookingID = req.body.bookingID;
+        date = {
+            checkin:new Date(req.body.newCheckIn.replace('"','').replace('"','')),
+            checkout:new Date(req.body.newCheckOut.replace('"','').replace('"',''))
+        };
+    
+        Booking.findById(bookingID).then((reservations,err)=>{
+            if(err) res.status(400).json(err);
+            if(reservations){
+                if(reservations.check_in_date.getTime() === date.checkin.getTime() && reservations.check_out_date.getTime() === date.checkout.getTime()){
+                    res.status(409).json({message:"cannot change to same dates"})
+                    return;
                 }
-                if(reservations.typeOfRoom === 'double'){
-                    arr = hotel.roomTypeAndNumber.double;
-                }
-                if(reservations.typeOfRoom === 'king'){
-                    arr = hotel.roomTypeAndNumber.king;
-                }
-                if(reservations.typeOfRoom === 'studio'){
-                    arr = hotel.roomTypeAndNumber.studio;
-                }
-                for(let i = 0;i<arr.length;i++){
-                    for(let j = 0;j<arr[i].dates.length;j++){
-                        if(arr[i].dates[j].bookingID === bookingID){
-                            arr[i].dates.splice(j,1)
+                if(reservations.changed){
+                if(reservations.new_check_in_date.getTime() === date.checkin.getTime() && reservations.new_check_out_date.getTime() === date.checkout.getTime()){
+                    res.status(409).json({message:"cannot change to same dates"})
+                    return;
+                }}
+                Hotel.findById(reservations.hotelID).then(hotel=>{
+                    if(reservations.typeOfRoom === 'single'){
+                        arr = hotel.roomTypeAndNumber.single;
+                    }
+                    if(reservations.typeOfRoom === 'double'){
+                        arr = hotel.roomTypeAndNumber.double;
+                    }
+                    if(reservations.typeOfRoom === 'king'){
+                        arr = hotel.roomTypeAndNumber.king;
+                    }
+                    if(reservations.typeOfRoom === 'studio'){
+                        arr = hotel.roomTypeAndNumber.studio;
+                    }
+                    for(let i = 0;i<arr.length;i++){
+                        for(let j = 0;j<arr[i].dates.length;j++){
+                            if(arr[i].dates[j].bookingID === bookingID){
+                                arr[i].dates.splice(j,1)
+                            }
                         }
                     }
-                }
-                if(checkAvalibity(arr,date,reservations.numOfRoom,bookingID)){
-                    reservations.changed = true;
-                    reservations.new_check_in_date = date.checkin;
-                    reservations.new_check_out_date = date.checkout;
-                    if(newPrice){
-                        reservations.price = newPrice
+                    if(checkAvalibity(arr,date,reservations.numOfRoom,bookingID)){
+                        if(isLogged){
+                            reservations.rewardPointsEarned = req.body.newPointsEarned?req.body.newPointsEarned:reservations.rewardPointsEarned
+                            if(req.body.newPointsused){
+                                user.rewardPoints = user.rewardPoints + reservations.rewardPointsUsed - req.body.newPointsused
+                                reservations.rewardPointsUsed = req.body.newPointsused?req.body.newPointsused:reservations.rewardPointsUsed
+                                user.save().catch(err=>console.log(err))
+                            }
+                        }
+                        reservations.changed = true;
+                        reservations.new_check_in_date = date.checkin;
+                        reservations.new_check_out_date = date.checkout;
+                        reservations.subtotal = req.body.newSubtotal?req.body.newSubtotal:reservations.subtotal
+                        reservations.total = req.body.newTotal?req.body.newTotal:reservations.total
+                        reservations.discount = req.body.newDiscount?req.body.newDiscount:reservations.discount
+                        reservations.rewardDiscount = req.body.newRewardsDiscount?req.body.newRewardsDiscount:reservations.rewardDiscount
+                        reservations.taxesAndFees = req.body.newTaxesAndFees?req.body.newTaxesAndFees:reservations.taxesAndFees
+                        reservations.numOfNights = req.body.numberOfNights
+                        hotel.save().catch(err=>res.status(400).json(err));
+                        reservations.save().catch(err=>res.status(400).json({
+                            message:"Fail to change",
+                            code: 400
+                          }))
+                          res.status(200).json(
+                            {
+                              message:"Successfully change",
+                              code:200
+                            })
+                    }else{
+                        res.status(409).json({
+                            message:"no room available at that date",
+                            code: 409
+                          })
                     }
-                    hotel.save().catch(err=>res.status(400).json(err));
-                    reservations.save().catch(err=>res.status(400).json({
-                        message:"Fail to change",
-                        code: 400
-                      }))
-                      res.status(200).json(
-                        {
-                          message:"Successfully change",
-                          code:200
-                        })
-                }else{
-                    res.status(409).json({
-                        message:"no room available at that date",
-                        code: 409
-                      })
-                }
-            }).catch(err=>{res.status(400).json(err)})
-        }else{
-            res.status(404).json({message:`cannot find ${bookingID}`,code:404})
-        }
-    })
+                }).catch(err=>{res.status(400).json(err)})
+            }else{
+                res.status(404).json({message:`cannot find ${bookingID}`,code:404})
+            }
+        })
+    })(req,res)
 })
 
 // @route POST /api/booking/cancel
 // @desc cancel a reservation 
 // @access public
 router.post('/cancel', (req,res)=>{
-    Booking.findById(req.query.bookingID)
+    Booking.findById(req.body.bookingID)
     .then(booking => {
-        if (booking.status == 0){
-            booking.status = 3;
-            if (booking.rewardPointsUsed !== 0){
-                User.findOneAndUpdate(
-                    {'customerID': booking.customerID},
-                    {$inc: { "rewardPoints" : booking.rewardPointsUsed }
-                })
-            }
-            Hotel.findById(booking.hotelID)
-            .then(hotel => {
-                if(booking.typeOfRoom === 'single'){
-                    arr = hotel.roomTypeAndNumber.single;
+        if (booking.check_in_date - new Date() > 172800000){
+            if (booking.status == 0){
+                booking.status = 3;
+                if (booking.rewardPointsUsed !== 0){
+                    User.findOneAndUpdate(
+                        {'customerID': booking.customerID},
+                        {$inc: { "rewardPoints" : booking.rewardPointsUsed }
+                    })
                 }
-                if(booking.typeOfRoom === 'double'){
-                    arr = hotel.roomTypeAndNumber.double;
-                }
-                if(booking.typeOfRoom === 'king'){
-                    arr = hotel.roomTypeAndNumber.king;
-                }
-                if(booking.typeOfRoom === 'studio'){
-                    arr = hotel.roomTypeAndNumber.studio;
-                }
-                for(let i = 0;i<arr.length;i++){
-                    for(let j = 0;j<arr[i].dates.length;j++){
-                        if(arr[i].dates[j].bookingID === req.query.bookingID){
-                            arr[i].dates.splice(j,1)
+                Hotel.findById(booking.hotelID)
+                .then(hotel => {
+                    if(booking.typeOfRoom === 'single'){
+                        arr = hotel.roomTypeAndNumber.single;
+                    }
+                    if(booking.typeOfRoom === 'double'){
+                        arr = hotel.roomTypeAndNumber.double;
+                    }
+                    if(booking.typeOfRoom === 'king'){
+                        arr = hotel.roomTypeAndNumber.king;
+                    }
+                    if(booking.typeOfRoom === 'studio'){
+                        arr = hotel.roomTypeAndNumber.studio;
+                    }
+                    for(let i = 0;i<arr.length;i++){
+                        for(let j = 0;j<arr[i].dates.length;j++){
+                            if(arr[i].dates[j].bookingID === req.body.bookingID){
+                                arr[i].dates.splice(j,1)
+                            }
                         }
                     }
-                }
-                hotel.save().catch(err=>res.status(400).json(err));
-                booking.save().catch( err => res.status(400).json({
-                    message: "not able to cancel",
-                    code: 400
-                }))
-                res.status(200).json({
-                    message: "successfully canceled",
-                    code: 200
+                    hotel.save().catch(err=>res.status(400).json(err));
+                    booking.save().catch( err => res.status(400).json({
+                        message: "not able to cancel",
+                        code: 400
+                    }))
+                    res.status(200).json({
+                        message: "successfully canceled",
+                        code: 200
+                    })
                 })
-            })
+            }
+            else{
+                res.status(400).json({
+                    message: "booking status is not 0.",
+                    code: 400
+                })
+            }
         }
-        else{
-            res.status(400).json({
-                message: "booking status is not 0.",
-                code: 400
-            })
-        }
+    else {
+        res.status(400).json({
+            message: "within 48 hours, cannot refund",
+            code: 400
+        })
+    }
     })
 })
 

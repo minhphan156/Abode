@@ -1,0 +1,745 @@
+@media screen and (max-width: 330px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+
+  .bookBtn{
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+
+  .bookBtnShrt{
+    display:none;
+  }
+
+  .priceAndRate{
+    display:none;
+  }
+
+  .shrtMap{
+    display:none;
+  }
+    
+  .maps{
+    height:400px;
+  }
+
+  .hotelName{
+    font-size: 30px;
+    font-weight: 550;
+  }
+  
+  .hotelAdd{
+    font-size: 14px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .singleRate{
+    display:none;
+  }
+
+  .bigTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 12px;
+    font-weight: 400;
+  }
+  
+  .tabContent{
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+
+@media screen and (min-width: 330px) and (max-width: 372px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+  
+  .bookBtn{
+    display:none;
+  }
+  
+  .bookBtnShrt{
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+
+  .priceAndRate{
+    display:none;
+  }
+
+  .shrtMap{
+    display:none;
+  }
+
+  .maps{
+    height:400px;
+  }
+      
+  .hotelName{
+    font-size: 30px;
+    font-weight: 550;
+  }
+    
+  .hotelAdd{
+    font-size: 14px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .singleRate{
+    display: none;
+  }
+
+  .bigTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 12px;
+    font-weight: 400;
+  }
+  
+  .tabContent{
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 372px) and (max-width: 393px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+
+  .bookBtn{
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+
+  .bookBtnShrt{
+    display:none;
+  }
+
+  .priceAndRate{
+    display:none;
+  }
+
+  .shrtMap{
+    display:none;
+  }
+
+  .maps{
+      height:400px;
+    }
+
+  .hotelName{
+    font-size: 30px;
+    font-weight: 550;
+  }
+  
+  .hotelAdd{
+    font-size: 16px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .singleRate{
+    display: none;
+  }
+
+  .bigTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .tabContent{
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 393px) and (max-width: 440px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+  
+  .bookBtn{
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+  
+  .bookBtnShrt{
+    display:none;
+  }
+
+  .priceAndRate{
+    display:none;
+  }
+
+  .shrtMap{
+    display:none;
+  }
+
+  .maps{
+    height:400px;
+  }
+
+  .hotelName{
+    font-size: 30px;
+    font-weight: 550;
+  }
+    
+  .hotelAdd{
+    font-size: 16px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .doubleRate{
+    display: none;
+  }
+
+  .bigTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .tabContent{
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 440px) and (max-width: 482px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+  
+  .bookBtn{
+    display:none;
+  }
+  
+  .bookBtnShrt{
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+
+  .priceAndRate{
+    display:none;
+  }
+
+  .shrtMap{
+    display:none;
+  }
+
+  .maps{
+    height:400px;
+  }
+
+  .hotelName{
+    font-size: 35px;
+    font-weight: 550;
+  }
+    
+  .hotelAdd{
+    font-size: 20px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 21px;
+    font-weight: 300;
+  }
+
+  .doubleRate{
+    display: none;
+  }
+
+  .bigTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .tabContent{
+    font-size: 16px;
+    font-weight: 200;
+  }
+    
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 21px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 482px) and (max-width: 991px){
+  .wholePage{
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+  
+  .bookBtn{
+    display:none;
+  }
+  
+  .bookBtnShrt{
+    height:38px;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+
+  .priceAndRate{
+    display:none;
+  }
+
+  .shrtMap{
+    display:none;
+  }
+
+  .maps{
+    height:400px;
+  }
+
+  .hotelName{
+    font-size: 38px;
+    font-weight: 550;
+  }
+      
+  .hotelAdd{
+    font-size: 22px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 23px;
+    font-weight: 300;
+  }
+
+  .doubleRate{
+    display: none;
+  }
+
+
+  .bigTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .tabContent{
+    font-size: 16px;
+    font-weight: 200;
+  }
+
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 23px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1163px){
+  .wholePage{
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+  }
+
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+  
+  .bookBtn{
+    height:38px;
+    width: 50%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+  
+  .bookBtnShrt{
+    display:none;
+  }
+
+  .priceAndRateHeader{
+    display:none;
+  }
+
+  .longMap{
+    display:none;
+  }
+
+  .maps{
+    height:660px;
+  }
+
+  .hotelName{
+    font-size: 40px;
+    font-weight: bold;
+  }
+  
+  .hotelAdd{
+    font-size: 24px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .mobileTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 18px;
+    font-weight: 400;
+  }
+  
+  .tabContent{
+    font-size: 16px;
+    font-weight: 200;
+  }
+
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 1163px){
+  .wholePage{
+    margin-left: 7.5%;
+    margin-right:7.5%;
+  }
+
+  .seeRoomBtn {
+    width: 100%;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #568cba;
+    color: white;
+  }
+
+  .bookBtn{
+    height:38px;
+    width: 50%;
+    overflow: hidden;
+    border: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 12px;
+    background-color: #0c4b78;
+    color: white;
+  }
+
+  .bookBtnShrt{
+    display:none;
+  }
+
+  .priceAndRateHeader{
+    display:none;
+  }
+
+  .longMap{
+    display:none;
+  }
+
+  .maps{
+    height:660px;
+  }
+
+  .hotelName{
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  .hotelAdd{
+    font-size: 24px;
+    font-weight: 450;
+    color: #808080;
+  }
+
+  .hotelStarShrt{
+    display:none;
+  }
+
+  .otherRating{
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .mobileTab{
+    display: none;
+  }
+
+  .tabName{
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .tabContent{
+    font-size: 16px;
+    font-weight: 200;
+  }
+
+  .reviewSection{
+    margin-top: 2%;
+    font-size: 24px;
+    font-weight: bold;
+  }
+}

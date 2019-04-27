@@ -87,6 +87,10 @@ const BookingSchema = new Schema({
     starReview:{
         type:Number,
         default:0
+    },
+    welcome:{
+        type:Boolean,
+        default:false
     }
 })
 
