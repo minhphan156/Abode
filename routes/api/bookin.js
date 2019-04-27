@@ -316,10 +316,10 @@ router.post("/confirm",(req,res)=>{
                                     destinationImg = null
                                 }else{
                                     destinationImg = city[0].imgMain
+                                    let x = city[0];
+                                    x.bookings += 1;                               
+                                    x.save().catch(err=>res.send(err))   
                                 }
-                                let x = city[0];
-                                x.bookings += 1;                               
-                                x.save().catch(err=>res.send(err))   
                                 confirmEmail(firstname,lastname,doc._id,hotelName,doc.typeOfRoom,date,email,doc.numOfRoom)
                                 doc.hotelID.name = hotelName;
                                 doc.customerID.email = email;
