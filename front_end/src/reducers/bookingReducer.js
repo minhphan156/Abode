@@ -52,7 +52,6 @@ export default function(state = initialState, action) {
     case CLEAR_BOOKING:
       return { ...state, bookingConfirmationData: {} };
     case CHANGE_RESERVATION:
-      console.log("Changed");
     case CANCEL_RESERVATION:
     default:
       return state;
