@@ -27,9 +27,9 @@ export default (class NavbarMenu extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
     return (
       <div>
         <IconButton
@@ -48,7 +48,8 @@ export default (class NavbarMenu extends React.Component {
           onClose={this.handleClose}
           TransitionComponent={Fade}
         >
-          <MenuItem>{this.props.userEmail}</MenuItem>
+        {this.props.userEmail?<MenuItem>{this.props.userEmail.email}</MenuItem>:null}
+
 
           <Link to="/history" className="navbarMenuButtons">
             <MenuItem onClick={this.handleClose}>Booking History</MenuItem>

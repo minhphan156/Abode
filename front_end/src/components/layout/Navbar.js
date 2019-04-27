@@ -6,8 +6,7 @@ import { logoutUser,getCurrentUser } from "../../actions/authActions";
 import { clearCurrentProfile,getProfileInfo  } from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
+
 
 import "./navbar.css";
 
@@ -17,6 +16,9 @@ import { Button, Grid } from "@material-ui/core";
 class Navbar extends Component {
   constructor() {
     super();
+    this.state ={
+      email:""
+    }
     this.onLogoutClick = this.onLogoutClick.bind(this);
   }
 
@@ -26,14 +28,16 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  componentDidMount(){
+  componentWillMount(){
     if (localStorage.jwtToken) {
-      this.props.getProfileInfo();
+       this.props.getProfileInfo();
+      console.log(this.props)
     }
   }
 
 
-  render() {
+render() { 
+    console.log(this.props)
     // Markup shown on the right hand side of Navbar when user is GUEST.
     let guestMarkUp = (
       <Grid
@@ -78,7 +82,7 @@ class Navbar extends Component {
         <Grid className="adjustMenuBurger" item>
           <NavbarMenu
             onLogoutClick={this.onLogoutClick}
-            userEmail={this.props.auth.user.email}
+            userEmail={this.props.profile.profile_info}
           />
         </Grid>
       </Grid>
@@ -120,7 +124,6 @@ class Navbar extends Component {
 
     return (
       <div className="navbarContainer ">
-      {    console.log(this.props)}
         <Grid
           container
           className="navbarContainer headerfont"
@@ -159,12 +162,13 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
-  landing: PropTypes.object.isRequired
+  landing: PropTypes.object.isRequired,
 };
 
 let mapStateToProps = state => ({
   auth: state.auth,
-  landing: state.landing
+  landing: state.landing,
+  profile: state.profile
 });
 
 export default connect(
