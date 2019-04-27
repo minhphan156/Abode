@@ -38,7 +38,7 @@ export const loginUser = userData => dispatch => {
         id: decoded.id,
         iat: decoded.iat,
         exp: decoded.exp,
-        email: email,
+        email: email
       };
 
       // Set current user
