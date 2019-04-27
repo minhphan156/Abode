@@ -113,10 +113,6 @@ router.get('/search', (req,res)=>{
             let kingAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.king, date, numberRooms, bookingID);
             let studioAvailable = checkAvailable(doc[startIndex].roomTypeAndNumber.studio, date, numberRooms, bookingID);
             if (singleAvailable || doubleAvailable || kingAvailable || studioAvailable){
-                await geocoder.geocode(arr.address, function(err,res){
-                        arr.lat = res[0].latitude;
-                        arr.lng = res[0].longitude;
-                    });
                 item = {
                     name:arr.name,
                     hotelID:arr._id,
@@ -127,13 +123,20 @@ router.get('/search', (req,res)=>{
                     star_rates:arr.star,
                     guest_rate:arr.hdc_rating,
                     img:arr.images[0],
-                    lat:arr.lat,
-                    lng:arr.lng
                 }
                 result.push(item);
             }
             startIndex++;
         }
+
+        let addresses = result.map(elem => {return elem.address})
+       await geocoder.batchGeocode(addresses, function (err, results) {
+            result.map((elem,i)=>{
+                elem.lat = results[i].value[0].latitude;
+                elem.lng = results[i].value[0].longitude;   
+            })
+          });
+
         resultPack = {
             "lastIndex": startIndex,
             "pageNumber": req.query.pageNumber,
