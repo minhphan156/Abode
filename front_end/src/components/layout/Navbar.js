@@ -16,9 +16,6 @@ import { Button, Grid } from "@material-ui/core";
 class Navbar extends Component {
   constructor() {
     super();
-    this.state ={
-      email:""
-    }
     this.onLogoutClick = this.onLogoutClick.bind(this);
   }
 
@@ -33,7 +30,6 @@ class Navbar extends Component {
        this.props.getProfileInfo();
     }
   }
-
 
 render() { 
     // Markup shown on the right hand side of Navbar when user is GUEST.
