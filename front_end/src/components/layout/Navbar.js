@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser,getCurrentUser } from "../../actions/authActions";
-import { clearCurrentProfile } from "../../actions/profileActions";
+import { clearCurrentProfile,getProfileInfo  } from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
 import axios from "axios";
@@ -26,10 +26,9 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  componentWillMount(){
+  componentDidMount(){
     if (localStorage.jwtToken) {
-      const decode = jwt_decode(localStorage.jwtToken);
-      this.props.getCurrentUser(decode);
+      this.props.getProfileInfo();
     }
   }
 
@@ -121,6 +120,7 @@ class Navbar extends Component {
 
     return (
       <div className="navbarContainer ">
+      {    console.log(this.props)}
         <Grid
           container
           className="navbarContainer headerfont"
@@ -169,5 +169,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile,getCurrentUser }
+  { logoutUser, clearCurrentProfile,getCurrentUser,getProfileInfo  }
 )(Navbar);
