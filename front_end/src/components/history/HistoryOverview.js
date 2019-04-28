@@ -26,18 +26,6 @@ import CancellationPrompt from "./CancellationPrompt";
 import ChangeReservation from "./ChangeReservation";
 import { Elements, StripeProvider } from "react-stripe-elements";
 const styles = {
-  table: {
-    maxWidth: 330,
-    minWidth: 300,
-    maxHeight: 50
-  },
-  paddingDense: {
-    paddingTop: 0,
-    paddingBottom: 0
-  },
-  tableCell: {
-    maxHeight: 50
-  },
   tableNoBorder: {
     maxHeight: 10,
 
@@ -52,9 +40,6 @@ const styles = {
   },
   chipCheckin: {
     backgroundColor: "#3ba711"
-  },
-  dateChangedFrom: {
-    textDecoration: "line-through"
   },
   dateChangedTo: {
     color: "#FFA500"
@@ -84,17 +69,6 @@ const styles = {
     paddingBottom: 1,
     backgroundColor: "#3ba711"
   },
-  reviewFormHeaderText: {
-    color: "white"
-  },
-  ReviewButtonForPhone: {
-    "&:focus": { outline: "none" },
-    borderRadius: 17,
-    textTransform: "none",
-    marginLeft: 28,
-    paddingLeft: 25.5,
-    paddingRight: 25.5
-  },
   ReviewedButtonForPhone: {
     "&:focus": { outline: "none" },
     borderRadius: 17,
@@ -104,12 +78,6 @@ const styles = {
     paddingLeft: 18,
     paddingRight: 18,
     backgroundColor: "#3ba711"
-  },
-  historyHotelImageForPhone: {
-    width: "112%"
-  },
-  HistoryPageTotalSmallForPhone: {
-    paddingBottom: 0
   }
 };
 
