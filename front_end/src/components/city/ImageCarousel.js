@@ -1,5 +1,5 @@
 // React essential imports
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 // Material-UI imports
@@ -7,49 +7,92 @@ import { Grid, withStyles, withWidth} from "@material-ui/core";
 
 // CSS to JavaScript component styling
 let styles = theme => ({
-  itemMain: {
-    width: "100%"
-  },
-  itemDetail: {
-    [theme.breakpoints.up("md")]: {
-      height: "40%"
+  containerSize: {
+    [theme.breakpoints.down("xl")]: {
+      height: 500
+    },
+    [theme.breakpoints.down("md")]: {
+      height: 400
     },
     [theme.breakpoints.down("sm")]: {
-      height: "50%"
+      height: 350
     }
   },
-  imgSize: {
-    width: "100%",
+  image: {
     height: "100%",
-    objectFit: "cover",
-    margin: 0
+    objectFit: "cover"
   }
 });
 
-// Child functional component for the image carousel used in <CityOverview />
-let ImageCarousel = props => {
-  let { classes, images } = props;
-  return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-      spacing={8}
-    >
-      <Grid item className={classes.itemMain} xs={6} >
-        <img className={classes.imgSize} src={images[0]}/>
+class ImageCarousel extends Component {
+  constructor() {
+    super();
+    this.state = {
+      images: []
+    }
+    this.handleChangeImage = this.handleChangeImage.bind(this);
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.cityData != null && state.images.length == 0) {
+      let imgArr = [props.cityData.imgMain, props.cityData.inspire];
+      imgArr = imgArr.concat(props.cityData.imgAlt);
+      return {
+        images: imgArr
+      }
+    }
+    return null;
+  }
+
+  handleChangeImage = newImageIndex => {
+    let newImages = this.state.images;
+    let temp = newImages[0];
+    newImages[0] = newImages[newImageIndex];
+    newImages[newImageIndex] = temp;
+    this.setState({
+      images: newImages
+    })
+  }
+
+  render() {
+    let { images } = this.state;
+    let { classes, cityData } = this.props;
+
+    let copyOfImages = [];
+    for (let i = 1; i < images.length; i++) {
+      copyOfImages.push(images[i]);
+    }
+
+    let counter = 1;
+    let additionalImagesMarkup = copyOfImages.map(img => {
+      let innerCounter = counter++;
+      return(
+        <Grid item md={2} xs>
+          <img className={classes.image} src={images[innerCounter]} alt={`${cityData.name} images[${innerCounter}]`} onClick={() => {this.handleChangeImage(innerCounter)}} />
+        </Grid>
+      );
+    });
+
+    return (
+      <Grid container direction="column" alignItems="center" justify="center" spacing={8}>
+        <Grid item xs={12} md={10}>
+          <img className={`${classes.image} ${classes.containerSize}`} src={images[0]} alt={`${cityData.name} images[0]`} />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Grid container direction="row" justify="center" alignItems="center" spacing={8}>
+            {additionalImagesMarkup}
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item className={classes.itemMain} xs={6}>
-        <img className={classes.imgSize} src={images[1]} />
-      </Grid>
-    </Grid>
-  );
-};
+    )
+  }
+}
+
 
 ImageCarousel.PropTypes = {
   width: PropTypes.func.isRequired,
-  styles: PropTypes.object.isRequired
+  styles: PropTypes.object.isRequired,
+  cityData: PropTypes.object.isRequired
 };
 
 export default withWidth()(withStyles(styles)(ImageCarousel));

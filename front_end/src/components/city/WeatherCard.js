@@ -9,7 +9,8 @@ import {
   Grid,
   Card,
   Typography,
-  CircularProgress
+  CircularProgress,
+  Hidden
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
 
@@ -104,7 +105,7 @@ let WeatherCard = props => {
                 <Grid container direction="row" justify="center">
                   <Grid item>
                     <Typography
-                      variant={isWidthDown("sm", width) ? "subtitle" : "h3"}
+                      variant={isWidthDown("sm", width) ? "h6" : "h3"}
                     >
                       {`${forecastDay.main.temp}°F`}
                     </Typography>
@@ -126,42 +127,44 @@ let WeatherCard = props => {
                   <Grid item>{weatherIcon(forecastDay)}</Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} style={{ width: "100%" }}>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <span className={classes.greyText}>Lo:</span>{" "}
-                    {`${forecastDay.main.temp_min}°F`}
-                  </Grid>
-                  <Grid item>
-                    <span className={classes.greyText}>Hi:</span>{" "}
-                    {`${forecastDay.main.temp_max}°F`}
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} style={{ width: "100%" }}>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <Typography className={classes.greyText} variant="subtitle">
-                      Humidity
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle">
-                      {`${forecastDay.main.humidity} g/m3`}
-                    </Typography>
+              <Hidden smDown>
+                <Grid item xs={12} style={{ width: "100%" }}>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <span className={classes.greyText}>Lo:</span>{" "}
+                      {`${forecastDay.main.temp_min}°F`}
+                    </Grid>
+                    <Grid item>
+                      <span className={classes.greyText}>Hi:</span>{" "}
+                      {`${forecastDay.main.temp_max}°F`}
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+                <Grid item xs={12} style={{ width: "100%" }}>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Typography className={classes.greyText} variant="subtitle">
+                        Humidity
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="subtitle">
+                        {`${forecastDay.main.humidity} g/m3`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Hidden>
             </Grid>
           </Card>
         </Grid>

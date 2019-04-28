@@ -24,7 +24,8 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
+  Hidden
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
 import { Search } from "@material-ui/icons";
@@ -66,6 +67,7 @@ class CityOverview extends Component {
 
   // Fetches needed city data upon mounting
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     this.props.fetchCityById(this.props.match.params.cityId);
     if (this.props.city.cityData != null) {
       this.setState({
@@ -98,22 +100,22 @@ class CityOverview extends Component {
             className={classes.rootContainer}
             direction="row"
             justify={isWidthDown("sm", width) ? "center" : "flex-start"}
-            spacing={8}
+            spacing={32}
           >
-            <Grid item xs={12}>
-              <Grid container direction="column" spacing={8}>
+            <Grid item xs={12} md={10}>
+              <Grid container direction="column" spacing={32}>
                 <Grid item xs={12}>
                   <Grid
                     container
                     direction="row"
                     alignItems="center"
-                    spacing={16}
+                    spacing={32}
                   >
                     <Grid item xs>
                       <Divider />
                     </Grid>
                     <Grid item>
-                      <Typography variant="h3">{city.cityData.name}</Typography>
+                      <Typography variant={isWidthDown("sm", width) ? "h6" : "h3" }>{city.cityData.name}</Typography>
                     </Grid>
                     <Grid item xs>
                       <Divider />
@@ -122,24 +124,46 @@ class CityOverview extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <ImageCarousel
-                    images={this.props.city.cityData.imgAlt}
-                    city={city}
+                    cityData={city.cityData}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <WeatherCard city={city} />
-                </Grid>
                 <Grid item xs="auto" md={12}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleCloseDialog}
-                  >
-                    <Search /> Search for hotels in this city
-                  </Button>
+                  <Grid container direction="row" justify="center" alignItems="center" style={{width: "100%"}}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleCloseDialog}
+                    >
+                      <Search /> Search for hotels in this city
+                    </Button>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <CityDescription city={city} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                spacing={8}
+              >
+                <Hidden mdUp>
+                  <Grid item xs md={12}>
+                    <Divider />
+                  </Grid>
+                </Hidden>
+                <Grid item >
+                  <Typography variant="h6">Weather</Typography>
+                </Grid>
+                <Grid item xs md={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <WeatherCard city={city} />
                 </Grid>
               </Grid>
             </Grid>
@@ -194,7 +218,6 @@ class CityOverview extends Component {
                   <Divider />
                 </Grid>
                 <Grid item xs={12}>
-                  {/* TODO: Update placedholder once backend is connected  */}
                   <SearchWidget
                     dealPage={true}
                     dealDestination={city.cityData.name}
