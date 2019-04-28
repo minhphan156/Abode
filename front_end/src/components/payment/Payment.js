@@ -377,7 +377,7 @@ class Payment extends Component {
     });
 
     let emailField = null;
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.auth.isAuthenticated && profile_info != null) {
       this.state.email = profile_info.email;
     } else {
       emailField = (
