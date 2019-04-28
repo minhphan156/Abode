@@ -112,7 +112,6 @@ class ChangeReservation extends Component {
   render() {
     const {
       classes,
-      width,
       checkInTime,
       checkOutTime,
       id,
