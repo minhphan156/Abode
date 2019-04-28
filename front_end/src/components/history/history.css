@@ -179,11 +179,6 @@
     display: none;
   }
 
-  .HistoryPageText2 {
-    font-size: 16px;
-    font-weight: 300;
-  }
-
   .historyHotelImage {
     width: 250px;
   }
@@ -216,13 +211,6 @@
   position: relative;
   top: 45px;
   text-align: center;
-}
-
-.centerChangeReservation {
-  text-align: center;
-  margin: auto;
-  width: 60%;
-  padding: 10px;
 }
 
 .rewardsPointsBalance {
