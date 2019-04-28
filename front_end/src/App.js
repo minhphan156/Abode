@@ -74,7 +74,7 @@ class App extends Component {
             </StripeProvider>
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
-
+            
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             {/*<Route exact path="/indiv-hotel/:hotelID" component={IndivHotel} />*/}
