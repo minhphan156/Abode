@@ -242,10 +242,7 @@ class ChangeReservation extends Component {
                   </div>
                 ) : null}
                 {this.state.showChange === true &&
-                (expansionData.total / expansionData.numberOfNights) *
-                  this.state.days -
-                  expansionData.total <
-                  0 ? (
+                expansionData.numberOfNights > this.state.days ? (
                   <DialogTitle>
                     <br /> <br />
                     You will be automatically refunded $
@@ -255,6 +252,14 @@ class ChangeReservation extends Component {
                       expansionData.total
                     )).toFixed(2)}
                     .
+                  </DialogTitle>
+                ) : null}
+                {this.state.showChange === true &&
+                expansionData.numberOfNights == this.state.days ? (
+                  <DialogTitle>
+                    <br /> <br />
+                    There will be no charges or refunds for the requested
+                    changes.
                   </DialogTitle>
                 ) : null}
               </Grid>
