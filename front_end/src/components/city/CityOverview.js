@@ -28,7 +28,7 @@ import {
   Hidden
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
-import { Search } from "@material-ui/icons";
+import { Search, WbCloudy } from "@material-ui/icons";
 
 // CSS to JavaScript component styling
 let styles = theme => ({
@@ -61,7 +61,7 @@ class CityOverview extends Component {
     this.state = {
       openDialog: false
     };
-    
+
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
 
@@ -78,7 +78,7 @@ class CityOverview extends Component {
 
   componentWillUnmount = () => {
     this.props.clearCityReducer();
-  }
+  };
 
   // Used to toggle the dialog on and off
   handleCloseDialog = event => {
@@ -100,35 +100,37 @@ class CityOverview extends Component {
             className={classes.rootContainer}
             direction="row"
             justify={isWidthDown("sm", width) ? "center" : "flex-start"}
+            alignItems={isWidthDown("sm", width) ? "center" : "flex-start"}
             spacing={32}
           >
             <Grid item xs={12} md={10}>
+              <Grid container direction="row" alignItems="center" spacing={32}>
+                <Grid item xs>
+                  <Divider />
+                </Grid>
+                <Grid item>
+                  <Typography variant={isWidthDown("sm", width) ? "h6" : "h3"}>
+                    {city.cityData.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <Divider />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={10}>
               <Grid container direction="column" spacing={32}>
                 <Grid item xs={12}>
+                  <ImageCarousel cityData={city.cityData} />
+                </Grid>
+                <Grid item xs="auto" md={12}>
                   <Grid
                     container
                     direction="row"
+                    justify="center"
                     alignItems="center"
-                    spacing={32}
+                    style={{ width: "100%" }}
                   >
-                    <Grid item xs>
-                      <Divider />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant={isWidthDown("sm", width) ? "h6" : "h3" }>{city.cityData.name}</Typography>
-                    </Grid>
-                    <Grid item xs>
-                      <Divider />
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <ImageCarousel
-                    cityData={city.cityData}
-                  />
-                </Grid>
-                <Grid item xs="auto" md={12}>
-                  <Grid container direction="row" justify="center" alignItems="center" style={{width: "100%"}}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -143,29 +145,28 @@ class CityOverview extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} md={2}>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                spacing={8}
-              >
-                <Hidden mdUp>
-                  <Grid item xs md={12}>
+            <Hidden mdUp>
+              <Grid item xs={12}>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="center"
+                  spacing={32}
+                >
+                  <Grid item xs>
                     <Divider />
                   </Grid>
-                </Hidden>
-                <Grid item >
-                  <Typography variant="h6">Weather</Typography>
-                </Grid>
-                <Grid item xs md={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12}>
-                  <WeatherCard city={city} />
+                  <Grid item>
+                    <Typography variant="h6">Weather</Typography>
+                  </Grid>
+                  <Grid item xs>
+                    <Divider />
+                  </Grid>
                 </Grid>
               </Grid>
+            </Hidden>
+            <Grid item xs={12} md={2}>
+              <WeatherCard city={city} />
             </Grid>
           </Grid>
           <Dialog
