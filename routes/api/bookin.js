@@ -213,10 +213,9 @@ router.post("/confirm",(req,res)=>{
     var discount = req.body.discount? req.body.discount: null ;
     var customerID;
     var bookingID = "tempBookingID"
-    var rewardPointsUsed = req.body.rewardPointsUsed ? req.body.rewardPointsUsed : null;
+    var rewardPointsUsed = req.body.rewardPointsUsed ? parseInt(req.body.rewardPointsUsed) : null;
     var rewardPointsEarned = req.body.rewardPointsEarned ? parseInt(req.body.rewardPointsEarned) : null;
     var rewardDiscount = req.body.rewardDiscount ? req.body.rewardDiscount : null;
-    console.log(rewardPointsEarned)
     //check this user visit our website before and get customerID
     Customer.find({email:email},function(err,doc){
         if(err) res.status(400).json(err);
