@@ -59,6 +59,9 @@ let styles = theme => ({
   subtitles: { fontWeight: "bold", color: "#808080" },
   root: {
     color: "#228B22"
+  },
+  stars: {
+    zIndex: 0
   }
 });
 
@@ -467,6 +470,7 @@ class searchResultOverview extends Component {
                                   >
                                     <Grid item>
                                       <ReactStars
+                                        className={classes.stars}
                                         value={hotel.star_rates}
                                         count={5}
                                         size={32}

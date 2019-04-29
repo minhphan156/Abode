@@ -743,3 +743,7 @@
     font-weight: bold;
   }
 }
+
+.stars {
+  z-index: 0;
+}

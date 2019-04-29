@@ -26,10 +26,7 @@ import {
 import { isWidthDown } from "@material-ui/core/withWidth";
 import {
   ExpandMore,
-  FilterList,
-  ChevronLeft,
-  ChevronRight,
-  Remove
+  FilterList
 } from "@material-ui/icons";
 import { Slider } from "@material-ui/lab";
 
@@ -42,6 +39,9 @@ let styles = theme => ({
   subtitles: { fontWeight: "bold", color: "#808080" },
   pad10: {
     padding: 10
+  },
+  stars: {
+    zIndex: 0
   }
 });
 
@@ -135,6 +135,7 @@ let FiltersWindow = props => {
                 </Grid>
                 <Grid item xs="auto">
                   <ReactStars
+                    className={classes.stars}
                     value={star_rate}
                     count={5}
                     onChange={handleStarRatings}
