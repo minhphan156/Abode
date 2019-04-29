@@ -22,6 +22,7 @@ import EditProfile from "./components/edit-profile/EditProfile";
 import NotFound from "./components/layout/NotFound";
 import searchResultOverview from "./components/searchResultOverview/searchResultOverview";
 import Confirmation from "./components/booking/Confirmation";
+import CityOverview from "./components/city/CityOverview";
 
 import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
@@ -80,6 +81,7 @@ class App extends Component {
             {/*<Route exact path="/indiv-hotel/:hotelID" component={IndivHotel} />*/}
             <Route exact path="/indiv-hotel" component={IndivHotel} />
             <Route exact path="/not-found/:attempt" component={NotFound} />
+            <Route exact path="/cities/:cityId" component={CityOverview} />
 
             <Switch>
               <PrivateRoute exact path="/history" component={HistoryOverview} />
