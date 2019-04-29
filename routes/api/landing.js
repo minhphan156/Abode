@@ -3,27 +3,31 @@ const router = express.Router();
 
 const City = require("../../models/city");
 
+// @route GET api/landing/
+// @desc Gather the city image content for the landing page (abode.city)
 router.get("/", function(req, res) {
   City.find({}, function(err, doc) {
-    if (err) res.status(400).json(err);
+    if (err) return res.status(400).json(err);
 
     var landingInfo = {
       inspire: "",
       inspireCity: "",
-      featCities: []
+      featCities: [],
+      cityID: ""
     };
     var i;
     doc.sort((a, b) => b.bookings - a.bookings);
     let n = Math.floor(Math.random() * doc.length);
     landingInfo.inspire = doc[n].inspire;
     landingInfo.inspireCity = doc[n].name;
+    landingInfo.cityID = doc[n]._id;
 
     //change loop limit if want more featured cities
     for (i = 0; i < 4; i++) {
       landingInfo.featCities.push(doc[i]);
     }
 
-    res.send(landingInfo);
+    return res.status(200).send(landingInfo);
 
     /* **If repeating cities is concern, use shuffle **
       doc = shuffle(doc);
