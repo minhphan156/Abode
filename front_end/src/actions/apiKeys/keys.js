@@ -1,0 +1,1 @@
+export let weatherMapAPIKey = "391f6b185b894759ecdf86aec2b5d031";

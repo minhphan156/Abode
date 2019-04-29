@@ -6,6 +6,7 @@ import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
+import AbodeLogo from "./logo.png";
 
 import "./navbar.css";
 
@@ -128,7 +129,11 @@ class Navbar extends Component {
                 alignItems="center"
               >
                 <Grid item>
-                  <img className="abode-logo" src="logo.png" alt="" />
+                  <img
+                    className="abode-logo"
+                    src={AbodeLogo}
+                    alt="Abode Logo"
+                  />
                 </Grid>
 
                 <Grid item className="abodeHome">

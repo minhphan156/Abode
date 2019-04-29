@@ -63,7 +63,7 @@ module.exports = function checkout(booking){
               if(booking.rewardPointsEarned){
                 User.findOneAndUpdate(
                     {"customerID":booking.customerID},
-                    {$inc:{"rewardPoints": booking.rewardPointsEarned}},
+                    {$inc:{"rewardPoints": parseInt(booking.rewardPointsEarned)}},
                     {new: true }).then(doc=>{
                         console.log(doc)
                     }).catch(err=>console.log(err))

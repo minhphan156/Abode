@@ -239,7 +239,7 @@ class Landing extends Component {
           <Grid container direction="row" justify="center">
             <Grid xs={12} sm={8} md={8} lg={8}>
               <div className="imageContainerLarge">
-                <Link to="/cities">
+                <Link to={`/cities/${city._id}`}>
                   <img src={city.imgMain} className={classes.collageImg} />
                   <div class="text-block-cities">
                     <h4 className="imageTextCityTitle">{city.name}</h4>
@@ -258,7 +258,7 @@ class Landing extends Component {
               >
                 <Grid xs={6} sm={12}>
                   <div className="imageContainerSmall imageContainerSmall1">
-                    <Link to="/cities">
+                    <Link to={`/cities/${city._id}`}>
                       <img
                         src={city.imgAlt[0]}
                         className={classes.collageImgSmall}
@@ -274,7 +274,7 @@ class Landing extends Component {
                 </Grid>
                 <Grid xs={6} sm={12} md={12} lg={12}>
                   <div className="imageContainerSmall imageContainerSmall2">
-                    <Link to="/cities">
+                    <Link to={`/cities/${city._id}`}>
                       <img
                         src={city.imgAlt[1]}
                         className={classes.collageImgSmall}
@@ -312,7 +312,11 @@ class Landing extends Component {
               <SearchWidget />
             </div>
             <div class="text-block-inspiration">
-              <Link to="/cities" style={{ color: "white" }}>
+              {/* Update Link once backend implementation for cities is done */}
+              <Link
+                to={`/cities/${this.props.landing.inspireCityId}`}
+                style={{ color: "white" }}
+              >
                 explore {this.props.landing.inspireCity}
               </Link>
             </div>
