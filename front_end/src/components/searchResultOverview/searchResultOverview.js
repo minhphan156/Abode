@@ -130,7 +130,7 @@ class searchResultOverview extends Component {
     this.setState({ open: false });
   };
 
-  onMarkerClick = (props, marker, e, index) =>{
+  onMarkerClick = (props, marker, index) =>{
   this.setState({
     selectedPlace: props,
     activeMarker: marker,
