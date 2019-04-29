@@ -22,6 +22,7 @@ const initialState = {
   },
   inspire: "",
   inspireCity: "",
+  inspireCityId: "",
   featCities: [],
   isInLanding: false
 };
@@ -30,16 +31,17 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case GET_LANDING_DATA:
       return {
-        ...state, 
-        inspire: action.payload.inspire, 
+        ...state,
+        inspire: action.payload.inspire,
         inspireCity: action.payload.inspireCity,
+        inspireCityId: action.payload.cityID,
         featCities: action.payload.featCities
-      }
+      };
     case SET_LANDING_STATUS:
-    return {
-      ...state,
-      isInLanding: action.payload
-    };
+      return {
+        ...state,
+        isInLanding: action.payload
+      };
     default:
       return state;
   }
