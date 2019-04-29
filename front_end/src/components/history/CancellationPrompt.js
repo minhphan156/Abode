@@ -42,7 +42,7 @@ class CancellationPrompt extends Component {
         <Button
           onClick={this.handleClickOpen}
           variant="outlined"
-          color="secondary"
+          color="primary"
           className={classes.button}
         >
           CANCEL

@@ -2,6 +2,7 @@ import {
   SAVE_BOOKING,
   SET_BOOKING,
   CLEAR_BOOKING,
+  CHANGE_RESERVATION,
   CANCEL_RESERVATION
 } from "../actions/types";
 
@@ -50,8 +51,8 @@ export default function(state = initialState, action) {
       };
     case CLEAR_BOOKING:
       return { ...state, bookingConfirmationData: {} };
+    case CHANGE_RESERVATION:
     case CANCEL_RESERVATION:
-      
     default:
       return state;
   }

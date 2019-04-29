@@ -2,6 +2,7 @@ import {
   SET_BOOKING,
   SAVE_BOOKING,
   CLEAR_BOOKING,
+  CHANGE_RESERVATION,
   CANCEL_RESERVATION
 } from "./types";
 import axios from "axios";
@@ -44,6 +45,18 @@ export const clearBooking = () => {
   return {
     type: CLEAR_BOOKING
   };
+};
+
+export const changeReservation = booking => dispatch => {
+  axios
+    .post("/api/booking/changeReservation", booking)
+    .then(res => {
+      dispatch({
+        type: CHANGE_RESERVATION,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 export const cancelReservation = booking => dispatch => {
