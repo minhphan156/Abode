@@ -468,7 +468,7 @@ router.post('/cancel', (req,res)=>{
     Booking.findById(req.body.bookingID)
     .then(booking => {
             if (booking.status === 0){
-                booking.status = 0;
+                booking.status = 3;
                 if (booking.check_in_date - new Date > 172800000){
                     console.log(booking.rewardPointsUsed);
                     if (booking.rewardPointsUsed !== 0){
