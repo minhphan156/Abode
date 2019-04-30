@@ -467,14 +467,20 @@ router.post('/changeReservation',(req,res)=>{
 router.post('/cancel', (req,res)=>{
     Booking.findById(req.body.bookingID)
     .then(booking => {
-        if (booking.check_in_date - new Date() > 172800000){
-            if (booking.status == 0){
-                booking.status = 3;
-                if (booking.rewardPointsUsed !== 0){
-                    User.findOneAndUpdate(
-                        {'customerID': booking.customerID},
-                        {$inc: { "rewardPoints" : booking.rewardPointsUsed }
-                    })
+            if (booking.status === 0){
+                booking.status = 0;
+                if (booking.check_in_date - new Date > 172800000){
+                    console.log(booking.rewardPointsUsed);
+                    if (booking.rewardPointsUsed !== 0){
+                        console.log(booking.rewardPointsUsed);
+                        User.find(
+                            {'customerID': booking.customerID}).then(
+                            user => {
+                                user[0].rewardPoints += booking.rewardPointsUsed;
+                                user[0].save().catch(err => console.log(err));
+                            }
+                        )
+                    }
                 }
                 Hotel.findById(booking.hotelID)
                 .then(hotel => {
@@ -514,13 +520,6 @@ router.post('/cancel', (req,res)=>{
                     code: 400
                 })
             }
-        }
-    else {
-        res.status(400).json({
-            message: "within 48 hours, cannot refund",
-            code: 400
-        })
-    }
     })
 })
 
