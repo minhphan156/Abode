@@ -52,6 +52,13 @@ class Navbar extends Component {
             </Button>
           </Link>
         </Grid>
+        <Grid item>
+          <Link to="/booking-not-logged-in">
+            <Button class="navButtons buttonBlue" primary>
+              Booking
+            </Button>
+          </Link>
+        </Grid>
       </Grid>
     );
 

@@ -83,8 +83,10 @@ const styles = {
 
 class HistoryOverview extends Component {
   componentWillMount() {
-    this.props.getHistory();
-    this.props.getProfileInfo();
+    if (this.props.auth.isAuthenticated) {
+      this.props.getHistory();
+      this.props.getProfileInfo();
+    }
   }
 
   render() {
@@ -397,7 +399,8 @@ HistoryOverview.propTypes = {
 const mapStateToProps = state => ({
   profile: state.profile,
   history: state.history,
-  bookingData: state.bookingData
+  bookingData: state.bookingData,
+  auth: state.auth
 });
 
 export default connect(

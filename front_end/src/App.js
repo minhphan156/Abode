@@ -28,6 +28,7 @@ import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
 import AboutUs from "./components/about_page/AboutUs";
 import PaymentPage from "./components/payment/PaymentPage";
+import BookingNotLoggedIn from "./components/auth/BookingNotLoggedIn";
 import { Elements, StripeProvider } from "react-stripe-elements";
 
 import "./App.css";
@@ -75,9 +76,14 @@ class App extends Component {
             </StripeProvider>
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
-            
+            <Route
+              exact
+              path="/booking-not-logged-in"
+              component={BookingNotLoggedIn}
+            />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+
             {/*<Route exact path="/indiv-hotel/:hotelID" component={IndivHotel} />*/}
             <Route exact path="/indiv-hotel" component={IndivHotel} />
             <Route exact path="/not-found/:attempt" component={NotFound} />
