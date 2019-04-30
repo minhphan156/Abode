@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getProfileInfo, getHistory } from "../../actions/profileActions";
+import { Elements, StripeProvider } from "react-stripe-elements";
 
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
@@ -21,14 +22,14 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReviewRating from "./ReviewRating";
 import HistoryExpansionTable from "./HistoryExpansionTable";
-import "./history.css";
 import CancellationPrompt from "./CancellationPrompt";
 import ChangeReservation from "./ChangeReservation";
-import { Elements, StripeProvider } from "react-stripe-elements";
+
+import "./history.css";
+
 const styles = {
   tableNoBorder: {
     maxHeight: 10,
-
     border: 0
   },
   chipChange: {
@@ -84,6 +85,7 @@ const styles = {
 class HistoryOverview extends Component {
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
+      // only call these if user logged in
       this.props.getHistory();
       this.props.getProfileInfo();
     }

@@ -65,7 +65,6 @@ export const getHistory = () => dispatch => {
 // Get User's Travel/Booking History Not-logged-in
 export const getHistoryNotLoggedIn = bookingData => dispatch => {
   dispatch(setProfileLoading());
-
   axios
     .post("/api/booking/guest-history", bookingData)
     .then(res => {

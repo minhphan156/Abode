@@ -166,25 +166,32 @@ router.post("/guest-history", (req, res) => {
           historyPack.push({
             name: custDoc.Firstname + " " + custDoc.Lastname,
             price: hotelDoc.price[book.typeOfRoom + "Price"],
-            total: book.total,
+            hotelName: hotelDoc.name,
+            img: hotelDoc.images[0],
+            city: hotelDoc.city,
+
             bookingID: book._id,
             check_in_date: book.check_in_date,
             check_out_date: book.check_out_date,
             typeOfRoom: book.typeOfRoom,
             numOfRoom: book.numOfRoom,
+            numOfNights: book.numOfNights,
             status: book.status,
             changed: book.changed,
             new_check_in_date: book.new_check_in_date,
             new_check_out_date: book.new_check_out_date,
+
+            total: book.total,
             subtotal: book.subtotal,
             discount: book.discount,
             taxesAndFees: book.taxesAndFees,
-            numOfNights: book.numOfNights,
+            rewardPointsUsed: book.rewardPointsUsed,
+            rewardPointsEarned: book.rewardPointsEarned,
+            rewardDiscount: book.rewardDiscount,
+            reservedDate: book.reservedDate,
+            nightlyRate: book.numOfNights,
             starReview: book.starReview,
-            comment: book.review,
-            hotelName: hotelDoc.name,
-            img: hotelDoc.images[0],
-            city: hotelDoc.city
+            comment: book.review
           });
           // Give frontend the goods
           return res.status(200).send(historyPack);

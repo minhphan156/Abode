@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 
@@ -17,7 +16,6 @@ class BookingNotLoggedIn extends Component {
       lastName: "",
       errors: {}
     };
-
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -38,12 +36,10 @@ class BookingNotLoggedIn extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
     const bookingData = {
       bookingID: this.state.bookingID,
       lastName: this.state.lastName
     };
-
     this.props.getHistoryNotLoggedIn(bookingData);
   }
 
@@ -79,13 +75,12 @@ class BookingNotLoggedIn extends Component {
             alignItems="center"
           >
             <img className="loginLogo" src={AbodeLogo} alt="" />
-
             <br />
             <br />
             <Grid className="AuthTextFields">
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
-                  placeholder="bookingID Address"
+                  placeholder="Booking ID"
                   name="bookingID"
                   type="bookingID"
                   value={this.state.bookingID}
@@ -93,14 +88,13 @@ class BookingNotLoggedIn extends Component {
                   error={errors.bookingID}
                 />
                 <TextFieldGroup
-                  placeholder="lastName"
+                  placeholder="Last Name"
                   name="lastName"
                   type="lastName"
                   value={this.state.lastName}
                   onChange={this.onChange}
                   error={errors.lastName}
                 />
-
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </Grid>
@@ -113,7 +107,6 @@ class BookingNotLoggedIn extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-
   errors: state.errors
 });
 

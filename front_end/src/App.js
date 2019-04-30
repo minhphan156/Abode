@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
+import { Elements, StripeProvider } from "react-stripe-elements";
 
 import NavBar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -16,20 +17,17 @@ import Landing from "./components/landing_page/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Search from "./components/layout/Search";
-import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import NotFound from "./components/layout/NotFound";
 import searchResultOverview from "./components/searchResultOverview/searchResultOverview";
 import Confirmation from "./components/booking/Confirmation";
 import CityOverview from "./components/city/CityOverview";
-
 import IndivHotel from "./components/indiv-hotel/IndivHotel";
 import HistoryOverview from "./components/history/HistoryOverview";
 import AboutUs from "./components/about_page/AboutUs";
 import PaymentPage from "./components/payment/PaymentPage";
 import BookingNotLoggedIn from "./components/auth/BookingNotLoggedIn";
-import { Elements, StripeProvider } from "react-stripe-elements";
 
 import "./App.css";
 
