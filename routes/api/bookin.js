@@ -159,34 +159,14 @@ router.post("/guest-history", (req, res) => {
             err: true
           });
 
-        // User checking history has been authorized
-        // Proceed with preparing history package
-        // (historyPack.bookingID = book._id),
-        //   (historyPack.check_in_date = book.check_in_date);
-        // historyPack.check_out_date = book.check_out_date;
-        // historyPack.typeOfRoom = book.typeOfRoom;
-        // historyPack.numOfRoom = book.numOfRoom;
-        // historyPack.status = book.status;
-        // historyPack.changed = book.changed;
-        // historyPack.new_check_in_date = book.new_check_in_date;
-        // historyPack.new_check_out_date = book.new_check_out_date;
-        // historyPack.subtotal = book.subtotal;
-        // historyPack.discount = book.discount;
-        // historyPack.taxesAndFees = book.taxesAndFees;
-        // historyPack.numOfNights = book.numOfNights;
-
-        // Info for Review
-        // historyPack.starReview = book.starReview;
-        // historyPack.comment = book.review;
-
         historyPack.err = false;
 
         Hotel.findById(book.hotelID).then(hotelDoc => {
           // Get the name, city and image of the hotel the User is staying at
-          //   historyPack.hotelName = hotelDoc.name;
-          //   historyPack.img = hotelDoc.images[0];
-          //   historyPack.city = hotelDoc.city;
           historyPack.push({
+            name: custDoc.Firstname + " " + custDoc.Lastname,
+            price: hotelDoc.price[book.typeOfRoom + "Price"],
+            total: book.total,
             bookingID: book._id,
             check_in_date: book.check_in_date,
             check_out_date: book.check_out_date,
