@@ -94,8 +94,7 @@ class searchResultOverview extends Component {
       open: false,
       showingInfoWindow: false,  //Hides or the shows the infoWindow
       activeMarker: {},          //Shows the active marker upon click
-      selectedPlace: {},          //Shows the infoWindow to the selected place upon a marker
-      onMarkerClickIndex: 0,  
+      selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker  
     };
 
     // Methods passed to child components
@@ -130,14 +129,14 @@ class searchResultOverview extends Component {
     this.setState({ open: false });
   };
 
-  onMarkerClick = (props, marker, index) =>{
+  onMarkerClick = (props, marker, e,) =>{
+  console.log(props);
+  console.log(marker);
   this.setState({
     selectedPlace: props,
     activeMarker: marker,
-    showingInfoWindow: true,
-    onMarkerClickIndex : index,
+    showingInfoWindow: true
   });
-  console.log("Being Called Function Here", index);
 }
 
   onClose = props => {
@@ -439,39 +438,34 @@ class searchResultOverview extends Component {
               {hotelQuery.results.map((item, index) => {
               return (
                 <Marker
-                  key={index}
-                  onClick={() => this.onMarkerClick(index)}
+                  onClick={this.onMarkerClick}
                   name={hotelQuery.results[index].name}
+                  price={hotelQuery.results[index].price}
+                  rate={hotelQuery.results[index].star_rates}
+                  img={hotelQuery.results[index].img}
                   position={{
                     lat: hotelQuery.results[index].lat,
                     lng: hotelQuery.results[index].lng
                   }}
-                >
-                {(this.state.onMarkerClickIndex === index) && 
-                <InfoWindow
-                marker={this.state.activeMarker}
-                visible={this.state.showingInfoWindow}
-                onClose={this.onClose}
-              >
-                <div>
-                  <h4>{hotelQuery.results[index].name}</h4>
-                  <div>
-                  <ReactStars
-                    count={5}
-                    value={hotelQuery.results[index].star_rates}
-                    size={23}
-                    edit={false}
-                    color2={"#FFD700"}
-                    color1={"#dcdcdc"}
-                  />
-                  </div>
-                  <img src={hotelQuery.results[index].img} />
-                </div>
-              </InfoWindow>
-            }
-                </Marker>
-                
+                />
               );
+              })}
+
+              {hotelQuery.results.map((item, index) => {
+                return (
+                  <InfoWindow
+                    marker={this.state.activeMarker}
+                    visible={this.state.showingInfoWindow}
+                    onClose={this.onClose}
+                    stlye={{width:'200px', height:'200px'}}
+                  >
+                    <div>
+                      <h4>{this.state.selectedPlace.name}</h4>
+                      <h4>${this.state.selectedPlace.price}</h4>
+                      <img src={this.state.selectedPlace.img} />
+                    </div>
+                  </InfoWindow>
+                );
               })}
             </Map>
           );
