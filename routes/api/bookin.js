@@ -469,19 +469,32 @@ router.post('/cancel', (req,res)=>{
     .then(booking => {
             if (booking.status === 0){
                 booking.status = 3;
-                if (booking.check_in_date - new Date > 172800000){
-                    console.log(booking.rewardPointsUsed);
-                    if (booking.rewardPointsUsed !== 0){
-                        console.log(booking.rewardPointsUsed);
-                        User.find(
-                            {'customerID': booking.customerID}).then(
-                            user => {
-                                user[0].rewardPoints += booking.rewardPointsUsed;
-                                user[0].save().catch(err => console.log(err));
-                            }
-                        )
+                if (booking.changed){
+                    if (booking.new_check_in_date - new Date > 172800000){
+                        if (booking.rewardPointsUsed !== 0){
+                            User.find(
+                                {'customerID': booking.customerID}).then(
+                                user => {
+                                    user[0].rewardPoints += booking.rewardPointsUsed;
+                                    user[0].save().catch(err => console.log(err));  
+                                }
+                            )
+                        }
                     }
                 }
+                else{
+                    if (booking.check_in_date - new Date > 172800000){
+                        if (booking.rewardPointsUsed !== 0){
+                            User.find(
+                                {'customerID': booking.customerID}).then(
+                                user => {
+                                    user[0].rewardPoints += booking.rewardPointsUsed;
+                                    user[0].save().catch(err => console.log(err));  
+                                }
+                            )
+                        }
+                    }
+                 }
                 Hotel.findById(booking.hotelID)
                 .then(hotel => {
                     if(booking.typeOfRoom === 'single'){
