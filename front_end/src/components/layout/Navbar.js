@@ -76,7 +76,7 @@ render() {
         <Grid className="adjustMenuBurger" item>
           <NavbarMenu
             onLogoutClick={this.onLogoutClick}
-            userEmail={this.props.profile.profile_info}
+            userEmail={this.props.auth.user.email}
           />
         </Grid>
       </Grid>

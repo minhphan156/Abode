@@ -47,7 +47,7 @@ export default (class NavbarMenu extends React.Component {
           onClose={this.handleClose}
           TransitionComponent={Fade}
         >
-        {this.props.userEmail?<MenuItem>{this.props.userEmail.email}</MenuItem>:null}
+        <MenuItem>{this.props.userEmail}</MenuItem>
 
 
           <Link to="/history" className="navbarMenuButtons">
