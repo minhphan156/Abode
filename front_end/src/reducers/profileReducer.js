@@ -42,7 +42,8 @@ export default function(state = initialState, action) {
     case CLEAR_CURRENT_PROFILE:
       return {
         ...state,
-        profile_info: null
+        profile_info: null,
+        history: null
       };
     case PUBLISH_REVIEW:
       for (let i = 0; i < state.history.length; i++) {
