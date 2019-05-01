@@ -43,7 +43,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile_info: null,
-        history: null
+        history: []
       };
     case PUBLISH_REVIEW:
       for (let i = 0; i < state.history.length; i++) {
