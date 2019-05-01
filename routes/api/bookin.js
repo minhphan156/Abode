@@ -421,10 +421,11 @@ router.post('/changeReservation',(req,res)=>{
                     }
                     if(checkAvalibity(arr,date,reservations.numOfRoom,bookingID)){
                         if(isLogged){
-                            reservations.rewardPointsEarned = req.body.newPointsEarned?req.body.newPointsEarned:reservations.rewardPointsEarned
-                            if(req.body.newPointsused){
-                                user.rewardPoints = user.rewardPoints + reservations.rewardPointsUsed - req.body.newPointsused
-                                reservations.rewardPointsUsed = req.body.newPointsused?req.body.newPointsused:reservations.rewardPointsUsed
+                            console.log("is here")
+                            reservations.rewardPointsEarned = req.body.newPointsEarned ? parseInt(req.body.newPointsEarned):reservations.rewardPointsEarned
+                            if(req.body.newPointsUsed){
+                                user.rewardPoints = user.rewardPoints + reservations.rewardPointsUsed - req.body.newPointsUsed
+                                reservations.rewardPointsUsed = req.body.newPointsUsed ? parseInt(req.body.newPointsUsed):reservations.rewardPointsUsed
                                 user.save().catch(err=>console.log(err))
                             }
                         }
