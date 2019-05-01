@@ -133,8 +133,6 @@ class searchResultOverview extends Component {
   };
 
   onMarkerClick = (props, marker, e,) =>{
-  console.log(props);
-  console.log(marker);
   this.setState({
     selectedPlace: props,
     activeMarker: marker,
@@ -428,6 +426,14 @@ class searchResultOverview extends Component {
         );
       } else if (hotelQuery.results.length > 0) {
         if (hotelQuery.results.length > 0) {
+          let iconA = {
+            url: "./logo.png",
+            size: new this.props.google.maps.Size(100, 100),
+            scaledSize: new this.props.google.maps.Size(30,30),
+            origin: new this.props.google.maps.Point(0, 0),
+            anchor: new this.props.google.maps.Point(0, 32)
+          };
+          let pixelOffsetA = new this.props.google.maps.Size(-32, 0);
           displayGoogleMap = (
             <Map
               class = "googleMap"
@@ -450,13 +456,16 @@ class searchResultOverview extends Component {
                     lat: hotelQuery.results[index].lat,
                     lng: hotelQuery.results[index].lng
                   }}
+                  icon={iconA}
                 />
               );
               })}
 
               {hotelQuery.results.map((item, index) => {
                 return (
-                  <InfoWindow
+                  <InfoWindow                 
+                    pixelOffset = {pixelOffsetA}
+                    
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                     onClose={this.onClose}
