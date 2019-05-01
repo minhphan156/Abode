@@ -156,6 +156,7 @@ class IndivHotel extends Component {
                       <div className="col-xl-1 col-lg-12 col-sm-12 col-12" />
                       <div className="col-xl-11 col-lg-12 col-sm-12 col-12">
                         <ReactStars
+                          className="stars"
                           count={5}
                           value={individualHotelData.star_rating}
                           size={26}
@@ -182,6 +183,7 @@ class IndivHotel extends Component {
                     <div id="hotel stars" className="row">
                       <div className="col-lg-12 col-sm-12 col-12">
                         <ReactStars
+                          className="stars"
                           count={5}
                           value={individualHotelData.star_rating}
                           size={23}
@@ -220,6 +222,7 @@ class IndivHotel extends Component {
                       </div>
 
                       <ReactStars
+                        className="stars"
                         count={5}
                         value={individualHotelData.ta_rating}
                         size={22}
@@ -237,6 +240,7 @@ class IndivHotel extends Component {
                         Hotels.com
                       </div>
                       <ReactStars
+                        className="stars"
                         count={5}
                         value={individualHotelData.hdc_rating / 2}
                         size={22}
@@ -260,6 +264,7 @@ class IndivHotel extends Component {
                       </div>
 
                       <ReactStars
+                        className="stars"
                         count={5}
                         value={individualHotelData.ta_rating}
                         size={20}
@@ -277,6 +282,7 @@ class IndivHotel extends Component {
                         Hotels.com
                       </div>
                       <ReactStars
+                        className="stars"
                         count={5}
                         value={individualHotelData.hdc_rating / 2}
                         size={20}
@@ -804,6 +810,7 @@ class IndivHotel extends Component {
                         </div>
 
                         <ReactStars
+                          className="stars"
                           count={5}
                           value={individualHotelData.ta_rating}
                           size={22}
@@ -821,6 +828,7 @@ class IndivHotel extends Component {
                           Hotels.com
                         </div>
                         <ReactStars
+                          className="stars"
                           count={5}
                           value={individualHotelData.hdc_rating / 2}
                           size={22}
@@ -1053,6 +1061,7 @@ class IndivHotel extends Component {
                       </div>
                       <small>
                           <ReactStars
+                            className="stars"
                             count={5}
                             value={ individualHotelData.review[index].reviewStar }
                             size={16}

@@ -217,7 +217,7 @@ router.get('/individual', async (req,res) => {
             getReviews().then(async () => {
 
             if ((typeof date.checkin !== 'undefined') && (typeof date.checkout !== 'undefined')){
-                if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0 || hotel.star >= 4)
+                if(checkAvailability(hotel.roomTypeAndNumber.single, date, numberOfRooms, "PlaceHolder").length == 0)
                     singleRoomAvailability = false;
                 if(checkAvailability(hotel.roomTypeAndNumber.double, date, numberOfRooms, "PlaceHolder").length == 0)
                     doubleRoomAvailability = false;
