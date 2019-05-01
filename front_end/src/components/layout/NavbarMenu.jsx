@@ -48,13 +48,8 @@ export default (class NavbarMenu extends React.Component {
           TransitionComponent={Fade}
         >
         <MenuItem>{this.props.userEmail}</MenuItem>
-
-
           <Link to="/history" className="navbarMenuButtons">
             <MenuItem onClick={this.handleClose}>Booking History</MenuItem>
-          </Link>
-          <Link to="/rewards" className="navbarMenuButtons">
-            <MenuItem onClick={this.handleClose}>Reward Points</MenuItem>
           </Link>
           <MenuItem onClick={this.logoutUser}>Logout</MenuItem>
         </Menu>
