@@ -429,7 +429,7 @@ class searchResultOverview extends Component {
           let iconA = {
             url: "./logo.png",
             size: new this.props.google.maps.Size(100, 100),
-            scaledSize: new this.props.google.maps.Size(30,30),
+            scaledSize: new this.props.google.maps.Size(40,40),
             origin: new this.props.google.maps.Point(0, 0),
             anchor: new this.props.google.maps.Point(0, 32)
           };
