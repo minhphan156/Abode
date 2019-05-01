@@ -9,6 +9,7 @@ import {
   SET_CURRENT_USER,
   GET_HISTORY
 } from "./types";
+import { setCurrentUser } from "./authActions";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -67,10 +68,11 @@ export const getProfileInfo = () => dispatch => {
   axios
     .get("/api/users/current")
     .then(res =>
-      dispatch({
+      {dispatch({
         type: GET_PROFILE_INFO,
         payload: res.data
       })
+      dispatch(setCurrentUser(res.data))}
     )
     .catch(err =>
       dispatch({

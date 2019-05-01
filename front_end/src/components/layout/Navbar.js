@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { clearCurrentProfile } from "../../actions/profileActions";
+import { clearCurrentProfile,getProfileInfo  } from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
 import AbodeLogo from "./logo.png";
+
 
 import "./navbar.css";
 
@@ -25,7 +26,13 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  render() {
+  componentWillMount(){
+    if (localStorage.jwtToken) {
+       this.props.getProfileInfo();
+    }
+  }
+
+render() { 
     // Markup shown on the right hand side of Navbar when user is GUEST.
     let guestMarkUp = (
       <Grid
@@ -154,15 +161,16 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
-  landing: PropTypes.object.isRequired
+  landing: PropTypes.object.isRequired,
 };
 
 let mapStateToProps = state => ({
   auth: state.auth,
-  landing: state.landing
+  landing: state.landing,
+  profile: state.profile
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile }
+  { logoutUser, clearCurrentProfile,getProfileInfo  }
 )(Navbar);
