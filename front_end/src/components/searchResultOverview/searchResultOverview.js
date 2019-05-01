@@ -432,19 +432,19 @@ class searchResultOverview extends Component {
             <Map
               class = "googleMap"
               google={this.props.google}
-              zoom={10}
+              zoom={13}
               initialCenter={{
                 lat: hotelQuery.results[0].lat,
                 lng: hotelQuery.results[0].lng
               }}
-            >
+            > 
               {hotelQuery.results.map((item, index) => {
               return (
                 <Marker
                   onClick={this.onMarkerClick}
                   name={hotelQuery.results[index].name}
                   price={hotelQuery.results[index].price}
-                  rate={hotelQuery.results[index].star_rates}
+                  address={hotelQuery.results[index].address}
                   img={hotelQuery.results[index].img}
                   position={{
                     lat: hotelQuery.results[index].lat,
@@ -460,13 +460,18 @@ class searchResultOverview extends Component {
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                     onClose={this.onClose}
-                    stlye={{width:'200px', height:'200px'}}
                   >
-                    <div>
-                      <h4>{this.state.selectedPlace.name}</h4>
-                      <h4>${this.state.selectedPlace.price}</h4>
-                      <img src={this.state.selectedPlace.img} />
+                  <div className="row">
+                    <div className="col-lg-8">
+                      <img style={{margin:'auto', width:'100%'}} src={this.state.selectedPlace.img} />
                     </div>
+                    <div className="col-lg-4">
+                        <p  className="mapPopInfoName">{this.state.selectedPlace.name}</p>
+                        <p  className="mapPopInfoAddress">{this.state.selectedPlace.address}</p>
+                        <p  className="mapPopInfoPrice">${this.state.selectedPlace.price}</p>
+
+                    </div>
+                  </div>
                   </InfoWindow>
                 );
               })}
@@ -565,6 +570,7 @@ class searchResultOverview extends Component {
                                         count={5}
                                         size={32}
                                         color2={"#ffd700"}
+                                        color1={"#dcdcdc"}
                                         edit={false}
                                       />
                                     </Grid>
@@ -713,19 +719,20 @@ class searchResultOverview extends Component {
             />
             <Grid item xs={12} sm={8} md={9} lg={9}>
               <Grid container direction="row" justify="center" spacing={8}>
-                <Grid item xs={12} sm={10} md={10} lg={10}>
+                <Grid item xs={12} sm={8} md={9} lg={10} >
                   <SortBar
                     sortCategory={this.state.sortCategory}
                     sortOrder={this.state.sortOrder}
                     handleChange={this.handleChange}
                   />
                 </Grid>
-                <Grid item xs={2} justify="left">
+                <Grid item xs={12} sm={4} md={3} lg={2}>
                 <div>
                   <Button
                     class="buttonSearch"
                     primary
                     onClick={this.handleClickChooseDeal()}
+                    style={{width:"100%"}}
                   >
                     <i class="fas fa-map-marked-alt"></i> View Map
                   </Button>

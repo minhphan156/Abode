@@ -141,6 +141,7 @@ let FiltersWindow = props => {
                     onChange={handleStarRatings}
                     size={32}
                     color2={"#ffd700"}
+                    color1={"#dcdcdc"}
                   />
                 </Grid>
               </Grid>
