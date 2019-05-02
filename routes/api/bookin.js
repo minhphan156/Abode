@@ -421,10 +421,11 @@ router.post('/changeReservation',(req,res)=>{
                     }
                     if(checkAvalibity(arr,date,reservations.numOfRoom,bookingID)){
                         if(isLogged){
-                            reservations.rewardPointsEarned = req.body.newPointsEarned?req.body.newPointsEarned:reservations.rewardPointsEarned
-                            if(req.body.newPointsused){
-                                user.rewardPoints = user.rewardPoints + reservations.rewardPointsUsed - req.body.newPointsused
-                                reservations.rewardPointsUsed = req.body.newPointsused?req.body.newPointsused:reservations.rewardPointsUsed
+                            console.log("is here")
+                            reservations.rewardPointsEarned = req.body.newPointsEarned ? parseInt(req.body.newPointsEarned):reservations.rewardPointsEarned
+                            if(req.body.newPointsUsed){
+                                user.rewardPoints = user.rewardPoints + reservations.rewardPointsUsed - req.body.newPointsUsed
+                                reservations.rewardPointsUsed = req.body.newPointsUsed ? parseInt(req.body.newPointsUsed):reservations.rewardPointsUsed
                                 user.save().catch(err=>console.log(err))
                             }
                         }
@@ -467,15 +468,34 @@ router.post('/changeReservation',(req,res)=>{
 router.post('/cancel', (req,res)=>{
     Booking.findById(req.body.bookingID)
     .then(booking => {
-        if (booking.check_in_date - new Date() > 172800000){
-            if (booking.status == 0){
+            if (booking.status === 0){
                 booking.status = 3;
-                if (booking.rewardPointsUsed !== 0){
-                    User.findOneAndUpdate(
-                        {'customerID': booking.customerID},
-                        {$inc: { "rewardPoints" : booking.rewardPointsUsed }
-                    })
+                if (booking.changed){
+                    if (booking.new_check_in_date - new Date > 172800000){
+                        if (booking.rewardPointsUsed !== 0){
+                            User.find(
+                                {'customerID': booking.customerID}).then(
+                                user => {
+                                    user[0].rewardPoints += booking.rewardPointsUsed;
+                                    user[0].save().catch(err => console.log(err));  
+                                }
+                            )
+                        }
+                    }
                 }
+                else{
+                    if (booking.check_in_date - new Date > 172800000){
+                        if (booking.rewardPointsUsed !== 0){
+                            User.find(
+                                {'customerID': booking.customerID}).then(
+                                user => {
+                                    user[0].rewardPoints += booking.rewardPointsUsed;
+                                    user[0].save().catch(err => console.log(err));  
+                                }
+                            )
+                        }
+                    }
+                 }
                 Hotel.findById(booking.hotelID)
                 .then(hotel => {
                     if(booking.typeOfRoom === 'single'){
@@ -514,13 +534,6 @@ router.post('/cancel', (req,res)=>{
                     code: 400
                 })
             }
-        }
-    else {
-        res.status(400).json({
-            message: "within 48 hours, cannot refund",
-            code: 400
-        })
-    }
     })
 })
 
