@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const moment = require('moment-timezone');
 
 const checkAvailable = require("../../validation/checkAvailableHotels");
 var checkAvailability = require('../../validation/checkAvailibility.js')
@@ -81,6 +82,21 @@ router.get('/search',(req,res)=>{
         checkin:req.query.checkIn.replace('"','').replace('"',''),
         checkout:req.query.checkOut.replace('"','').replace('"',''),
     };
+    let holiday = false
+    //holiday
+    let objDate = new Date(moment("2019-07-04").tz("America/Los_Angeles")).getTime()
+    let comingDate = new Date(moment(date.checkin).tz("America/Los_Angeles")).getTime()
+    let checkInDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
+    objDate = new Date(moment("2019-07-05").tz("America/Los_Angeles")).getTime()
+    comingDate = new Date(moment(date.checkout).tz("America/Los_Angeles")).getTime()
+    let checkOutDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
+    console.log(checkInDiff)
+    console.log(checkOutDiff)
+    if(checkInDiff === 0 &&  checkOutDiff === 0){
+        holiday = true;
+    }
+    //
+
     var numberRooms = parseInt(req.query.numberRooms);
     var startIndex = req.query.lastIndex;
     const NUM_RESULTS = req.query.numResults;
@@ -108,7 +124,7 @@ router.get('/search',(req,res)=>{
                     address:arr.address,
                     city:arr.city,
                     price:arr.price.singlePrice,
-                    discount:arr.discount,
+                    discount:holiday ? 0.85: arr.discount,
                     star_rates:arr.star,
                     guest_rate:arr.hdc_rating,
                     img:arr.images[0],
@@ -135,6 +151,21 @@ router.get('/individual', async (req,res) => {
         checkin: req.query.checkIn.replace('"','').replace('"',''),
         checkout: req.query.checkOut.replace('"','').replace('"','')
     };
+    let holiday = false
+    //holiday
+    let objDate = new Date(moment("2019-07-04").tz("America/Los_Angeles")).getTime()
+    let comingDate = new Date(moment(date.checkin).tz("America/Los_Angeles")).getTime()
+    let checkInDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
+    objDate = new Date(moment("2019-07-05").tz("America/Los_Angeles")).getTime()
+    comingDate = new Date(moment(date.checkout).tz("America/Los_Angeles")).getTime()
+    let checkOutDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
+    console.log(checkInDiff)
+    console.log(checkOutDiff)
+    if(checkInDiff === 0 &&  checkOutDiff === 0){
+        holiday = true;
+        console.log("true")
+    }
+    //
     var numberOfRooms = parseInt(req.query.numberRooms);
     let singleRoomAvailability = true;
     let doubleRoomAvailability = true;
@@ -225,7 +256,7 @@ router.get('/individual', async (req,res) => {
                     // Add the complete reviews for this hotel and sort by most recent review
                     review: (await (reviewPack)).sort((a,b) => { return (new Date(b.reviewDate)).getTime() - (new Date(a.reviewDate)).getTime() }),
                     top_spots:hotel.top_spots,
-                    discount: hotel.discount
+                    discount:holiday? 0.85: hotel.discount,
                 }
                 
                 // Send final package of info about this hotel
