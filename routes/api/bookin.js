@@ -146,17 +146,15 @@ router.post("/guest-history", (req, res) => {
 
   //   var historyPack = {};
   var historyPack = [];
-  Booking.findById(bookingID, (err, book) => {
-    if (err) return res.status(404).json(err);
+  Booking.findById(bookingID).then((book) => {
 
     Customer.findById(book.customerID)
       .then(custDoc => {
-        console.log("doc:", custDoc.Lastname);
-        console.log("req", lastName);
+
         // Block request if the last name does not match the booking
         if (custDoc.Lastname !== lastName)
           return res.status(403).json({
-            err: true
+            guestHistoryError: true
           });
 
         historyPack.err = false;
@@ -194,13 +192,27 @@ router.post("/guest-history", (req, res) => {
             comment: book.review
           });
           // Give frontend the goods
-          return res.status(200).send(historyPack);
+          return res.status(200).send(
+            {
+              historyPack,
+              guestHistoryError: false
+            });
         });
       })
-      .catch(err => {
-        if (err) return res.status(404).json(err);
+
+      .catch(() => {
+        return res.status(403).json({
+          guestHistoryError: true
+        });
       });
+
+  }).catch(() => {
+    return res.status(403).json({
+      guestHistoryError: true
+    });
+
   });
+
 });
 
 // @route POST /api/booking/confirm
