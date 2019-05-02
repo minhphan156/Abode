@@ -1,0 +1,48 @@
+@media screen and (max-width: 600px){
+    .weatherStatus{
+        font-size: 18px;
+    }
+
+    .temperature{
+        font-size: 35px;
+        font-weight: bold;
+        color: #0c4b78;
+    }
+}
+
+@media screen and (min-width: 600px) and  (max-width: 960px){
+    .weatherStatus{
+        font-size: 22px;
+    }
+
+    .temperature{
+        font-size: 40px;
+        font-weight: bold;
+        color: #0c4b78;
+    }
+}
+
+@media screen and (min-width: 960px) and  (max-width: 1092px){
+    .weatherStatus{
+        font-size: 28px;
+    }
+
+    .temperature{
+        font-size: 40px;
+        font-weight: bold;
+        color: #0c4b78;
+    }
+}
+
+@media screen and (min-width: 1280px){
+    .weatherStatus{
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .temperature{
+        font-size: 40px;
+        font-weight: bold;
+        color: #0c4b78;
+    }
+}

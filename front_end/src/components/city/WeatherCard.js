@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "./WeatherCard.css";
 // Material-UI imports
 import {
   withStyles,
@@ -74,20 +75,23 @@ let WeatherCard = props => {
     }
 
     let currentDayOfWeek = new Date().getDay();
+    let days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+
+    days[currentDayOfWeek] = "Today";
+    days[currentDayOfWeek+1] = "Tomorrow";
 
     let fiveDayForecastMarkup = forecastArray.map(forecastDay => {
-      let days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ];
-      if (currentDayOfWeek == 7) {
+      if (currentDayOfWeek === 7) {
         currentDayOfWeek = 0;
-      }
+      };
 
       return (
         <Grid item xs={6} md>
@@ -105,9 +109,10 @@ let WeatherCard = props => {
                 <Grid container direction="row" justify="center">
                   <Grid item>
                     <Typography
+                      class="temperature"
                       variant={isWidthDown("sm", width) ? "h6" : "h3"}
                     >
-                      {`${forecastDay.main.temp}°F`}
+                      {`${forecastDay.main.temp.toFixed(0)}°F`}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -120,7 +125,7 @@ let WeatherCard = props => {
                   alignItems="center"
                 >
                   <Grid item>
-                    <Typography variant="subtitle">
+                    <Typography class="weatherStatus" variant="subtitle">
                       {`${forecastDay.weather[0].main}`}
                     </Typography>
                   </Grid>
@@ -134,6 +139,7 @@ let WeatherCard = props => {
                     direction="row"
                     justify="space-between"
                     alignItems="center"
+                    style={{color:'#568cba'}}
                   >
                     <Grid item>
                       <span className={classes.greyText}>Lo:</span>{" "}
