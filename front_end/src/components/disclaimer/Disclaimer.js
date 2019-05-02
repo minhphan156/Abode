@@ -4,7 +4,6 @@ import "./Disclaimer.css";
 import SJSU from "../../images/SJSU.png";
 import Typography from "@material-ui/core/Typography";
 
-
 export default (class disclaimer extends Component {
   constructor(props) {
     super(props);
@@ -17,17 +16,15 @@ export default (class disclaimer extends Component {
   render() {
     return (
       <div>
-        <Grid container>
-          <img className="SJSU-icon" src={SJSU} alt="" />
-          <Grid item id="DisclaimerContainerTitle" xs={12}>
-            Disclaimer
-          </Grid>
-
-          <Grid item id="DisclaimerContainerText" item xs={12}>
-            <Typography component="h6" variant="h6">
-              Abode is a web application which shares catalog of ideas, and it
-              is a mini clone of the very successful product hotel.com.
-              <br />
+        <div container>
+          <div id="img">
+            <img id="SJSU-icon" src={SJSU} alt="" />
+          </div>
+          <div id="content">
+            <h1 item id="title">
+              Disclaimer
+            </h1>
+            <div>
               <br />
               This is a school project at San Jose State University, and the
               course is Software Engineering Process Management (SE/CMPE 165),
@@ -35,32 +32,41 @@ export default (class disclaimer extends Component {
               within small teams, and the scope of this project is to design and
               develop a web application. <br />
               <br />
-              The project includes following statements:
-              <ul>
-                <li>mission statement</li>
-                <li>synthesis of design concepts</li>
-                <li>tradeoff studies</li>
-                <li>
-                  risk assessment and the interactions encountered in the
-                  optimal design
-                </li>
-                <li>development</li>
-                <li>manufacture and test of systems</li>
-              </ul>
+            </div>
+            <h5>Disclaimer for Abode.com</h5>
+            <ul>
+              <li>
+                From our website, you can see information of other hotels by
+                searching. While we strive to provide only quality information
+                (images, amenities, address) belongs to{" "}
+                <a href="https://www.hotels.com" id="link">
+                  hotels.com
+                </a>{" "}
+                and all images of cities belong to third party, we have no
+                control over the content and nature of these sites. Site owners
+                and content may change without notice and may occur before we
+                have the opportunity to remove APIs which may have gone ‘bad'.
+              </li>
               <br />
-              Since this is the school project, this site, Abode, is not
-              intended to be used commercially or for advertisement. All
-              information about each hotel, such as name, address, price,
-              pictures, rates and amenities, are based on APIs from Trip Advisor
-              and Hotels.com. <br />
-              <br />
-              we also do not store any payment information in our database.
-            </Typography>
-          </Grid>
-        </Grid>
+
+              <li>
+                Since this is the school project of San Jose State University,
+                this website, Abode, is not intended to be used commercially or
+                for any advertisement, and we do not store any payment
+                information in our database.
+              </li>
+            </ul>
+            <h5>Consent</h5>
+            By using our website, you hereby consent to our disclaimer and agree
+            to its terms.
+            <br />
+            <br />
+            <h5>Update</h5>
+            Should we update, amend or make any changes to this document, those
+            changes will be prominently posted here.
+          </div>
+        </div>
       </div>
     );
   }
 });
-
-const mapStateToProps = state => ({});

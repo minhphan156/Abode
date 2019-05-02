@@ -1,19 +1,38 @@
-#DisclaimerContainerTitle {
+#container {
+  margin: 40px;
+  padding: 20px;
+}
+
+#title {
   color: #0c4b78;
   font-size: 34px;
   font-weight: 500;
   text-align: center;
 }
 
-#DisclaimerContainerText {
+#content {
   text-align: left;
   padding: 20px;
+  color: rgb(49, 49, 49);
+  font-size: 18px;
 }
 
-img.SJSU-icon {
-  margin-left: auto;
-  margin-right: auto;
+h5 {
+  font-weight: bold;
+  color: black;
+}
+
+#SJSU-icon {
   height: 100px;
   width: 400px;
-  padding: 10px;
+  padding: 1%;
+}
+
+#link {
+  color: blue;
+}
+
+#img {
+  margin-left: auto;
+  margin-right: auto;
 }
