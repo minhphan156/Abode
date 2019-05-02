@@ -139,15 +139,15 @@ let WeatherCard = props => {
                     direction="row"
                     justify="space-between"
                     alignItems="center"
-                    style={{color:'#568cba'}}
+                    style={{fontSize:18, fontWeight:'bold', color:'#568cba'}}
                   >
                     <Grid item>
                       <span className={classes.greyText}>Lo:</span>{" "}
-                      {`${forecastDay.main.temp_min}°F`}
+                      {`${forecastDay.main.temp_min.toFixed(0)}°F`}
                     </Grid>
                     <Grid item>
                       <span className={classes.greyText}>Hi:</span>{" "}
-                      {`${forecastDay.main.temp_max}°F`}
+                      {`${forecastDay.main.temp_max.toFixed(0)}°F`}
                     </Grid>
                   </Grid>
                 </Grid>
