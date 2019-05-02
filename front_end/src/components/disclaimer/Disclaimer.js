@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import "./disclaimer.css";
+import "./Disclaimer.css";
 import SJSU from "../../images/SJSU.png";
 import Typography from "@material-ui/core/Typography";
 
