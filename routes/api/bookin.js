@@ -435,101 +435,129 @@ router.post("/changeReservation", (req, res) => {
           res.status(409).json({ message: "cannot change to same dates" });
           return;
         }
-        if (reservations.changed) {
-          if (
-            reservations.new_check_in_date.getTime() ===
-              date.checkin.getTime() &&
-            reservations.new_check_out_date.getTime() ===
-              date.checkout.getTime()
-          ) {
-            res.status(409).json({ message: "cannot change to same dates" });
-            return;
+        bookingID = req.body.bookingID;
+        date = {
+          checkin: new Date(
+            req.body.newCheckIn.replace('"', "").replace('"', "")
+          ),
+          checkout: new Date(
+            req.body.newCheckOut.replace('"', "").replace('"', "")
+          )
+        };
+
+        Booking.findById(bookingID).then((reservations, err) => {
+          if (err) res.status(400).json(err);
+          if (reservations) {
+            if (
+              reservations.check_in_date.getTime() === date.checkin.getTime() &&
+              reservations.check_out_date.getTime() === date.checkout.getTime()
+            ) {
+              res.status(409).json({ message: "cannot change to same dates" });
+              return;
+            }
+            if (reservations.changed) {
+              if (
+                reservations.new_check_in_date.getTime() ===
+                  date.checkin.getTime() &&
+                reservations.new_check_out_date.getTime() ===
+                  date.checkout.getTime()
+              ) {
+                res
+                  .status(409)
+                  .json({ message: "cannot change to same dates" });
+                return;
+              }
+            }
+
+            Hotel.findById(reservations.hotelID)
+              .then(hotel => {
+                if (reservations.typeOfRoom === "single") {
+                  arr = hotel.roomTypeAndNumber.single;
+                }
+                if (reservations.typeOfRoom === "double") {
+                  arr = hotel.roomTypeAndNumber.double;
+                }
+                if (reservations.typeOfRoom === "king") {
+                  arr = hotel.roomTypeAndNumber.king;
+                }
+                if (reservations.typeOfRoom === "studio") {
+                  arr = hotel.roomTypeAndNumber.studio;
+                }
+                for (let i = 0; i < arr.length; i++) {
+                  for (let j = 0; j < arr[i].dates.length; j++) {
+                    if (arr[i].dates[j].bookingID === bookingID) {
+                      arr[i].dates.splice(j, 1);
+                    }
+                  }
+                }
+                if (
+                  checkAvalibity(arr, date, reservations.numOfRoom, bookingID)
+                ) {
+                  if (isLogged) {
+                    console.log("is here");
+                    reservations.rewardPointsEarned = req.body.newPointsEarned
+                      ? parseInt(req.body.newPointsEarned)
+                      : reservations.rewardPointsEarned;
+                    if (req.body.newPointsUsed) {
+                      user.rewardPoints =
+                        user.rewardPoints +
+                        reservations.rewardPointsUsed -
+                        req.body.newPointsUsed;
+                      reservations.rewardPointsUsed = req.body.newPointsUsed
+                        ? parseInt(req.body.newPointsUsed)
+                        : reservations.rewardPointsUsed;
+                      user.save().catch(err => console.log(err));
+                    }
+                  }
+                  reservations.changed = true;
+                  reservations.new_check_in_date = date.checkin;
+                  reservations.new_check_out_date = date.checkout;
+                  reservations.subtotal = req.body.newSubtotal
+                    ? req.body.newSubtotal
+                    : reservations.subtotal;
+                  reservations.total = req.body.newTotal
+                    ? req.body.newTotal
+                    : reservations.total;
+                  reservations.discount = req.body.newDiscount
+                    ? req.body.newDiscount
+                    : reservations.discount;
+                  reservations.rewardDiscount = req.body.newRewardsDiscount
+                    ? req.body.newRewardsDiscount
+                    : reservations.rewardDiscount;
+                  reservations.taxesAndFees = req.body.newTaxesAndFees
+                    ? req.body.newTaxesAndFees
+                    : reservations.taxesAndFees;
+                  reservations.numOfNights = req.body.numberOfNights;
+                  hotel.save().catch(err => res.status(400).json(err));
+                  reservations.save().catch(err =>
+                    res.status(400).json({
+                      message: "Fail to change",
+                      code: 400
+                    })
+                  );
+                  res.status(200).json({
+                    message: "Successfully change",
+                    code: 200
+                  });
+                } else {
+                  res.status(409).json({
+                    message: "no room available at that date",
+                    code: 409
+                  });
+                }
+              })
+              .catch(err => {
+                res.status(400).json(err);
+              });
+          } else {
+            res
+              .status(404)
+              .json({ message: `cannot find ${bookingID}`, code: 404 });
           }
-        }
-        Hotel.findById(reservations.hotelID)
-          .then(hotel => {
-            if (reservations.typeOfRoom === "single") {
-              arr = hotel.roomTypeAndNumber.single;
-            }
-            if (reservations.typeOfRoom === "double") {
-              arr = hotel.roomTypeAndNumber.double;
-            }
-            if (reservations.typeOfRoom === "king") {
-              arr = hotel.roomTypeAndNumber.king;
-            }
-            if (reservations.typeOfRoom === "studio") {
-              arr = hotel.roomTypeAndNumber.studio;
-            }
-            for (let i = 0; i < arr.length; i++) {
-              for (let j = 0; j < arr[i].dates.length; j++) {
-                if (arr[i].dates[j].bookingID === bookingID) {
-                  arr[i].dates.splice(j, 1);
-                }
-              }
-            }
-            if (checkAvalibity(arr, date, reservations.numOfRoom, bookingID)) {
-              if (isLogged) {
-                reservations.rewardPointsEarned = req.body.newPointsEarned
-                  ? req.body.newPointsEarned
-                  : reservations.rewardPointsEarned;
-                if (req.body.newPointsused) {
-                  user.rewardPoints =
-                    user.rewardPoints +
-                    reservations.rewardPointsUsed -
-                    req.body.newPointsused;
-                  reservations.rewardPointsUsed = req.body.newPointsused
-                    ? req.body.newPointsused
-                    : reservations.rewardPointsUsed;
-                  user.save().catch(err => console.log(err));
-                }
-              }
-              reservations.changed = true;
-              reservations.new_check_in_date = date.checkin;
-              reservations.new_check_out_date = date.checkout;
-              reservations.subtotal = req.body.newSubtotal
-                ? req.body.newSubtotal
-                : reservations.subtotal;
-              reservations.total = req.body.newTotal
-                ? req.body.newTotal
-                : reservations.total;
-              reservations.discount = req.body.newDiscount
-                ? req.body.newDiscount
-                : reservations.discount;
-              reservations.rewardDiscount = req.body.newRewardsDiscount
-                ? req.body.newRewardsDiscount
-                : reservations.rewardDiscount;
-              reservations.taxesAndFees = req.body.newTaxesAndFees
-                ? req.body.newTaxesAndFees
-                : reservations.taxesAndFees;
-              reservations.numOfNights = req.body.numberOfNights;
-              hotel.save().catch(err => res.status(400).json(err));
-              reservations.save().catch(err =>
-                res.status(400).json({
-                  message: "Fail to change",
-                  code: 400
-                })
-              );
-              res.status(200).json({
-                message: "Successfully change",
-                code: 200
-              });
-            } else {
-              res.status(409).json({
-                message: "no room available at that date",
-                code: 409
-              });
-            }
-          })
-          .catch(err => {
-            res.status(400).json(err);
-          });
-      } else {
-        res
-          .status(404)
-          .json({ message: `cannot find ${bookingID}`, code: 404 });
+        });
       }
-    });
-  })(req, res);
+    })(req, res);
+  });
 });
 
 // @route POST /api/booking/cancel
@@ -537,57 +565,110 @@ router.post("/changeReservation", (req, res) => {
 // @access public
 router.post("/cancel", (req, res) => {
   Booking.findById(req.body.bookingID).then(booking => {
-    if (booking.check_in_date - new Date() > 172800000) {
-      if (booking.status == 0) {
-        booking.status = 3;
-        if (booking.rewardPointsUsed !== 0) {
-          User.findOneAndUpdate(
-            { customerID: booking.customerID },
-            { $inc: { rewardPoints: booking.rewardPointsUsed } }
-          );
+    if (booking.status === 0) {
+      booking.status = 3;
+      if (booking.changed) {
+        if (booking.new_check_in_date - new Date() > 172800000) {
+          if (booking.rewardPointsUsed !== 0) {
+            User.find({ customerID: booking.customerID }).then(user => {
+              user[0].rewardPoints += booking.rewardPointsUsed;
+              user[0].save().catch(err => console.log(err));
+            });
+          }
         }
-        Hotel.findById(booking.hotelID).then(hotel => {
-          if (booking.typeOfRoom === "single") {
-            arr = hotel.roomTypeAndNumber.single;
+      } else {
+        if (booking.check_in_date - new Date() > 172800000) {
+          if (booking.rewardPointsUsed !== 0) {
+            User.find({ customerID: booking.customerID }).then(user => {
+              user[0].rewardPoints += booking.rewardPointsUsed;
+              user[0].save().catch(err => console.log(err));
+            });
           }
-          if (booking.typeOfRoom === "double") {
-            arr = hotel.roomTypeAndNumber.double;
-          }
-          if (booking.typeOfRoom === "king") {
-            arr = hotel.roomTypeAndNumber.king;
-          }
-          if (booking.typeOfRoom === "studio") {
-            arr = hotel.roomTypeAndNumber.studio;
-          }
-          for (let i = 0; i < arr.length; i++) {
-            for (let j = 0; j < arr[i].dates.length; j++) {
-              if (arr[i].dates[j].bookingID === req.body.bookingID) {
-                arr[i].dates.splice(j, 1);
-              }
+        }
+      }
+      Hotel.findById(booking.hotelID).then(hotel => {
+        if (booking.typeOfRoom === "single") {
+          arr = hotel.roomTypeAndNumber.single;
+        }
+        if (booking.typeOfRoom === "double") {
+          arr = hotel.roomTypeAndNumber.double;
+        }
+        if (booking.typeOfRoom === "king") {
+          arr = hotel.roomTypeAndNumber.king;
+        }
+        if (booking.typeOfRoom === "studio") {
+          arr = hotel.roomTypeAndNumber.studio;
+        }
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr[i].dates.length; j++) {
+            if (arr[i].dates[j].bookingID === req.body.bookingID) {
+              arr[i].dates.splice(j, 1);
             }
           }
-          hotel.save().catch(err => res.status(400).json(err));
-          booking.save().catch(err =>
-            res.status(400).json({
-              message: "not able to cancel",
-              code: 400
-            })
-          );
-          res.status(200).json({
-            message: "successfully canceled",
-            code: 200
-          });
+        }
+        hotel.save().catch(err => res.status(400).json(err));
+        booking.save().catch(err =>
+          res.status(400).json({
+            message: "not able to cancel",
+            code: 400
+          })
+        );
+        res.status(200).json({
+          message: "successfully canceled",
+          code: 200
         });
-      } else {
-        res.status(400).json({
-          message: "booking status is not 0.",
-          code: 400
-        });
+      });
+    }
+    if (checkAvalibity(arr, date, reservations.numOfRoom, bookingID)) {
+      if (isLogged) {
+        reservations.rewardPointsEarned = req.body.newPointsEarned
+          ? req.body.newPointsEarned
+          : reservations.rewardPointsEarned;
+        if (req.body.newPointsused) {
+          user.rewardPoints =
+            user.rewardPoints +
+            reservations.rewardPointsUsed -
+            req.body.newPointsused;
+          reservations.rewardPointsUsed = req.body.newPointsused
+            ? req.body.newPointsused
+            : reservations.rewardPointsUsed;
+          user.save().catch(err => console.log(err));
+        }
       }
+      reservations.changed = true;
+      reservations.new_check_in_date = date.checkin;
+      reservations.new_check_out_date = date.checkout;
+      reservations.subtotal = req.body.newSubtotal
+        ? req.body.newSubtotal
+        : reservations.subtotal;
+      reservations.total = req.body.newTotal
+        ? req.body.newTotal
+        : reservations.total;
+      reservations.discount = req.body.newDiscount
+        ? req.body.newDiscount
+        : reservations.discount;
+      reservations.rewardDiscount = req.body.newRewardsDiscount
+        ? req.body.newRewardsDiscount
+        : reservations.rewardDiscount;
+      reservations.taxesAndFees = req.body.newTaxesAndFees
+        ? req.body.newTaxesAndFees
+        : reservations.taxesAndFees;
+      reservations.numOfNights = req.body.numberOfNights;
+      hotel.save().catch(err => res.status(400).json(err));
+      reservations.save().catch(err =>
+        res.status(400).json({
+          message: "Fail to change",
+          code: 400
+        })
+      );
+      res.status(200).json({
+        message: "Successfully change",
+        code: 200
+      });
     } else {
-      res.status(400).json({
-        message: "within 48 hours, cannot refund",
-        code: 400
+      res.status(409).json({
+        message: "no room available at that date",
+        code: 409
       });
     }
   });
