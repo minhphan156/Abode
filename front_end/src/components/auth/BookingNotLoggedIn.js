@@ -1,13 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 import { getHistoryNotLoggedIn } from "../../actions/profileActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 import Paper from "@material-ui/core/Paper";
-import AbodeLogo from "../../images/logo.png";
+
 import "./auth.css";
 
+const styles = {
+  container: {
+    maxHeight: 300,
+    Width: 900
+  },
+  PaperContainer: {
+    marginTop: 50,
+    marginBottom: 50,
+    height: 170,
+    width: "50%",
+    padding: 20
+  }
+};
 class BookingNotLoggedIn extends Component {
   constructor() {
     super();
@@ -45,40 +60,30 @@ class BookingNotLoggedIn extends Component {
 
   render() {
     const { errors } = this.state;
-    let paperSize;
-
-    if (Object.keys(errors).length == 0) {
-      paperSize = "AuthPaperLogin";
-    } else {
-      paperSize = "AuthPaperLoginError";
-    }
+    const { classes } = this.props;
 
     return (
       <Grid
         container
         className="AuthContainerLogin"
-        spacing={0}
         direction="column"
         justify="center"
         alignItems="center"
       >
-        <Paper className={paperSize}>
-          <Grid item className="AuthTitle">
+        <Paper className={classes.PaperContainer}>
+          <Grid item xs={12} className="AuthTitle">
             Guest Booking
           </Grid>
-          <br />
-          <Grid
-            container
-            spacing={0}
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <img className="loginLogo" src={AbodeLogo} alt="" />
-            <br />
-            <br />
-            <Grid className="AuthTextFields">
-              <form onSubmit={this.onSubmit}>
+          <form onSubmit={this.onSubmit}>
+            <Grid
+              style={{ marginTop: 10 }}
+              container
+              spacing={24}
+              direction="row"
+              justify="center"
+              alignItems="center"
+            >
+              <Grid item xs={5}>
                 <TextFieldGroup
                   placeholder="Booking ID"
                   name="bookingID"
@@ -87,6 +92,8 @@ class BookingNotLoggedIn extends Component {
                   onChange={this.onChange}
                   error={errors.bookingID}
                 />
+              </Grid>
+              <Grid item xs={5}>
                 <TextFieldGroup
                   placeholder="Last Name"
                   name="lastName"
@@ -95,10 +102,12 @@ class BookingNotLoggedIn extends Component {
                   onChange={this.onChange}
                   error={errors.lastName}
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
+              </Grid>
+              <Grid item xs={2} style={{ marginBottom: 16 }}>
+                <input type="submit" className="btn btn-info" />
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </Paper>
       </Grid>
     );
@@ -113,4 +122,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getHistoryNotLoggedIn }
-)(BookingNotLoggedIn);
+)(withStyles(styles)(BookingNotLoggedIn));

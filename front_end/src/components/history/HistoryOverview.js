@@ -362,7 +362,12 @@ class HistoryOverview extends Component {
 
             {/* ExpansionPanelDetails is the part that can be expanded (not visible by default) */}
             <ExpansionPanelDetails>
-              <HistoryExpansionTable expansionData={expansionData} />
+              <HistoryExpansionTable
+                isAuthenticatedNotLoggedIn={
+                  this.props.auth.isAuthenticatedNotLoggedIn
+                }
+                expansionData={expansionData}
+              />
             </ExpansionPanelDetails>
           </ExpansionPanel>
         );

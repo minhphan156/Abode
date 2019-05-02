@@ -79,25 +79,26 @@ export const getHistoryNotLoggedIn = bookingData => dispatch => {
         payload: true
       });
     })
-    .catch(err =>
+    .catch(err => {
+      console.log("getHistoryNotLoggedIn error");
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 // Get User's Rewards Points
 export const getProfileInfo = () => dispatch => {
   dispatch(setProfileLoading());
   axios
     .get("/api/users/current")
-    .then(res =>
-      {dispatch({
+    .then(res => {
+      dispatch({
         type: GET_PROFILE_INFO,
         payload: res.data
-      })
-      dispatch(setCurrentUser(res.data))}
-    )
+      });
+      dispatch(setCurrentUser(res.data));
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
