@@ -49,6 +49,13 @@ router.get("/history", passport.authenticate("jwt", { session: false }), (req, r
             Booking.find({customerID: req.user.customerID}, (err, bookings) => {
                 if(err) return res.status(400).json(err);
 
+                // Send an empty historyPack if the customer does not have any bookings
+                if (bookings.length === 0) {
+                    return res.status(200).json({
+                        historyPack
+                    });
+                }
+
                 Customer.findById(req.user.customerID, (custErr, customerInfo) => {
                     if(custErr) return res.status(400).json(custErr);
                 
