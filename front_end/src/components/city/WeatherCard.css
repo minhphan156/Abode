@@ -34,9 +34,22 @@
     }
 }
 
-@media screen and (min-width: 1280px){
+@media screen and (min-width: 1280px) and (max-width: 1920px){
     .weatherStatus{
         font-size: 22px;
+        font-weight: bold;
+    }
+
+    .temperature{
+        font-size: 40px;
+        font-weight: bold;
+        color: #0c4b78;
+    }
+}
+
+@media screen and (min-width: 1920px){
+    .weatherStatus{
+        font-size: 18px;
         font-weight: bold;
     }
 
