@@ -217,9 +217,9 @@ class ChangeReservation extends Component {
                   )}
                 </DialogActions>
                 {this.state.showChange === true &&
-                (expansionData.total / expansionData.numberOfNights) *
-                  this.state.days -
-                  expansionData.total >
+                expansionData.nightlyRate *
+                  (this.state.days - expansionData.numberOfNights) *
+                  (1 + this.state.taxRate) >
                   0 ? (
                   <div>
                     <CardContent>
@@ -229,9 +229,8 @@ class ChangeReservation extends Component {
                         Night(s) : $
                         {(
                           expansionData.nightlyRate *
-                            this.state.days *
-                            (1 + this.state.taxRate) -
-                          expansionData.total
+                          (this.state.days - expansionData.numberOfNights) *
+                          (1 + this.state.taxRate)
                         ).toFixed(2)}
                       </h4>
                       <hr />
