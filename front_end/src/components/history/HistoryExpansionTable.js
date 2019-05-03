@@ -62,6 +62,7 @@ class HistoryExpansionTable extends Component {
         ),
         createData("Taxes and Fees", "$" + bookingData.taxesAndFees),
         createData("Total", "$" + bookingData.total),
+        createData("Reward Points Used", bookingData.rewardPointsUsed),
         createData(
           "Reward Points Earned (*added after check-in)",
           bookingData.rewardPointsEarned
