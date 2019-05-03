@@ -57,7 +57,7 @@ export const getHistory = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err //.response.data
       })
     );
 };
@@ -67,13 +67,13 @@ export const getProfileInfo = () => dispatch => {
   dispatch(setProfileLoading());
   axios
     .get("/api/users/current")
-    .then(res =>
-      {dispatch({
+    .then(res => {
+      dispatch({
         type: GET_PROFILE_INFO,
         payload: res.data
-      })
-      dispatch(setCurrentUser(res.data))}
-    )
+      });
+      dispatch(setCurrentUser(res.data));
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
