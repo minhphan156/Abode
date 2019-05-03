@@ -67,7 +67,7 @@ router.get("/search", (req, res) => {
 
   if (req.query.free_parking === "1")
     free_parking = new RegExp("valet(.*)parking", "ig");
-  if (req.query.pet_friendly === "1")
+  if (req.query.multilingual === "1")
     multilingual = new RegExp("multilingual", "ig");
 
   if (req.query.free_breakfast === "1")
