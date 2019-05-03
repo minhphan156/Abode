@@ -90,6 +90,8 @@ class IndivHotel extends Component {
   }
 
   render() {
+    console.log(this.props.individualHotelData.individualHotelData);
+    console.log(this.props.query.searchQuery);
     if (
       this.props.individualHotelData.individualHotelData === null ||
       this.props.query.searchQuery === null

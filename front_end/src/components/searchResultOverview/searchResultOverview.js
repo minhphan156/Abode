@@ -138,6 +138,10 @@ class searchResultOverview extends Component {
     activeMarker: marker,
     showingInfoWindow: true
   });
+  if(props.hotel!=null){
+    console.log(props.hotel);
+    this.handleClickToHotel(props.hotel);
+  }
 }
 
   onClose = props => {
@@ -428,12 +432,11 @@ class searchResultOverview extends Component {
         if (hotelQuery.results.length > 0) {
           let iconA = {
             url: "./logo.png",
-            size: new this.props.google.maps.Size(100, 100),
+            size: new this.props.google.maps.Size(40, 40),
             scaledSize: new this.props.google.maps.Size(40,40),
             origin: new this.props.google.maps.Point(0, 0),
             anchor: new this.props.google.maps.Point(0, 32)
           };
-          let pixelOffsetA = new this.props.google.maps.Size(-32, 0);
           displayGoogleMap = (
             <Map
               class = "googleMap"
@@ -448,10 +451,7 @@ class searchResultOverview extends Component {
               return (
                 <Marker
                   onClick={this.onMarkerClick}
-                  name={hotelQuery.results[index].name}
-                  price={hotelQuery.results[index].price}
-                  address={hotelQuery.results[index].address}
-                  img={hotelQuery.results[index].img}
+                  hotel={hotelQuery.results[index]}
                   position={{
                     lat: hotelQuery.results[index].lat,
                     lng: hotelQuery.results[index].lng
@@ -461,26 +461,28 @@ class searchResultOverview extends Component {
               );
               })}
 
+
               {hotelQuery.results.map((item, index) => {
                 return (
                   <InfoWindow                 
-                    pixelOffset = {pixelOffsetA}
-                    
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                     onClose={this.onClose}
                   >
-                  <div className="row">
-                    <div className="col-lg-8">
-                      <img style={{margin:'auto', width:'100%'}} src={this.state.selectedPlace.img} />
+                  {this.state.selectedPlace.hotel != null ? (
+                    <div className="row">
+                      <div className="col-lg-8">
+                      {console.log(this.state.selectedPlace.hotel)}
+                      <img style={{margin:'auto', width:'100%'}} src={this.state.selectedPlace.hotel.img} />
+                      </div>
+                      <div className="col-lg-4">
+                        <a  className="mapPopInfoName" href="/indiv-hotel">{this.state.selectedPlace.hotel.name}</a>
+                        <p  className="mapPopInfoAddress">{this.state.selectedPlace.hotel.address}</p>
+                        <p  className="mapPopInfoPrice">${this.state.selectedPlace.hotel.price}</p>
+                      </div>
                     </div>
-                    <div className="col-lg-4">
-                        <p  className="mapPopInfoName">{this.state.selectedPlace.name}</p>
-                        <p  className="mapPopInfoAddress">{this.state.selectedPlace.address}</p>
-                        <p  className="mapPopInfoPrice">${this.state.selectedPlace.price}</p>
-
-                    </div>
-                  </div>
+                  ): null
+                  }
                   </InfoWindow>
                 );
               })}
