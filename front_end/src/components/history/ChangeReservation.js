@@ -44,20 +44,26 @@ class ChangeReservation extends Component {
       newCheckIn: null,
       newCheckOut: null,
       days: null,
-      showChange: false
+      showChange: false,
+      taxRate: 0.125 //Default tax rate is 12.5% when only reward points used for booking
+      //No basis to calculate tax rate from when $0 taxAndFees and $0 subtotal
     };
     this.stripeValidate = this.stripeValidate.bind(this);
     this.onChangeClick = this.onChangeClick.bind(this);
     this.onHandleDate = this.onHandleDate.bind(this);
     this.showChangeClick = this.showChangeClick.bind(this);
   }
-  showChangeClick() {
+  showChangeClick(expansionData) {
     if (this.state.newCheckIn != null && this.state.newCheckOut != null) {
       var duration = moment.duration(
         this.state.newCheckOut.diff(this.state.newCheckIn)
       );
       this.setState({ days: duration.asDays() });
       this.setState({ showChange: true });
+      if (expansionData.taxesAndFees > 0)
+        this.setState({
+          taxRate: expansionData.taxesAndFees / expansionData.subtotal
+        });
     }
   }
   stripeValidate(e) {
@@ -164,7 +170,7 @@ class ChangeReservation extends Component {
                   <br /> <br />
                   Check In: {checkInTime.toDateString()} <br /> <br />
                   Check Out: {checkOutTime.toDateString()} <br /> <br />
-                  Number of Nights: {expansionData.numberOfNights}
+                  {/* Number of Nights: {expansionData.numberOfNights} */}
                 </DialogContent>
                 {this.state.newCheckIn != null &&
                 this.state.newCheckOut != null &&
@@ -201,7 +207,7 @@ class ChangeReservation extends Component {
                   {this.state.newCheckIn == null ||
                   this.state.newCheckOut == null ? null : (
                     <Button
-                      onClick={this.showChangeClick}
+                      onClick={() => this.showChangeClick(expansionData)}
                       variant="outlined"
                       color="primary"
                       className={classes.button}
@@ -222,8 +228,9 @@ class ChangeReservation extends Component {
                         {this.state.days - expansionData.numberOfNights}{" "}
                         Night(s) : $
                         {(
-                          (expansionData.total / expansionData.numberOfNights) *
-                            this.state.days -
+                          expansionData.nightlyRate *
+                            this.state.days *
+                            (1 + this.state.taxRate) -
                           expansionData.total
                         ).toFixed(2)}
                       </h4>
