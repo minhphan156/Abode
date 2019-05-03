@@ -101,7 +101,7 @@ class CityOverview extends Component {
             direction="row"
             justify={isWidthDown("sm", width) ? "center" : "flex-start"}
             alignItems={isWidthDown("sm", width) ? "center" : "flex-start"}
-            spacing={32}
+            spacing={isWidthDown("sm", width) ? 8:32}
           >
             <Grid item xs={12} md={10}>
               <Grid container direction="row" alignItems="center" spacing={32}>
