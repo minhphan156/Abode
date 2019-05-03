@@ -94,8 +94,7 @@ class ChangeReservation extends Component {
         (expansionData.discounts / expansionData.numberOfNights) * days,
       newTaxesAndFees:
         (expansionData.taxesAndFees / expansionData.numberOfNights) * days,
-      newRewardsDiscount:
-        (expansionData.rewardsDiscount / expansionData.numberOfNights) * days,
+      newRewardsDiscount: expansionData.rewardsDiscount, //extra costs incurred in changing reservation must be payed in cash
       newTotal: (expansionData.total / expansionData.numberOfNights) * days,
       newPointsEarned: (
         (expansionData.total / expansionData.numberOfNights) *
