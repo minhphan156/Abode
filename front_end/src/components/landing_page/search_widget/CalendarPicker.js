@@ -29,7 +29,7 @@ class CalendarPicker extends Component {
   }
 
   render() {
-    const { classes, width } = this.props;
+    let { classes, width } = this.props;
 
     return (
       <div className={classes.root}>
@@ -55,6 +55,7 @@ class CalendarPicker extends Component {
           focusedInput={this.state.focusedInput}
           onFocusChange={focusedInput => this.setState({ focusedInput })}
           noBorder={true}
+          small={true}
         />
       </div>
     );

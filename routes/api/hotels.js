@@ -62,19 +62,19 @@ router.get('/search',(req,res)=>{
     if (typeof price_high == 'undefined' || price_high == '')
         price_high = Number.POSITIVE_INFINITY
 
-    if (req.query.free_wifi === '1'){
-        free_wifi = new RegExp('free(.*)wifi',"ig");}
+    if (req.query.free_wifi === "1") {
+    free_wifi = new RegExp("wifi", "ig");
+    }
 
-    if (req.query.pool === '1') 
-        pool = new RegExp('pool',"ig");
+    if (req.query.pool === "1") pool = new RegExp("pool", "ig");
 
-    if (req.query.free_parking === '1')
-        free_parking = new RegExp('valet parking',"ig");
-    if (req.query.pet_friendly === '1')
-        multilingual = new RegExp('Multilingual',"ig");
-        
-    if (req.query.free_breakfast === '1')
-        free_breakfast = new RegExp('free(.*)breakfast',"ig");
+    if (req.query.free_parking === "1")
+    free_parking = new RegExp("valet(.*)parking", "ig");
+    if (req.query.multilingual === "1")
+    multilingual = new RegExp("multilingual", "ig");
+
+    if (req.query.free_breakfast === "1")
+    free_breakfast = new RegExp("breakfast", "ig");
 
     //End Filter
     var searchKey = req.query.destinationName;
