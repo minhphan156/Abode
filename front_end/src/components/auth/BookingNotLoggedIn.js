@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-
-import { getHistoryNotLoggedIn } from "../../actions/profileActions";
+import withWidth from "@material-ui/core/withWidth";
+import { isWidthDown } from "@material-ui/core/withWidth";
+import {
+  getHistoryNotLoggedIn,
+  cleanUpNotLoggedInHistoryState
+} from "../../actions/profileActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 import Paper from "@material-ui/core/Paper";
 
@@ -12,14 +16,21 @@ import "./auth.css";
 
 const styles = {
   container: {
-    maxHeight: 300,
+    minHeight: 300,
     Width: 900
   },
   PaperContainer: {
     marginTop: 50,
     marginBottom: 50,
-    height: 170,
+
     width: "50%",
+    padding: 20
+  },
+  PaperContainerPhone: {
+    marginTop: 50,
+    marginBottom: 50,
+
+    width: "78%",
     padding: 20
   }
 };
@@ -33,6 +44,10 @@ class BookingNotLoggedIn extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.cleanUpNotLoggedInHistoryState();
   }
 
   componentWillReceiveProps = nextProps => {
@@ -61,6 +76,7 @@ class BookingNotLoggedIn extends Component {
   render() {
     const { errors } = this.state;
     const { classes } = this.props;
+    const width = this.props.width;
 
     return (
       <Grid
@@ -70,7 +86,13 @@ class BookingNotLoggedIn extends Component {
         justify="center"
         alignItems="center"
       >
-        <Paper className={classes.PaperContainer}>
+        <Paper
+          className={
+            isWidthDown("xs", width)
+              ? classes.PaperContainerPhone
+              : classes.PaperContainer
+          }
+        >
           <Grid item xs={12} className="AuthTitle">
             Guest Booking
           </Grid>
@@ -78,12 +100,12 @@ class BookingNotLoggedIn extends Component {
             <Grid
               style={{ marginTop: 10 }}
               container
-              spacing={24}
-              direction="row"
+              spacing={isWidthDown("xs", width) ? 0 : 24}
+              direction={isWidthDown("xs", width) ? "column" : "row"}
               justify="center"
               alignItems="center"
             >
-              <Grid item xs={5}>
+              <Grid item xs={isWidthDown("xs", width) ? 12 : 5}>
                 <TextFieldGroup
                   placeholder="Booking ID"
                   name="bookingID"
@@ -93,7 +115,7 @@ class BookingNotLoggedIn extends Component {
                   error={errors.bookingID}
                 />
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={isWidthDown("xs", width) ? 12 : 5}>
                 <TextFieldGroup
                   placeholder="Last Name"
                   name="lastName"
@@ -103,11 +125,22 @@ class BookingNotLoggedIn extends Component {
                   error={errors.lastName}
                 />
               </Grid>
-              <Grid item xs={2} style={{ marginBottom: 16 }}>
+              <Grid
+                item
+                xs={isWidthDown("xs", width) ? 4 : 2}
+                style={{ marginBottom: 16 }}
+              >
                 <input type="submit" className="btn btn-info" />
               </Grid>
             </Grid>
           </form>
+          {this.props.errors.guestHistoryError ? (
+            <Grid item xs={12}>
+              <div style={{ color: "red", textAlign: "center" }}>
+                Booking ID or Last Name was entered incorrectly
+              </div>
+            </Grid>
+          ) : null}
         </Paper>
       </Grid>
     );
@@ -121,5 +154,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getHistoryNotLoggedIn }
-)(withStyles(styles)(BookingNotLoggedIn));
+  { getHistoryNotLoggedIn, cleanUpNotLoggedInHistoryState }
+)(withStyles(styles)(withWidth()(BookingNotLoggedIn)));

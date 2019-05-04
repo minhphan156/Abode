@@ -62,7 +62,16 @@ export const getHistory = () => dispatch => {
       })
     );
 };
-
+export const cleanUpNotLoggedInHistoryState = () => dispatch => {
+  dispatch({
+    type: BOOKING_NOT_LOGGED_IN_AUTHENTICATED,
+    payload: false
+  });
+  dispatch({
+    type: GET_ERRORS,
+    payload: { guestHistoryError: false }
+  });
+};
 // Get User's Travel/Booking History Not-logged-in
 export const getHistoryNotLoggedIn = bookingData => dispatch => {
   dispatch(setProfileLoading());

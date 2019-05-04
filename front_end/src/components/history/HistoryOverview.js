@@ -129,7 +129,7 @@ class HistoryOverview extends Component {
           </div>
         );
       }
-      bookings = history.map(booking => {
+      bookings = history.historyPack.map(booking => {
         displayChangeChip = null;
         displayRegularChip = null;
         arrayOfButtons = null;

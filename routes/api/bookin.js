@@ -146,73 +146,69 @@ router.post("/guest-history", (req, res) => {
 
   //   var historyPack = {};
   var historyPack = [];
-  Booking.findById(bookingID).then((book) => {
+  Booking.findById(bookingID)
+    .then(book => {
+      Customer.findById(book.customerID)
+        .then(custDoc => {
+          // Block request if the last name does not match the booking
+          if (custDoc.Lastname !== lastName)
+            return res.status(404).json({
+              guestHistoryError: true
+            });
 
-    Customer.findById(book.customerID)
-      .then(custDoc => {
+          historyPack.err = false;
 
-        // Block request if the last name does not match the booking
-        if (custDoc.Lastname !== lastName)
-          return res.status(403).json({
-            guestHistoryError: true
-          });
+          Hotel.findById(book.hotelID).then(hotelDoc => {
+            // Get the name, city and image of the hotel the User is staying at
+            historyPack.push({
+              name: custDoc.Firstname + " " + custDoc.Lastname,
+              price: hotelDoc.price[book.typeOfRoom + "Price"],
+              hotelName: hotelDoc.name,
+              img: hotelDoc.images[0],
+              city: hotelDoc.city,
 
-        historyPack.err = false;
+              bookingID: book._id,
+              check_in_date: book.check_in_date,
+              check_out_date: book.check_out_date,
+              typeOfRoom: book.typeOfRoom,
+              numOfRoom: book.numOfRoom,
+              numOfNights: book.numOfNights,
+              status: book.status,
+              changed: book.changed,
+              new_check_in_date: book.new_check_in_date,
+              new_check_out_date: book.new_check_out_date,
 
-        Hotel.findById(book.hotelID).then(hotelDoc => {
-          // Get the name, city and image of the hotel the User is staying at
-          historyPack.push({
-            name: custDoc.Firstname + " " + custDoc.Lastname,
-            price: hotelDoc.price[book.typeOfRoom + "Price"],
-            hotelName: hotelDoc.name,
-            img: hotelDoc.images[0],
-            city: hotelDoc.city,
-
-            bookingID: book._id,
-            check_in_date: book.check_in_date,
-            check_out_date: book.check_out_date,
-            typeOfRoom: book.typeOfRoom,
-            numOfRoom: book.numOfRoom,
-            numOfNights: book.numOfNights,
-            status: book.status,
-            changed: book.changed,
-            new_check_in_date: book.new_check_in_date,
-            new_check_out_date: book.new_check_out_date,
-
-            total: book.total,
-            subtotal: book.subtotal,
-            discount: book.discount,
-            taxesAndFees: book.taxesAndFees,
-            rewardPointsUsed: book.rewardPointsUsed,
-            rewardPointsEarned: book.rewardPointsEarned,
-            rewardDiscount: book.rewardDiscount,
-            reservedDate: book.reservedDate,
-            nightlyRate: book.numOfNights,
-            starReview: book.starReview,
-            comment: book.review
-          });
-          // Give frontend the goods
-          return res.status(200).send(
-            {
+              total: book.total,
+              subtotal: book.subtotal,
+              discount: book.discount,
+              taxesAndFees: book.taxesAndFees,
+              rewardPointsUsed: book.rewardPointsUsed,
+              rewardPointsEarned: book.rewardPointsEarned,
+              rewardDiscount: book.rewardDiscount,
+              reservedDate: book.reservedDate,
+              nightlyRate: book.numOfNights,
+              starReview: book.starReview,
+              comment: book.review
+            });
+            // Give frontend the goods
+            return res.status(200).send({
               historyPack,
               guestHistoryError: false
             });
-        });
-      })
+          });
+        })
 
-      .catch(() => {
-        return res.status(403).json({
-          guestHistoryError: true
+        .catch(() => {
+          return res.status(404).json({
+            guestHistoryError: true
+          });
         });
+    })
+    .catch(() => {
+      return res.status(404).json({
+        guestHistoryError: true
       });
-
-  }).catch(() => {
-    return res.status(403).json({
-      guestHistoryError: true
     });
-
-  });
-
 });
 
 // @route POST /api/booking/confirm

@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { clearCurrentProfile,getProfileInfo  } from "../../actions/profileActions";
+import {
+  clearCurrentProfile,
+  getProfileInfo
+} from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
-import AbodeLogo from "./logo.png";
+import NavBarMenuLeft from "./NavBarMenuLeft";
 
+import AbodeLogo from "./logo.png";
+import withWidth from "@material-ui/core/withWidth";
+import { isWidthDown } from "@material-ui/core/withWidth";
 
 import "./navbar.css";
 
@@ -26,20 +32,23 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  componentWillMount(){
+  componentWillMount() {
     if (localStorage.jwtToken) {
-       this.props.getProfileInfo();
+      this.props.getProfileInfo();
     }
   }
 
-render() { 
+  render() {
     // Markup shown on the right hand side of Navbar when user is GUEST.
+    const width = this.props.width;
+
     let guestMarkUp = (
       <Grid
         container
         spacing={0}
         justify="space-evenly"
         alignItems="center"
+        direction="row"
         xs={4}
         sm={4}
         md={3}
@@ -56,13 +65,6 @@ render() {
           <Link to="/login">
             <Button class="navButtons buttonBlue" primary>
               Login
-            </Button>
-          </Link>
-        </Grid>
-        <Grid item>
-          <Link to="/booking-not-logged-in">
-            <Button class="navButtons buttonBlue" primary>
-              Booking
             </Button>
           </Link>
         </Grid>
@@ -119,13 +121,25 @@ render() {
             Featured Cities
           </AnchorLink>
         </Grid>
+
+        {this.props.auth.isAuthenticated ? null : (
+          <Grid item className="headerMenu">
+            <Link
+              to="/booking-not-logged-in"
+              offset="-550"
+              style={{ color: "white" }}
+            >
+              Check Booking
+            </Link>
+          </Grid>
+        )}
       </Grid>
     );
 
     let notInLandingMarkup = <Grid item />;
 
     return (
-      <div className="navbarContainer ">
+      <div className="navbarContainer">
         <Grid
           container
           className="navbarContainer headerfont"
@@ -134,28 +148,85 @@ render() {
           justify="space-between"
           alignItems="center"
         >
-          <Grid className="navbarLogo" item>
-            <Link to="/">
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
-                <Grid item>
-                  <img
-                    className="abode-logo"
-                    src={AbodeLogo}
-                    alt="Abode Logo"
-                  />
-                </Grid>
+          {this.props.auth.isAuthenticated ? (
+            <Grid className="navbarLogo" item>
+              <Link to="/">
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <img
+                      className="abode-logo"
+                      src={AbodeLogo}
+                      alt="Abode Logo"
+                    />
+                  </Grid>
 
-                <Grid item className="abodeHome">
-                  Abode
+                  <Grid item className="abodeHome">
+                    Abode
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Link>
-          </Grid>
+              </Link>
+            </Grid>
+          ) : (
+            <Grid item>
+              {" "}
+              {isWidthDown("xs", width) ? (
+                <div>
+                  <NavBarMenuLeft />{" "}
+                  <Grid className="navbarLogo" item>
+                    <Link to="/">
+                      <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <img
+                            className="abode-logo"
+                            src={AbodeLogo}
+                            alt="Abode Logo"
+                          />
+                        </Grid>
+
+                        <Grid item className="abodeHome">
+                          Abode
+                        </Grid>
+                      </Grid>
+                    </Link>
+                  </Grid>
+                </div>
+              ) : (
+                <Grid className="navbarLogo" item>
+                  <Link to="/">
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-between"
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <img
+                          className="abode-logo"
+                          src={AbodeLogo}
+                          alt="Abode Logo"
+                        />
+                      </Grid>
+
+                      <Grid item className="abodeHome">
+                        Abode
+                      </Grid>
+                    </Grid>
+                  </Link>
+                </Grid>
+              )}
+            </Grid>
+          )}
+
           {this.props.landing.isInLanding == true
             ? inLandingMarkup
             : notInLandingMarkup}
@@ -168,7 +239,7 @@ render() {
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
-  landing: PropTypes.object.isRequired,
+  landing: PropTypes.object.isRequired
 };
 
 let mapStateToProps = state => ({
@@ -179,5 +250,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile,getProfileInfo  }
-)(Navbar);
+  { logoutUser, clearCurrentProfile, getProfileInfo }
+)(withWidth()(Navbar));
