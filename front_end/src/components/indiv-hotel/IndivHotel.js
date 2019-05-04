@@ -23,7 +23,6 @@ import "./indivHotel.css";
 import taxrates from "../payment/taxrates.json";
 
 class IndivHotel extends Component {
-  
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -90,8 +89,6 @@ class IndivHotel extends Component {
   }
 
   render() {
-    console.log(this.props.individualHotelData.individualHotelData);
-    console.log(this.props.query.searchQuery);
     if (
       this.props.individualHotelData.individualHotelData === null ||
       this.props.query.searchQuery === null
@@ -109,11 +106,11 @@ class IndivHotel extends Component {
       let iconA = {
         url: "./logo.png",
         size: new this.props.google.maps.Size(100, 100),
-        scaledSize: new this.props.google.maps.Size(40,40),
+        scaledSize: new this.props.google.maps.Size(40, 40),
         origin: new this.props.google.maps.Point(0, 0),
         anchor: new this.props.google.maps.Point(0, 32)
       };
-      let displayGoogleMaps = (                    
+      let displayGoogleMaps = (
         <Map
           google={this.props.google}
           zoom={15}
@@ -128,7 +125,7 @@ class IndivHotel extends Component {
           }}
         >
           <Marker
-            icon={ iconA }
+            icon={iconA}
             onClick={this.onMarkerClick}
             name={"Current location"}
             position={{
@@ -143,7 +140,7 @@ class IndivHotel extends Component {
           </InfoWindow>
         </Map>
       );
-      let displayGoogleMapsLong =(
+      let displayGoogleMapsLong = (
         <Map
           google={this.props.google}
           zoom={15}
@@ -158,12 +155,12 @@ class IndivHotel extends Component {
           }}
         >
           <Marker
-            icon = { iconA }
+            icon={iconA}
             onClick={this.onMarkerClick}
             name={"Current location"}
             position={{
-             lat: individualHotelData.lat,
-             lng: individualHotelData.alt
+              lat: individualHotelData.lat,
+              lng: individualHotelData.alt
             }}
           />
           <InfoWindow onClose={this.onInfoWindowClose}>
@@ -286,7 +283,10 @@ class IndivHotel extends Component {
                   className="text-center"
                   style={{ fontSize: 40, color: "#3ba711" }}
                 >
-                  ${(individualHotelData.price.singlePrice * discountRate).toFixed(0)}
+                  $
+                  {(
+                    individualHotelData.price.singlePrice * discountRate
+                  ).toFixed(0)}
                 </h2>
 
                 <div>
@@ -786,7 +786,6 @@ class IndivHotel extends Component {
                               {individualHotelData.airports.map((item, key) => {
                                 return (
                                   <div class="tabContent">
-                                    {console.log("airports")}
                                     <div
                                       className="col"
                                       style={{ color: "#808080" }}
@@ -885,7 +884,10 @@ class IndivHotel extends Component {
                       className="text-center"
                       style={{ fontSize: 40, color: "#3ba711" }}
                     >
-                      ${(individualHotelData.price.singlePrice * discountRate).toFixed(0)}
+                      $
+                      {(
+                        individualHotelData.price.singlePrice * discountRate
+                      ).toFixed(0)}
                     </h2>
                     <div>
                       <AnchorLink href="#table1">
@@ -933,15 +935,11 @@ class IndivHotel extends Component {
                     </div>
                   </div>
                   <div class="shrtMap">
-                    <div className="row">
-                      {displayGoogleMaps}
-                    </div>
+                    <div className="row">{displayGoogleMaps}</div>
                   </div>
 
                   <div class="longMap">
-                    <div className="row">
-                      {displayGoogleMapsLong}
-                    </div>
+                    <div className="row">{displayGoogleMapsLong}</div>
                   </div>
                 </div>
               </div>
@@ -1094,7 +1092,6 @@ class IndivHotel extends Component {
                   </table>
                 </section>
               </div>
-              {console.log(individualHotelData)}
               <p class="reviewSection">
                 <i class="fas fa-poll" style={{ color: "#0c4b78" }} /> Reviews (
                 {individualHotelData.review.length})
