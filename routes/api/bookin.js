@@ -53,6 +53,11 @@ router.get(
     Booking.find({ customerID: req.user.customerID }, (err, bookings) => {
       if (err) return res.status(400).json(err);
 
+      // Send an empty historyPack if the customer does not have any bookings
+      if (bookings.length === 0) {
+        return res.status(200).send(historyPack);
+      }
+
       Customer.findById(req.user.customerID, (custErr, customerInfo) => {
         if (custErr) return res.status(400).json(custErr);
 
@@ -191,10 +196,7 @@ router.post("/guest-history", (req, res) => {
               comment: book.review
             });
             // Give frontend the goods
-            return res.status(200).send({
-              historyPack,
-              guestHistoryError: false
-            });
+            return res.status(200).send({ historyPack });
           });
         })
 
@@ -477,16 +479,17 @@ router.post("/changeReservation", (req, res) => {
             }
             if (checkAvalibity(arr, date, reservations.numOfRoom, bookingID)) {
               if (isLogged) {
+                console.log("is here");
                 reservations.rewardPointsEarned = req.body.newPointsEarned
-                  ? req.body.newPointsEarned
+                  ? parseInt(req.body.newPointsEarned)
                   : reservations.rewardPointsEarned;
-                if (req.body.newPointsused) {
+                if (req.body.newPointsUsed) {
                   user.rewardPoints =
                     user.rewardPoints +
                     reservations.rewardPointsUsed -
-                    req.body.newPointsused;
-                  reservations.rewardPointsUsed = req.body.newPointsused
-                    ? req.body.newPointsused
+                    req.body.newPointsUsed;
+                  reservations.rewardPointsUsed = req.body.newPointsUsed
+                    ? parseInt(req.body.newPointsUsed)
                     : reservations.rewardPointsUsed;
                   user.save().catch(err => console.log(err));
                 }
@@ -598,57 +601,10 @@ router.post("/cancel", (req, res) => {
           code: 200
         });
       });
-    }
-    if (checkAvalibity(arr, date, reservations.numOfRoom, bookingID)) {
-      if (isLogged) {
-        reservations.rewardPointsEarned = req.body.newPointsEarned
-          ? req.body.newPointsEarned
-          : reservations.rewardPointsEarned;
-        if (req.body.newPointsused) {
-          user.rewardPoints =
-            user.rewardPoints +
-            reservations.rewardPointsUsed -
-            req.body.newPointsused;
-          reservations.rewardPointsUsed = req.body.newPointsused
-            ? req.body.newPointsused
-            : reservations.rewardPointsUsed;
-          user.save().catch(err => console.log(err));
-        }
-      }
-      reservations.changed = true;
-      reservations.new_check_in_date = date.checkin;
-      reservations.new_check_out_date = date.checkout;
-      reservations.subtotal = req.body.newSubtotal
-        ? req.body.newSubtotal
-        : reservations.subtotal;
-      reservations.total = req.body.newTotal
-        ? req.body.newTotal
-        : reservations.total;
-      reservations.discount = req.body.newDiscount
-        ? req.body.newDiscount
-        : reservations.discount;
-      reservations.rewardDiscount = req.body.newRewardsDiscount
-        ? req.body.newRewardsDiscount
-        : reservations.rewardDiscount;
-      reservations.taxesAndFees = req.body.newTaxesAndFees
-        ? req.body.newTaxesAndFees
-        : reservations.taxesAndFees;
-      reservations.numOfNights = req.body.numberOfNights;
-      hotel.save().catch(err => res.status(400).json(err));
-      reservations.save().catch(err =>
-        res.status(400).json({
-          message: "Fail to change",
-          code: 400
-        })
-      );
-      res.status(200).json({
-        message: "Successfully change",
-        code: 200
-      });
     } else {
-      res.status(409).json({
-        message: "no room available at that date",
-        code: 409
+      res.status(400).json({
+        message: "booking status is not 0.",
+        code: 400
       });
     }
   });

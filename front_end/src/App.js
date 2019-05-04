@@ -28,6 +28,7 @@ import HistoryOverview from "./components/history/HistoryOverview";
 import AboutUs from "./components/about_page/AboutUs";
 import PaymentPage from "./components/payment/PaymentPage";
 import BookingNotLoggedIn from "./components/auth/BookingNotLoggedIn";
+import Disclaimer from "./components/disclaimer/Disclaimer";
 
 import "./App.css";
 
@@ -79,6 +80,8 @@ class App extends Component {
               path="/booking-not-logged-in"
               component={BookingNotLoggedIn}
             />
+            <Route exact path="/disclaimer" component={Disclaimer} />
+
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
 
