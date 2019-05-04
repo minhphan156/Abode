@@ -103,6 +103,73 @@ class IndivHotel extends Component {
       }
 
       const { individualHotelData } = this.props.individualHotelData;
+      let iconA = {
+        url: "./logo.png",
+        size: new this.props.google.maps.Size(100, 100),
+        scaledSize: new this.props.google.maps.Size(40, 40),
+        origin: new this.props.google.maps.Point(0, 0),
+        anchor: new this.props.google.maps.Point(0, 32)
+      };
+      let displayGoogleMaps = (
+        <Map
+          google={this.props.google}
+          zoom={15}
+          initialCenter={{
+            lat: individualHotelData.lat,
+            lng: individualHotelData.alt
+          }}
+          style={{
+            width: "100%",
+            height: "70%",
+            marginTop: "1%"
+          }}
+        >
+          <Marker
+            icon={iconA}
+            onClick={this.onMarkerClick}
+            name={"Current location"}
+            position={{
+              lat: individualHotelData.lat,
+              lng: individualHotelData.alt
+            }}
+          />
+          <InfoWindow onClose={this.onInfoWindowClose}>
+            <div>
+              <h1>{individualHotelData.name}</h1>
+            </div>
+          </InfoWindow>
+        </Map>
+      );
+      let displayGoogleMapsLong = (
+        <Map
+          google={this.props.google}
+          zoom={15}
+          initialCenter={{
+            lat: individualHotelData.lat,
+            lng: individualHotelData.alt
+          }}
+          style={{
+            width: "100%",
+            height: "100%",
+            marginTop: "1%"
+          }}
+        >
+          <Marker
+            icon={iconA}
+            onClick={this.onMarkerClick}
+            name={"Current location"}
+            position={{
+              lat: individualHotelData.lat,
+              lng: individualHotelData.alt
+            }}
+          />
+          <InfoWindow onClose={this.onInfoWindowClose}>
+            <div>
+              <h1>{individualHotelData.name}</h1>
+            </div>
+          </InfoWindow>
+        </Map>
+      );
       return (
         <div class="wholePage" style={{ minHeight: window.innerHeight - 180 }}>
           {individualHotelData.img.length === 0 ? (
@@ -216,7 +283,10 @@ class IndivHotel extends Component {
                   className="text-center"
                   style={{ fontSize: 40, color: "#3ba711" }}
                 >
-                  ${(individualHotelData.price.singlePrice * discountRate).toFixed(0)}
+                  $
+                  {(
+                    individualHotelData.price.singlePrice * discountRate
+                  ).toFixed(0)}
                 </h2>
 
                 <div>
@@ -716,7 +786,6 @@ class IndivHotel extends Component {
                               {individualHotelData.airports.map((item, key) => {
                                 return (
                                   <div class="tabContent">
-                                    {console.log("airports")}
                                     <div
                                       className="col"
                                       style={{ color: "#808080" }}
@@ -815,7 +884,10 @@ class IndivHotel extends Component {
                       className="text-center"
                       style={{ fontSize: 40, color: "#3ba711" }}
                     >
-                      ${(individualHotelData.price.singlePrice * discountRate).toFixed(0)}
+                      $
+                      {(
+                        individualHotelData.price.singlePrice * discountRate
+                      ).toFixed(0)}
                     </h2>
                     <div>
                       <AnchorLink href="#table1">
@@ -863,67 +935,11 @@ class IndivHotel extends Component {
                     </div>
                   </div>
                   <div class="shrtMap">
-                    <div className="row">
-                      <Map
-                        google={this.props.google}
-                        zoom={15}
-                        initialCenter={{
-                          lat: individualHotelData.lat,
-                          lng: individualHotelData.alt
-                        }}
-                        style={{
-                          width: "100%",
-                          height: "70%",
-                          marginTop: "1%"
-                        }}
-                      >
-                        <Marker
-                          onClick={this.onMarkerClick}
-                          name={"Current location"}
-                          position={{
-                            lat: individualHotelData.lat,
-                            lng: individualHotelData.alt
-                          }}
-                        />
-                        <InfoWindow onClose={this.onInfoWindowClose}>
-                          <div>
-                            <h1>{individualHotelData.name}</h1>
-                          </div>
-                        </InfoWindow>
-                      </Map>
-                    </div>
+                    <div className="row">{displayGoogleMaps}</div>
                   </div>
 
                   <div class="longMap">
-                    <div className="row">
-                      <Map
-                        google={this.props.google}
-                        zoom={15}
-                        initialCenter={{
-                          lat: individualHotelData.lat,
-                          lng: individualHotelData.alt
-                        }}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          marginTop: "1%"
-                        }}
-                      >
-                        <Marker
-                          onClick={this.onMarkerClick}
-                          name={"Current location"}
-                          position={{
-                            lat: individualHotelData.lat,
-                            lng: individualHotelData.alt
-                          }}
-                        />
-                        <InfoWindow onClose={this.onInfoWindowClose}>
-                          <div>
-                            <h1>{individualHotelData.name}</h1>
-                          </div>
-                        </InfoWindow>
-                      </Map>
-                    </div>
+                    <div className="row">{displayGoogleMapsLong}</div>
                   </div>
                 </div>
               </div>
@@ -1076,7 +1092,6 @@ class IndivHotel extends Component {
                   </table>
                 </section>
               </div>
-              {console.log(individualHotelData)}
               <p class="reviewSection">
                 <i class="fas fa-poll" style={{ color: "#0c4b78" }} /> Reviews (
                 {individualHotelData.review.length})

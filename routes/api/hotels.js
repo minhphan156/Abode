@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const NodeGeocoder = require('node-geocoder');
 const moment = require('moment-timezone');
 
 const checkAvailable = require("../../validation/checkAvailableHotels");
@@ -8,9 +9,20 @@ const Hotel = require("../../models/Hotel");
 const Booking = require("../../models/booking");
 const Customer = require("../../models/customer");
 
+var options = {
+    provider: 'google',
+   
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    apiKey: 'AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8', // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+  };
+
+  var geocoder = NodeGeocoder(options);
+
 // @route GET api/hotel/search
 // @desc Search Overview with Sorting and Filtering
-router.get('/search',(req,res)=>{
+router.get('/search', (req,res)=>{
     //Sorting
     var sortByObject = req.query.sortObject;
     if (typeof sortByObject !== 'undefined'){
@@ -107,7 +119,7 @@ router.get('/search',(req,res)=>{
         star: {$gte: star_rating},
         hdc_rating: {$gte: review_score},
         $or:[{name:regex}, {city:regex},{airports:regex}]
-    }).sort(sortByObject).then((doc,err)=>{
+    }).sort(sortByObject).then(async (doc,err)=>{
         if(err) res.status(400).json(err);
         var result = [];
         let bookingID = "bookid"
@@ -133,6 +145,15 @@ router.get('/search',(req,res)=>{
             }
             startIndex++;
         }
+
+        let addresses = result.map(elem => {return elem.address})
+       await geocoder.batchGeocode(addresses, function (err, results) {
+            result.map((elem,i)=>{
+                elem.lat = results[i].value[0].latitude;
+                elem.lng = results[i].value[0].longitude;   
+            })
+          });
+
         resultPack = {
             "lastIndex": startIndex,
             "pageNumber": req.query.pageNumber,
@@ -140,6 +161,7 @@ router.get('/search',(req,res)=>{
             "results": result
         }
         res.status(200).json(resultPack);
+
     })
 })
 

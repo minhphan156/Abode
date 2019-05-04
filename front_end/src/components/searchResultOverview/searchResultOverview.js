@@ -4,6 +4,8 @@ import { getIndividualHotelResult } from "../../actions/searchResultActions";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { submitQuery, saveQuery } from "../../actions/searchActions";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+
 import { clearData } from "../../actions/searchResultActions";
 // Additional libraries
 import ReactStars from "react-stars";
@@ -12,7 +14,7 @@ import ReactStars from "react-stars";
 import SearchWidget from "../landing_page/search_widget/SearchWidget";
 import FiltersWindow from "./FiltersWindow.js";
 import SortBar from "./SortBar.js";
-
+import "./searchResultOverview.css";
 // Material UI Imports
 import {
   Grid,
@@ -35,6 +37,10 @@ import {
   NavigateNext,
   NavigateBefore
 } from "@material-ui/icons";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 // Component CSS to Javascript styles
 let styles = theme => ({
@@ -85,7 +91,13 @@ class searchResultOverview extends Component {
       pool: false,
       multilingual: false,
       priceRangeEquality: "To",
-      priceRangeAnchorEl: null
+      priceRangeAnchorEl: null,
+      lat: null,
+      lng: null,
+      open: false,
+      showingInfoWindow: false,  //Hides or the shows the infoWindow
+      activeMarker: {},          //Shows the active marker upon click
+      selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker  
     };
 
     // Methods passed to child components
@@ -104,6 +116,37 @@ class searchResultOverview extends Component {
     this.backendCall = this.backendCall.bind(this);
     this.goToPreviousPage = this.goToPreviousPage.bind(this);
     this.goToNextPage = this.goToNextPage.bind(this);
+    this.handleClickChooseDeal = this.handleClickChooseDeal.bind(this);
+  }
+
+  handleClickChooseDeal = () => event => {
+    event.preventDefault();
+    this.handleClickOpen();
+  };
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  onMarkerClick = (props, marker, e,) =>{
+  this.setState({
+    selectedPlace: props,
+    activeMarker: marker,
+    showingInfoWindow: true
+  });
+}
+
+  onClose = props => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
   }
 
   // Upon mounting this component, browser is moved to the top of page.
@@ -113,7 +156,7 @@ class searchResultOverview extends Component {
 
   componentWillUnmount() {
     this.props.clearData();
-  }
+  };
 
   // Used to reset <FiltersWindow /> upon pressing 'Search'
   handleResetSearchOverview = () => {
@@ -365,7 +408,7 @@ class searchResultOverview extends Component {
       } = this.state;
       let { classes, width } = this.props;
       let { hotelQuery, searchQuery, loading } = this.props.query;
-
+      let displayGoogleMap = null;
       // Markup for each hotel result card
       let hotels;
       if (loading) {
@@ -383,6 +426,65 @@ class searchResultOverview extends Component {
         );
       } else if (hotelQuery.results.length > 0) {
         if (hotelQuery.results.length > 0) {
+          let iconA = {
+            url: "./logo.png",
+            size: new this.props.google.maps.Size(40, 40),
+            scaledSize: new this.props.google.maps.Size(40,40),
+            origin: new this.props.google.maps.Point(0, 0),
+            anchor: new this.props.google.maps.Point(0, 32)
+          };
+          displayGoogleMap = (
+            <Map
+              class = "googleMap"
+              google={this.props.google}
+              zoom={13}
+              initialCenter={{
+                lat: hotelQuery.results[0].lat,
+                lng: hotelQuery.results[0].lng
+              }}
+            > 
+              {hotelQuery.results.map((item, index) => {
+              return (
+                <Marker
+                  onClick={this.onMarkerClick}
+                  hotel={hotelQuery.results[index]}
+                  position={{
+                    lat: hotelQuery.results[index].lat,
+                    lng: hotelQuery.results[index].lng
+                  }}
+                  icon={iconA}
+                />
+              );
+              })}
+
+
+              {hotelQuery.results.map((item, index) => {
+                return (
+                  <InfoWindow                 
+                    marker={this.state.activeMarker}
+                    visible={this.state.showingInfoWindow}
+                    onClose={this.onClose}
+                  >
+                  {this.state.selectedPlace.hotel != null ? (
+                    <div className="row">
+                      <div className="col-lg-8">
+                      {console.log(this.state.selectedPlace.hotel)}
+                      <img style={{margin:'auto', width:'100%'}} src={this.state.selectedPlace.hotel.img} />
+                      </div>
+                      <div className="col-lg-4">
+                        <p  className="mapPopInfoName">{this.state.selectedPlace.hotel.name}</p>
+                        <p  className="mapPopInfoAddress">{this.state.selectedPlace.hotel.address}</p>
+                        <p  className="mapPopInfoPrice">${this.state.selectedPlace.hotel.price}</p>
+                      </div>
+                    </div>
+                  ): null
+                  }
+                  </InfoWindow>
+                );
+              })}
+            </Map>
+          );
+
           hotels = hotelQuery.results.map(hotel => {
             // Markup for price container
             let displayPriceContainer = null;
@@ -440,7 +542,9 @@ class searchResultOverview extends Component {
                                 <img src={hotel.img} />
                               </Card>
                             </Grid>
-                            <Grid item xs={12} md="auto">
+                            <Grid item xs={12} md="auto" 
+                                  style={{marginTop:'3%'}}
+                            >
                               <Grid
                                 container
                                 direction="column"
@@ -456,6 +560,11 @@ class searchResultOverview extends Component {
                                 }
                                 spacing={0}
                               >
+                                <Grid item>
+                                  <Typography variant="h6" color="default">
+                                    {hotel.star_rates}-Star Hotel
+                                  </Typography>
+                                </Grid>
                                 <Grid item xs={12} md="auto">
                                   <Grid
                                     container
@@ -473,8 +582,9 @@ class searchResultOverview extends Component {
                                         className={classes.stars}
                                         value={hotel.star_rates}
                                         count={5}
-                                        size={32}
+                                        size={28}
                                         color2={"#ffd700"}
+                                        color1={"#dcdcdc"}
                                         edit={false}
                                       />
                                     </Grid>
@@ -483,15 +593,10 @@ class searchResultOverview extends Component {
                                         variant="subtitle2"
                                         color="default"
                                       >
-                                        {hotel.star_rates} out of 5 Star Rating
+                                        {hotel.guest_rate} Guest Ratings
                                       </Typography>
                                     </Grid>
                                   </Grid>
-                                </Grid>
-                                <Grid item>
-                                  <Typography variant="h6" color="default">
-                                    {hotel.guest_rate} Guest Rating
-                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
@@ -541,7 +646,6 @@ class searchResultOverview extends Component {
           </Grid>
         );
       }
-
       // Markup for pagination
       let pagination = (
         <Grid
@@ -580,7 +684,8 @@ class searchResultOverview extends Component {
       );
 
       return (
-        <div className={classes.pageMargins}>
+        <div className={classes.pageMargins} 
+        style={{ minHeight: window.innerHeight - 180 }}>
           <ExpansionPanel
             defaultExpanded={width == "xs" ? false : true}
             square="false"
@@ -622,13 +727,25 @@ class searchResultOverview extends Component {
               multilingual={multilingual}
             />
             <Grid item xs={12} sm={8} md={9} lg={9}>
-              <Grid container direction="flow" justify="center" spacing={8}>
-                <Grid item xs={12}>
+              <Grid container direction="row" justify="center" spacing={8}>
+                <Grid item xs={12} sm={8} md={9} lg={10} >
                   <SortBar
                     sortCategory={this.state.sortCategory}
                     sortOrder={this.state.sortOrder}
                     handleChange={this.handleChange}
                   />
+                </Grid>
+                <Grid item xs={12} sm={4} md={3} lg={2}>
+                <div>
+                  <Button
+                    class="buttonSearch"
+                    primary
+                    onClick={this.handleClickChooseDeal()}
+                    style={{width:"100%"}}
+                  >
+                    <i class="fas fa-map-marked-alt"></i> View Map
+                  </Button>
+                </div>
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={8}>
@@ -643,6 +760,38 @@ class searchResultOverview extends Component {
               )}
             </Grid>
           </Grid>
+          {/* <Dialog> is a material UI pop-up window. It appears if the user clicks on "Book now" for the hotel deals */}
+          <Dialog
+            maxWidth={"md"}
+            scroll={"body"}
+            fullScreen={width === "xs" ? true : false}
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle className="BookingInfoTitle">
+              <div className="text-right">
+                <Button onClick={this.handleClose} color="primary">
+                  Close
+                </Button>
+              </div>
+            </DialogTitle>
+            <DialogContent>
+            <Grid
+                container
+                className="dealPopUpTitle"
+                direction="column"
+                justify="space-between"
+                alignItems="center"
+            >
+                { displayGoogleMap }
+            </Grid>
+            </DialogContent>
+            <DialogActions>
+
+            </DialogActions>
+          </Dialog>
         </div>
       );
     }
@@ -665,4 +814,8 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getIndividualHotelResult, submitQuery, saveQuery, clearData }
-)(withStyles(styles)(withWidth()(searchResultOverview)));
+)(withStyles(styles)(withWidth()(
+  GoogleApiWrapper({
+    apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"
+  })(searchResultOverview)
+)));
