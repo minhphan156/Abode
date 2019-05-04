@@ -120,7 +120,7 @@ class HistoryOverview extends Component {
             alignItems="center"
             className={classes.msgHeight}
           >
-            <Grid item>yes</Grid>
+            <Grid item>You have not made any bookings yet</Grid>
           </Grid>
         );
       } else {
@@ -218,14 +218,6 @@ class HistoryOverview extends Component {
                 );
                 arrayOfButtons = (
                   <Grid className="buttonContainer">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      REVIEW
-                    </Button>
-                    <br />
                     <br />
                     <StripeProvider apiKey="pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx">
                       <Elements>
