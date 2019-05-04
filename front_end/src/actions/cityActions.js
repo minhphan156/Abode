@@ -15,21 +15,26 @@ import {
 // Fetches city data using the provided city id
 export let fetchCityById = cityId => dispatch => {
   setLoadingCity();
-  axios.get(`/api/cityView/city/${cityId}`)
-  .then(res => {
-    dispatch({
-      type: GET_CITY,
-      payload: res.data
+  axios
+    .get(`/api/cityView/city/${cityId}`)
+    .then(res => {
+      dispatch({
+        type: GET_CITY,
+        payload: res.data
+      });
+      let cityName = res.data.name
+        .trim()
+        .slice(0, res.data.name.trim().indexOf(","))
+        .toLowerCase()
+        .replace(/ /g, "+");
+      dispatch(fetchCityWeather(cityName));
+    })
+    .catch(err => {
+      dispatch({
+        type: CITY_ERRORS,
+        payload: err.data
+      });
     });
-    let cityName = res.data.name.trim().slice(0, res.data.name.trim().indexOf(',')).toLowerCase().replace(/ /g, "+");
-    dispatch(fetchCityWeather(cityName));
-  })
-  .catch(err => {
-    dispatch({
-      type: CITY_ERRORS,
-      payload: err.data
-    });
-  })
 };
 
 // Fetches weather data for the city using the provided city information
@@ -37,7 +42,7 @@ let fetchCityWeather = cityName => dispatch => {
   setCityWeatherLoading();
   axios
     .get(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&APPID=${weatherMapAPIKey}&units=imperial`
+      `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&APPID=${weatherMapAPIKey}&units=imperial`
     )
     .then(res => {
       dispatch({
@@ -71,5 +76,5 @@ let setCityWeatherLoading = () => dispatch => {
 export let clearCityReducer = () => dispatch => {
   dispatch({
     type: CLEAR_CITY
-  })
-}
+  });
+};

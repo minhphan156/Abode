@@ -29,6 +29,7 @@ import HistoryOverview from "./components/history/HistoryOverview";
 import AboutUs from "./components/about_page/AboutUs";
 import PaymentPage from "./components/payment/PaymentPage";
 import { Elements, StripeProvider } from "react-stripe-elements";
+import Disclaimer from "./components/disclaimer/Disclaimer";
 
 import "./App.css";
 
@@ -75,7 +76,8 @@ class App extends Component {
             </StripeProvider>
             <Route exact path="/confirmation" component={Confirmation} />
             <Route exact path="/aboutus" component={AboutUs} />
-            
+            <Route exact path="/disclaimer" component={Disclaimer} />
+
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             {/*<Route exact path="/indiv-hotel/:hotelID" component={IndivHotel} />*/}
