@@ -5,27 +5,19 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
-export default (class NavbarMenu extends React.Component {
+export default (class NavBarMenuLeft extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { authenticated: null, anchorEl: null };
-    this.logoutUser = this.logoutUser.bind(this);
+    this.state = { anchorEl: null };
   }
-
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-
-  logoutUser(e) {
-    this.handleClose();
-    this.props.onLogoutClick(e);
-  }
-
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
@@ -47,11 +39,19 @@ export default (class NavbarMenu extends React.Component {
           onClose={this.handleClose}
           TransitionComponent={Fade}
         >
-        <MenuItem>{this.props.userEmail}</MenuItem>
-          <Link to="/history" className="navbarMenuButtons">
-            <MenuItem onClick={this.handleClose}>Booking History</MenuItem>
+          <Link to="/register">
+            <MenuItem onClick={this.handleClose}>Sign Up</MenuItem>
           </Link>
-          <MenuItem onClick={this.logoutUser}>Logout</MenuItem>
+          <Link to="/login">
+            <MenuItem onClick={this.handleClose}>Login</MenuItem>
+          </Link>
+          <Link
+            to="/booking-not-logged-in"
+            offset="-550"
+            style={{ color: "white" }}
+          >
+            <MenuItem onClick={this.handleClose}>Check Booking</MenuItem>
+          </Link>
         </Menu>
       </div>
     );

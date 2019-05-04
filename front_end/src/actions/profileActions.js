@@ -7,8 +7,10 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   SET_CURRENT_USER,
-  GET_HISTORY
+  GET_HISTORY,
+  BOOKING_NOT_LOGGED_IN_AUTHENTICATED
 } from "./types";
+import { setCurrentUser } from "./authActions";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -56,22 +58,56 @@ export const getHistory = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err //.response.data
       })
     );
 };
+export const cleanUpNotLoggedInHistoryState = () => dispatch => {
+  dispatch({
+    type: BOOKING_NOT_LOGGED_IN_AUTHENTICATED,
+    payload: false
+  });
+  dispatch({
+    type: GET_ERRORS,
+    payload: { guestHistoryError: false }
+  });
+};
+// Get User's Travel/Booking History Not-logged-in
+export const getHistoryNotLoggedIn = bookingData => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .post("/api/booking/guest-history", bookingData)
+    .then(res => {
+      dispatch({
+        type: GET_HISTORY,
+        payload: res.data
+      });
 
+      dispatch({
+        type: BOOKING_NOT_LOGGED_IN_AUTHENTICATED,
+        payload: true
+      });
+    })
+    .catch(err => {
+      console.log("getHistoryNotLoggedIn error");
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 // Get User's Rewards Points
 export const getProfileInfo = () => dispatch => {
   dispatch(setProfileLoading());
   axios
     .get("/api/users/current")
-    .then(res =>
+    .then(res => {
       dispatch({
         type: GET_PROFILE_INFO,
         payload: res.data
-      })
-    )
+      });
+      dispatch(setCurrentUser(res.data));
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

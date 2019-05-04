@@ -81,7 +81,10 @@ class Confirmation extends Component {
         ),
         createData("Taxes and Fees", "$" + bookingData.taxesAndFees.toFixed(2)),
         createData("Total", "$" + bookingData.total.toFixed(2)),
-        createData("Reward Points Earned", bookingData.rewardPointsEarned)
+        createData(
+          "Reward Points Earned\n(*added after check-in)",
+          bookingData.rewardPointsEarned
+        )
       ];
       return (
         <Grid
