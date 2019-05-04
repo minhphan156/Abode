@@ -285,7 +285,7 @@ let FiltersWindow = props => {
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
-                    label="Complimentary Breakfast"
+                    label="Serves Breakfast"
                     control={
                       <Checkbox
                         checked={free_breakfast}
