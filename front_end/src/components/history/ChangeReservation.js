@@ -62,7 +62,9 @@ class ChangeReservation extends Component {
 
       if (expansionData.taxesAndFees > 0)
         this.setState({
-          taxRate: expansionData.taxesAndFees / expansionData.subtotal
+          taxRate:
+            expansionData.taxesAndFees /
+            (expansionData.subtotal - expansionData.rewardsDiscount)
         });
       this.setState({ days: duration.asDays() });
       this.setState({
