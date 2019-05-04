@@ -216,7 +216,7 @@ class IndivHotel extends Component {
                   className="text-center"
                   style={{ fontSize: 40, color: "#3ba711" }}
                 >
-                  ${individualHotelData.price.singlePrice * discountRate}
+                  ${(individualHotelData.price.singlePrice * discountRate).toFixed(0)}
                 </h2>
 
                 <div>
@@ -815,7 +815,7 @@ class IndivHotel extends Component {
                       className="text-center"
                       style={{ fontSize: 40, color: "#3ba711" }}
                     >
-                      ${individualHotelData.price.singlePrice * discountRate}
+                      ${(individualHotelData.price.singlePrice * discountRate).toFixed(0)}
                     </h2>
                     <div>
                       <AnchorLink href="#table1">
