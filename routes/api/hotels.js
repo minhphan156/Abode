@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-<<<<<<< HEAD
 const NodeGeocoder = require('node-geocoder');
-=======
 const moment = require('moment-timezone');
 
->>>>>>> dev-general
 const checkAvailable = require("../../validation/checkAvailableHotels");
 var checkAvailability = require('../../validation/checkAvailibility.js')
 const Hotel = require("../../models/Hotel");
