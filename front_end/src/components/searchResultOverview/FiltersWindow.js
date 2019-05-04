@@ -309,7 +309,7 @@ let FiltersWindow = props => {
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
-                    label="Multilingual"
+                    label="Multilingual Staff"
                     control={
                       <Checkbox
                         checked={multilingual}
