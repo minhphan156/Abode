@@ -20,17 +20,9 @@ const styles = {
     Width: 900
   },
   PaperContainer: {
-    marginTop: 50,
+    marginTop: 130,
     marginBottom: 50,
 
-    width: "50%",
-    padding: 20
-  },
-  PaperContainerPhone: {
-    marginTop: 50,
-    marginBottom: 50,
-    height: 385,
-    width: "78%",
     padding: 20
   }
 };
@@ -81,20 +73,14 @@ class BookingNotLoggedIn extends Component {
     return (
       <Grid
         container
-        className="AuthContainerLogin"
-        direction="column"
+        className="SearchBookingContainer"
+        // direction="column"
         justify="center"
-        alignItems="center"
+        alignItems="baseline"
       >
-        <Paper
-          className={
-            isWidthDown("xs", width)
-              ? classes.PaperContainerPhone
-              : classes.PaperContainer
-          }
-        >
-          <Grid item xs={12} className="AuthTitle">
-            Guest Booking
+        <Paper className={classes.PaperContainer}>
+          <Grid item xs={12} className="SearchBookingTitle">
+            Search Booking
           </Grid>
           <form onSubmit={this.onSubmit}>
             <Grid

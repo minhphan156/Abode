@@ -98,12 +98,12 @@ class Navbar extends Component {
       <Grid
         container
         spacing={0}
-        justify="space-evenly"
+        justify={width === "sm" ? "flex-end" : "space-around"}
         alignItems="center"
         xs={4}
-        sm={4}
+        sm={5}
         md={5}
-        lg={4}
+        lg={5}
       >
         <Grid item className="headerMenu">
           <AnchorLink
@@ -125,13 +125,13 @@ class Navbar extends Component {
         </Grid>
 
         {this.props.auth.isAuthenticated ? null : (
-          <Grid item className="headerMenu">
+          <Grid item className=" headerMenuBooking">
             <Link
               to="/booking-not-logged-in"
               offset="-550"
               style={{ color: "white" }}
             >
-              Check Booking
+              Search Booking
             </Link>
           </Grid>
         )}
