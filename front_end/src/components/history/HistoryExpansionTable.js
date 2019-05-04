@@ -44,30 +44,54 @@ class HistoryExpansionTable extends Component {
           "Cancellations must be received 48 hours before check-in date for full refund"
         )
       ];
-
-      BillRows = [
-        createData("Nightly Rate", "$" + bookingData.nightlyRate),
-        createData("Number of Rooms", bookingData.numRooms),
-        createData("Number of Nights", bookingData.numberOfNights),
-        createData("Subtotal", "$" + bookingData.subtotal),
-        createData(
-          "Discounts",
-          bookingData.discounts
-            ? "$" + bookingData.discounts
-            : bookingData.discounts
-        ),
-        createData(
-          "Rewards Discount",
-          bookingData.rewardsDiscount ? "$" + bookingData.rewardsDiscount : null
-        ),
-        createData("Taxes and Fees", "$" + bookingData.taxesAndFees),
-        createData("Total", "$" + bookingData.total),
-        createData("Reward Points Used", bookingData.rewardPointsUsed),
-        createData(
-          "Reward Points Earned (*added after check-in)",
-          bookingData.rewardPointsEarned
-        )
-      ];
+      if (this.props.isAuthenticatedNotLoggedIn) {
+        BillRows = [
+          createData("Nightly Rate", "$" + bookingData.nightlyRate),
+          createData("Number of Rooms", bookingData.numRooms),
+          createData("Number of Nights", bookingData.numberOfNights),
+          createData("Subtotal", "$" + bookingData.subtotal),
+          createData(
+            "Discounts",
+            bookingData.discounts
+              ? "$" + bookingData.discounts
+              : bookingData.discounts
+          ),
+          createData(
+            "Rewards Discount",
+            bookingData.rewardsDiscount
+              ? "$" + bookingData.rewardsDiscount
+              : null
+          ),
+          createData("Taxes and Fees", "$" + bookingData.taxesAndFees),
+          createData("Total", "$" + bookingData.total)
+        ];
+      } else {
+        BillRows = [
+          createData("Nightly Rate", "$" + bookingData.nightlyRate),
+          createData("Number of Rooms", bookingData.numRooms),
+          createData("Number of Nights", bookingData.numberOfNights),
+          createData("Subtotal", "$" + bookingData.subtotal),
+          createData(
+            "Discounts",
+            bookingData.discounts
+              ? "$" + bookingData.discounts
+              : bookingData.discounts
+          ),
+          createData(
+            "Rewards Discount",
+            bookingData.rewardsDiscount
+              ? "$" + bookingData.rewardsDiscount
+              : null
+          ),
+          createData("Taxes and Fees", "$" + bookingData.taxesAndFees),
+          createData("Total", "$" + bookingData.total),
+          createData("Reward Points Used", bookingData.rewardPointsUsed),
+          createData(
+            "Reward Points Earned (*added after check-in)",
+            bookingData.rewardPointsEarned
+          )
+        ];
+      }
 
       return (
         <Grid

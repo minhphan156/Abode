@@ -96,7 +96,80 @@ class IndivHotel extends Component {
       this.props.history.push("/");
       return null;
     } else {
+      let discountRate = 1;
+      if (this.props.individualHotelData.individualHotelData.discount > 0) {
+        discountRate = this.props.individualHotelData.individualHotelData
+          .discount;
+      }
+
       const { individualHotelData } = this.props.individualHotelData;
+      let iconA = {
+        url: "./logo.png",
+        size: new this.props.google.maps.Size(100, 100),
+        scaledSize: new this.props.google.maps.Size(40, 40),
+        origin: new this.props.google.maps.Point(0, 0),
+        anchor: new this.props.google.maps.Point(0, 32)
+      };
+      let displayGoogleMaps = (
+        <Map
+          google={this.props.google}
+          zoom={15}
+          initialCenter={{
+            lat: individualHotelData.lat,
+            lng: individualHotelData.alt
+          }}
+          style={{
+            width: "100%",
+            height: "70%",
+            marginTop: "1%"
+          }}
+        >
+          <Marker
+            icon={iconA}
+            onClick={this.onMarkerClick}
+            name={"Current location"}
+            position={{
+              lat: individualHotelData.lat,
+              lng: individualHotelData.alt
+            }}
+          />
+          <InfoWindow onClose={this.onInfoWindowClose}>
+            <div>
+              <h1>{individualHotelData.name}</h1>
+            </div>
+          </InfoWindow>
+        </Map>
+      );
+      let displayGoogleMapsLong = (
+        <Map
+          google={this.props.google}
+          zoom={15}
+          initialCenter={{
+            lat: individualHotelData.lat,
+            lng: individualHotelData.alt
+          }}
+          style={{
+            width: "100%",
+            height: "100%",
+            marginTop: "1%"
+          }}
+        >
+          <Marker
+            icon={iconA}
+            onClick={this.onMarkerClick}
+            name={"Current location"}
+            position={{
+              lat: individualHotelData.lat,
+              lng: individualHotelData.alt
+            }}
+          />
+          <InfoWindow onClose={this.onInfoWindowClose}>
+            <div>
+              <h1>{individualHotelData.name}</h1>
+            </div>
+          </InfoWindow>
+        </Map>
+      );
       return (
         <div class="wholePage" style={{ minHeight: window.innerHeight - 180 }}>
           {individualHotelData.img.length === 0 ? (
@@ -200,10 +273,22 @@ class IndivHotel extends Component {
               <div class="priceAndRateHeader" style={{ marginTop: "2%" }}>
                 <h2
                   className="text-center"
+                  style={{ fontSize: 30, color: "#3ba711" }}
+                >
+                  {discountRate < 1
+                    ? ((1 - discountRate) * 100).toFixed(0) + "% OFF!"
+                    : null}
+                </h2>
+                <h2
+                  className="text-center"
                   style={{ fontSize: 40, color: "#3ba711" }}
                 >
-                  ${individualHotelData.price.singlePrice}
+                  $
+                  {(
+                    individualHotelData.price.singlePrice * discountRate
+                  ).toFixed(0)}
                 </h2>
+
                 <div>
                   <AnchorLink href="#table1">
                     <Button class="seeRoomBtn">See Rooms</Button>
@@ -701,7 +786,6 @@ class IndivHotel extends Component {
                               {individualHotelData.airports.map((item, key) => {
                                 return (
                                   <div class="tabContent">
-                                    {console.log("airports")}
                                     <div
                                       className="col"
                                       style={{ color: "#808080" }}
@@ -790,9 +874,20 @@ class IndivHotel extends Component {
                   <div class="priceAndRate">
                     <h2
                       className="text-center"
+                      style={{ fontSize: 30, color: "#3ba711" }}
+                    >
+                      {discountRate < 1
+                        ? ((1 - discountRate) * 100).toFixed(0) + "% OFF!"
+                        : null}
+                    </h2>
+                    <h2
+                      className="text-center"
                       style={{ fontSize: 40, color: "#3ba711" }}
                     >
-                      ${individualHotelData.price.singlePrice}
+                      $
+                      {(
+                        individualHotelData.price.singlePrice * discountRate
+                      ).toFixed(0)}
                     </h2>
                     <div>
                       <AnchorLink href="#table1">
@@ -840,67 +935,11 @@ class IndivHotel extends Component {
                     </div>
                   </div>
                   <div class="shrtMap">
-                    <div className="row">
-                      <Map
-                        google={this.props.google}
-                        zoom={15}
-                        initialCenter={{
-                          lat: individualHotelData.lat,
-                          lng: individualHotelData.alt
-                        }}
-                        style={{
-                          width: "100%",
-                          height: "70%",
-                          marginTop: "1%"
-                        }}
-                      >
-                        <Marker
-                          onClick={this.onMarkerClick}
-                          name={"Current location"}
-                          position={{
-                            lat: individualHotelData.lat,
-                            lng: individualHotelData.alt
-                          }}
-                        />
-                        <InfoWindow onClose={this.onInfoWindowClose}>
-                          <div>
-                            <h1>{individualHotelData.name}</h1>
-                          </div>
-                        </InfoWindow>
-                      </Map>
-                    </div>
+                    <div className="row">{displayGoogleMaps}</div>
                   </div>
 
                   <div class="longMap">
-                    <div className="row">
-                      <Map
-                        google={this.props.google}
-                        zoom={15}
-                        initialCenter={{
-                          lat: individualHotelData.lat,
-                          lng: individualHotelData.alt
-                        }}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          marginTop: "1%"
-                        }}
-                      >
-                        <Marker
-                          onClick={this.onMarkerClick}
-                          name={"Current location"}
-                          position={{
-                            lat: individualHotelData.lat,
-                            lng: individualHotelData.alt
-                          }}
-                        />
-                        <InfoWindow onClose={this.onInfoWindowClose}>
-                          <div>
-                            <h1>{individualHotelData.name}</h1>
-                          </div>
-                        </InfoWindow>
-                      </Map>
-                    </div>
+                    <div className="row">{displayGoogleMapsLong}</div>
                   </div>
                 </div>
               </div>
@@ -932,7 +971,11 @@ class IndivHotel extends Component {
                               color: "#3ba711"
                             }}
                           >
-                            ${individualHotelData.price.singlePrice}
+                            $
+                            {(
+                              individualHotelData.price.singlePrice *
+                              discountRate
+                            ).toFixed(0)}
                           </td>
                           <td>
                             <Link
@@ -960,7 +1003,11 @@ class IndivHotel extends Component {
                               color: "#3ba711"
                             }}
                           >
-                            ${individualHotelData.price.doublePrice}
+                            $
+                            {(
+                              individualHotelData.price.doublePrice *
+                              discountRate
+                            ).toFixed(0)}
                           </td>
                           <td>
                             <Link
@@ -988,7 +1035,10 @@ class IndivHotel extends Component {
                               color: "#3ba711"
                             }}
                           >
-                            ${individualHotelData.price.kingPrice}
+                            $
+                            {(
+                              individualHotelData.price.kingPrice * discountRate
+                            ).toFixed(0)}
                           </td>
                           <td>
                             <Link
@@ -1016,7 +1066,11 @@ class IndivHotel extends Component {
                               color: "#3ba711"
                             }}
                           >
-                            ${individualHotelData.price.suitePrice}
+                            $
+                            {(
+                              individualHotelData.price.suitePrice *
+                              discountRate
+                            ).toFixed(0)}
                           </td>
                           <td>
                             <Link
@@ -1038,46 +1092,55 @@ class IndivHotel extends Component {
                   </table>
                 </section>
               </div>
-              {console.log(individualHotelData)}
-              <p class="reviewSection"> 
-                <i class="fas fa-poll" style={{color: "#0c4b78"}} />
-                {" "}Reviews ({individualHotelData.review.length})
+              <p class="reviewSection">
+                <i class="fas fa-poll" style={{ color: "#0c4b78" }} /> Reviews (
+                {individualHotelData.review.length})
               </p>
-              <div class="list-group" style={{ marginBottom:'2%' }}>
+              <div class="list-group" style={{ marginBottom: "2%" }}>
                 {individualHotelData.review.map((item, index) => {
                   return (
                     <a class="list-group-item list-group-item-action">
                       <div class="d-flex w-100 justify-content-between">
-                        <p class="mb-1"
-                            style={{
-                              fontSize: 20,
-                              fontWeight: "bold",
-                              color: "#0c4b78"
-                            }}
-                        >{ individualHotelData.review[index].reviewName }</p>
+                        <p
+                          class="mb-1"
+                          style={{
+                            fontSize: 20,
+                            fontWeight: "bold",
+                            color: "#0c4b78"
+                          }}
+                        >
+                          {individualHotelData.review[index].reviewName}
+                        </p>
                         <small>
-                          { individualHotelData.review[index].reviewDate.split('T')[0] }
-                        </small> 
+                          {
+                            individualHotelData.review[index].reviewDate.split(
+                              "T"
+                            )[0]
+                          }
+                        </small>
                       </div>
                       <small>
-                          <ReactStars
-                            className="stars"
-                            count={5}
-                            value={ individualHotelData.review[index].reviewStar }
-                            size={16}
-                            edit={false}
-                            color2={"#0c4b78"}
-                            color1={"#dcdcdc"}
-                          />
+                        <ReactStars
+                          className="stars"
+                          count={5}
+                          value={individualHotelData.review[index].reviewStar}
+                          size={16}
+                          edit={false}
+                          color2={"#0c4b78"}
+                          color1={"#dcdcdc"}
+                        />
                       </small>
-                      <p class="mb-1"
-                            style={{
-                              fontSize: 15,
-                            }}
-                      >{ individualHotelData.review[index].reviewText }</p>  
+                      <p
+                        class="mb-1"
+                        style={{
+                          fontSize: 15
+                        }}
+                      >
+                        {individualHotelData.review[index].reviewText}
+                      </p>
                     </a>
                   );
-                  })}
+                })}
               </div>
             </div>
           )}

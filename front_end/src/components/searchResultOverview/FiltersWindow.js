@@ -24,10 +24,7 @@ import {
   Hidden
 } from "@material-ui/core";
 import { isWidthDown } from "@material-ui/core/withWidth";
-import {
-  ExpandMore,
-  FilterList
-} from "@material-ui/icons";
+import { ExpandMore, FilterList } from "@material-ui/icons";
 import { Slider } from "@material-ui/lab";
 
 // Component styling
@@ -85,11 +82,11 @@ let FiltersWindow = props => {
     handleFiltersApply,
     handleEqualityMenuOpen,
     handleEqualityMenuClose,
-    free_wifi,
+    wifi,
     free_parking,
     free_breakfast,
     pool,
-    pet_friendly
+    multilingual
   } = props;
 
   return (
@@ -141,6 +138,7 @@ let FiltersWindow = props => {
                     onChange={handleStarRatings}
                     size={32}
                     color2={"#ffd700"}
+                    color1={"#dcdcdc"}
                   />
                 </Grid>
               </Grid>
@@ -264,11 +262,11 @@ let FiltersWindow = props => {
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
-                    label="Free WiFi"
+                    label="WiFi"
                     control={
                       <Checkbox
-                        checked={free_wifi}
-                        onChange={handleAmenities("free_wifi")}
+                        checked={wifi}
+                        onChange={handleAmenities("wifi")}
                       />
                     }
                   />
@@ -276,7 +274,7 @@ let FiltersWindow = props => {
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
-                    label="Free Parking"
+                    label="Valet Parking"
                     control={
                       <Checkbox
                         checked={free_parking}
@@ -288,7 +286,7 @@ let FiltersWindow = props => {
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
-                    label="Free Breakfast"
+                    label="Serves Breakfast"
                     control={
                       <Checkbox
                         checked={free_breakfast}
@@ -312,11 +310,11 @@ let FiltersWindow = props => {
                 <Grid item>
                   <FormControlLabel
                     className={classes.rating}
-                    label="Pet Friendly"
+                    label="Multilingual Staff"
                     control={
                       <Checkbox
-                        checked={pet_friendly}
-                        onChange={handleAmenities("pet_friendly")}
+                        checked={multilingual}
+                        onChange={handleAmenities("multilingual")}
                       />
                     }
                   />

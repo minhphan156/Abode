@@ -66,6 +66,10 @@
   .headerMenu {
     display: none;
   }
+
+  .headerMenuBooking {
+    display: none;
+  }
 }
 
 /* Small Screen */
@@ -123,6 +127,13 @@
   .headerMenu {
     display: none;
   }
+
+  .headerMenuBooking {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+  }
 }
 
 /* Medium Screen (Landscape Phones, Tablets) */
@@ -178,6 +189,13 @@
   }
 
   .headerMenu {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+  }
+
+  .headerMenuBooking {
     font-size: 16px;
     font-weight: 400;
     text-align: center;
@@ -243,6 +261,13 @@
   }
 
   .headerMenu {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+  }
+
+  .headerMenuBooking {
     font-size: 18px;
     font-weight: 400;
     text-align: center;

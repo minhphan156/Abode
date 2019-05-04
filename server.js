@@ -42,12 +42,6 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 const checkout = require('./email/checkout');
-const http = require("http")
-
-setInterval(function(){
-  http.get("http://www.abode.city/");
-},300000)
-
 const Booking = require('./models/booking')
 const welcomeEmail = require('./email/welcomeEmail')
 function automation(){
