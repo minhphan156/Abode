@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getProfileInfo, getHistory } from "../../actions/profileActions";
+import { Elements, StripeProvider } from "react-stripe-elements";
 
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
@@ -21,14 +22,14 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReviewRating from "./ReviewRating";
 import HistoryExpansionTable from "./HistoryExpansionTable";
-import "./history.css";
 import CancellationPrompt from "./CancellationPrompt";
 import ChangeReservation from "./ChangeReservation";
-import { Elements, StripeProvider } from "react-stripe-elements";
+
+import "./history.css";
+
 const styles = {
   tableNoBorder: {
     maxHeight: 10,
-
     border: 0
   },
   chipChange: {
@@ -83,8 +84,11 @@ const styles = {
 
 class HistoryOverview extends Component {
   componentWillMount() {
-    this.props.getHistory();
-    this.props.getProfileInfo();
+    if (this.props.auth.isAuthenticated) {
+      // only call these if user logged in
+      this.props.getHistory();
+      this.props.getProfileInfo();
+    }
   }
 
   render() {
@@ -137,252 +141,257 @@ class HistoryOverview extends Component {
             </div>
           );
         }
-        if (history != null) {
-          bookings = history.map(booking => {
-            displayChangeChip = null;
-            displayRegularChip = null;
-            arrayOfButtons = null;
-            expansionData = null;
-            var checkInDateAndTime = new Date(booking.check_in_date);
-            var checkOutDateAndTime = new Date(booking.check_out_date);
-            var checkInDateAndTimeNEW = new Date(booking.new_check_in_date);
-            var checkOutDateAndTimeNEW = new Date(booking.new_check_out_date);
-            var month = new Array(12);
-            month[0] = "January";
-            month[1] = "February";
-            month[2] = "March";
-            month[3] = "April";
-            month[4] = "May";
-            month[5] = "June";
-            month[6] = "July";
-            month[7] = "August";
-            month[8] = "September";
-            month[9] = "October";
-            month[10] = "November";
-            month[11] = "December";
+      }
+      if (history != null) {
+        bookings = history.map(booking => {
+          displayChangeChip = null;
+          displayRegularChip = null;
+          arrayOfButtons = null;
+          expansionData = null;
+          var checkInDateAndTime = new Date(booking.check_in_date);
+          var checkOutDateAndTime = new Date(booking.check_out_date);
+          var checkInDateAndTimeNEW = new Date(booking.new_check_in_date);
+          var checkOutDateAndTimeNEW = new Date(booking.new_check_out_date);
+          var month = new Array(12);
+          month[0] = "January";
+          month[1] = "February";
+          month[2] = "March";
+          month[3] = "April";
+          month[4] = "May";
+          month[5] = "June";
+          month[6] = "July";
+          month[7] = "August";
+          month[8] = "September";
+          month[9] = "October";
+          month[10] = "November";
+          month[11] = "December";
 
-            // if the booking was changed, we  display the "Changed" chip
-            if (booking.changed === true) {
-              displayChangeChip = (
+          // if the booking was changed, we  display the "Changed" chip
+          if (booking.changed === true) {
+            displayChangeChip = (
+              <Chip
+                label="Changed"
+                color="primary"
+                className={classes.chipChange}
+                icon={<SwapHorizIcon />}
+              />
+            );
+            checkInDateAndTime = checkInDateAndTimeNEW;
+            checkOutDateAndTime = checkOutDateAndTimeNEW;
+          }
+
+          var discountToPass = booking.discount;
+          var rewardsDiscountToPass = booking.rewardDiscount;
+          if (booking.price != undefined) {
+            expansionData = {
+              bookingId: booking.bookingID,
+              name: booking.name,
+              checkIn: checkInDateAndTime,
+              checkOut: checkOutDateAndTime,
+              roomType: booking.typeOfRoom,
+              nightlyRate: (booking.price + 0).toFixed(2),
+              numRooms: booking.numOfRoom,
+              numberOfNights: booking.numOfNights,
+              subtotal: (booking.subtotal + 0).toFixed(2),
+              discounts: discountToPass
+                ? discountToPass.toFixed(2)
+                : discountToPass,
+              rewardsDiscount: rewardsDiscountToPass
+                ? rewardsDiscountToPass.toFixed(2)
+                : rewardsDiscountToPass,
+              taxesAndFees: (booking.taxesAndFees + 0).toFixed(2),
+              total: (booking.total + 0).toFixed(2),
+              rewardPointsEarned: booking.rewardPointsEarned,
+              rewardPointsUsed: booking.rewardPointsUsed
+            };
+          }
+
+          // here we determine which chip to display. There are four different statuses that each correspond to a chip
+          //0 = trip comin up
+          //1 = user has checked in
+          //2 = user has checked out
+          //3 = trip was canceled
+          switch (booking.status) {
+            case 0:
+              displayRegularChip = (
                 <Chip
-                  label="Changed"
-                  color="primary"
-                  className={classes.chipChange}
-                  icon={<SwapHorizIcon />}
+                  label="Coming Up"
+                  color="secondary"
+                  className={classes.chip}
+                  icon={<DoneIcon />}
                 />
               );
-              checkInDateAndTime = checkInDateAndTimeNEW;
-              checkOutDateAndTime = checkOutDateAndTimeNEW;
-            }
-
-            var discountToPass = booking.discount;
-            var rewardsDiscountToPass = booking.rewardDiscount;
-            if (booking.price != undefined) {
-              expansionData = {
-                bookingId: booking.bookingID,
-                name: booking.name,
-                checkIn: checkInDateAndTime,
-                checkOut: checkOutDateAndTime,
-                roomType: booking.typeOfRoom,
-                nightlyRate: (booking.price + 0).toFixed(2),
-                numRooms: booking.numOfRoom,
-                numberOfNights: booking.numOfNights,
-                subtotal: (booking.subtotal + 0).toFixed(2),
-                discounts: discountToPass
-                  ? discountToPass.toFixed(2)
-                  : discountToPass,
-                rewardsDiscount: rewardsDiscountToPass
-                  ? rewardsDiscountToPass.toFixed(2)
-                  : rewardsDiscountToPass,
-                taxesAndFees: (booking.taxesAndFees + 0).toFixed(2),
-                total: (booking.total + 0).toFixed(2),
-                rewardPointsEarned: booking.rewardPointsEarned,
-                rewardPointsUsed: booking.rewardPointsUsed
-              };
-            }
-
-            // here we determine which chip to display. There are four different statuses that each correspond to a chip
-            //0 = trip comin up
-            //1 = user has checked in
-            //2 = user has checked out
-            //3 = trip was canceled
-            switch (booking.status) {
-              case 0:
-                displayRegularChip = (
-                  <Chip
-                    label="Coming Up"
-                    color="secondary"
-                    className={classes.chip}
-                    icon={<DoneIcon />}
+              arrayOfButtons = (
+                <Grid className="buttonContainer">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    className={classes.button}
+                  >
+                    REVIEW
+                  </Button>
+                  <br />
+                  <br />
+                  <StripeProvider apiKey="pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx">
+                    <Elements>
+                      <ChangeReservation
+                        checkInTime={checkInDateAndTime}
+                        checkOutTime={checkOutDateAndTime}
+                        id={booking.bookingID}
+                        hotel={booking.hotelName}
+                        expansionData={expansionData}
+                      />
+                    </Elements>
+                  </StripeProvider>
+                  <br />
+                  <CancellationPrompt
+                    checkInTime={checkInDateAndTime}
+                    checkOutTime={checkOutDateAndTime}
+                    id={booking.bookingID}
+                    hotel={booking.hotelName}
                   />
-                );
-                arrayOfButtons = (
-                  <Grid className="buttonContainer">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      REVIEW
-                    </Button>
-                    <br />
-                    <br />
-                    <StripeProvider apiKey="pk_test_CfoXbulxsXkVcOxKjywJuhkq00V32mVcsx">
-                      <Elements>
-                        <ChangeReservation
-                          checkInTime={checkInDateAndTime}
-                          checkOutTime={checkOutDateAndTime}
-                          id={booking.bookingID}
-                          hotel={booking.hotelName}
-                          expansionData={expansionData}
-                        />
-                      </Elements>
-                    </StripeProvider>
-                    <br />
-                    <CancellationPrompt
-                      checkInTime={checkInDateAndTime}
-                      checkOutTime={checkOutDateAndTime}
-                      id={booking.bookingID}
-                      hotel={booking.hotelName}
+                </Grid>
+              );
+              break;
+            case 1:
+              displayRegularChip = (
+                <Chip
+                  label="Checked In"
+                  color="primary"
+                  className={classes.chipCheckin}
+                  icon={<DoneIcon />}
+                />
+              );
+              arrayOfButtons = (
+                <Grid className="buttonContainer">
+                  <ReviewRating
+                    ReviewButtonStyle={classes.ReviewButton}
+                    ReviewedButtonStyle={classes.ReviewedButton}
+                    booking={booking}
+                  />{" "}
+                </Grid>
+              );
+              break;
+            case 2:
+              displayRegularChip = (
+                <Chip
+                  label="Checked Out"
+                  color="primary"
+                  className={classes.chipCheckout}
+                  icon={<ExitIcon />}
+                />
+              );
+              arrayOfButtons = (
+                <Grid className="buttonContainer">
+                  <ReviewRating
+                    ReviewButtonStyle={classes.ReviewButton}
+                    ReviewedButtonStyle={classes.ReviewedButton}
+                    booking={booking}
+                  />{" "}
+                </Grid>
+              );
+              break;
+            case 3:
+              displayRegularChip = (
+                <Chip
+                  label="Canceled"
+                  color="primary"
+                  className={classes.chipCancel}
+                  icon={<CancelIcon />}
+                />
+              );
+              arrayOfButtons = <Grid className="buttonContainer" />;
+              break;
+            default:
+          }
+
+          // these are the expansionpanels for all the different bookings
+          return (
+            <ExpansionPanel
+              classes={{
+                expanded: classes.backgroundStyle
+              }}
+            >
+              {/* ExpansionPanelSummary is the part that is always visible */}
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Grid
+                  container
+                  spacing={0}
+                  direction="row"
+                  justify="space-evenly"
+                >
+                  <Grid item>
+                    <img
+                      className="historyHotelImage"
+                      src={booking.img}
+                      alt="hotel img"
                     />
                   </Grid>
-                );
-                break;
-              case 1:
-                displayRegularChip = (
-                  <Chip
-                    label="Checked In"
-                    color="primary"
-                    className={classes.chipCheckin}
-                    icon={<DoneIcon />}
-                  />
-                );
-                arrayOfButtons = (
-                  <Grid className="buttonContainer">
-                    <ReviewRating
-                      ReviewButtonStyle={classes.ReviewButton}
-                      ReviewedButtonStyle={classes.ReviewedButton}
-                      booking={booking}
-                    />{" "}
-                  </Grid>
-                );
-                break;
-              case 2:
-                displayRegularChip = (
-                  <Chip
-                    label="Checked Out"
-                    color="primary"
-                    className={classes.chipCheckout}
-                    icon={<ExitIcon />}
-                  />
-                );
-                arrayOfButtons = (
-                  <Grid className="buttonContainer">
-                    <ReviewRating
-                      ReviewButtonStyle={classes.ReviewButton}
-                      ReviewedButtonStyle={classes.ReviewedButton}
-                      booking={booking}
-                    />{" "}
-                  </Grid>
-                );
-                break;
-              case 3:
-                displayRegularChip = (
-                  <Chip
-                    label="Canceled"
-                    color="primary"
-                    className={classes.chipCancel}
-                    icon={<CancelIcon />}
-                  />
-                );
-                arrayOfButtons = <Grid className="buttonContainer" />;
-                break;
-              default:
-            }
 
-            // these are the expansionpanels for all the different bookings
-            return (
-              <ExpansionPanel
-                classes={{
-                  expanded: classes.backgroundStyle
-                }}
-              >
-                {/* ExpansionPanelSummary is the part that is always visible */}
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Grid
-                    container
-                    spacing={0}
-                    direction="row"
-                    justify="space-evenly"
-                  >
-                    <Grid item>
-                      <img
-                        className="historyHotelImage"
-                        src={booking.img}
-                        alt="hotel img"
-                      />
+                  <Grid className="HistoryContainerHotelName">
+                    <Grid item className="HistoryPageHotelName">
+                      {booking.hotelName}
                     </Grid>
-
-                    <Grid className="HistoryContainerHotelName">
-                      <Grid item className="HistoryPageHotelName">
-                        {booking.hotelName}
-                      </Grid>
-                      <Grid item className="HistoryPageDestinationName">
-                        {booking.city}
-                      </Grid>
-                      <Grid item className="chipsAndTotal">
-                        <br />
-                        {displayRegularChip}
-                        {displayChangeChip}
-                      </Grid>
-                      {/* We display a different layout for small screens */}
-                      <Grid item className="chipsAndTotalSmall">
-                        <br />
-                        <Grid
-                          container
-                          spacing={0}
-                          direction="row"
-                          justify="space-between"
-                        >
-                          <Grid item>{displayRegularChip}</Grid>
-                          <Grid item className="HistoryPageTotalSmall">
-                            Total: $ {(booking.total + 0).toFixed(2)}
-                          </Grid>
-                        </Grid>
-
-                        {displayChangeChip}
-                      </Grid>
+                    <Grid item className="HistoryPageDestinationName">
+                      {booking.city}
                     </Grid>
-                    <Grid>
-                      <Grid
-                        item
-                        className="HistoryPageTotal HistoryContainerDates"
-                      >
-                        Total: $ {(booking.total + 0).toFixed(2)}
-                      </Grid>
+                    <Grid item className="chipsAndTotal">
+                      <br />
+                      {displayRegularChip}
+                      {displayChangeChip}
+                    </Grid>
+                    {/* We display a different layout for small screens */}
+                    <Grid item className="chipsAndTotalSmall">
                       <br />
                       <Grid
-                        item
-                        className="HistoryPageTotal HistoryContainerDates"
+                        container
+                        spacing={0}
+                        direction="row"
+                        justify="space-between"
                       >
-                        {month[checkInDateAndTime.getUTCMonth()]}{" "}
-                        {checkInDateAndTime.getUTCFullYear()}
+                        <Grid item>{displayRegularChip}</Grid>
+                        <Grid item className="HistoryPageTotalSmall">
+                          Total: $ {(booking.total + 0).toFixed(2)}
+                        </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid>
-                      <Grid item>{arrayOfButtons} </Grid>
+
+                      {displayChangeChip}
                     </Grid>
                   </Grid>
-                </ExpansionPanelSummary>
+                  <Grid>
+                    <Grid
+                      item
+                      className="HistoryPageTotal HistoryContainerDates"
+                    >
+                      Total: $ {(booking.total + 0).toFixed(2)}
+                    </Grid>
+                    <br />
+                    <Grid
+                      item
+                      className="HistoryPageTotal HistoryContainerDates"
+                    >
+                      {month[checkInDateAndTime.getUTCMonth()]}{" "}
+                      {checkInDateAndTime.getUTCFullYear()}
+                    </Grid>
+                  </Grid>
+                  <Grid>
+                    <Grid item>{arrayOfButtons} </Grid>
+                  </Grid>
+                </Grid>
+              </ExpansionPanelSummary>
 
-                {/* ExpansionPanelDetails is the part that can be expanded (not visible by default) */}
-                <ExpansionPanelDetails>
-                  <HistoryExpansionTable expansionData={expansionData} />
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            );
-          });
-        }
+              {/* ExpansionPanelDetails is the part that can be expanded (not visible by default) */}
+              <ExpansionPanelDetails>
+                <HistoryExpansionTable
+                  isAuthenticatedNotLoggedIn={
+                    this.props.auth.isAuthenticatedNotLoggedIn
+                  }
+                  expansionData={expansionData}
+                />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          );
+        });
       }
     }
     return (
@@ -417,7 +426,8 @@ HistoryOverview.propTypes = {
 const mapStateToProps = state => ({
   profile: state.profile,
   history: state.history,
-  bookingData: state.bookingData
+  bookingData: state.bookingData,
+  auth: state.auth
 });
 
 export default connect(
