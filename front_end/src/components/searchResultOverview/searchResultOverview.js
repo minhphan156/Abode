@@ -138,10 +138,6 @@ class searchResultOverview extends Component {
     activeMarker: marker,
     showingInfoWindow: true
   });
-  if(props.hotel!=null){
-    console.log(props.hotel);
-    this.handleClickToHotel(props.hotel);
-  }
 }
 
   onClose = props => {
@@ -476,7 +472,7 @@ class searchResultOverview extends Component {
                       <img style={{margin:'auto', width:'100%'}} src={this.state.selectedPlace.hotel.img} />
                       </div>
                       <div className="col-lg-4">
-                        <a  className="mapPopInfoName" href="/indiv-hotel">{this.state.selectedPlace.hotel.name}</a>
+                        <p  className="mapPopInfoName">{this.state.selectedPlace.hotel.name}</p>
                         <p  className="mapPopInfoAddress">{this.state.selectedPlace.hotel.address}</p>
                         <p  className="mapPopInfoPrice">${this.state.selectedPlace.hotel.price}</p>
                       </div>
@@ -546,7 +542,9 @@ class searchResultOverview extends Component {
                                 <img src={hotel.img} />
                               </Card>
                             </Grid>
-                            <Grid item xs={12} md="auto">
+                            <Grid item xs={12} md="auto" 
+                                  style={{marginTop:'3%'}}
+                            >
                               <Grid
                                 container
                                 direction="column"
@@ -562,6 +560,11 @@ class searchResultOverview extends Component {
                                 }
                                 spacing={0}
                               >
+                                <Grid item>
+                                  <Typography variant="h6" color="default">
+                                    {hotel.star_rates}-Star Hotel
+                                  </Typography>
+                                </Grid>
                                 <Grid item xs={12} md="auto">
                                   <Grid
                                     container
@@ -579,7 +582,7 @@ class searchResultOverview extends Component {
                                         className={classes.stars}
                                         value={hotel.star_rates}
                                         count={5}
-                                        size={32}
+                                        size={28}
                                         color2={"#ffd700"}
                                         color1={"#dcdcdc"}
                                         edit={false}
@@ -590,15 +593,10 @@ class searchResultOverview extends Component {
                                         variant="subtitle2"
                                         color="default"
                                       >
-                                        {hotel.star_rates} out of 5 Star Rating
+                                        {hotel.guest_rate} Guest Ratings
                                       </Typography>
                                     </Grid>
                                   </Grid>
-                                </Grid>
-                                <Grid item>
-                                  <Typography variant="h6" color="default">
-                                    {hotel.guest_rate} Guest Rating
-                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
