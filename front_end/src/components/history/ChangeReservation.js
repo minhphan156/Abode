@@ -45,8 +45,9 @@ class ChangeReservation extends Component {
       newCheckOut: null,
       days: null,
       showChange: false,
-      taxRate: 0.125 //Default tax rate is 12.5% when only reward points used for booking
+      taxRate: 0.125, //Default tax rate is 12.5% when only reward points used for booking
       //No basis to calculate tax rate from when $0 taxAndFees and $0 subtotal
+      total: null
     };
     this.stripeValidate = this.stripeValidate.bind(this);
     this.onChangeClick = this.onChangeClick.bind(this);
@@ -58,12 +59,19 @@ class ChangeReservation extends Component {
       var duration = moment.duration(
         this.state.newCheckOut.diff(this.state.newCheckIn)
       );
-      this.setState({ days: duration.asDays() });
-      this.setState({ showChange: true });
+
       if (expansionData.taxesAndFees > 0)
         this.setState({
           taxRate: expansionData.taxesAndFees / expansionData.subtotal
         });
+      this.setState({ days: duration.asDays() });
+      this.setState({
+        total:
+          expansionData.nightlyRate *
+          (duration.asDays() - expansionData.numberOfNights) *
+          (1 + this.state.taxRate)
+      });
+      this.setState({ showChange: true });
     }
   }
   stripeValidate(e) {
@@ -89,20 +97,21 @@ class ChangeReservation extends Component {
       newCheckOut: this.state.newCheckOut,
       numberOfNights: days,
       newSubtotal:
-        (expansionData.subtotal / expansionData.numberOfNights) * days,
-      newDiscount:
-        (expansionData.discounts / expansionData.numberOfNights) * days,
+        expansionData.nightlyRate * (days - expansionData.numberOfNights) +
+        expansionData.subtotal / 1,
+      newDiscount: expansionData.discounts, //no increase in discounts for changing reservation
       newTaxesAndFees:
-        (expansionData.taxesAndFees / expansionData.numberOfNights) * days,
+        expansionData.nightlyRate *
+          (days - expansionData.numberOfNights) *
+          this.state.taxRate +
+        expansionData.taxesAndFees / 1,
       newRewardsDiscount: expansionData.rewardsDiscount, //extra costs incurred in changing reservation must be payed in cash
-      newTotal: (expansionData.total / expansionData.numberOfNights) * days,
+      newTotal: this.state.total + expansionData.total / 1, //need to divide by 1 to be recognized as a number
       newPointsEarned: (
-        (expansionData.total / expansionData.numberOfNights) *
-        days *
+        (this.state.total + expansionData.total / 1) *
         10
       ).toFixed(0),
-      newPointsUsed:
-        (expansionData.rewardPointsUsed / expansionData.numberOfNights) * days
+      newPointsUsed: expansionData.rewardPointsUsed //rewardPoints cannot be used for changing reservation
     };
 
     this.props.changeReservation(changeReservationData);
@@ -215,22 +224,13 @@ class ChangeReservation extends Component {
                     </Button>
                   )}
                 </DialogActions>
-                {this.state.showChange === true &&
-                expansionData.nightlyRate *
-                  (this.state.days - expansionData.numberOfNights) *
-                  (1 + this.state.taxRate) >
-                  0 ? (
+                {this.state.showChange === true && this.state.total > 0 ? (
                   <div>
                     <CardContent>
                       <h4 style={{ marginTop: "1%" }}>
                         Payment for Extra{" "}
                         {this.state.days - expansionData.numberOfNights}{" "}
-                        Night(s) : $
-                        {(
-                          expansionData.nightlyRate *
-                          (this.state.days - expansionData.numberOfNights) *
-                          (1 + this.state.taxRate)
-                        ).toFixed(2)}
+                        Night(s) : ${this.state.total.toFixed(2)}
                       </h4>
                       <hr />
                       <TextFieldGroup
