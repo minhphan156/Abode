@@ -180,7 +180,7 @@ class ChangeReservation extends Component {
                   <br /> <br />
                   Check In: {checkInTime.toDateString()} <br /> <br />
                   Check Out: {checkOutTime.toDateString()} <br /> <br />
-                  {/* Number of Nights: {expansionData.numberOfNights} */}
+                  Number of Nights: {expansionData.numberOfNights}
                 </DialogContent>
                 {this.state.newCheckIn != null &&
                 this.state.newCheckOut != null &&
