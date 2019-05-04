@@ -35,6 +35,10 @@
     padding-right: 50px;
     padding-top: 30px;
   }
+
+  .SearchBookingContainer {
+    height: 620px;
+  }
 }
 
 @media screen and (min-width: 600px) {
@@ -68,6 +72,10 @@
     padding-right: 50px;
     padding-top: 30px;
   }
+
+  .SearchBookingContainer {
+    height: 620px;
+  }
 }
 
 .AuthTitle {
@@ -92,4 +100,13 @@
 .linkToOhter {
   color: #0c4b78;
   font-size: 16px;
+}
+
+.SearchBookingTitle {
+  color: #0c4b78;
+  font-size: 34px;
+  font-weight: 900;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 30px;
 }

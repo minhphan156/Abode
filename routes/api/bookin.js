@@ -145,61 +145,72 @@ router.get(
 // @route GET /api/booking/guest-history
 // @desc History page
 // @access public
-router.get("/guest-history", (req, res) => {
+router.post("/guest-history", (req, res) => {
   const bookingID = req.body.bookingID;
   const lastName = req.body.lastName;
 
-  var historyPack = {};
+  //   var historyPack = {};
+  var historyPack = [];
+  Booking.findById(bookingID)
+    .then(book => {
+      Customer.findById(book.customerID)
+        .then(custDoc => {
+          // Block request if the last name does not match the booking
+          if (custDoc.Lastname !== lastName)
+            return res.status(404).json({
+              guestHistoryError: true
+            });
 
-  Booking.findById(bookingID, (err, book) => {
-    if (err) return res.status(404).json(err);
+          historyPack.err = false;
 
-    Customer.findById(book.customerID)
-      .then(custDoc => {
-        console.log("doc:", custDoc.Lastname);
-        console.log("req", lastName);
-        // Block request if the last name does not match the booking
-        if (custDoc.Lastname !== lastName)
-          return res.status(403).json({
-            err: true
+          Hotel.findById(book.hotelID).then(hotelDoc => {
+            // Get the name, city and image of the hotel the User is staying at
+            historyPack.push({
+              name: custDoc.Firstname + " " + custDoc.Lastname,
+              price: hotelDoc.price[book.typeOfRoom + "Price"],
+              hotelName: hotelDoc.name,
+              img: hotelDoc.images[0],
+              city: hotelDoc.city,
+
+              bookingID: book._id,
+              check_in_date: book.check_in_date,
+              check_out_date: book.check_out_date,
+              typeOfRoom: book.typeOfRoom,
+              numOfRoom: book.numOfRoom,
+              numOfNights: book.numOfNights,
+              status: book.status,
+              changed: book.changed,
+              new_check_in_date: book.new_check_in_date,
+              new_check_out_date: book.new_check_out_date,
+
+              total: book.total,
+              subtotal: book.subtotal,
+              discount: book.discount,
+              taxesAndFees: book.taxesAndFees,
+              rewardPointsUsed: book.rewardPointsUsed,
+              rewardPointsEarned: book.rewardPointsEarned,
+              rewardDiscount: book.rewardDiscount,
+              reservedDate: book.reservedDate,
+              nightlyRate: book.numOfNights,
+              starReview: book.starReview,
+              comment: book.review
+            });
+            // Give frontend the goods
+            return res.status(200).send(historyPack);
           });
+        })
 
-        // User checking history has been authorized
-        // Proceed with preparing history package
-        (historyPack.bookingID = book._id),
-          (historyPack.check_in_date = book.check_in_date);
-        historyPack.check_out_date = book.check_out_date;
-        historyPack.typeOfRoom = book.typeOfRoom;
-        historyPack.numOfRoom = book.numOfRoom;
-        historyPack.status = book.status;
-        historyPack.changed = book.changed;
-        historyPack.new_check_in_date = book.new_check_in_date;
-        historyPack.new_check_out_date = book.new_check_out_date;
-        historyPack.subtotal = book.subtotal;
-        historyPack.discount = book.discount;
-        historyPack.taxesAndFees = book.taxesAndFees;
-        historyPack.numOfNights = book.numOfNights;
-
-        // Info for Review
-        historyPack.starReview = book.starReview;
-        historyPack.comment = book.review;
-
-        historyPack.err = false;
-
-        Hotel.findById(book.hotelID).then(hotelDoc => {
-          // Get the name, city and image of the hotel the User is staying at
-          historyPack.hotelName = hotelDoc.name;
-          historyPack.img = hotelDoc.images[0];
-          historyPack.city = hotelDoc.city;
-
-          // Give frontend the goods
-          return res.status(200).send(historyPack);
+        .catch(() => {
+          return res.status(404).json({
+            guestHistoryError: true
+          });
         });
-      })
-      .catch(err => {
-        if (err) return res.status(404).json(err);
+    })
+    .catch(() => {
+      return res.status(404).json({
+        guestHistoryError: true
       });
-  });
+    });
 });
 
 // @route POST /api/booking/confirm

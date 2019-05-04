@@ -312,7 +312,6 @@ class Landing extends Component {
               <SearchWidget />
             </div>
             <div class="text-block-inspiration">
-              {/* Update Link once backend implementation for cities is done */}
               <Link
                 to={`/cities/${this.props.landing.inspireCityId}`}
                 style={{ color: "white" }}

@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { clearCurrentProfile,getProfileInfo  } from "../../actions/profileActions";
+import {
+  clearCurrentProfile,
+  getProfileInfo
+} from "../../actions/profileActions";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import NavbarMenu from "./NavbarMenu";
-import AbodeLogo from "./logo.png";
+import NavBarMenuLeft from "./NavBarMenuLeft";
 
+import AbodeLogo from "./logo.png";
+import withWidth from "@material-ui/core/withWidth";
+import { isWidthDown } from "@material-ui/core/withWidth";
 
 import "./navbar.css";
 
@@ -26,20 +32,25 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  componentWillMount(){
+  componentWillMount() {
     if (localStorage.jwtToken) {
-       this.props.getProfileInfo();
+      this.props.getProfileInfo();
     }
   }
 
-render() { 
+  render() {
     // Markup shown on the right hand side of Navbar when user is GUEST.
-    let guestMarkUp = (
+    const width = this.props.width;
+
+    let guestMarkUp = isWidthDown("xs", width) ? (
+      <NavBarMenuLeft />
+    ) : (
       <Grid
         container
         spacing={0}
         justify="space-evenly"
         alignItems="center"
+        direction="row"
         xs={4}
         sm={4}
         md={3}
@@ -87,12 +98,12 @@ render() {
       <Grid
         container
         spacing={0}
-        justify="space-evenly"
+        justify={width === "sm" ? "flex-end" : "space-around"}
         alignItems="center"
         xs={4}
-        sm={4}
+        sm={5}
         md={5}
-        lg={4}
+        lg={5}
       >
         <Grid item className="headerMenu">
           <AnchorLink
@@ -112,13 +123,25 @@ render() {
             Featured Cities
           </AnchorLink>
         </Grid>
+
+        {this.props.auth.isAuthenticated ? null : (
+          <Grid item className=" headerMenuBooking">
+            <Link
+              to="/booking-not-logged-in"
+              offset="-550"
+              style={{ color: "white" }}
+            >
+              Search Booking
+            </Link>
+          </Grid>
+        )}
       </Grid>
     );
 
     let notInLandingMarkup = <Grid item />;
 
     return (
-      <div className="navbarContainer ">
+      <div className="navbarContainer">
         <Grid
           container
           className="navbarContainer headerfont"
@@ -149,6 +172,7 @@ render() {
               </Grid>
             </Link>
           </Grid>
+
           {this.props.landing.isInLanding == true
             ? inLandingMarkup
             : notInLandingMarkup}
@@ -161,7 +185,7 @@ render() {
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
-  landing: PropTypes.object.isRequired,
+  landing: PropTypes.object.isRequired
 };
 
 let mapStateToProps = state => ({
@@ -172,5 +196,5 @@ let mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile,getProfileInfo  }
-)(Navbar);
+  { logoutUser, clearCurrentProfile, getProfileInfo }
+)(withWidth()(Navbar));

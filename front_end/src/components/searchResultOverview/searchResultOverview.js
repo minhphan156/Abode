@@ -85,11 +85,11 @@ class searchResultOverview extends Component {
       guest_rate: 0,
       price_low: null,
       price_high: null,
-      free_wifi: false,
+      wifi: false,
       free_parking: false,
       free_breakfast: false,
       pool: false,
-      pet_friendly: false,
+      multilingual: false,
       priceRangeEquality: "To",
       priceRangeAnchorEl: null,
       lat: null,
@@ -165,11 +165,11 @@ class searchResultOverview extends Component {
       guest_rate: 0,
       price_low: null,
       price_high: null,
-      free_wifi: false,
+      wifi: false,
       free_parking: false,
       free_breakfast: false,
       pool: false,
-      pet_friendly: false,
+      multilingual: false,
       priceRangeEquality: "To",
       priceRangeAnchorEl: null,
       sortCategory: null,
@@ -274,11 +274,11 @@ class searchResultOverview extends Component {
       guest_rate,
       star_rate,
       priceRangeEquality,
-      free_wifi,
+      wifi,
       free_parking,
       free_breakfast,
       pool,
-      pet_friendly
+      multilingual
     } = this.state;
 
     let { sortCategory, sortOrder } =
@@ -328,11 +328,11 @@ class searchResultOverview extends Component {
       lastIndex: lastIndex,
       numResults: numResults,
       pageNumber: 1,
-      free_wifi: free_wifi ? 1 : 0,
+      wifi: wifi ? 1 : 0,
       free_parking: free_parking ? 1 : 0,
       free_breakfast: free_breakfast ? 1 : 0,
       pool: pool ? 1 : 0,
-      pet_friendly: pet_friendly ? 1 : 0,
+      multilingual: multilingual ? 1 : 0,
       price_low: price_low_validated,
       price_high: price_high_validated,
       review_score: guest_rate,
@@ -400,11 +400,11 @@ class searchResultOverview extends Component {
         price_high,
         priceRangeEquality,
         priceRangeAnchorEl,
-        free_wifi,
+        wifi,
         free_parking,
         free_breakfast,
         pool,
-        pet_friendly
+        multilingual
       } = this.state;
       let { classes, width } = this.props;
       let { hotelQuery, searchQuery, loading } = this.props.query;
@@ -720,11 +720,11 @@ class searchResultOverview extends Component {
               handleFiltersApply={this.handleFiltersApply}
               handleEqualityMenuOpen={this.handleEqualityMenuOpen}
               handleEqualityMenuClose={this.handleEqualityMenuClose}
-              free_wifi={free_wifi}
+              wifi={wifi}
               free_parking={free_parking}
               free_breakfast={free_breakfast}
               pool={pool}
-              pet_friendly={pet_friendly}
+              multilingual={multilingual}
             />
             <Grid item xs={12} sm={8} md={9} lg={9}>
               <Grid container direction="row" justify="center" spacing={8}>

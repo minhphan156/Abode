@@ -5,11 +5,13 @@ import PropTypes from "prop-types";
 
 // if authenticated, load props
 // otherwise, redirect to login
+// if user applied correct bookingID and lastName => isAuthenticatedNotLoggedIn == true
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      auth.isAuthenticated === true ? (
+      auth.isAuthenticated === true ||
+      auth.isAuthenticatedNotLoggedIn === true ? (
         <Component {...props} />
       ) : (
         <Redirect to="/login" />
