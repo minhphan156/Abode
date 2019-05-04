@@ -196,7 +196,7 @@ router.post("/guest-history", (req, res) => {
               comment: book.review
             });
             // Give frontend the goods
-            return res.status(200).send({ historyPack });
+            return res.status(200).send(historyPack);
           });
         })
 
