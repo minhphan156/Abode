@@ -42,7 +42,9 @@ class Navbar extends Component {
     // Markup shown on the right hand side of Navbar when user is GUEST.
     const width = this.props.width;
 
-    let guestMarkUp = (
+    let guestMarkUp = isWidthDown("xs", width) ? (
+      <NavBarMenuLeft />
+    ) : (
       <Grid
         container
         spacing={0}
@@ -148,84 +150,28 @@ class Navbar extends Component {
           justify="space-between"
           alignItems="center"
         >
-          {this.props.auth.isAuthenticated ? (
-            <Grid className="navbarLogo" item>
-              <Link to="/">
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <img
-                      className="abode-logo"
-                      src={AbodeLogo}
-                      alt="Abode Logo"
-                    />
-                  </Grid>
-
-                  <Grid item className="abodeHome">
-                    Abode
-                  </Grid>
+          <Grid className="navbarLogo" item>
+            <Link to="/">
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+                <Grid item>
+                  <img
+                    className="abode-logo"
+                    src={AbodeLogo}
+                    alt="Abode Logo"
+                  />
                 </Grid>
-              </Link>
-            </Grid>
-          ) : (
-            <Grid item>
-              {" "}
-              {isWidthDown("xs", width) ? (
-                <div>
-                  <NavBarMenuLeft />{" "}
-                  <Grid className="navbarLogo" item>
-                    <Link to="/">
-                      <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="center"
-                      >
-                        <Grid item>
-                          <img
-                            className="abode-logo"
-                            src={AbodeLogo}
-                            alt="Abode Logo"
-                          />
-                        </Grid>
 
-                        <Grid item className="abodeHome">
-                          Abode
-                        </Grid>
-                      </Grid>
-                    </Link>
-                  </Grid>
-                </div>
-              ) : (
-                <Grid className="navbarLogo" item>
-                  <Link to="/">
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-between"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <img
-                          className="abode-logo"
-                          src={AbodeLogo}
-                          alt="Abode Logo"
-                        />
-                      </Grid>
-
-                      <Grid item className="abodeHome">
-                        Abode
-                      </Grid>
-                    </Grid>
-                  </Link>
+                <Grid item className="abodeHome">
+                  Abode
                 </Grid>
-              )}
-            </Grid>
-          )}
+              </Grid>
+            </Link>
+          </Grid>
 
           {this.props.landing.isInLanding == true
             ? inLandingMarkup

@@ -29,7 +29,7 @@ const styles = {
   PaperContainerPhone: {
     marginTop: 50,
     marginBottom: 50,
-
+    height: 385,
     width: "78%",
     padding: 20
   }

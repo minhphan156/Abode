@@ -39,20 +39,12 @@ export default (class NavBarMenuLeft extends React.Component {
           onClose={this.handleClose}
           TransitionComponent={Fade}
         >
-          <AnchorLink
-            href="#topDealsAnchor"
-            offset="-450"
-            style={{ color: "white" }}
-          >
-            <MenuItem onClick={this.handleClose}>Deals of the Week</MenuItem>
-          </AnchorLink>
-          <AnchorLink
-            href="#featuredCitiesAnchor"
-            offset="-500"
-            style={{ color: "white" }}
-          >
-            <MenuItem onClick={this.handleClose}>Featured Cities</MenuItem>
-          </AnchorLink>
+          <Link to="/register">
+            <MenuItem onClick={this.handleClose}>Sign Up</MenuItem>
+          </Link>
+          <Link to="/login">
+            <MenuItem onClick={this.handleClose}>Login</MenuItem>
+          </Link>
           <Link
             to="/booking-not-logged-in"
             offset="-550"
