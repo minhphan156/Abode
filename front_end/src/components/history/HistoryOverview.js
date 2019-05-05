@@ -203,7 +203,8 @@ class HistoryOverview extends Component {
               total: (booking.total + 0).toFixed(2),
               rewardPointsEarned: booking.rewardPointsEarned,
               rewardPointsUsed: booking.rewardPointsUsed,
-              city:booking.city
+              city: booking.city,
+              bookingChanged: booking.changed
             };
           }
 
