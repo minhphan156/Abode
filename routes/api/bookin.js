@@ -307,7 +307,15 @@ router.post("/confirm", (req, res) => {
           }).then((doc, err) => {
             if (err) res.status(400).json(err);
             // if they dont, store the booking information into booking db
-            if (doc.length === 0) {
+            let cancel = true;
+            if(doc.length !== 0){
+              for(let i =0; i<doc.length;i++){
+                if(doc[i].status !== 3){
+                  cancel = false;
+                }
+              }
+            }
+            if (doc.length === 0 || cancel === true) {
               if (isLogged) {
                 if (rewardPointsUsed && user.rewardPoints < rewardPointsUsed) {
                   res.status(403).send({ error: "not enought rewardPoints" });
