@@ -438,19 +438,20 @@ router.post("/changeReservation", (req, res) => {
     Booking.findById(bookingID).then((reservations, err) => {
       if (err) res.status(400).json(err);
       if (reservations) {
-        if (
-          reservations.check_in_date.getTime() === date.checkin.getTime() &&
-          reservations.check_out_date.getTime() === date.checkout.getTime()
-        ) {
-          res.status(409).json({ message: "cannot change to same dates" });
-          return;
-        }
         if (reservations.changed) {
           if (
             reservations.new_check_in_date.getTime() ===
               date.checkin.getTime() &&
             reservations.new_check_out_date.getTime() ===
               date.checkout.getTime()
+          ) {
+            res.status(409).json({ message: "cannot change to same dates" });
+            return;
+          }
+        }else{
+          if (
+            reservations.check_in_date.getTime() === date.checkin.getTime() &&
+            reservations.check_out_date.getTime() === date.checkout.getTime()
           ) {
             res.status(409).json({ message: "cannot change to same dates" });
             return;
