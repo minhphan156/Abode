@@ -24,7 +24,6 @@ import "./history.css";
 import moment from "moment";
 import taxrates from "../payment/taxrates.json";
 
-
 const styles = theme => ({
   appBar: {
     position: "relative"
@@ -62,18 +61,15 @@ class ChangeReservation extends Component {
         this.state.newCheckOut.diff(this.state.newCheckIn)
       );
 
-        let taxRate = 0;
+      let taxRate = 0;
 
-            // get the city's tax rate and pass it on as part of tempBookingInfo
-    taxrates.name.filter(taxrate => {
-      if (
-        taxrate.label ===
-        expansionData.city
-      ) {
-        taxRate = taxrate.rate;
-      }
-    });
-        this.setState({taxRate:taxRate});
+      // get the city's tax rate and pass it on as part of tempBookingInfo
+      taxrates.name.filter(taxrate => {
+        if (taxrate.label === expansionData.city) {
+          taxRate = taxrate.rate;
+        }
+      });
+      this.setState({ taxRate: taxRate });
 
       this.setState({ days: duration.asDays() });
       this.setState({
@@ -113,7 +109,7 @@ class ChangeReservation extends Component {
       newDiscount: expansionData.discounts, //no increase in discounts for changing reservation
       newTaxesAndFees:
         expansionData.nightlyRate *
-          (days - expansionData.numberOfNights) *
+          (this.state.days - expansionData.numberOfNights) *
           this.state.taxRate +
         expansionData.taxesAndFees / 1,
       newRewardsDiscount: expansionData.rewardsDiscount, //extra costs incurred in changing reservation must be payed in cash
@@ -152,14 +148,16 @@ class ChangeReservation extends Component {
     } = this.props;
     return (
       <div>
-        <Button
-          onClick={this.handleChangeClickOpen}
-          variant="outlined"
-          color="secondary"
-          className={classes.button}
-        >
-          CHANGE
-        </Button>
+        {expansionData.bookingChanged === true ? null : (
+          <Button
+            onClick={this.handleChangeClickOpen}
+            variant="outlined"
+            color="secondary"
+            className={classes.button}
+          >
+            CHANGE
+          </Button>
+        )}
         <Dialog
           fullScreen
           open={this.state.openChangeDialog}
