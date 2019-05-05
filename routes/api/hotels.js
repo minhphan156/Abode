@@ -259,7 +259,8 @@ router.get('/individual', async (req,res) => {
                     studioRoomAvailability = false;
             }
 
-            individualHotelPack = {
+            geocoder.geocode(hotel.address).then(async req=>{
+                individualHotelPack = {
                     singleAvailability: singleRoomAvailability, 
                     doubleAvailability: doubleRoomAvailability, 
                     kingAvailability: kingRoomAvailablity, 
@@ -275,6 +276,9 @@ router.get('/individual', async (req,res) => {
                     hdc_rating: hotel.hdc_rating, 
                     amenities: hotel.amenities, 
                     airports: hotel.airports,
+                    // lat and lng
+                    lat:req[0].latitude,
+                    alt: req[0].longitude,
                     // Add the complete reviews for this hotel and sort by most recent review
                     review: (await (reviewPack)).sort((a,b) => { return (new Date(b.reviewDate)).getTime() - (new Date(a.reviewDate)).getTime() }),
                     top_spots:hotel.top_spots,
@@ -282,7 +286,9 @@ router.get('/individual', async (req,res) => {
                 }
                 
                 // Send final package of info about this hotel
-                return res.status(200).json(individualHotelPack);            
+                return res.status(200).json(individualHotelPack);    
+            })
+                    
             });
 
             getReviews().catch((reviewErr) => {
