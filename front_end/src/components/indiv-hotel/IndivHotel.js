@@ -968,7 +968,8 @@ class IndivHotel extends Component {
                             style={{
                               fontSize: 20,
                               fontWeight: "bold",
-                              color: "#3ba711"
+                              color: "#3ba711",
+                              zIndex: 10
                             }}
                           >
                             $
