@@ -108,9 +108,16 @@ class ChangeReservation extends Component {
           this.state.taxRate +
         expansionData.taxesAndFees / 1,
       newRewardsDiscount: expansionData.rewardsDiscount, //extra costs incurred in changing reservation must be payed in cash
-      newTotal: this.state.total + expansionData.total / 1, //need to divide by 1 to be recognized as a number
+      newTotal:
+        expansionData.nightlyRate *
+          (this.state.days - expansionData.numberOfNights) *
+          (1 + this.state.taxRate) +
+        expansionData.total / 1, //need to divide by 1 to be recognized as a number
       newPointsEarned: (
-        (this.state.total + expansionData.total / 1) *
+        (expansionData.nightlyRate *
+          (this.state.days - expansionData.numberOfNights) *
+          (1 + this.state.taxRate) +
+          expansionData.total / 1) *
         10
       ).toFixed(0),
       newPointsUsed: expansionData.rewardPointsUsed //rewardPoints cannot be used for changing reservation
