@@ -48,7 +48,9 @@ class ChangeReservation extends Component {
       showChange: false,
       taxRate: 0, //Default tax rate is 12.5% when only reward points used for booking
       //No basis to calculate tax rate from when $0 taxAndFees and $0 subtotal
-      total: null
+      total: null,
+      preventNegativeCashBalanceFlag: 1,
+      decreaseRewardsPoints: 0
     };
     this.stripeValidate = this.stripeValidate.bind(this);
     this.onChangeClick = this.onChangeClick.bind(this);
@@ -78,6 +80,16 @@ class ChangeReservation extends Component {
           (duration.asDays() - expansionData.numberOfNights) *
           (1 + taxRate)
       });
+      if (
+        expansionData.total == 0 &&
+        expansionData.nightlyRate *
+          (duration.asDays() - expansionData.numberOfNights) *
+          (1 + taxRate) <
+          0
+      ) {
+        this.setState({ preventNegativeCashBalanceFlag: 0 });
+        this.setState({ decreaseRewardsPoints: 1 });
+      }
       this.setState({ showChange: true });
     }
   }
@@ -109,23 +121,35 @@ class ChangeReservation extends Component {
       newDiscount: expansionData.discounts, //no increase in discounts for changing reservation
       newTaxesAndFees:
         expansionData.nightlyRate *
+          this.state.preventNegativeCashBalanceFlag *
           (this.state.days - expansionData.numberOfNights) *
           this.state.taxRate +
         expansionData.taxesAndFees / 1,
-      newRewardsDiscount: expansionData.rewardsDiscount, //extra costs incurred in changing reservation must be payed in cash
+      newRewardsDiscount:
+        expansionData.nightlyRate *
+          (days - expansionData.numberOfNights) *
+          this.state.decreaseRewardsPoints +
+        expansionData.rewardsDiscount / 1, //extra costs incurred in changing reservation must be payed in cash
       newTotal:
         expansionData.nightlyRate *
+          this.state.preventNegativeCashBalanceFlag *
           (this.state.days - expansionData.numberOfNights) *
           (1 + this.state.taxRate) +
         expansionData.total / 1, //need to divide by 1 to be recognized as a number
       newPointsEarned: (
         (expansionData.nightlyRate *
+          this.state.preventNegativeCashBalanceFlag *
           (this.state.days - expansionData.numberOfNights) *
           (1 + this.state.taxRate) +
           expansionData.total / 1) *
         10
       ).toFixed(0),
-      newPointsUsed: expansionData.rewardPointsUsed //rewardPoints cannot be used for changing reservation
+      newPointsUsed:
+        expansionData.nightlyRate *
+          (days - expansionData.numberOfNights) *
+          this.state.decreaseRewardsPoints *
+          100 +
+        expansionData.rewardPointsUsed / 1 //rewardPoints cannot be used for additional nights
     };
 
     this.props.changeReservation(changeReservationData);
