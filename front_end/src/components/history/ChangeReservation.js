@@ -22,6 +22,8 @@ import Slide from "@material-ui/core/Slide";
 import CalendarPicker from "../landing_page/search_widget/CalendarPicker";
 import "./history.css";
 import moment from "moment";
+import taxrates from "../payment/taxrates.json";
+
 
 const styles = theme => ({
   appBar: {
@@ -45,7 +47,7 @@ class ChangeReservation extends Component {
       newCheckOut: null,
       days: null,
       showChange: false,
-      taxRate: 0.125, //Default tax rate is 12.5% when only reward points used for booking
+      taxRate: 0, //Default tax rate is 12.5% when only reward points used for booking
       //No basis to calculate tax rate from when $0 taxAndFees and $0 subtotal
       total: null
     };
@@ -55,23 +57,30 @@ class ChangeReservation extends Component {
     this.showChangeClick = this.showChangeClick.bind(this);
   }
   showChangeClick(expansionData) {
-    if (this.state.newCheckIn != null && this.state.newCheckOut != null) {
+    if (this.state.newCheckIn !== null && this.state.newCheckOut !== null) {
       var duration = moment.duration(
         this.state.newCheckOut.diff(this.state.newCheckIn)
       );
 
-      if (expansionData.taxesAndFees > 0)
-        this.setState({
-          taxRate:
-            expansionData.taxesAndFees /
-            (expansionData.subtotal - expansionData.rewardsDiscount)
-        });
+        let taxRate = 0;
+
+            // get the city's tax rate and pass it on as part of tempBookingInfo
+    taxrates.name.filter(taxrate => {
+      if (
+        taxrate.label ===
+        expansionData.city
+      ) {
+        taxRate = taxrate.rate;
+      }
+    });
+        this.setState({taxRate:taxRate});
+
       this.setState({ days: duration.asDays() });
       this.setState({
         total:
           expansionData.nightlyRate *
           (duration.asDays() - expansionData.numberOfNights) *
-          (1 + this.state.taxRate)
+          (1 + taxRate)
       });
       this.setState({ showChange: true });
     }
