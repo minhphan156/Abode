@@ -1,8 +1,5 @@
 import { GET_INDIVIDUAL_HOTEL, CLEAR_DATA } from "./types";
 import axios from "axios";
-import Geocode from "react-geocode";
-
-Geocode.setApiKey("AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8");
 
 export const getIndividualHotelResult = hotel => dispatch => {
   axios
