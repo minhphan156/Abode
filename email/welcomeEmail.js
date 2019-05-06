@@ -33,7 +33,7 @@ var diffDays = parseInt(
         .format()
     ).getTime()) /
     (1000 * 60 * 60 * 24)
-);
+) + 1;
 checkin = moment(checkin)
   .tz("America/Los_Angeles")
   .format("MM/DD/YYYY");
