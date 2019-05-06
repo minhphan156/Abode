@@ -204,7 +204,9 @@ class HistoryOverview extends Component {
               taxesAndFees: (booking.taxesAndFees + 0).toFixed(2),
               total: (booking.total + 0).toFixed(2),
               rewardPointsEarned: booking.rewardPointsEarned,
-              rewardPointsUsed: booking.rewardPointsUsed
+              rewardPointsUsed: booking.rewardPointsUsed,
+              city: booking.city,
+              bookingChanged: booking.changed
             };
           }
 
