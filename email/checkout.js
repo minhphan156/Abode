@@ -16,7 +16,7 @@ const keys = require('../config/keys');
 module.exports = function checkout(booking){
 
     var checkout = booking.new_check_out_date ? booking.new_check_out_date :booking.check_out_date
-    var diffDays = parseInt((checkout.getTime() - new Date(moment().tz("America/Los_Angeles").format()).getTime()) / (1000 * 60 * 60 * 24));
+    var diffDays = parseInt((checkout.getTime() - new Date(moment().tz("America/Los_Angeles").format()).setHours(12,0,0,0)) / (1000 * 60 * 60 * 24)) + 1;
     if(diffDays === 0){
         booking.status = 2
         var html = `<body>

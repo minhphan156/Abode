@@ -144,7 +144,7 @@ class HistoryOverview extends Component {
           );
         }
       }
-      if (history != null) {
+      if (history != null && history.length > 0) {
         bookings = history.map(booking => {
           displayChangeChip = null;
           displayRegularChip = null;
@@ -184,7 +184,7 @@ class HistoryOverview extends Component {
 
           var discountToPass = booking.discount;
           var rewardsDiscountToPass = booking.rewardDiscount;
-          if (booking.price != undefined) {
+          if (booking) {
             expansionData = {
               bookingId: booking.bookingID,
               name: booking.name,
