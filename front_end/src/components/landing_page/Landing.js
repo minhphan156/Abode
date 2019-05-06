@@ -316,7 +316,7 @@ class Landing extends Component {
                 to={`/cities/${this.props.landing.inspireCityId}`}
                 style={{ color: "white" }}
               >
-                explore {this.props.landing.inspireCity}
+                Take Me Here
               </Link>
             </div>
           </div>

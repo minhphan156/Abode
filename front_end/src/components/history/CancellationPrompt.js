@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { cancelReservation } from "../../actions/bookingActions";
-import { Button } from "@material-ui/core/";
+import { Button, withWidth } from "@material-ui/core/";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -49,9 +49,8 @@ class CancellationPrompt extends Component {
         </Button>
 
         <Dialog
-          fullWidth={
-            width === "md" || width === "lg" || width === "sm" ? true : false
-          }
+          maxWidth={"md"}
+          scroll={"body"}
           fullScreen={width === "xs" ? true : false}
           open={this.state.open}
           onClose={this.handleClose}
@@ -115,4 +114,4 @@ const mapStateToProps = state => ({});
 export default connect(
   mapStateToProps,
   { cancelReservation }
-)(withStyles(styles)(CancellationPrompt));
+)(withStyles(styles)(withWidth()(CancellationPrompt)));
