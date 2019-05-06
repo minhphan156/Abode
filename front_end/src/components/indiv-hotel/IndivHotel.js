@@ -111,6 +111,7 @@ class IndivHotel extends Component {
         anchor: new this.props.google.maps.Point(0, 32)
       };
       let displayGoogleMaps = (
+        <div style={{zIndex:-1}}>
         <Map
           google={this.props.google}
           zoom={15}
@@ -121,7 +122,7 @@ class IndivHotel extends Component {
           style={{
             width: "100%",
             height: "70%",
-            marginTop: "1%"
+            marginTop: "1%",
           }}
         >
           <Marker
@@ -139,6 +140,7 @@ class IndivHotel extends Component {
             </div>
           </InfoWindow>
         </Map>
+        </div>
       );
       let displayGoogleMapsLong = (
         <Map
@@ -935,7 +937,7 @@ class IndivHotel extends Component {
                     </div>
                   </div>
                   <div class="shrtMap">
-                    <div className="row">{displayGoogleMaps}</div>
+                    <div className="row" >{displayGoogleMaps}</div>
                   </div>
 
                   <div class="longMap">
@@ -987,6 +989,7 @@ class IndivHotel extends Component {
                                 )
                               }
                               to="/payment"
+                              style={{zIndex:10}}
                             >
                               <Button class="bookBtn">Book Single Room</Button>
                               <Button class="bookBtnShrt">Book Single</Button>
