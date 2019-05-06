@@ -281,6 +281,7 @@ class ChangeReservation extends Component {
                   checkIn={this.state.newCheckIn}
                   checkOut={this.state.newCheckOut}
                   onHandleDate={this.onHandleDate}
+                  dealPage={true}
                 />
                 <DialogActions>
                   {this.state.newCheckIn == null ||
