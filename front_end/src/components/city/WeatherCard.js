@@ -95,7 +95,7 @@ let WeatherCard = props => {
 
       return (
         <Grid item xs={6} sm={6} md={12} lg={12} xl={6}>
-          <Card style={{ padding: 8 }} square={true}>
+          <Card style={{ padding: 12 }} square={true}>
             <Grid container direction="column" alignItems="flex-start">
               <Grid item xs={12}>
                 <Typography
@@ -133,24 +133,6 @@ let WeatherCard = props => {
                 </Grid>
               </Grid>
               <Hidden smDown>
-                <Grid item xs={12} style={{ width: "100%" }}>
-                  <Grid
-                    container
-                    direction="row"
-                    justify="space-between"
-                    alignItems="center"
-                    style={{fontSize:18, fontWeight:'bold', color:'#568cba'}}
-                  >
-                    <Grid item>
-                      <span className={classes.greyText}>Lo:</span>{" "}
-                      {`${forecastDay.main.temp_min.toFixed(0)}°F`}
-                    </Grid>
-                    <Grid item>
-                      <span className={classes.greyText}>Hi:</span>{" "}
-                      {`${forecastDay.main.temp_max.toFixed(0)}°F`}
-                    </Grid>
-                  </Grid>
-                </Grid>
                 <Grid item xs={12} style={{ width: "100%" }}>
                   <Grid
                     container
