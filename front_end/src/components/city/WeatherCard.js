@@ -95,7 +95,7 @@ let WeatherCard = props => {
 
       return (
         <Grid item xs={6} sm={6} md={12} lg={12} xl={6}>
-          <Card style={{ padding: 8 }} square={true}>
+          <Card style={{ padding: 12 }} square={true}>
             <Grid container direction="column" alignItems="flex-start">
               <Grid item xs={12}>
                 <Typography
