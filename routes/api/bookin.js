@@ -487,7 +487,6 @@ router.post("/changeReservation", (req, res) => {
             }
             if (checkAvalibity(arr, date, reservations.numOfRoom, bookingID)) {
               if (isLogged) {
-                console.log("is here");
                 reservations.rewardPointsEarned = req.body.newPointsEarned
                   ? parseInt(req.body.newPointsEarned)
                   : reservations.rewardPointsEarned;

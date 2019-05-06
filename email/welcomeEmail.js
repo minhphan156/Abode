@@ -38,12 +38,10 @@ checkin = moment(checkin)
   .format("MM/DD/YYYY");
 
 if (diffDays <= 5 && diffDays > 0 && booking.welcome !== true) {
-  console.log(diffDays)
   weather.find({search:des, degreeType: 'F'}, function(err, result) {
     if(err) console.log(err);
     let current = result[0].current;
     let forecast = result[0].forecast;
-    console.log("abc" +diffDays)
       var html = `<body>
             <div>
             <div class="topBar" style="background-image:linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9);;overflow: hidden; height:100px;"> 
