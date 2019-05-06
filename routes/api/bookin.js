@@ -307,7 +307,15 @@ router.post("/confirm", (req, res) => {
           }).then((doc, err) => {
             if (err) res.status(400).json(err);
             // if they dont, store the booking information into booking db
-            if (doc.length === 0) {
+            let cancel = true;
+            if(doc.length !== 0){
+              for(let i =0; i<doc.length;i++){
+                if(doc[i].status !== 3){
+                  cancel = false;
+                }
+              }
+            }
+            if (doc.length === 0 || cancel === true) {
               if (isLogged) {
                 if (rewardPointsUsed && user.rewardPoints < rewardPointsUsed) {
                   res.status(403).send({ error: "not enought rewardPoints" });
@@ -430,6 +438,9 @@ router.post("/changeReservation", (req, res) => {
       isLogged = true;
     }
     bookingID = req.body.bookingID;
+    console.log("req.body");
+    console.log(req.body);
+
     date = {
       checkin: new Date(req.body.newCheckIn.replace('"', "").replace('"', "")),
       checkout: new Date(req.body.newCheckOut.replace('"', "").replace('"', ""))
@@ -438,19 +449,20 @@ router.post("/changeReservation", (req, res) => {
     Booking.findById(bookingID).then((reservations, err) => {
       if (err) res.status(400).json(err);
       if (reservations) {
-        if (
-          reservations.check_in_date.getTime() === date.checkin.getTime() &&
-          reservations.check_out_date.getTime() === date.checkout.getTime()
-        ) {
-          res.status(409).json({ message: "cannot change to same dates" });
-          return;
-        }
         if (reservations.changed) {
           if (
             reservations.new_check_in_date.getTime() ===
               date.checkin.getTime() &&
             reservations.new_check_out_date.getTime() ===
               date.checkout.getTime()
+          ) {
+            res.status(409).json({ message: "cannot change to same dates" });
+            return;
+          }
+        } else {
+          if (
+            reservations.check_in_date.getTime() === date.checkin.getTime() &&
+            reservations.check_out_date.getTime() === date.checkout.getTime()
           ) {
             res.status(409).json({ message: "cannot change to same dates" });
             return;
@@ -479,7 +491,6 @@ router.post("/changeReservation", (req, res) => {
             }
             if (checkAvalibity(arr, date, reservations.numOfRoom, bookingID)) {
               if (isLogged) {
-                console.log("is here");
                 reservations.rewardPointsEarned = req.body.newPointsEarned
                   ? parseInt(req.body.newPointsEarned)
                   : reservations.rewardPointsEarned;
@@ -494,24 +505,23 @@ router.post("/changeReservation", (req, res) => {
                   user.save().catch(err => console.log(err));
                 }
               }
+
+
+
               reservations.changed = true;
               reservations.new_check_in_date = date.checkin;
               reservations.new_check_out_date = date.checkout;
               reservations.subtotal = req.body.newSubtotal
                 ? req.body.newSubtotal
                 : reservations.subtotal;
-              reservations.total = req.body.newTotal
-                ? req.body.newTotal
-                : reservations.total;
+              reservations.total = req.body.newTotal;
               reservations.discount = req.body.newDiscount
                 ? req.body.newDiscount
                 : reservations.discount;
               reservations.rewardDiscount = req.body.newRewardsDiscount
                 ? req.body.newRewardsDiscount
                 : reservations.rewardDiscount;
-              reservations.taxesAndFees = req.body.newTaxesAndFees
-                ? req.body.newTaxesAndFees
-                : reservations.taxesAndFees;
+              reservations.taxesAndFees = req.body.newTaxesAndFees;
               reservations.numOfNights = req.body.numberOfNights;
               hotel.save().catch(err => res.status(400).json(err));
               reservations.save().catch(err =>

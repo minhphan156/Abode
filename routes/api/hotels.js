@@ -14,7 +14,7 @@ var options = {
    
     // Optional depending on the providers
     httpAdapter: 'https', // Default
-    apiKey: 'AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8', // for Mapquest, OpenCage, Google Premier
+    apiKey: 'AIzaSyBjtRUvjcEnZpsmS4xtRF1f5HZ1RRV8qWI', // for Mapquest, OpenCage, Google Premier
     formatter: null         // 'gpx', 'string', ...
   };
 
@@ -102,8 +102,6 @@ router.get('/search', (req,res)=>{
     objDate = new Date(moment("2019-07-05").tz("America/Los_Angeles")).getTime()
     comingDate = new Date(moment(date.checkout).tz("America/Los_Angeles")).getTime()
     let checkOutDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
-    console.log(checkInDiff)
-    console.log(checkOutDiff)
     if(checkInDiff === 0 &&  checkOutDiff === 0){
         holiday = true;
     }
@@ -181,11 +179,8 @@ router.get('/individual', async (req,res) => {
     objDate = new Date(moment("2019-07-05").tz("America/Los_Angeles")).getTime()
     comingDate = new Date(moment(date.checkout).tz("America/Los_Angeles")).getTime()
     let checkOutDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
-    console.log(checkInDiff)
-    console.log(checkOutDiff)
     if(checkInDiff === 0 &&  checkOutDiff === 0){
         holiday = true;
-        console.log("true")
     }
     //
     var numberOfRooms = parseInt(req.query.numberRooms);
@@ -259,7 +254,8 @@ router.get('/individual', async (req,res) => {
                     studioRoomAvailability = false;
             }
 
-            individualHotelPack = {
+            geocoder.geocode(hotel.address).then(async req=>{
+                individualHotelPack = {
                     singleAvailability: singleRoomAvailability, 
                     doubleAvailability: doubleRoomAvailability, 
                     kingAvailability: kingRoomAvailablity, 
@@ -275,6 +271,9 @@ router.get('/individual', async (req,res) => {
                     hdc_rating: hotel.hdc_rating, 
                     amenities: hotel.amenities, 
                     airports: hotel.airports,
+                    // lat and lng
+                    lat:req[0].latitude,
+                    alt: req[0].longitude,
                     // Add the complete reviews for this hotel and sort by most recent review
                     review: (await (reviewPack)).sort((a,b) => { return (new Date(b.reviewDate)).getTime() - (new Date(a.reviewDate)).getTime() }),
                     top_spots:hotel.top_spots,
@@ -282,7 +281,9 @@ router.get('/individual', async (req,res) => {
                 }
                 
                 // Send final package of info about this hotel
-                return res.status(200).json(individualHotelPack);            
+                return res.status(200).json(individualHotelPack);    
+            })
+                    
             });
 
             getReviews().catch((reviewErr) => {

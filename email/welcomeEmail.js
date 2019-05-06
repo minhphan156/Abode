@@ -13,7 +13,6 @@ const cities = require('./cities.json')
     }
   });
 module.exports = function welcomeEmail(booking){
-  console.log(booking)
   let arr = cities.name
   let des = null
   var city = new RegExp(booking.hotelID.city,'i')
@@ -25,25 +24,24 @@ module.exports = function welcomeEmail(booking){
   var checkin = booking.new_check_in_date
   ? booking.new_check_in_date
   : booking.check_in_date;
-var diffDays = parseInt(
+ var diffDays = parseInt(
   (checkin.getTime() -
     new Date(
       moment()
         .tz("America/Los_Angeles")
         .format()
-    ).getTime()) /
+    ).setHours(12,0,0,0)) /
     (1000 * 60 * 60 * 24)
-);
+) ;
 checkin = moment(checkin)
   .tz("America/Los_Angeles")
   .format("MM/DD/YYYY");
+
 if (diffDays <= 5 && diffDays > 0 && booking.welcome !== true) {
-  console.log(diffDays)
   weather.find({search:des, degreeType: 'F'}, function(err, result) {
     if(err) console.log(err);
     let current = result[0].current;
     let forecast = result[0].forecast;
-    console.log("abc" +diffDays)
       var html = `<body>
             <div>
             <div class="topBar" style="background-image:linear-gradient(to right, #0c4b78, #3d4e96, #2c76a9);;overflow: hidden; height:100px;"> 

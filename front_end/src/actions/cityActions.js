@@ -42,7 +42,7 @@ let fetchCityWeather = cityName => dispatch => {
   setCityWeatherLoading();
   axios
     .get(
-      `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&APPID=${weatherMapAPIKey}&units=imperial`
+      `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?q=${cityName},US&APPID=${weatherMapAPIKey}&units=imperial`
     )
     .then(res => {
       dispatch({
