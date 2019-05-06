@@ -102,8 +102,6 @@ router.get('/search', (req,res)=>{
     objDate = new Date(moment("2019-07-05").tz("America/Los_Angeles")).getTime()
     comingDate = new Date(moment(date.checkout).tz("America/Los_Angeles")).getTime()
     let checkOutDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
-    console.log(checkInDiff)
-    console.log(checkOutDiff)
     if(checkInDiff === 0 &&  checkOutDiff === 0){
         holiday = true;
     }
@@ -181,11 +179,8 @@ router.get('/individual', async (req,res) => {
     objDate = new Date(moment("2019-07-05").tz("America/Los_Angeles")).getTime()
     comingDate = new Date(moment(date.checkout).tz("America/Los_Angeles")).getTime()
     let checkOutDiff = parseInt((comingDate - objDate)/(1000 * 60 * 60 * 24)) 
-    console.log(checkInDiff)
-    console.log(checkOutDiff)
     if(checkInDiff === 0 &&  checkOutDiff === 0){
         holiday = true;
-        console.log("true")
     }
     //
     var numberOfRooms = parseInt(req.query.numberRooms);
