@@ -685,6 +685,7 @@
     border-radius: 12px;
     background-color: #0c4b78;
     color: white;
+    z-index: 10px;
   }
 
   .bookBtnShrt{
@@ -697,6 +698,10 @@
 
   .longMap{
     display:none;
+  }
+
+  .shrtMap{
+    z-index: -10;
   }
 
   .maps{
