@@ -73,6 +73,7 @@ class Login extends Component {
         direction="column"
         justify="center"
         alignItems="center"
+        style={{minHeight:window.innerHeight-180}}
       >
         <Paper className={paperSize}>
           <Grid item className="AuthTitle">
