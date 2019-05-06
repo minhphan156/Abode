@@ -107,9 +107,9 @@ class HistoryOverview extends Component {
         <Grid
           container
           justify="center"
-          alignItems="center"
+          // alignItems="center"
           className={classes.msgHeight}
-          style={{minHeight:window.innerHeight-180}}
+          style={{ minHeight: window.innerHeight - 180 }}
         >
           <Grid item>
             <CircularProgress />
@@ -122,9 +122,9 @@ class HistoryOverview extends Component {
           <Grid
             container
             justify="center"
-            alignItems="center"
+            // alignItems="center"
             className={classes.msgHeight}
-            style={{minHeight:window.innerHeight-180}}
+            style={{ minHeight: window.innerHeight - 180 }}
           >
             <Grid item>You have not made any bookings yet</Grid>
           </Grid>
@@ -397,7 +397,7 @@ class HistoryOverview extends Component {
           direction="column"
           justify="space-between"
           alignItems="center"
-          style={{minHeight:window.innerHeight-230}}
+          // style={{minHeight:window.innerHeight-230}}
         >
           <Grid item id="HistoryContainerTitle">
             Your Travel History
