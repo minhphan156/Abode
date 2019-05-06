@@ -50,7 +50,9 @@ class ChangeReservation extends Component {
       //No basis to calculate tax rate from when $0 taxAndFees and $0 subtotal
       total: null,
       preventNegativeCashBalanceFlag: 1,
-      decreaseRewardsPoints: 0
+      decreaseRewardsPoints: 0,
+      hybridPointsCashDecrement: 0,
+      zeroCash: 1
     };
     this.stripeValidate = this.stripeValidate.bind(this);
     this.onChangeClick = this.onChangeClick.bind(this);
@@ -83,12 +85,24 @@ class ChangeReservation extends Component {
       if (
         expansionData.total == 0 &&
         expansionData.nightlyRate *
-          (duration.asDays() - expansionData.numberOfNights) *
-          (1 + taxRate) <
-          0
+        (duration.asDays() - expansionData.numberOfNights) *
+        (1 + taxRate) <
+        0
       ) {
         this.setState({ preventNegativeCashBalanceFlag: 0 });
         this.setState({ decreaseRewardsPoints: 1 });
+      }
+      if (
+        expansionData.total <
+        -(
+          expansionData.nightlyRate *
+          (duration.asDays() - expansionData.numberOfNights) *
+          (1 + taxRate)
+        )
+      ) {
+        this.setState({ preventNegativeCashBalanceFlag: 0 });
+        this.setState({ hybridPointsCashDecrement: 1 });
+        this.setState({ zeroCash: 0 });
       }
       this.setState({ showChange: true });
     }
@@ -120,38 +134,55 @@ class ChangeReservation extends Component {
         expansionData.subtotal / 1,
       newDiscount: expansionData.discounts, //no increase in discounts for changing reservation
       newTaxesAndFees:
+        this.state.zeroCash *
         expansionData.nightlyRate *
-          this.state.preventNegativeCashBalanceFlag *
-          (this.state.days - expansionData.numberOfNights) *
-          this.state.taxRate +
-        expansionData.taxesAndFees / 1,
+        this.state.preventNegativeCashBalanceFlag *
+        (this.state.days - expansionData.numberOfNights) *
+        this.state.taxRate +
+        (expansionData.taxesAndFees / 1) * this.state.zeroCash,
       newRewardsDiscount:
-        expansionData.nightlyRate *
+        this.state.zeroCash *
+        (expansionData.nightlyRate *
           (days - expansionData.numberOfNights) *
           this.state.decreaseRewardsPoints +
-        expansionData.rewardsDiscount / 1, //extra costs incurred in changing reservation must be payed in cash
+          expansionData.rewardsDiscount / 1) +
+        this.state.hybridPointsCashDecrement * expansionData.nightlyRate * days,  //extra costs incurred in changing reservation must be payed in cash
       newTotal:
-        expansionData.nightlyRate *
+        this.state.zeroCash *
+        parseFloat(
+          expansionData.nightlyRate *
           this.state.preventNegativeCashBalanceFlag *
           (this.state.days - expansionData.numberOfNights) *
           (1 + this.state.taxRate) +
-        expansionData.total / 1, //need to divide by 1 to be recognized as a number
+          expansionData.total / 1
+        ), //need to divide by 1 to be recognized as a number
+      //repetition of calculation code because if it is stored as a variable elsewhere, javascript recognizes a number as string
+      //or is not able to recognize a negative number as negative
       newPointsEarned: (
         (expansionData.nightlyRate *
           this.state.preventNegativeCashBalanceFlag *
           (this.state.days - expansionData.numberOfNights) *
           (1 + this.state.taxRate) +
           expansionData.total / 1) *
+        this.state.zeroCash *
         10
       ).toFixed(0),
+
       newPointsUsed:
-        expansionData.nightlyRate *
+        this.state.zeroCash *
+        (expansionData.nightlyRate *
           (days - expansionData.numberOfNights) *
           this.state.decreaseRewardsPoints *
           100 +
-        expansionData.rewardPointsUsed / 1 //rewardPoints cannot be used for additional nights
+          expansionData.rewardPointsUsed / 1) +
+        this.state.hybridPointsCashDecrement *
+        expansionData.nightlyRate *
+        days *
+        100  //rewardPoints cannot be used for additional nights
     };
-
+    console.log("TOTAL");
+    console.log(changeReservationData.newTotal);
+    console.log(this.state.zeroCash);
     this.props.changeReservation(changeReservationData);
     this.setState({ openChangeDialog: false });
     window.location.reload();
@@ -221,21 +252,21 @@ class ChangeReservation extends Component {
                   Number of Nights: {expansionData.numberOfNights}
                 </DialogContent>
                 {this.state.newCheckIn != null &&
-                this.state.newCheckOut != null &&
-                this.state.showChange === true ? (
-                  <div>
-                    <DialogTitle>New Reservation</DialogTitle>
-                    <DialogContent>
-                      Check In: {new Date(this.state.newCheckIn).toDateString()}{" "}
-                      <br /> <br />
-                      Check Out:{" "}
-                      {new Date(
-                        this.state.newCheckOut
-                      ).toDateString()} <br /> <br />
-                      Number of Nights: {this.state.days}
-                    </DialogContent>
-                  </div>
-                ) : null}
+                  this.state.newCheckOut != null &&
+                  this.state.showChange === true ? (
+                    <div>
+                      <DialogTitle>New Reservation</DialogTitle>
+                      <DialogContent>
+                        Check In: {new Date(this.state.newCheckIn).toDateString()}{" "}
+                        <br /> <br />
+                        Check Out:{" "}
+                        {new Date(
+                          this.state.newCheckOut
+                        ).toDateString()} <br /> <br />
+                        Number of Nights: {this.state.days}
+                      </DialogContent>
+                    </div>
+                  ) : null}
               </Grid>
               <Grid item>
                 <DialogTitle>
@@ -253,16 +284,16 @@ class ChangeReservation extends Component {
                 />
                 <DialogActions>
                   {this.state.newCheckIn == null ||
-                  this.state.newCheckOut == null ? null : (
-                    <Button
-                      onClick={() => this.showChangeClick(expansionData)}
-                      variant="outlined"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Select Dates
+                    this.state.newCheckOut == null ? null : (
+                      <Button
+                        onClick={() => this.showChangeClick(expansionData)}
+                        variant="outlined"
+                        color="primary"
+                        className={classes.button}
+                      >
+                        Select Dates
                     </Button>
-                  )}
+                    )}
                 </DialogActions>
                 {this.state.showChange === true && this.state.total > 0 ? (
                   <div>
@@ -287,41 +318,35 @@ class ChangeReservation extends Component {
                   </div>
                 ) : null}
                 {this.state.showChange === true &&
-                expansionData.numberOfNights > this.state.days ? (
-                  <DialogTitle>
-                    <br /> <br />
-                    You will be automatically refunded $
-                    {(-(
-                      (expansionData.total / expansionData.numberOfNights) *
-                        this.state.days -
-                      expansionData.total
-                    )).toFixed(2)}
-                    .
+                  expansionData.numberOfNights > this.state.days ? (
+                    <DialogTitle>
+                      <br /> <br />
+                      You will be automatically refunded with cash and/or points.
                   </DialogTitle>
-                ) : null}
+                  ) : null}
                 {this.state.showChange === true &&
-                expansionData.numberOfNights == this.state.days ? (
-                  <DialogTitle>
-                    <br /> <br />
-                    There will be no charges or refunds for the requested
-                    changes.
+                  expansionData.numberOfNights == this.state.days ? (
+                    <DialogTitle>
+                      <br /> <br />
+                      There will be no charges or refunds for the requested
+                      changes.
                   </DialogTitle>
-                ) : null}
+                  ) : null}
               </Grid>
             </Grid>
             <DialogActions>
               {this.state.newCheckIn == null ||
-              this.state.newCheckOut == null ||
-              this.state.showChange == false ? null : (
-                <Button
-                  onClick={() => this.onChangeClick(id, expansionData)}
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Confirm Change
+                this.state.newCheckOut == null ||
+                this.state.showChange == false ? null : (
+                  <Button
+                    onClick={() => this.onChangeClick(id, expansionData)}
+                    variant="outlined"
+                    color="primary"
+                    className={classes.button}
+                  >
+                    Confirm Change
                 </Button>
-              )}
+                )}
 
               <Button
                 onClick={this.handleChangeClose}

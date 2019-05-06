@@ -430,6 +430,9 @@ router.post("/changeReservation", (req, res) => {
       isLogged = true;
     }
     bookingID = req.body.bookingID;
+    console.log("req.body");
+    console.log(req.body);
+
     date = {
       checkin: new Date(req.body.newCheckIn.replace('"', "").replace('"', "")),
       checkout: new Date(req.body.newCheckOut.replace('"', "").replace('"', ""))
@@ -448,7 +451,7 @@ router.post("/changeReservation", (req, res) => {
             res.status(409).json({ message: "cannot change to same dates" });
             return;
           }
-        }else{
+        } else {
           if (
             reservations.check_in_date.getTime() === date.checkin.getTime() &&
             reservations.check_out_date.getTime() === date.checkout.getTime()
@@ -495,24 +498,23 @@ router.post("/changeReservation", (req, res) => {
                   user.save().catch(err => console.log(err));
                 }
               }
+
+
+
               reservations.changed = true;
               reservations.new_check_in_date = date.checkin;
               reservations.new_check_out_date = date.checkout;
               reservations.subtotal = req.body.newSubtotal
                 ? req.body.newSubtotal
                 : reservations.subtotal;
-              reservations.total = req.body.newTotal
-                ? req.body.newTotal
-                : reservations.total;
+              reservations.total = req.body.newTotal;
               reservations.discount = req.body.newDiscount
                 ? req.body.newDiscount
                 : reservations.discount;
               reservations.rewardDiscount = req.body.newRewardsDiscount
                 ? req.body.newRewardsDiscount
                 : reservations.rewardDiscount;
-              reservations.taxesAndFees = req.body.newTaxesAndFees
-                ? req.body.newTaxesAndFees
-                : reservations.taxesAndFees;
+              reservations.taxesAndFees = req.body.newTaxesAndFees;
               reservations.numOfNights = req.body.numberOfNights;
               hotel.save().catch(err => res.status(400).json(err));
               reservations.save().catch(err =>
