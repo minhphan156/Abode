@@ -77,6 +77,7 @@ class BookingNotLoggedIn extends Component {
         // direction="column"
         justify="center"
         alignItems="baseline"
+        style={{minHeight:window.innerHeight-180}}
       >
         <Paper className={classes.PaperContainer}>
           <Grid item xs={12} className="SearchBookingTitle">
