@@ -1158,6 +1158,6 @@ export default connect(
   { saveBooking, getIndividualHotelResult }
 )(
   GoogleApiWrapper({
-    apiKey: "AIzaSyDW-Gy3YtzwfsT2pstjlMU2Q5U4TjRJZp8"
+    apiKey: "AIzaSyBjtRUvjcEnZpsmS4xtRF1f5HZ1RRV8qWI"
   })(IndivHotel)
 );
