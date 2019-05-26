@@ -2,7 +2,7 @@
 
 Abode is a project by students at San Jose State University as part of their SE 165, Spring 2019 class. It emulates a hotel booking site (like hotels.com) with all its features and functions.
 
-The live version will be available soon on: https://www.abode-hotel.com
+The live version will be available soon on: https://www.abode.city
 
 ## Team
 - Project Manager: [Sandro Sallenbach](https://github.com/SandroSal)
