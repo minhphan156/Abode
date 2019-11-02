@@ -28,7 +28,7 @@
     "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",
-    "mongoose": "^5.3.10",
+    "mongoose": "^5.7.5",
     "node-geocoder": "^3.22.0",
     "nodemailer": "^6.1.0",
     "openweather-apis": "^4.0.0",
