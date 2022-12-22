@@ -23,7 +23,7 @@
     "concurrently": "^4.0.1",
     "express": "^4.16.3",
     "http": "0.0.0",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "material-design-icons": "^3.0.1",
     "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.24.0",
