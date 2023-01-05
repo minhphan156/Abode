@@ -24,7 +24,7 @@
     "react-number-format": "^4.0.7",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^5.0.1",
     "react-star-ratings": "^2.3.0",
     "react-stars": "^2.2.5",
     "react-stripe-elements": "^2.0.1",
